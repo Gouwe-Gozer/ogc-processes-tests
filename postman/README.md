@@ -12,7 +12,18 @@ canonical case
         +-- future Topic 3 client
 ```
 
-To reproduce a case in Postman, create this request:
+Generate the collection from the canonical cases:
+
+```bash
+python3 scripts/generate_postman_collection.py
+```
+
+Each ready `cases/<folder>/` directory becomes one collection item named
+`<folder>`. The generator copies the exact `request.json` body, derives the
+execution URL from `process_id`, and adds `Prefer: respond-async` for async
+cases. Pending cases without a request body are reported and skipped.
+
+The resulting request has this form:
 
 ```text
 POST {{baseUrl}}/processes/{process_id}/execution
@@ -20,7 +31,7 @@ Content-Type: application/json
 Body: contents of request.json
 ```
 
-Import `ogc-processes-tests.postman_collection.json` for basic discovery and
-the `hellojs` execution request. The collection variable defaults to
-`http://localhost/ogc-api`. Canonical execution cases should remain the
-reviewed source of request bodies.
+Import `ogc-processes-tests.postman_collection.json` after generation. The
+collection variable defaults to `http://localhost/ogc-api`; override it in
+Postman for another server. The generated collection must not be edited as a
+second source of truth.
