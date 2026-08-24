@@ -23,7 +23,7 @@ a request has its particular shape.
 Execute the literal-input smoke test against a local ZOO-Project instance:
 
 ```bash
-python scripts/run_case.py cases/hellojs_string \
+python3 scripts/run_case.py cases/hellojs_string \
   --base-url http://localhost/ogc-api
 ```
 
@@ -32,7 +32,7 @@ If the host does not provide a `python` alias, use `python3` instead.
 Print the equivalent curl command without sending it:
 
 ```bash
-python scripts/run_case.py cases/hellojs_string \
+python3 scripts/run_case.py cases/hellojs_string \
   --base-url http://localhost/ogc-api \
   --print-curl
 ```

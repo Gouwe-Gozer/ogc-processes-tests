@@ -18,10 +18,24 @@ Generate the collection from the canonical cases:
 python3 scripts/generate_postman_collection.py
 ```
 
-Each ready `cases/<folder>/` directory becomes one collection item named
-`<folder>`. The generator copies the exact `request.json` body, derives the
-execution URL from `process_id`, and adds `Prefer: respond-async` for async
-cases. Pending cases without a request body are reported and skipped.
+The generated layout is:
+
+```text
+OGC API Processes tests
+├── POST_process_sync
+│   └── <case folder name>          POST execution requests
+└── process_descriptions
+    └── <process_id>                GET process descriptions
+```
+
+Each ready `cases/<folder>/` directory becomes one POST item named `<folder>`.
+The generator copies the exact `request.json` body, derives the execution URL
+from `process_id`, and adds `Prefer: respond-async` for async cases. Those async
+cases retain their header inside the requested `POST_process_sync` folder.
+
+The `process_descriptions` folder contains one deduplicated GET request for
+every process represented by a generated POST. Pending cases without a request
+body are reported and skipped from both folders.
 
 The resulting request has this form:
 

@@ -51,7 +51,7 @@ def read_json(path: Path) -> Any:
         raise ValueError(f"cannot read JSON from {path}: {error}") from error
 
 
-def create_item(case_path: Path, case: dict[str, Any]) -> dict[str, Any]:
+def create_execution_item(case_path: Path, case: dict[str, Any]) -> dict[str, Any]:
     case_name = case_path.parent.name
     try:
         process_id = case["process_id"]
@@ -92,8 +92,30 @@ def create_item(case_path: Path, case: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def generate_collection(cases_dir: Path, base_url: str) -> tuple[dict[str, Any], list[str]]:
-    items = []
+def create_process_description_item(
+    process_id: str, case_names: list[str]
+) -> dict[str, Any]:
+    encoded_process_id = urllib.parse.quote(process_id, safe="")
+    source_cases = ", ".join(f"cases/{name}" for name in case_names)
+    return {
+        "name": process_id,
+        "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": f"{{{{baseUrl}}}}/processes/{encoded_process_id}",
+            "description": (
+                f"Process description used by the generated POST request(s).\n\n"
+                f"Canonical case sources: {source_cases}"
+            ),
+        },
+    }
+
+
+def generate_collection(
+    cases_dir: Path, base_url: str
+) -> tuple[dict[str, Any], list[str], int, int]:
+    execution_items = []
+    process_cases: dict[str, list[str]] = {}
     pending = []
     case_paths = sorted(cases_dir.glob("*/case.json"), key=lambda path: path.parent.name)
     if not case_paths:
@@ -106,7 +128,16 @@ def generate_collection(cases_dir: Path, base_url: str) -> tuple[dict[str, Any],
         if case.get("status") == "pending":
             pending.append(case_path.parent.name)
             continue
-        items.append(create_item(case_path, case))
+        execution_items.append(create_execution_item(case_path, case))
+        process_id = case.get("process_id")
+        if not isinstance(process_id, str):
+            raise ValueError(f"{case_path}: process_id must be a string")
+        process_cases.setdefault(process_id, []).append(case_path.parent.name)
+
+    description_items = [
+        create_process_description_item(process_id, process_cases[process_id])
+        for process_id in sorted(process_cases, key=str.casefold)
+    ]
 
     collection = {
         "info": {
@@ -121,15 +152,31 @@ def generate_collection(cases_dir: Path, base_url: str) -> tuple[dict[str, Any],
         "variable": [
             {"key": "baseUrl", "value": base_url.rstrip("/"), "type": "string"}
         ],
-        "item": items,
+        "item": [
+            {
+                "name": "POST_process_sync",
+                "description": "Case-derived process execution requests.",
+                "item": execution_items,
+            },
+            {
+                "name": "process_descriptions",
+                "description": (
+                    "Process descriptions for every process represented in "
+                    "POST_process_sync."
+                ),
+                "item": description_items,
+            },
+        ],
     }
-    return collection, pending
+    return collection, pending, len(execution_items), len(description_items)
 
 
 def main() -> int:
     args = parse_args()
     try:
-        collection, pending = generate_collection(args.cases_dir, args.base_url)
+        collection, pending, execution_count, description_count = generate_collection(
+            args.cases_dir, args.base_url
+        )
     except (OSError, ValueError) as error:
         print(f"error: {error}")
         return 1
@@ -139,7 +186,10 @@ def main() -> int:
         json.dumps(collection, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"generated {len(collection['item'])} items in {args.output}")
+    print(
+        f"generated {execution_count} POST items and {description_count} "
+        f"process descriptions in {args.output}"
+    )
     if pending:
         print(f"skipped {len(pending)} pending cases: {', '.join(pending)}")
     return 0
