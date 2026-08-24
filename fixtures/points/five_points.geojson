@@ -5,7 +5,8 @@
       "type": "Feature",
       "id": "point_1",
       "properties": {
-        "name": "Alkmaar test point 1"
+        "name": "Alkmaar test point 1",
+        "elevation_m": 2.1
       },
       "geometry": {
         "type": "Point",
@@ -16,7 +17,8 @@
       "type": "Feature",
       "id": "point_2",
       "properties": {
-        "name": "Alkmaar test point 2"
+        "name": "Alkmaar test point 2",
+        "elevation_m": 3.4
       },
       "geometry": {
         "type": "Point",
@@ -27,7 +29,8 @@
       "type": "Feature",
       "id": "point_3",
       "properties": {
-        "name": "Alkmaar test point 3"
+        "name": "Alkmaar test point 3",
+        "elevation_m": 1.8
       },
       "geometry": {
         "type": "Point",
@@ -38,7 +41,8 @@
       "type": "Feature",
       "id": "point_4",
       "properties": {
-        "name": "Alkmaar test point 4"
+        "name": "Alkmaar test point 4",
+        "elevation_m": 4.2
       },
       "geometry": {
         "type": "Point",
@@ -49,7 +53,8 @@
       "type": "Feature",
       "id": "point_5",
       "properties": {
-        "name": "Alkmaar test point 5"
+        "name": "Alkmaar test point 5",
+        "elevation_m": 2.9
       },
       "geometry": {
         "type": "Point",

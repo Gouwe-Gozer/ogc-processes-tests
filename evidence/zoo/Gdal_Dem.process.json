@@ -1,0 +1,80 @@
+{
+  "id": "Gdal_Dem",
+  "title": "Tools to analyze and visualize DEMs.",
+  "description": "http://www.gdal.org/gdaldem.html",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/Gdal_Dem/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/Gdal_Dem/execution.html"
+    }
+  ],
+  "inputs": {
+    "InputDSN": {
+      "title": "The input data source name",
+      "description": "The input data source name to use.",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "OutputDSN": {
+      "title": "The output data source name",
+      "description": "The output data source name.",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "utility": {
+      "title": "The mode",
+      "description": "This service has 7 different modes :  hillshade,  slope,  aspect, color-relief, TRI, TPI, roughness",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "s": {
+      "title": "The scale",
+      "description": "Scale is the ratio of vertical units to horizontal, for Feet:Latlong use 370400, for Meters:LatLong use 111120",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "nullable": true
+      }
+    },
+    "co": {
+      "title": "Creation Option",
+      "description": "string representing options (NAME=VALUE)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "Result": {
+      "title": "The resulting converted file",
+      "description": "The file name resulting of the convertion",
+      "schema": {
+        "type": "string"
+      }
+    }
+  }
+}

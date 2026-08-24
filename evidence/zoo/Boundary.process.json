@@ -1,9 +1,14 @@
 {
-  "id": "RVoronoi",
-  "title": "Voronoi Diagram. ",
-  "description": "Computes the edges of Voronoi diagram for a set of data points.",
+  "id": "Boundary",
+  "title": "Computes boundary.",
+  "description": "This service shall return a feature callection representing the combinatorial boundary of each geometry in the InputPolygon feature collection.",
   "mutable": false,
-  "version": "2.0.0",
+  "version": "1.0.0",
+  "metadata": [
+    {
+      "title": "Demo"
+    }
+  ],
   "jobControlOptions": [
     "sync-execute",
     "async-execute",
@@ -18,19 +23,19 @@
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
       "type": "application/json",
       "title": "Execute End Point",
-      "href": "http://localhost/ogc-api/processes/RVoronoi/execution"
+      "href": "http://localhost/ogc-api/processes/Boundary/execution"
     },
     {
       "rel": "alternate",
       "type": "text/html",
       "title": "Execute End Point",
-      "href": "http://localhost/ogc-api/processes/RVoronoi/execution.html"
+      "href": "http://localhost/ogc-api/processes/Boundary/execution.html"
     }
   ],
   "inputs": {
-    "InputPoints": {
-      "title": "Data points",
-      "description": "The set of data points.",
+    "InputPolygon": {
+      "title": "Polygon to compute boundary",
+      "description": "URI to a set of GML that describes the polygon.",
       "extended-schema": {
         "oneOf": [
           {
@@ -63,13 +68,13 @@
                     "type": "string",
                     "contentEncoding": "UTF-8",
                     "contentMediaType": "text/xml",
-                    "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
                   },
                   {
                     "type": "string",
                     "contentEncoding": "base64",
                     "contentMediaType": "text/xml",
-                    "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
                   }
                 ]
               }
@@ -83,23 +88,28 @@
             "type": "string",
             "contentEncoding": "UTF-8",
             "contentMediaType": "text/xml",
-            "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
           },
           {
             "type": "string",
             "contentEncoding": "base64",
             "contentMediaType": "text/xml",
-            "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
           }
         ]
       },
-      "raw_schema1": "true"
+      "raw_schema1": "true",
+      "metadata": [
+        {
+          "title": "Mon test  "
+        }
+      ]
     }
   },
   "outputs": {
     "Result": {
-      "title": "Voronoi Diagram.",
-      "description": "JSON String / GML Entity of the Voronoi Diagram.",
+      "title": "The geometry created",
+      "description": "The geometry containing the boundary of the geometry on which the method is invoked.",
       "extended-schema": {
         "oneOf": [
           {
@@ -112,9 +122,8 @@
                 "properties": {
                   "type": {
                     "enum": [
-                      "application/json",
-                      "image/png",
                       "text/xml",
+                      "application/json",
                       "text/xml"
                     ]
                   }
@@ -130,25 +139,20 @@
             "properties": {
               "value": {
                 "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "UTF-8",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  },
                   {
                     "type": "object"
                   },
                   {
                     "type": "string",
                     "contentEncoding": "base64",
-                    "contentMediaType": "image/png"
-                  },
-                  {
-                    "type": "string",
-                    "contentEncoding": "base64",
                     "contentMediaType": "text/xml",
-                    "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
-                  },
-                  {
-                    "type": "string",
-                    "contentEncoding": "UTF-8",
-                    "contentMediaType": "text/xml",
-                    "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
                   }
                 ]
               }
@@ -159,28 +163,28 @@
       "schema": {
         "oneOf": [
           {
+            "type": "string",
+            "contentEncoding": "UTF-8",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          },
+          {
             "type": "object"
           },
           {
             "type": "string",
             "contentEncoding": "base64",
-            "contentMediaType": "image/png"
-          },
-          {
-            "type": "string",
-            "contentEncoding": "base64",
             "contentMediaType": "text/xml",
-            "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
-          },
-          {
-            "type": "string",
-            "contentEncoding": "UTF-8",
-            "contentMediaType": "text/xml",
-            "contentSchema": "http://schemas.opengis.net/gml/3.1.0/base/feature.xsd"
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
           }
         ]
       },
-      "raw_schema1": "true"
+      "raw_schema1": "true",
+      "metadata": [
+        {
+          "title": "Mon test  "
+        }
+      ]
     }
   }
 }

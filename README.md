@@ -49,16 +49,14 @@ It exits successfully only when the response status equals
 
 ## Cases
 
-- `hellojs_string` is a basic synchronous string-input smoke test.
-- `rvoronoi_five_points` sends the five Alkmaar points to `RVoronoi`. The
-  captured ZOO process description advertises only GML 3.1 XML for
-  `InputPoints`, so its request embeds GML derived from the GeoJSON fixture.
-  This deliberate duplication makes the exact interoperable payload visible
-  while keeping the small GeoJSON fixture reusable by clients. On the local
-  server inspected on 2026-08-24, ZOO accepted the execution request but the R
-  service failed because `readOGR` was unavailable; the observed error is
-  retained under `evidence/zoo/` and the case still expects a successful 200
-  response.
+The first 26 selected processes now each have a case directory. Five protocol
+and basic-behaviour cases are executable; 21 provider cases are explicitly
+marked `pending` until public fixture references or server-side GDAL paths are
+available. See `cases/README.md` for the inventory and blockers.
+
+The runner exits with code `3` when asked to execute a pending case. It adds
+`Prefer: respond-async` automatically for cases whose `execution_mode` is
+`async`.
 
 ## Fixture conventions
 
@@ -70,14 +68,21 @@ Spatial fixtures:
 - follow GeoJSON RFC 7946 and do not contain an obsolete `crs` member;
 - are deterministic, small, readable, and committed to Git.
 
-Raster tests are deferred until a real raster process is added; see
-`fixtures/raster/README.md`.
+A small text DEM is available for the selected raster processes; execution is
+pending server-side staging. See `fixtures/raster/README.md`.
 
 ## Evidence and Postman
 
 `evidence/zoo/` contains machine-readable process descriptions fetched from
 the local ZOO service. They provide traceability from advertised process
 metadata to request and observed behaviour.
+
+Refresh selected descriptions with the standard-library capture helper:
+
+```bash
+python3 scripts/fetch_process_descriptions.py hellojs EchoProcess \
+  --base-url http://localhost/ogc-api
+```
 
 Postman is optional. See `postman/README.md` and the starter collection for a
 convenient interface over the canonical files.

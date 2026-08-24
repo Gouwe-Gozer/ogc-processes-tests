@@ -1,0 +1,12 @@
+{
+  "id": "simplify_polygon",
+  "title": "Simplify the simple Alkmaar polygon",
+  "process_id": "Simplify",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "InputPolygon advertises GML/JSON and Tolerance is optional. Pending fixture URL selection; use a tolerance appropriate to longitude/latitude coordinate units."
+}

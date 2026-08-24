@@ -1,0 +1,12 @@
+{
+  "id": "gdal_warp_raster",
+  "title": "Warp the small Alkmaar DEM",
+  "process_id": "Gdal_Warp",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Pending server-side fixture staging and output-path policy: InputDSN and OutputDSN are required filename strings."
+}

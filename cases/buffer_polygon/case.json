@@ -1,0 +1,12 @@
+{
+  "id": "buffer_polygon",
+  "title": "Buffer the simple Alkmaar polygon",
+  "process_id": "Buffer",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "InputPolygon advertises inline or referenced GML/JSON. Pending selection of the public fixture URL; use a small distance in coordinate units rather than the advertised default of 10."
+}

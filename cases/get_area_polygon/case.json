@@ -1,0 +1,12 @@
+{
+  "id": "get_area_polygon",
+  "title": "Calculate the area of the simple Alkmaar polygon",
+  "process_id": "GetArea",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "InputPolygon advertises GML 3.1. The numeric result will be in square coordinate units unless the service reprojects."
+}

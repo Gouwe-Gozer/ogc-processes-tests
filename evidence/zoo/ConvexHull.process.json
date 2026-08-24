@@ -1,0 +1,177 @@
+{
+  "id": "ConvexHull",
+  "title": "Compute convex hull.",
+  "description": "This service shall return a feature collection that represents the convex hull of geometry InputPolygon. The convex hull is the smallest convex polygon that contains all points of the geometry. The convex Hull for a geometry of encoding data type Point is the point itself",
+  "mutable": false,
+  "version": "1.0.0",
+  "metadata": [
+    {
+      "title": "Demo"
+    }
+  ],
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/ConvexHull/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/ConvexHull/execution.html"
+    }
+  ],
+  "inputs": {
+    "InputPolygon": {
+      "title": "Polygon to compute convexhull",
+      "description": "URI to a set of GML that describes the polygon.",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "text/xml"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "UTF-8",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "UTF-8",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          }
+        ]
+      },
+      "raw_schema1": "true",
+      "metadata": [
+        {
+          "title": "Mon test"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "Result": {
+      "title": "The convex hull of the geometry",
+      "description": "The convex hull of the geometry",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/json"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "UTF-8",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "UTF-8",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "raw_schema1": "true",
+      "metadata": [
+        {
+          "title": "Mon test  "
+        }
+      ]
+    }
+  }
+}

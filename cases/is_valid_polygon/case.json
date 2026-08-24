@@ -1,0 +1,12 @@
+{
+  "id": "is_valid_polygon",
+  "title": "Validate the simple Alkmaar polygon",
+  "process_id": "IsValid",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "The explicitly closed fixture is intended to produce true. Pending selection of the public GML fixture URL."
+}

@@ -1,0 +1,180 @@
+{
+  "id": "Contains",
+  "title": "Contains",
+  "description": "This service shall return a true value if and only if the geometry g2 lies in the closure (boundary union interior) of geometry g1 - the inverse of Within(g1: Geometry, g2: Geometry).",
+  "mutable": false,
+  "version": "2.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/Contains/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/Contains/execution.html"
+    }
+  ],
+  "inputs": {
+    "InputEntity1": {
+      "title": "the first geometry ",
+      "description": "the first geometry.",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "text/xml"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "UTF-8",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "UTF-8",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "InputEntity2": {
+      "title": "the other geometry",
+      "description": "the other geometry.",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "text/xml"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "UTF-8",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "text/xml",
+                    "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "UTF-8",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "text/xml",
+            "contentSchema": "http://fooa/gml/3.1.0/polygon.xsd"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  },
+  "outputs": {
+    "Result": {
+      "title": "Contains result",
+      "description": "A value true or false if the geometry1 contains the geometry2.",
+      "schema": {
+        "type": "boolean"
+      },
+      "metadata": [
+        {
+          "title": "Mon test  "
+        }
+      ]
+    }
+  }
+}

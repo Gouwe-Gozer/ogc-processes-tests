@@ -1,5 +1,0 @@
-{
-  "title": "NoApplicableCode",
-  "type": "NoApplicableCode",
-  "detail": "Unable to run your R service:  Error in readOGR(inputs[[\"InputPoints\"]][[\"cache_file\"]], layer = ogrListLayers(inputs[[\"InputPoints\"]][[\"cache_file\"]])[1],  : \n  could not find function \"readOGR\"\n"
-}

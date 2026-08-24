@@ -22,5 +22,5 @@ Body: contents of request.json
 
 Import `ogc-processes-tests.postman_collection.json` for basic discovery and
 the `hellojs` execution request. The collection variable defaults to
-`http://localhost/ogc-api`. It intentionally has no RVoronoi execution request;
-canonical execution cases should remain the reviewed source of request bodies.
+`http://localhost/ogc-api`. Canonical execution cases should remain the
+reviewed source of request bodies.

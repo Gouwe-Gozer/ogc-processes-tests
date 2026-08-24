@@ -1,0 +1,12 @@
+{
+  "id": "centroid_polygon",
+  "title": "Calculate the centroid of the simple Alkmaar polygon",
+  "process_id": "Centroid",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "InputPolygon advertises GML 3.1 UTF-8/base64 input. Pending selection of the public fixture URL."
+}

@@ -50,14 +50,6 @@
         },
         "url": "{{baseUrl}}/processes/hellojs/execution"
       }
-    },
-    {
-      "name": "Describe RVoronoi",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/processes/RVoronoi"
-      }
     }
   ]
 }

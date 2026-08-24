@@ -1,0 +1,15 @@
+{
+  "id": "contains_polygon_point",
+  "title": "Test whether the Alkmaar polygon contains an interior point",
+  "process_id": "Contains",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixtures": [
+    "../../fixtures/gml/simple_polygon.gml",
+    "../../fixtures/gml/inside_point.gml"
+  ],
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Use the polygon as InputEntity1 and the point as InputEntity2. Pending public GML fixture URLs."
+}

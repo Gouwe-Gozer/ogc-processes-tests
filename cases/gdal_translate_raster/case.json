@@ -1,0 +1,12 @@
+{
+  "id": "gdal_translate_raster",
+  "title": "Translate the small Alkmaar DEM",
+  "process_id": "Gdal_Translate",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Pending server-side fixture staging: InputDSN and OutputDSN are required filename strings, not uploaded complex inputs."
+}

@@ -1,0 +1,12 @@
+{
+  "id": "gdal_grid_points",
+  "title": "Grid the five Alkmaar elevation points",
+  "process_id": "Gdal_Grid",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/points/five_points.geojson",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Pending server-side fixture staging and output-path policy; InputDSN and OutputDSN are required filename strings."
+}

@@ -1,0 +1,16 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "inside_point",
+      "properties": {
+        "name": "Point inside the simple Alkmaar polygon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.750, 52.632]
+      }
+    }
+  ]
+}

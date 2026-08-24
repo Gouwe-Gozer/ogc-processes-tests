@@ -1,0 +1,12 @@
+{
+  "id": "gdal_contour_dem",
+  "title": "Create contours from the small Alkmaar DEM",
+  "process_id": "Gdal_Contour",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixture": "../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Pending server-side fixture staging and output-path policy; the advertised raster source and vector destination are filename strings."
+}

@@ -137,14 +137,6 @@ even its description endpoint currently fails. A client should handle that
 failure without crashing, but HTTP 500 is a server defect and must not be
 treated as compliant success behaviour.
 
-## Why `RVoronoi` is not selected
-
-`RVoronoi` is intentionally excluded from the 44 core processes. The supplied
-Docker image advertises it but does not install `rgdal`, `rgeos`, `deldir` or
-`sp`, so its execution currently fails at `readOGR`. Equivalent geometry and
-Voronoi-style coverage is available from `Delaunay` and
-`SAGA.shapes_points.16` without adding that legacy R dependency stack.
-
 ## Separation of concerns
 
 A process implementation generally does not affect whether a client can list

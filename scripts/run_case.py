@@ -15,6 +15,10 @@ from pathlib import Path
 from typing import Any
 
 
+class PendingCaseError(ValueError):
+    """Raised when a case intentionally has no executable request yet."""
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Execute a canonical OGC API Processes case."
@@ -46,6 +50,10 @@ def load_case(case_dir: Path) -> tuple[dict[str, Any], Path, bytes]:
     case = read_json(case_path)
     if not isinstance(case, dict):
         raise ValueError(f"{case_path} must contain a JSON object")
+    if case.get("status") == "pending":
+        raise PendingCaseError(
+            f"{case.get('id', case_dir.name)} is pending: {case.get('notes', '')}"
+        )
 
     try:
         request_name = case["request"]
@@ -58,6 +66,8 @@ def load_case(case_dir: Path) -> tuple[dict[str, Any], Path, bytes]:
         raise ValueError("request and process_id must be strings")
     if not isinstance(expected_status, int):
         raise ValueError("expected.http_status must be an integer")
+    if case.get("execution_mode", "sync") not in {"sync", "async"}:
+        raise ValueError("execution_mode must be sync or async")
 
     request_path = case_dir / request_name
     read_json(request_path)
@@ -73,20 +83,25 @@ def execution_url(base_url: str, process_id: str) -> str:
     return f"{base_url.rstrip('/')}/processes/{quoted_id}/execution"
 
 
-def print_curl(url: str, request_path: Path) -> None:
+def print_curl(url: str, request_path: Path, execution_mode: str) -> None:
     display_path = Path(os.path.relpath(request_path, Path.cwd()))
     print("curl \\")
     print("  -X POST \\")
     print(f"  {shlex.quote(url)} \\")
     print("  -H 'Content-Type: application/json' \\")
+    if execution_mode == "async":
+        print("  -H 'Prefer: respond-async' \\")
     print(f"  --data @{shlex.quote(str(display_path))}")
 
 
 def execute(case: dict[str, Any], url: str, body: bytes) -> int:
+    headers = {"Content-Type": "application/json"}
+    if case.get("execution_mode") == "async":
+        headers["Prefer"] = "respond-async"
     request = urllib.request.Request(
         url,
         data=body,
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
 
@@ -120,13 +135,16 @@ def main() -> int:
     args = parse_args()
     try:
         case, request_path, body = load_case(args.case_dir)
+    except PendingCaseError as error:
+        print(f"pending: {error}", file=sys.stderr)
+        return 3
     except ValueError as error:
         print(f"error: {error}", file=sys.stderr)
         return 2
 
     url = execution_url(args.base_url, case["process_id"])
     if args.print_curl:
-        print_curl(url, request_path)
+        print_curl(url, request_path, case.get("execution_mode", "sync"))
         return 0
     return execute(case, url, body)
 

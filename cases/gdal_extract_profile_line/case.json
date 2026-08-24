@@ -1,0 +1,15 @@
+{
+  "id": "gdal_extract_profile_line",
+  "title": "Extract an elevation profile along the Alkmaar line",
+  "process_id": "GdalExtractProfile",
+  "execution_mode": "sync",
+  "status": "pending",
+  "fixtures": [
+    "../../fixtures/raster/alkmaar_dem.asc",
+    "../../fixtures/lines/simple_line.geojson"
+  ],
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Geometry accepts JSON inline or by reference, but RasterFile is a filename relative to the ZOO dataPath. Pending DEM staging."
+}
