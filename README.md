@@ -49,13 +49,12 @@ It exits successfully only when the response status equals
 
 ## Cases
 
-The first 26 selected processes now each have a case directory. Nineteen
-protocol, basic-behaviour, GEOS, and CGAL cases are executable; seven older
-GDAL/OGR wrapper cases are explicitly marked `pending` until server-side paths
-are available. See `cases/README.md` for the inventory and blockers.
+The first 26 selected processes now each have an executable case directory.
+Filename-based GDAL/OGR cases require fixtures to be staged in the local ZOO
+profile first. See `cases/README.md` for the inventory and observed outcomes.
 
-The runner exits with code `3` when asked to execute a pending case. It adds
-`Prefer: respond-async` automatically for cases whose `execution_mode` is
+The runner exits with code `3` when asked to execute a future pending case. It
+adds `Prefer: respond-async` automatically for cases whose `execution_mode` is
 `async`.
 
 ## Fixture conventions
@@ -68,14 +67,19 @@ Spatial fixtures:
 - follow GeoJSON RFC 7946 and do not contain an obsolete `crs` member;
 - are deterministic, small, readable, and committed to Git.
 
-A small text DEM is available for the selected raster processes; execution is
-pending server-side staging. See `fixtures/raster/README.md`.
+A small text DEM is available for the selected raster processes. Stage local
+fixtures with `python3 scripts/stage_zoo_fixtures.py` before running the
+filename-based GDAL/OGR cases. See `fixtures/raster/README.md`.
 
 ## Evidence and Postman
 
 `evidence/zoo/` contains machine-readable process descriptions fetched from
 the local ZOO service. They provide traceability from advertised process
 metadata to request and observed behaviour.
+
+See [`CLIENT_IMPLEMENTATION_LESSONS.md`](CLIENT_IMPLEMENTATION_LESSONS.md) for
+the client-facing lessons from comparing those descriptions with the first 26
+requests and their observed execution behaviour.
 
 Refresh selected descriptions with the standard-library capture helper:
 

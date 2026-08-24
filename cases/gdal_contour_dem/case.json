@@ -3,10 +3,10 @@
   "title": "Create contours from the small Alkmaar DEM",
   "process_id": "Gdal_Contour",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixture": "../../fixtures/raster/alkmaar_dem.asc",
   "expected": {
     "http_status": 200
   },
-  "notes": "Pending server-side fixture staging and output-path policy; the advertised raster source and vector destination are filename strings."
+  "notes": "Local-profile case. This provider uses paths directly and writes an ESRI Shapefile dataset below ZOO tmpPath."
 }

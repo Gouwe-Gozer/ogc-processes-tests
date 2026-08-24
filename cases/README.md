@@ -15,13 +15,13 @@ The runner returns exit code `3` for pending cases.
 | `longProcess` | `long_process_async` | ready | Polling and dismissal are future cases |
 | `demo` | `demo_async_expected_failure` | ready | Poll the created job to assert its eventual failure |
 | `failR` | `fail_r_expected_error` | ready | — |
-| `Gdal_Translate` | `gdal_translate_raster` | pending | Stage input and choose a writable server output path |
-| `Gdal_Warp` | `gdal_warp_raster` | pending | Stage input and choose a writable server output path |
-| `Gdal_Dem` | `gdal_dem_hillshade` | pending | Stage input and choose a writable server output path |
-| `Gdal_Contour` | `gdal_contour_dem` | pending | Stage input and choose a writable server output path |
-| `Gdal_Grid` | `gdal_grid_points` | pending | Stage input and choose a writable server output path |
-| `GdalExtractProfile` | `gdal_extract_profile_line` | pending | Stage the DEM under ZOO `dataPath` |
-| `Ogr2Ogr` | `ogr2ogr_vector` | pending | Stage input and choose a writable server output path |
+| `Gdal_Translate` | `gdal_translate_raster` | ready | Requires local fixture staging |
+| `Gdal_Warp` | `gdal_warp_raster` | ready | Requires local fixture staging |
+| `Gdal_Dem` | `gdal_dem_slope` | ready | Requires local fixture staging; hillshade needs an unadvertised input |
+| `Gdal_Contour` | `gdal_contour_dem` | ready | Requires local fixture staging |
+| `Gdal_Grid` | `gdal_grid_points` | expected error | Provider needs unadvertised parameters and returns 500 |
+| `GdalExtractProfile` | `gdal_extract_profile_line` | ready | Requires local fixture staging |
+| `Ogr2Ogr` | `ogr2ogr_vector` | ready | Requires local fixture staging |
 | `Buffer` | `buffer_polygon` | ready | — |
 | `Centroid` | `centroid_polygon` | ready | — |
 | `Boundary` | `boundary_polygon` | ready | — |
@@ -38,5 +38,11 @@ The runner returns exit code `3` for pending cases.
 | `Delaunay` | `delaunay_five_points` | ready | — |
 
 The older `Gdal_*` and `Ogr2Ogr` descriptions expose source and destination as
-literal filename strings. A GitHub URL must not be substituted unless live
-execution proves the provider accepts it as a data source.
+literal filename strings. For the local Docker profile, stage fixtures with:
+
+```bash
+python3 scripts/stage_zoo_fixtures.py
+```
+
+This copies `fixtures/` below `/usr/com/zoo-project/ogc-processes-tests/`, the
+configured ZOO `dataPath`. Provider outputs use the configured `/tmp/zTmp`.

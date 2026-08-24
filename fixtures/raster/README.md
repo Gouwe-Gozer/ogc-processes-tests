@@ -4,7 +4,7 @@
 with a matching projection sidecar. It covers the same Alkmaar test area as
 the vector fixtures and is readable without binary tooling.
 
-A GeoTIFF derivative can be added when fixture delivery to the server has been
-settled. The older selected `Gdal_*` process descriptions accept server-side
-filenames rather than uploaded complex inputs, so simply publishing this file
-does not necessarily make it usable by those wrappers.
+The older selected `Gdal_*` process descriptions accept server-side filenames
+rather than uploaded complex inputs. For the local Docker profile, run
+`python3 scripts/stage_zoo_fixtures.py` to copy this fixture below ZOO's
+configured `dataPath` before executing those cases.

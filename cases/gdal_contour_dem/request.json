@@ -1,0 +1,10 @@
+{
+  "inputs": {
+    "InputDSN": "/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+    "OutputDSN": "/tmp/zTmp/gdal_contour_alkmaar.shp",
+    "i": "1",
+    "a": "elevation",
+    "b": 1
+  },
+  "response": "document"
+}

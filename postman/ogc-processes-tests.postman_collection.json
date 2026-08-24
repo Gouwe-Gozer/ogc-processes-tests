@@ -275,6 +275,144 @@
           }
         },
         {
+          "name": "gdal_contour_dem",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"InputDSN\": \"/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"/tmp/zTmp/gdal_contour_alkmaar.shp\",\n    \"i\": \"1\",\n    \"a\": \"elevation\",\n    \"b\": 1\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Gdal_Contour/execution",
+            "description": "Create contours from the small Alkmaar DEM\n\nLocal-profile case. This provider uses paths directly and writes an ESRI Shapefile dataset below ZOO tmpPath.\n\nCanonical source: cases/gdal_contour_dem"
+          }
+        },
+        {
+          "name": "gdal_dem_slope",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"InputDSN\": \"/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"/tmp/zTmp/gdal_dem_slope.tif\",\n    \"utility\": \"slope\",\n    \"s\": \"111120\"\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Gdal_Dem/execution",
+            "description": "Calculate slope from the small Alkmaar DEM\n\nLocal-profile case. This provider uses paths directly, so the request names the staged dataPath input and tmpPath output explicitly. Hillshade is not used because the implementation requires an unadvertised z input.\n\nCanonical source: cases/gdal_dem_slope"
+          }
+        },
+        {
+          "name": "gdal_extract_profile_line",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"RasterFile\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"Geometry\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/lines/simple_line.geojson\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"outputs\": {\n    \"Profile\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/GdalExtractProfile/execution",
+            "description": "Extract an elevation profile along the Alkmaar line\n\nLocal-profile case. RasterFile is relative to ZOO dataPath; Geometry uses the commit-pinned public GeoJSON line reference.\n\nCanonical source: cases/gdal_extract_profile_line"
+          }
+        },
+        {
+          "name": "gdal_grid_points",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"OF\": \"AAIGrid\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/points/five_points_3d.geojson\",\n    \"OutputDSN\": \"gdal_grid_alkmaar\"\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Gdal_Grid/execution",
+            "description": "Grid the five Alkmaar elevation points\n\nExpected-error local-profile case. The advertised inputs reach the provider, but it returns 500 without a useful message because its implementation needs unadvertised layer/band parameters. The request intentionally does not invent them.\n\nCanonical source: cases/gdal_grid_points"
+          }
+        },
+        {
+          "name": "gdal_translate_raster",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"Format\": \"GTiff\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"gdal_translate_alkmaar\"\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Gdal_Translate/execution",
+            "description": "Translate the small Alkmaar DEM\n\nLocal-profile case. Stage fixtures with scripts/stage_zoo_fixtures.py; InputDSN is relative to ZOO dataPath and OutputDSN is created below tmpPath.\n\nCanonical source: cases/gdal_translate_raster"
+          }
+        },
+        {
+          "name": "gdal_warp_raster",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"Format\": \"GTiff\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"gdal_warp_alkmaar\",\n    \"s_srs\": \"OGC:CRS84\",\n    \"t_srs\": \"EPSG:3857\"\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Gdal_Warp/execution",
+            "description": "Warp the small Alkmaar DEM\n\nLocal-profile case. Stage fixtures first; the DEM is reprojected from OGC CRS84 to EPSG:3857 and written below ZOO tmpPath.\n\nCanonical source: cases/gdal_warp_raster"
+          }
+        },
+        {
           "name": "get_area_polygon",
           "request": {
             "method": "POST",
@@ -391,6 +529,29 @@
             },
             "url": "{{baseUrl}}/processes/longProcess/execution",
             "description": "Start longProcess asynchronously\n\nVerifies asynchronous job creation. Job polling and dismissal will be separate cases.\n\nCanonical source: cases/long_process_async"
+          }
+        },
+        {
+          "name": "ogr2ogr_vector",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"F\": \"GeoJSON\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/polygons/simple_polygon.geojson\",\n    \"OutputDSN\": \"ogr2ogr_simple_polygon.geojson\"\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/Ogr2Ogr/execution",
+            "description": "Convert the Alkmaar polygon vector dataset\n\nLocal-profile case. Stage fixtures first; InputDSN is relative to dataPath and the GeoJSON output is created below tmpPath.\n\nCanonical source: cases/ogr2ogr_vector"
           }
         },
         {
@@ -623,6 +784,90 @@
           }
         },
         {
+          "name": "Gdal_Contour",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Gdal_Contour",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_contour_dem"
+          }
+        },
+        {
+          "name": "Gdal_Dem",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Gdal_Dem",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_dem_slope"
+          }
+        },
+        {
+          "name": "Gdal_Grid",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Gdal_Grid",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_grid_points"
+          }
+        },
+        {
+          "name": "Gdal_Translate",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Gdal_Translate",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_translate_raster"
+          }
+        },
+        {
+          "name": "Gdal_Warp",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Gdal_Warp",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_warp_raster"
+          }
+        },
+        {
+          "name": "GdalExtractProfile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/GdalExtractProfile",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/gdal_extract_profile_line"
+          }
+        },
+        {
           "name": "GetArea",
           "request": {
             "method": "GET",
@@ -690,6 +935,20 @@
             ],
             "url": "{{baseUrl}}/processes/longProcess",
             "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/long_process_async"
+          }
+        },
+        {
+          "name": "Ogr2Ogr",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/Ogr2Ogr",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/ogr2ogr_vector"
           }
         },
         {

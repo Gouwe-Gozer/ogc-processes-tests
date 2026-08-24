@@ -1,0 +1,10 @@
+{
+  "inputs": {
+    "Format": "GTiff",
+    "InputDSN": "ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+    "OutputDSN": "gdal_warp_alkmaar",
+    "s_srs": "OGC:CRS84",
+    "t_srs": "EPSG:3857"
+  },
+  "response": "document"
+}

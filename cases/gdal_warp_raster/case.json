@@ -3,10 +3,10 @@
   "title": "Warp the small Alkmaar DEM",
   "process_id": "Gdal_Warp",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixture": "../../fixtures/raster/alkmaar_dem.asc",
   "expected": {
     "http_status": 200
   },
-  "notes": "Pending server-side fixture staging and output-path policy: InputDSN and OutputDSN are required filename strings."
+  "notes": "Local-profile case. Stage fixtures first; the DEM is reprojected from OGC CRS84 to EPSG:3857 and written below ZOO tmpPath."
 }

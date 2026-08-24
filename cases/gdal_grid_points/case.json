@@ -3,10 +3,10 @@
   "title": "Grid the five Alkmaar elevation points",
   "process_id": "Gdal_Grid",
   "execution_mode": "sync",
-  "status": "pending",
-  "fixture": "../../fixtures/points/five_points.geojson",
+  "request": "request.json",
+  "fixture": "../../fixtures/points/five_points_3d.geojson",
   "expected": {
-    "http_status": 200
+    "http_status": 500
   },
-  "notes": "Pending server-side fixture staging and output-path policy; InputDSN and OutputDSN are required filename strings."
+  "notes": "Expected-error local-profile case. The advertised inputs reach the provider, but it returns 500 without a useful message because its implementation needs unadvertised layer/band parameters. The request intentionally does not invent them."
 }

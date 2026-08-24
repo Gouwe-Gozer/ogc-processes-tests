@@ -19,6 +19,15 @@ Notable advertised-contract details:
 - `EchoProcess` advertises older EPSG URN spellings for bounding-box CRSs.
 - `Distance` describes generic geometry inputs, but its provider rejects point
   GML because the implementation extracts only `Polygon` or `MultiPolygon`.
+- `Gdal_Dem` advertises hillshade but its implementation requires an
+  unadvertised `z` input for that mode. The executable case uses advertised
+  slope mode instead.
+- `Gdal_Grid` cannot create an output from only its advertised inputs because
+  its implementation relies on unadvertised layer/band parameters. The
+  canonical advertised-input request is retained as an expected 500 case.
+- `Ogr2Ogr` successfully creates the GeoJSON output, but its literal response
+  concatenates the CGI address and temp URL into a malformed URL. The observed
+  value is preserved without correction.
 
 These are captured server facts, not recommendations for ideal process
 metadata. Cases must follow the descriptions or clearly record a tested server
@@ -28,3 +37,7 @@ The dated `*.job-*.json` files preserve one observed terminal job state for
 the successful `longProcess` and deliberately failing `demo` cases. Their job
 identifiers and timestamps are evidence from those individual executions, not
 stable values for assertions.
+
+The `*.execution.json` and `*.execution-error.json` files preserve observed
+response bodies for the local profile. Generated output paths describe the
+server used for the capture and are not portable fixture locations.

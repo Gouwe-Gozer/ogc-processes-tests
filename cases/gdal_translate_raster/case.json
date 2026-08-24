@@ -3,10 +3,10 @@
   "title": "Translate the small Alkmaar DEM",
   "process_id": "Gdal_Translate",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixture": "../../fixtures/raster/alkmaar_dem.asc",
   "expected": {
     "http_status": 200
   },
-  "notes": "Pending server-side fixture staging: InputDSN and OutputDSN are required filename strings, not uploaded complex inputs."
+  "notes": "Local-profile case. Stage fixtures with scripts/stage_zoo_fixtures.py; InputDSN is relative to ZOO dataPath and OutputDSN is created below tmpPath."
 }
