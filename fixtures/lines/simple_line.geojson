@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "line_1",
+      "properties": {
+        "name": "Alkmaar test line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [4.742, 52.630],
+          [4.748, 52.633],
+          [4.754, 52.631],
+          [4.761, 52.636]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "point_1",
+      "properties": {
+        "name": "Alkmaar test point 1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.741, 52.626]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "point_2",
+      "properties": {
+        "name": "Alkmaar test point 2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.752, 52.632]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "point_3",
+      "properties": {
+        "name": "Alkmaar test point 3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.764, 52.627]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "point_4",
+      "properties": {
+        "name": "Alkmaar test point 4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.747, 52.641]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "point_5",
+      "properties": {
+        "name": "Alkmaar test point 5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.760, 52.638]
+      }
+    }
+  ]
+}

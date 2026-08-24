@@ -1,0 +1,12 @@
+{
+  "id": "rvoronoi_five_points",
+  "title": "Create Voronoi polygons from five Alkmaar points",
+  "process_id": "RVoronoi",
+  "execution_mode": "sync",
+  "request": "request.json",
+  "fixture": "../../fixtures/points/five_points.geojson",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "The captured process description advertises InputPoints only as GML 3.1 text/xml. The inline GML payload uses the same coordinates and IDs as the canonical GeoJSON fixture; GeoJSON input was not advertised and is not assumed. The local server accepted this request on 2026-08-24 but returned 500 because its R runtime lacked readOGR; success remains the expected interoperable outcome."
+}

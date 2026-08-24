@@ -1,0 +1,24 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "polygon_1",
+      "properties": {
+        "name": "Alkmaar test polygon"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.744, 52.628],
+            [4.756, 52.628],
+            [4.756, 52.636],
+            [4.744, 52.636],
+            [4.744, 52.628]
+          ]
+        ]
+      }
+    }
+  ]
+}
