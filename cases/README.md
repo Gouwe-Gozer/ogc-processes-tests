@@ -1,9 +1,10 @@
 # Case inventory
 
 Every selected protocol/basic and GDAL/OGR/GEOS/CGAL process has one initial
-case. A `ready` case contains an exact `request.json`. A `pending` case records
-its intended fixture and expected outcome but deliberately omits the request
-until the remaining delivery detail is known.
+case. A `ready` case contains an exact `request.json`. Public complex inputs are
+pinned to an immutable repository commit. A `pending` case records its intended
+fixture and expected outcome but deliberately omits the request until the
+remaining server-side delivery detail is known.
 
 The runner returns exit code `3` for pending cases.
 
@@ -21,20 +22,20 @@ The runner returns exit code `3` for pending cases.
 | `Gdal_Grid` | `gdal_grid_points` | pending | Stage input and choose a writable server output path |
 | `GdalExtractProfile` | `gdal_extract_profile_line` | pending | Stage the DEM under ZOO `dataPath` |
 | `Ogr2Ogr` | `ogr2ogr_vector` | pending | Stage input and choose a writable server output path |
-| `Buffer` | `buffer_polygon` | pending | Publish or inline the fixture and select a small distance |
-| `Centroid` | `centroid_polygon` | pending | Publish or inline the GML fixture |
-| `Boundary` | `boundary_polygon` | pending | Publish or inline the GML fixture |
-| `ConvexHull` | `convex_hull_polygon` | pending | Publish or inline the GML fixture |
-| `Simplify` | `simplify_polygon` | pending | Publish or inline the fixture and select a small tolerance |
-| `Intersection` | `intersection_polygons` | pending | Publish or inline two GML fixtures |
-| `Union` | `union_polygons` | pending | Publish or inline two GML fixtures |
-| `Difference` | `difference_polygons` | pending | Publish or inline two ordered GML fixtures |
-| `SymDifference` | `symmetric_difference_polygons` | pending | Publish or inline two GML fixtures |
-| `Distance` | `distance_points` | pending | Publish or inline two GML fixtures |
-| `GetArea` | `get_area_polygon` | pending | Publish or inline the GML fixture |
-| `Contains` | `contains_polygon_point` | pending | Publish or inline polygon and point GML fixtures |
-| `IsValid` | `is_valid_polygon` | pending | Publish or inline the GML fixture |
-| `Delaunay` | `delaunay_five_points` | pending | Publish or inline the GML fixture |
+| `Buffer` | `buffer_polygon` | ready | — |
+| `Centroid` | `centroid_polygon` | ready | — |
+| `Boundary` | `boundary_polygon` | ready | — |
+| `ConvexHull` | `convex_hull_polygon` | ready | — |
+| `Simplify` | `simplify_polygon` | ready | — |
+| `Intersection` | `intersection_polygons` | ready | — |
+| `Union` | `union_polygons` | ready | — |
+| `Difference` | `difference_polygons` | ready | — |
+| `SymDifference` | `symmetric_difference_polygons` | ready | — |
+| `Distance` | `distance_polygons` | ready | Provider accepts polygon GML but rejects point GML despite generic wording |
+| `GetArea` | `get_area_polygon` | ready | — |
+| `Contains` | `contains_polygon_point` | ready | — |
+| `IsValid` | `is_valid_polygon` | ready | — |
+| `Delaunay` | `delaunay_five_points` | ready | — |
 
 The older `Gdal_*` and `Ogr2Ogr` descriptions expose source and destination as
 literal filename strings. A GitHub URL must not be substituted unless live

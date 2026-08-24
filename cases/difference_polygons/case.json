@@ -3,7 +3,7 @@
   "title": "Subtract one overlapping Alkmaar polygon from another",
   "process_id": "Difference",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixtures": [
     "../../fixtures/gml/simple_polygon.gml",
     "../../fixtures/gml/overlapping_polygon.gml"
@@ -11,5 +11,5 @@
   "expected": {
     "http_status": 200
   },
-  "notes": "Direction-sensitive case using simple_polygon as InputEntity1. Pending public GML fixture URLs."
+  "notes": "Direction-sensitive reference-input case using the pinned simple polygon as InputEntity1."
 }

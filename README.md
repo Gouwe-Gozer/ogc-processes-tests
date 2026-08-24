@@ -49,10 +49,10 @@ It exits successfully only when the response status equals
 
 ## Cases
 
-The first 26 selected processes now each have a case directory. Five protocol
-and basic-behaviour cases are executable; 21 provider cases are explicitly
-marked `pending` until public fixture references or server-side GDAL paths are
-available. See `cases/README.md` for the inventory and blockers.
+The first 26 selected processes now each have a case directory. Nineteen
+protocol, basic-behaviour, GEOS, and CGAL cases are executable; seven older
+GDAL/OGR wrapper cases are explicitly marked `pending` until server-side paths
+are available. See `cases/README.md` for the inventory and blockers.
 
 The runner exits with code `3` when asked to execute a pending case. It adds
 `Prefer: respond-async` automatically for cases whose `execution_mode` is

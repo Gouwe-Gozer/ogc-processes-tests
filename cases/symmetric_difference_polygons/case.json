@@ -3,7 +3,7 @@
   "title": "Calculate the symmetric difference of two Alkmaar polygons",
   "process_id": "SymDifference",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixtures": [
     "../../fixtures/gml/simple_polygon.gml",
     "../../fixtures/gml/overlapping_polygon.gml"
@@ -11,5 +11,5 @@
   "expected": {
     "http_status": 200
   },
-  "notes": "Both required inputs advertise GML 3.1 UTF-8/base64. Pending public URLs for the two fixtures."
+  "notes": "Both required reference inputs are pinned to the published GML 3.1 fixtures."
 }

@@ -17,6 +17,8 @@ Notable advertised-contract details:
   `http://fooa/`;
 - `Gdal_Warp` describes its `r` resampling-method input as Boolean;
 - `EchoProcess` advertises older EPSG URN spellings for bounding-box CRSs.
+- `Distance` describes generic geometry inputs, but its provider rejects point
+  GML because the implementation extracts only `Polygon` or `MultiPolygon`.
 
 These are captured server facts, not recommendations for ideal process
 metadata. Cases must follow the descriptions or clearly record a tested server

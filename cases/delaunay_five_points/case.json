@@ -3,10 +3,10 @@
   "title": "Create a Delaunay triangulation from five Alkmaar points",
   "process_id": "Delaunay",
   "execution_mode": "sync",
-  "status": "pending",
+  "request": "request.json",
   "fixture": "../../fixtures/gml/five_points.gml",
   "expected": {
     "http_status": 200
   },
-  "notes": "InputPoints advertises only GML 3.1 UTF-8/base64. Pending selection of the public fixture URL."
+  "notes": "Reference-input case pinned to the published five-point GML 3.1 fixture."
 }
