@@ -16,12 +16,12 @@ The selection favours:
 
 ## Status and interpretation
 
-The 44 core entries below are **candidate test cases**, not a claim that all 44
-executions have already been proven successful. Their process-description
-endpoints returned HTTP 200, and their shared runtimes are present in the local
-ZOO image. Before adding an execution case, capture its process description
-under `evidence/zoo/`, construct the request from that description, and record
-the observed result.
+The 44 core entries below now have captured process descriptions and at least
+one executable case. This is not a claim that all 44 executions are successful:
+the repository deliberately preserves expected errors, empty HTTP-200 results,
+and invalid output references alongside usable results. Each case is derived
+from its description and keeps the exact request and observed response as
+interoperability evidence.
 
 The complete ZOO collection advertises the same capabilities for all 703
 entries:

@@ -34,6 +34,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="print an equivalent curl command without sending the request",
     )
+    parser.add_argument(
+        "--response-output",
+        type=Path,
+        help="write the raw response body to this evidence file",
+    )
     return parser.parse_args()
 
 
@@ -94,7 +99,12 @@ def print_curl(url: str, request_path: Path, execution_mode: str) -> None:
     print(f"  --data @{shlex.quote(str(display_path))}")
 
 
-def execute(case: dict[str, Any], url: str, body: bytes) -> int:
+def execute(
+    case: dict[str, Any],
+    url: str,
+    body: bytes,
+    response_output: Path | None = None,
+) -> int:
     headers = {"Content-Type": "application/json"}
     if case.get("execution_mode") == "async":
         headers["Prefer"] = "respond-async"
@@ -119,6 +129,10 @@ def execute(case: dict[str, Any], url: str, body: bytes) -> int:
     charset = response.headers.get_content_charset() or "utf-8"
     raw_body = response.read().decode(charset, errors="replace")
     response.close()
+
+    if response_output is not None:
+        response_output.parent.mkdir(parents=True, exist_ok=True)
+        response_output.write_text(raw_body.rstrip() + "\n", encoding="utf-8")
 
     print(f"Case: {case.get('id', '<unknown>')}")
     print("Method: POST")
@@ -146,7 +160,7 @@ def main() -> int:
     if args.print_curl:
         print_curl(url, request_path, case.get("execution_mode", "sync"))
         return 0
-    return execute(case, url, body)
+    return execute(case, url, body, args.response_output)
 
 
 if __name__ == "__main__":

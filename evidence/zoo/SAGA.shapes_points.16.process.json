@@ -1,0 +1,185 @@
+{
+  "id": "SAGA.shapes_points.16",
+  "title": "Thiessen Polygons",
+  "description": "Creates Thiessen or Voronoi polygons for given point data set.",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.shapes_points.16/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.shapes_points.16/execution.html"
+    }
+  ],
+  "inputs": {
+    "POINTS": {
+      "title": "Points",
+      "description": "Points",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/vnd.google-earth.kml+xml",
+                      "application/json"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/vnd.google-earth.kml+xml"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/vnd.google-earth.kml+xml"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "FRAME": {
+      "title": "Frame Size",
+      "description": "Frame Size",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 10,
+        "format": "float",
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "POLYGONS": {
+      "title": "Polygons",
+      "description": "Polygons",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/vnd.google-earth.kml+xml",
+                      "application/json"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/vnd.google-earth.kml+xml"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/vnd.google-earth.kml+xml"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}

@@ -1,8 +1,9 @@
 {
   "profile_id": "zoo-ubuntu18-gdal3-saga7-otb7",
-  "captured_at": "2026-08-24",
+  "capture_started_at": "2026-08-24",
+  "capture_completed_at": "2026-08-25",
   "base_url": "http://localhost/ogc-api",
-  "process_count": 26,
+  "process_count": 44,
   "process_ids": [
     "hellojs",
     "EchoProcess",
@@ -29,7 +30,25 @@
     "GetArea",
     "Contains",
     "IsValid",
-    "Delaunay"
+    "Delaunay",
+    "SAGA.grid_tools.0",
+    "SAGA.grid_tools.3",
+    "SAGA.grid_tools.27",
+    "SAGA.grid_calculus.1",
+    "SAGA.grid_filter.1",
+    "SAGA.grid_gridding.1",
+    "SAGA.shapes_grid.5",
+    "SAGA.shapes_grid.0",
+    "SAGA.shapes_polygons.5",
+    "SAGA.shapes_polygons.14",
+    "SAGA.shapes_points.16",
+    "SAGA.shapes_lines.3",
+    "SAGA.table_tools.0",
+    "SAGA.table_tools.3",
+    "SAGA.tin_tools.2",
+    "SAGA.tin_tools.3",
+    "SAGA.pointcloud_tools.4",
+    "SAGA.statistics_grid.5"
   ],
   "description_http_status": 200
 }

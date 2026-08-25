@@ -1,0 +1,12 @@
+{
+  "id": "saga_grid_calculator",
+  "title": "Multiply an Alkmaar raster with the SAGA grid calculator",
+  "process_id": "SAGA.grid_calculus.1",
+  "execution_mode": "sync",
+  "request": "request.json",
+  "fixture": "../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "A single referenced AAIGrid succeeds. Supplying two advertised repeated GRIDS values crashes this provider; see saga_grid_calculator_repeated_input_expected_error."
+}

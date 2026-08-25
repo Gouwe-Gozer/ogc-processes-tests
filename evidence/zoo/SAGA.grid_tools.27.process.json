@@ -1,0 +1,417 @@
+{
+  "id": "SAGA.grid_tools.27",
+  "title": "Tiling",
+  "description": "Tiling",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.grid_tools.27/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.grid_tools.27/execution.html"
+    }
+  ],
+  "inputs": {
+    "GRID": {
+      "title": "Grid",
+      "description": "Grid",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "application/x-ogc-envi",
+                      "application/x-ogc-aaigrid",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-envi"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-aaigrid"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-envi"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-aaigrid"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "TILES_SAVE": {
+      "title": "Save Tiles to Disk",
+      "description": "Save tiles to disk individually",
+      "minOccurs": 0,
+      "schema": {
+        "type": "boolean",
+        "default": false,
+        "enum": [
+          "true",
+          "false"
+        ],
+        "nullable": true
+      }
+    },
+    "TILES_PATH": {
+      "title": "Output Directory",
+      "description": "Output Directory",
+      "minOccurs": 0,
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/plain"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/plain"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "nullable": true
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/plain"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "TILES_NAME": {
+      "title": "Base Name",
+      "description": "The base name of the tiles",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "tile",
+        "nullable": true
+      }
+    },
+    "OVERLAP": {
+      "title": "Overlapping Cells",
+      "description": "Overlapping Cells",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 0,
+        "nullable": true
+      }
+    },
+    "OVERLAP_SYM": {
+      "title": "Add Cells",
+      "description": "Add Cells",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "symmetric",
+        "enum": [
+          "symmetric",
+          "bottom / left",
+          "top / right"
+        ],
+        "nullable": true
+      }
+    },
+    "METHOD": {
+      "title": "Tile Size Definition",
+      "description": "Tile Size Definition",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "number of grid cells per tile",
+        "enum": [
+          "number of grid cells per tile",
+          "coordinates (offset",
+          " range",
+          " cell size",
+          " tile size)"
+        ],
+        "nullable": true
+      }
+    },
+    "NX": {
+      "title": "Number of Column Cells",
+      "description": "Number of Column Cells",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 100,
+        "nullable": true
+      }
+    },
+    "NY": {
+      "title": "Number of Row Cells",
+      "description": "Number of Row Cells",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 100,
+        "nullable": true
+      }
+    },
+    "XRANGE_MIN": {
+      "title": "Offset and Range (X) (min value)",
+      "description": "Offset and Range (X)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "XRANGE_MAX": {
+      "title": "Offset and Range (X) (max value)",
+      "description": "Offset and Range (X)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "YRANGE_MIN": {
+      "title": "Offset and Range (Y) (min value)",
+      "description": "Offset and Range (Y)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "YRANGE_MAX": {
+      "title": "Offset and Range (Y) (max value)",
+      "description": "Offset and Range (Y)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "DCELL": {
+      "title": "Cell Size",
+      "description": "Cell Size",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 1,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "DX": {
+      "title": "Tile Size (X)",
+      "description": "Tile Size (X)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 100,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "DY": {
+      "title": "Tile Size (Y)",
+      "description": "Tile Size (Y)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 100,
+        "format": "float",
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "TILES": {
+      "title": "Tiles",
+      "description": "Tiles",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "application/x-ogc-envi",
+                      "application/x-ogc-aaigrid",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-envi"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-aaigrid"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-envi"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-aaigrid"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}

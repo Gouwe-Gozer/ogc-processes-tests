@@ -1,0 +1,714 @@
+{
+  "id": "SAGA.grid_gridding.1",
+  "title": "Inverse Distance Weighted",
+  "description": "Inverse distance grid interpolation from irregular distributed points.",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.grid_gridding.1/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.grid_gridding.1/execution.html"
+    }
+  ],
+  "inputs": {
+    "POINTS": {
+      "title": "Points",
+      "description": "Points",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/vnd.google-earth.kml+xml",
+                      "application/json"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/vnd.google-earth.kml+xml"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/vnd.google-earth.kml+xml"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "FIELD": {
+      "title": "Attribute",
+      "description": "Attribute",
+      "minOccurs": 0,
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/csv",
+                      "text/csv"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/csv"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "text/csv"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "nullable": true
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/csv"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "text/csv"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "CV_METHOD": {
+      "title": "Cross Validation",
+      "description": "Cross Validation",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "none",
+        "enum": [
+          "none",
+          "leave one out",
+          "2-fold",
+          "k-fold"
+        ],
+        "nullable": true
+      }
+    },
+    "CV_SAMPLES": {
+      "title": "Cross Validation Subsamples",
+      "description": "number of subsamples for k-fold cross validation",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 10,
+        "nullable": true
+      }
+    },
+    "TARGET_DEFINITION": {
+      "title": "Target Grid System",
+      "description": "Target Grid System",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "user defined",
+        "enum": [
+          "user defined",
+          "grid or grid system"
+        ],
+        "nullable": true
+      }
+    },
+    "TARGET_USER_SIZE": {
+      "title": "Cellsize",
+      "description": "Cellsize",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 1,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "TARGET_USER_XMIN": {
+      "title": "West",
+      "description": "West",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 0,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "TARGET_USER_XMAX": {
+      "title": "East",
+      "description": "East",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 100,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "TARGET_USER_YMIN": {
+      "title": "South",
+      "description": "South",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 0,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "TARGET_USER_YMAX": {
+      "title": "North",
+      "description": "North",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 100,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "TARGET_USER_COLS": {
+      "title": "Columns",
+      "description": "Number of cells in East-West direction.",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 100,
+        "nullable": true
+      }
+    },
+    "TARGET_USER_ROWS": {
+      "title": "Rows",
+      "description": "Number of cells in North-South direction.",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 100,
+        "nullable": true
+      }
+    },
+    "TARGET_USER_FITS": {
+      "title": "Fit",
+      "description": "Fit",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "nodes",
+        "enum": [
+          "nodes",
+          "cells"
+        ],
+        "nullable": true
+      }
+    },
+    "TARGET_TEMPLATE": {
+      "title": "Target System",
+      "description": "use this grid's system for output grids",
+      "minOccurs": 0,
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "application/x-ogc-envi",
+                      "application/x-ogc-aaigrid",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-envi"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-aaigrid"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "nullable": true
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-envi"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-aaigrid"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "SEARCH_RANGE": {
+      "title": "Search Range",
+      "description": "Search Range",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "global",
+        "enum": [
+          "local",
+          "global"
+        ],
+        "nullable": true
+      }
+    },
+    "SEARCH_RADIUS": {
+      "title": "Maximum Search Distance",
+      "description": "local maximum search distance given in map units",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 1000,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "SEARCH_POINTS_ALL": {
+      "title": "Number of Points",
+      "description": "Number of Points",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "all points within search distance",
+        "enum": [
+          "maximum number of nearest points",
+          "all points within search distance"
+        ],
+        "nullable": true
+      }
+    },
+    "SEARCH_POINTS_MIN": {
+      "title": "Minimum",
+      "description": "minimum number of points to use",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 1,
+        "nullable": true
+      }
+    },
+    "SEARCH_POINTS_MAX": {
+      "title": "Maximum",
+      "description": "maximum number of nearest points",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 20,
+        "nullable": true
+      }
+    },
+    "DW_WEIGHTING": {
+      "title": "Weighting Function",
+      "description": "Weighting Function",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "inverse distance to a power",
+        "enum": [
+          "no distance weighting",
+          "inverse distance to a power",
+          "exponential",
+          "gaussian weighting"
+        ],
+        "nullable": true
+      }
+    },
+    "DW_IDW_POWER": {
+      "title": "Inverse Distance Weighting Power",
+      "description": "Inverse Distance Weighting Power",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 2,
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "DW_IDW_OFFSET": {
+      "title": "Inverse Distance Offset",
+      "description": "Calculates weights for distance plus one, avoiding division by zero for zero distances",
+      "minOccurs": 0,
+      "schema": {
+        "type": "boolean",
+        "default": false,
+        "enum": [
+          "true",
+          "false"
+        ],
+        "nullable": true
+      }
+    },
+    "DW_BANDWIDTH": {
+      "title": "Gaussian and Exponential Weighting Bandwidth",
+      "description": "Gaussian and Exponential Weighting Bandwidth",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "default": 1,
+        "format": "float",
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "CV_SUMMARY": {
+      "title": "Cross Validation Summary",
+      "description": "Cross Validation Summary",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/csv",
+                      "text/csv"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/csv"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "text/csv"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/csv"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "text/csv"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "CV_RESIDUALS": {
+      "title": "Cross Validation Residuals",
+      "description": "Cross Validation Residuals",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/vnd.google-earth.kml+xml",
+                      "application/json"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/vnd.google-earth.kml+xml"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/vnd.google-earth.kml+xml"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "TARGET_OUT_GRID": {
+      "title": "Target Grid",
+      "description": "Target Grid",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "application/x-ogc-envi",
+                      "application/x-ogc-aaigrid",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-envi"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-aaigrid"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-envi"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-aaigrid"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}

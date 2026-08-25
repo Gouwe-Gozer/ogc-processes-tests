@@ -1,9 +1,9 @@
 # ZOO evidence
 
 The `*.process.json` files are live process descriptions captured from the
-local ZOO API on 2026-08-24 for profile
-`zoo-ubuntu18-gdal3-saga7-otb7`. All 26 selected description endpoints returned
-HTTP 200. `selection.capture.json` records the exact selection.
+local ZOO API on 2026-08-24 and 2026-08-25 for profile
+`zoo-ubuntu18-gdal3-saga7-otb7`. All 44 core selected description endpoints
+returned HTTP 200. `selection.capture.json` records the exact selection.
 
 Notable advertised-contract details:
 
@@ -28,6 +28,15 @@ Notable advertised-contract details:
 - `Ogr2Ogr` successfully creates the GeoJSON output, but its literal response
   concatenates the CGI address and temp URL into a malformed URL. The observed
   value is preserved without correction.
+- three SAGA raster processes accept one raster but crash with `SIGSEGV` when
+  given two values through their advertised repeated input;
+- four other description-conformant SAGA requests return HTTP 500 after the
+  provider terminates with `SIGSEGV` or `SIGABRT`;
+- SAGA raster tiling and polygon dissolve return HTTP 200 with an empty object,
+  omitting their requested outputs;
+- SAGA table creation returns HTTP 200 with a TIFF reference even though no
+  TIFF exists, consistent with the table output's incorrect advertised media
+  types.
 
 These are captured server facts, not recommendations for ideal process
 metadata. Cases must follow the descriptions or clearly record a tested server
@@ -41,3 +50,11 @@ stable values for assertions.
 The `*.execution.json` and `*.execution-error.json` files preserve observed
 response bodies for the local profile. Generated output paths describe the
 server used for the capture and are not portable fixture locations.
+
+[`SAGA_EXECUTION_OBSERVATIONS.md`](SAGA_EXECUTION_OBSERVATIONS.md) indexes all
+18 primary SAGA outcomes. [`SAGA_FAILURES.md`](SAGA_FAILURES.md) links every
+preserved SAGA crash response to its exact runnable request.
+
+[`ERROR_CATALOG.md`](ERROR_CATALOG.md) and its machine-readable
+[`error.catalog.json`](error.catalog.json) group every distinct captured error
+message and document which client warnings are supported by the evidence.

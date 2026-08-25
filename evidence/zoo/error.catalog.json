@@ -1,0 +1,98 @@
+{
+  "profile_id": "zoo-ubuntu18-gdal3-saga7-otb7",
+  "updated_at": "2026-08-25",
+  "distinct_messages": [
+    {
+      "id": "provider-sigsegv",
+      "observation": "http_problem",
+      "http_status": 500,
+      "title": "NoApplicableCode",
+      "type": "NoApplicableCode",
+      "field": "detail",
+      "message": "ZOO Kernel failed to process your request, receiving signal 11 = SIGSEGV ",
+      "cases": [
+        "saga_resample_rasters_repeated_input_expected_error",
+        "saga_mosaic_rasters_repeated_input_expected_error",
+        "saga_grid_calculator_repeated_input_expected_error",
+        "saga_idw_points",
+        "saga_pointcloud_to_grid"
+      ],
+      "client_use": "Report a server-side process crash, retain the raw problem, and allow the user to inspect or revise the request.",
+      "do_not_infer": "The message does not identify an invalid input or a single root cause. Do not blame a particular field or retry automatically."
+    },
+    {
+      "id": "provider-sigabrt",
+      "observation": "http_problem",
+      "http_status": 500,
+      "title": "NoApplicableCode",
+      "type": "NoApplicableCode",
+      "field": "detail",
+      "message": "ZOO Kernel failed to process your request, receiving signal 6 = SIGABRT ",
+      "cases": [
+        "saga_intersect_polygons",
+        "saga_thiessen_points"
+      ],
+      "client_use": "Report a server-side process abort, retain the raw problem, and allow the user to inspect or revise the request.",
+      "do_not_infer": "The message does not identify an invalid input or a single root cause. Do not blame a particular field or retry automatically."
+    },
+    {
+      "id": "provider-no-message",
+      "observation": "http_problem",
+      "http_status": 500,
+      "title": "NoApplicableCode",
+      "type": "NoApplicableCode",
+      "field": "detail",
+      "message": "Unable to run the Service. The message returned back by the Service was the following: No message provided",
+      "cases": [
+        "gdal_grid_points"
+      ],
+      "client_use": "Explain that the server failed without actionable diagnostic detail and retain the raw response.",
+      "do_not_infer": "Do not manufacture an input-level validation message from this response."
+    },
+    {
+      "id": "r-provider-failure",
+      "observation": "http_problem",
+      "http_status": 500,
+      "title": "NoApplicableCode",
+      "type": "NoApplicableCode",
+      "field": "detail",
+      "message": "Unable to run the Service. The message returned back by the Service was the following: Failed running from R world!",
+      "cases": [
+        "fail_r_expected_error"
+      ],
+      "client_use": "Show the provider-supplied failure detail and classify it as an HTTP execution failure.",
+      "do_not_infer": "The text does not identify a user-correctable field."
+    },
+    {
+      "id": "async-service-failure",
+      "observation": "terminal_job",
+      "job_status": "failed",
+      "field": "message",
+      "message": "Unable to run the Service. The message returned back by the Service was the following: Error executing the service",
+      "cases": [
+        "demo_async_expected_failure"
+      ],
+      "client_use": "Present the terminal job as failed and show its message even though job submission itself was accepted.",
+      "do_not_infer": "A successful asynchronous submission does not make this terminal failure an HTTP submission error."
+    }
+  ],
+  "silent_result_anomalies": [
+    {
+      "case": "saga_tile_raster",
+      "http_status": 200,
+      "body": {},
+      "warning": "The requested TILES output is absent."
+    },
+    {
+      "case": "saga_dissolve_polygons",
+      "http_status": 200,
+      "body": {},
+      "warning": "The requested DISSOLVED output is absent."
+    },
+    {
+      "case": "saga_create_table",
+      "http_status": 200,
+      "warning": "The response advertises a TIFF output reference, but the referenced TIFF was not created."
+    }
+  ]
+}

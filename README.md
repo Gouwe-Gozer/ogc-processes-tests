@@ -47,9 +47,19 @@ POST {baseUrl}/processes/{process_id}/execution
 It exits successfully only when the response status equals
 `expected.http_status`.
 
+To preserve a raw response body as execution evidence while running a case:
+
+```bash
+python3 scripts/run_case.py cases/hellojs_string \
+  --base-url http://localhost/ogc-api \
+  --response-output /tmp/hellojs.execution.json
+```
+
 ## Cases
 
-The first 26 selected processes now each have an executable case directory.
+All 44 core selected processes now have an executable case directory. Three
+SAGA raster processes additionally have expected-error cases that preserve the
+provider's failure on advertised repeated inputs, for 47 POST cases in total.
 Filename-based GDAL/OGR cases require fixtures to be staged in the local ZOO
 profile first. See `cases/README.md` for the inventory and observed outcomes.
 
@@ -78,8 +88,9 @@ the local ZOO service. They provide traceability from advertised process
 metadata to request and observed behaviour.
 
 See [`CLIENT_IMPLEMENTATION_LESSONS.md`](CLIENT_IMPLEMENTATION_LESSONS.md) for
-the client-facing lessons from comparing those descriptions with the first 26
-requests and their observed execution behaviour.
+the client-facing lessons from comparing those descriptions with their exact
+requests and observed execution behaviour. The SAGA execution matrix and
+provider failures are indexed under `evidence/zoo/`.
 
 Refresh selected descriptions with the standard-library capture helper:
 

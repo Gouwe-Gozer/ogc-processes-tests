@@ -1,0 +1,20 @@
+{
+  "inputs": {
+    "GRIDS": {
+      "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc",
+      "type": "application/x-ogc-aaigrid"
+    },
+    "FORMULA": "g1 * 2",
+    "NAME": "Alkmaar sum",
+    "TYPE": "4 byte floating point number"
+  },
+  "outputs": {
+    "RESULT": {
+      "format": {
+        "mediaType": "image/tiff"
+      },
+      "transmissionMode": "reference"
+    }
+  },
+  "response": "document"
+}

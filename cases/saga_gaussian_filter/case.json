@@ -1,0 +1,12 @@
+{
+  "id": "saga_gaussian_filter",
+  "title": "Apply a Gaussian filter to the Alkmaar DEM",
+  "process_id": "SAGA.grid_filter.1",
+  "execution_mode": "sync",
+  "request": "request.json",
+  "fixture": "../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "SAGA 7.3 provider-profile case using a referenced AAIGrid input."
+}

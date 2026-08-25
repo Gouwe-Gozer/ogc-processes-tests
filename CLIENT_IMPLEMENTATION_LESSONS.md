@@ -1,62 +1,217 @@
 # Client implementation lessons learned
 
-## Purpose and scope
+## Purpose and tender scope
 
-This document records lessons from the first 26 process cases in this
-repository. It focuses on what a generic OGC API - Processes client can learn
-from a process description, which assumptions are safe, and how the client
-should handle invalid or incompatible user input.
+This document records lessons from the 44 core process descriptions and their
+47 execution cases in this
+repository for the Topic 3 OGC API - Processes client. It focuses on:
 
-These findings are based on the captured ZOO-Project descriptions in
+- what the protocol core can distil from a process description;
+- which assumptions are safe when creating an execution request;
+- what can go wrong when an end user supplies incorrect input;
+- the minimum boundary needed between the protocol core and HTTP transport.
+
+The findings are based on the captured ZOO-Project descriptions in
 [`evidence/zoo/`](evidence/zoo/), the canonical requests in [`cases/`](cases/),
-and their observed executions. They describe the current server profile, not
-every OGC API - Processes implementation. See
+and their observed executions. They describe the current tested server profile,
+not every OGC API - Processes implementation. See
 [`SERVER_PROFILE_COMPATIBILITY.md`](SERVER_PROFILE_COMPATIBILITY.md) for the
 profile and upgrade implications.
 
-## Main conclusion
+This is not a plan for a general-purpose API client. Features should be added
+only when they are required by a Topic 3 commitment or by a tested service.
 
-A process description is the best available contract for constructing an
-execution request, but it is not proof that the process implementation honours
-that contract.
+## Intended architecture
 
-The client should therefore separate three concerns:
+```text
+Consumer / application
+├── form generation                 outside the protocol core
+├── raw JSON editor                 outside the protocol core
+├── MapLibre integration            outside the protocol core
+└── result rendering                outside the protocol core
+             │
+             ▼
+OGC API - Processes protocol core
+├── landing page and link discovery
+├── conformance
+├── process collection and descriptions
+├── synchronous execution
+├── asynchronous jobs and results
+└── job dismissal
+             │
+             ▼
+Minimal transport port
+├── browser fetch adapter           required
+└── relay adapter                   optional, only if later required
+```
 
-1. **Description parsing:** turn advertised metadata and schemas into a usable
-   internal model.
-2. **Request validation:** catch errors that are demonstrably inconsistent with
-   that model.
-3. **Execution handling:** submit the request and robustly handle provider
-   errors, asynchronous jobs, and malformed responses.
+The protocol core must not call browser `fetch` directly. It depends on a
+small transport interface so the same protocol behaviour can later run through
+a relay if browser access to a tested service requires it.
 
-Passing client-side validation means "consistent with the advertised
-description". It must never be presented as a guarantee that execution will
-succeed.
+Form controls, map behaviour, and rendering decisions consume the protocol
+core but are not part of it. The core exposes the raw and understood parts of a
+process description; it does not need to know how they are presented.
+
+## Minimal transport boundary
+
+The transport exists only to decouple protocol logic from browser `fetch`. It
+needs to support:
+
+- methods `GET`, `POST`, and `DELETE`;
+- request URL and headers;
+- an optional request body;
+- an optional `AbortSignal`;
+- response status, headers, final URL, and raw body.
+
+An implementation-neutral shape could be:
+
+```ts
+type HeaderMap = Record<string, string>;
+
+interface TransportRequest {
+  method: "GET" | "POST" | "DELETE";
+  url: string;
+  headers?: HeaderMap;
+  body?: string | Uint8Array;
+  signal?: AbortSignal;
+}
+
+interface TransportResponse {
+  status: number;
+  headers: HeaderMap;
+  url: string;
+  rawBody: Uint8Array;
+}
+
+interface Transport {
+  request(request: TransportRequest): Promise<TransportResponse>;
+}
+```
+
+The transport should return HTTP error responses as responses. For example,
+HTTP 400 or 500 is not a network failure and its raw body is needed by the
+protocol core to parse an OGC problem response. A rejected transport promise
+is reserved for failures where no HTTP response was obtained or the request
+was aborted.
+
+JSON encoding, OGC problem parsing, link interpretation, and job behaviour
+belong to the protocol core. This keeps a future relay adapter small and avoids
+duplicating protocol behaviour in two transports.
+
+### What can be borrowed from `examples/ogc-client`
+
+The existing `examples/ogc-client` is useful as a source of small, tested
+ideas:
+
+- injecting request headers and browser fetch options;
+- returning typed endpoint failures;
+- resolving relative links against a response or API URL;
+- testing network, HTTP, parsing, and abort behaviour separately.
+
+Its transport utility should not be copied unchanged. It uses global fetch
+options, concentrates on shared GET and XML requests, and does not expose the
+response information needed for asynchronous OGC API execution. The new port
+should be instance-scoped and JSON-neutral. Concurrent-request deduplication
+and its browser cache are not necessary for the tender core.
+
+If source code is copied rather than merely using the same ideas, retain the
+BSD-3-Clause copyright notice and licence required by that project.
+
+### Deliberately not part of the transport
+
+Do not add the following without a demonstrated requirement:
+
+- an OAuth or other authentication framework;
+- automatic retries or backoff;
+- TLS or proxy configuration;
+- caching infrastructure;
+- download persistence;
+- observability frameworks or request history;
+- provider-profile adapters.
+
+Headers are deliberately supported, so a consuming application can provide a
+service-specific header if one is required. That does not justify building
+speculative OAuth. Likewise, a relay transport remains a small optional future
+adapter, not a general proxy subsystem.
+
+## Protocol-core responsibilities
+
+### Landing page and discovery
+
+The core starts at the configured API URL, parses the landing page, and follows
+advertised link relations for conformance and processes. Relative links are
+resolved against the URL of the document that contained them.
+
+The captured server sometimes advertises absolute URLs containing `localhost`.
+Those links may be unusable when the API is reached through another hostname.
+The core should retain the advertised link and provide a clear failure. A
+configurable link-rewrite or relay policy is an optional integration feature
+only if a tested deployment requires it.
+
+### Conformance
+
+The core fetches `/conformance` through its discovered link and exposes the
+advertised conformance classes. It should use those capabilities before
+offering protocol operations, rather than treating one ZOO-Project profile as
+the definition of the standard.
+
+### Processes and descriptions
+
+The core fetches the process collection and individual process descriptions.
+It retains each raw description and normalizes the subset needed by the
+consumer. Unknown fields or unsupported schema constructs must not crash
+discovery.
+
+When a schema construct is unsupported, the promised fallback is raw JSON. The
+core reports that it cannot interpret that part of the schema and retains it;
+the consumer can offer a raw JSON editor and pass the resulting valid JSON to
+execution. The core should not silently weaken or invent schema constraints.
+
+### Execution
+
+The core serializes or accepts an execute request body and posts it to the
+advertised execution endpoint. It supports:
+
+- synchronous document responses;
+- asynchronous submission using the required preference header;
+- output transmission by value or reference where advertised.
+
+HTTP 200 normally means the tested synchronous execution has completed and the
+body contains its result document. It does not mean a job is waiting elsewhere
+unless the response explicitly describes a job.
+
+HTTP 201 for asynchronous submission means the job was accepted, not that it
+succeeded. The core obtains the job location from the response headers or body
+and exposes the job resource.
+
+### Jobs, results, and dismiss
+
+The core can retrieve job status, follow a successful job's result link, and
+request dismissal with `DELETE` when supported. It recognizes non-terminal and
+terminal states without requiring UI-specific polling or progress components.
+
+A small convenience operation may poll until a terminal state while accepting
+an `AbortSignal`. Elaborate scheduling, persistence, and retry infrastructure
+are outside scope. The application remains free to control when status is
+requested.
 
 ## What can be distilled from a process description
 
 ### Process identity and operation links
 
-The description supplies an exact process `id`, a human-readable `title` and
-`description`, a `version`, and links. The execute link is identified by its
-relation, for example:
+A description supplies an exact process `id`, human-readable `title` and
+`description`, a `version`, metadata, and links. The execute link is identified
+by its relation, for example:
 
 ```text
 http://www.opengis.net/def/rel/ogc/1.0/execute
 ```
 
-The client can use this information to label the process, identify the
-contract version, and locate the execution endpoint. Process and input IDs are
-opaque and case-sensitive; they must not be translated, normalized, or derived
-from titles.
+Process, input, and output IDs are opaque and case-sensitive. The core must not
+translate or derive them from titles.
 
-Links require a client policy. The captured server sometimes emits absolute
-URLs containing `localhost`, which may be unusable behind a proxy or from a
-different host. Prefer a matching advertised link when it is usable, but check
-its origin against the configured API endpoint. A client must not blindly send
-credentials to, or make server-side requests through, an unexpected origin.
-
-### Supported execution and output modes
+### Execution and output capabilities
 
 `jobControlOptions` advertises capabilities such as:
 
@@ -64,70 +219,56 @@ credentials to, or make server-side requests through, an unexpected origin.
 - `async-execute`;
 - `dismiss`.
 
-`outputTransmission` advertises `value`, `reference`, or both. These values can
-drive the available controls in the client. They do not determine the mode by
-themselves: the execution request and HTTP headers still select the requested
-behaviour.
+`outputTransmission` advertises `value`, `reference`, or both. These fields are
+the basis for execution choices exposed to the consumer. The request and HTTP
+headers still select the actual mode.
 
-In the current tests, synchronous execution normally returns HTTP 200 with the
-result document. Asynchronous submission returns HTTP 201 and a job location.
-HTTP 201 only means that the job was accepted; the job may later become
-`successful` or `failed`. The client must poll the advertised monitor link and
-only fetch results after a successful terminal state.
+### Input identifiers, requiredness, and cardinality
 
-### Input identifiers and requiredness
+The `inputs` object gives the exact execution-request keys. In the captured
+profile, inputs with `minOccurs: 0` are optional and inputs without that
+override behave as required. `maxOccurs` can indicate repeatable inputs,
+including `unbounded`.
 
-The `inputs` object gives the exact request keys. For this profile, inputs with
-`minOccurs: 0` are optional and inputs without that override behave as required
-inputs. `maxOccurs` can indicate repeatable values, including `unbounded`.
-
-Requiredness, nullability, and defaulting are separate concepts:
+Requiredness, nullability, and defaulting are different:
 
 - optional means the input may be omitted;
-- `nullable: true` means an explicit JSON `null` is allowed by the advertised
-  schema;
-- `default` describes a server-side default and does not make a required input
-  optional unless the surrounding contract says so;
-- repeatable input values should be represented without losing order.
+- `nullable: true` advertises that explicit JSON `null` is accepted;
+- `default` advertises a value the server may apply;
+- repeatable values must not lose order.
 
-The client should preserve these distinctions in its internal model. In
-particular, it must not convert an omitted value into `null`, or accidentally
-drop valid values such as `0`, `false`, or an empty string.
+The normalized model must preserve these distinctions. It must not replace an
+omitted value with `null` or lose valid values such as `0`, `false`, or an
+empty string.
 
-### Literal types and constraints
+### Literal and structured schemas
 
-The captured schemas demonstrate `string`, `integer`, `number`, `boolean`, and
-`object` values. They may also include:
+The captured descriptions demonstrate `string`, `integer`, `number`,
+`boolean`, `object`, and array values. Constraints include:
 
-- `default`;
-- `enum`;
-- `format`, such as `float`, `double`, or `uri`;
-- `nullable`;
+- `default`, `enum`, `format`, and `nullable`;
 - `oneOf` and `allOf`;
 - nested `required` and `properties`;
-- array `items`, `minItems`, and `maxItems`.
+- `items`, `minItems`, and `maxItems`.
 
-These are suitable for generating form controls and local validation. For
-example, `EchoProcess` describes a bounding box object with a four- or
+For example, `EchoProcess` describes a bounding-box object with a four- or
 six-number `bbox` array and an enumerated `crs` URI.
 
-Unknown schema keywords must be retained or ignored safely. They must not make
-the whole description unparsable. Conversely, a client must not silently
-weaken a constraint merely because its form renderer does not support it.
+The core may normalize schema features it understands. Form generation remains
+outside the core, and unsupported constructs remain available through the raw
+description and raw JSON fallback.
 
-### Complex data, representations, and references
+### Complex values and references
 
-Complex inputs and outputs are commonly expressed with `oneOf`. The captured
-descriptions include:
+The captured descriptions include:
 
 - inline JSON objects;
 - inline UTF-8 XML strings;
 - base64-encoded XML strings;
-- link objects for referenced data;
+- references to remotely available data;
 - media types and, sometimes, a content schema.
 
-The extended schema is useful here because it describes the execution wrapper
-as well as the underlying value. Current reference requests use this shape:
+A current reference request has this form:
 
 ```json
 {
@@ -136,7 +277,7 @@ as well as the underlying value. Current reference requests use this shape:
 }
 ```
 
-An inline complex value may require a wrapper such as:
+An inline complex value may require a wrapper:
 
 ```json
 {
@@ -147,17 +288,15 @@ An inline complex value may require a wrapper such as:
 }
 ```
 
-The client should model the transport choice separately from the data format:
-inline versus reference, UTF-8 versus base64, and GeoJSON versus GML are
-different decisions. It should serialize the exact advertised wrapper rather
-than guessing from a filename extension.
+Inline/reference transport, content format, and content encoding are separate
+properties. The core should preserve the advertised wrapper rather than infer
+it from a filename extension.
 
 ### Outputs
 
-The `outputs` object supplies output IDs and value schemas. Together with
-`outputTransmission`, this lets the client offer value/reference selection and
-format selection where supported. A document response in the current cases is
-requested with:
+The `outputs` object supplies exact output IDs and value schemas. Together with
+`outputTransmission`, it describes available value/reference and format
+choices. A tested document response requests an output like this:
 
 ```json
 {
@@ -171,212 +310,154 @@ requested with:
 }
 ```
 
-Output IDs are just as exact as input IDs. The client should not assume every
-process calls its output `Result`, or that a string output is necessarily an
-ordinary text value. In the GDAL/OGR processes, a string may actually contain
-a server-side path or a download URL.
+The core must not assume that every output is called `Result`. A string output
+may contain ordinary text, a server-side path, or a download URL. The core
+returns the result and its representation metadata; rendering it as text,
+GeoJSON, GML, raster, or a MapLibre layer is outside the core.
 
-## Assumptions that are reasonably safe
+## Reasonably safe assumptions
 
-The following assumptions are safe only after the target server's current
-description has been fetched successfully:
+After successfully fetching the target server's current description, it is
+reasonable to assume that:
 
-- The advertised process, input, and output IDs are the exact identifiers to
-  serialize.
-- Advertised primitive types and explicit JSON Schema constraints are the
-  correct basis for client-side validation.
-- Inputs explicitly marked with `minOccurs: 0` may be omitted.
-- Advertised defaults can be shown to the user. Omitting an optional input lets
-  the server decide whether to apply that default; the client should not claim
-  that the default was used until the result confirms it.
-- Only advertised job-control and transmission modes should be offered by
-  default.
-- An advertised media type is a candidate representation, not evidence that an
-  arbitrary document with that media type is semantically valid.
-- A successful synchronous execution is indicated by the HTTP status and a
-  parseable response, not by the status alone.
-- An accepted asynchronous execution must be followed through its job resource
-  to a terminal state.
+- advertised process, input, and output IDs are the identifiers to serialize;
+- advertised primitive types and explicit constraints are the basis for
+  validation of understood schema constructs;
+- inputs explicitly marked with `minOccurs: 0` may be omitted;
+- only advertised job-control and transmission modes should be used by default;
+- an advertised default may be shown, but the server decides whether an
+  omitted optional input receives it;
+- an advertised media type is a candidate representation, not proof that any
+  document carrying that type is semantically valid;
+- an accepted asynchronous execution must be followed to a terminal job state.
 
-Saved requests should be associated with the API origin and a process
-description version or hash. Before replay, the client should refresh or
-compare the current description and report contract drift.
+## Unsafe assumptions and observed mismatches
 
-## Assumptions that are not safe
-
-### Advertised schema does not guarantee executability
+### The description does not guarantee execution
 
 `Gdal_Grid` advertises only `OF`, `InputDSN`, and `OutputDSN`. A request using
-exactly those inputs passes description-based validation but the provider needs
-additional, unadvertised parameters and returns HTTP 500. The client cannot fix
-this generically without inventing provider-specific fields. It should retain
-the request and response as diagnostics and report a server contract defect.
+exactly those fields conforms to the description, but the provider requires
+additional unadvertised parameters and returns HTTP 500. The core must not
+invent provider-specific inputs to make it work.
 
-`Gdal_Dem` provides another example: its advertised fields are insufficient
-for the provider's hillshade branch, which requires an unadvertised value. The
-verified case uses the advertised `slope` operation instead.
+`Gdal_Dem` has a similar problem for its hillshade branch, which needs an
+unadvertised value. The verified case uses its advertised slope branch.
 
-### A broad complex type does not guarantee every geometry
+### A broad complex schema may hide narrower provider rules
 
-The description can say XML, JSON, or object while the provider parser accepts
-only a narrower geometry or document shape. The `Distance` provider rejected
-point GML in testing even though its wording is generic; the executable case
-uses polygons. Media-type validation alone cannot catch this.
+The `Distance` provider rejected point GML despite generic geometry wording;
+the executable case uses polygons. A matching media type and valid XML or JSON
+cannot prove that the provider accepts the geometry or document structure.
 
-Descriptions may also disagree internally. For example, a title may refer to a
-generic "geometry" while a content schema points specifically to a polygon.
-The client should show the more specific constraint, warn about conflicting
-metadata, and avoid pretending it can resolve the conflict.
+Metadata can also conflict internally. A title may describe a generic geometry
+while a content schema identifies a polygon. The core should retain both and
+must not claim certainty it does not have.
 
-### A string is not necessarily portable user text
+### A string may represent a server-side filename
 
-The GDAL/OGR descriptions expose dataset inputs and outputs as strings. In the
-tested provider they are filenames resolved inside the ZOO container, not file
-uploads and not generally accessible client paths. The local staging script is
-test infrastructure for that deployment; it is not a portable client feature.
+The tested GDAL/OGR descriptions expose data-source inputs as strings. Their
+values are paths resolved inside the ZOO container, not browser uploads or
+paths on the end user's computer. Local fixture staging is test infrastructure
+for this deployment, not a portable client capability.
 
-The client must not assume that a path on the user's computer is visible to the
-server. It should only offer filename/path entry when the deployment explicitly
-defines its meaning. Prefer an advertised reference or upload mechanism when
-one exists.
+### A reference may not be reachable from the process server
 
-### A reference URL may not be reachable by the process server
+A URL reachable by the browser may still be inaccessible to the process server
+because it executes in a different network context. Only execution proves that
+the provider can retrieve and use the reference.
 
-A URL reachable by the browser or desktop client may be inaccessible from the
-server because of DNS, firewall, authentication, TLS, redirect, or container
-network differences. Media type and file content can also disagree. A client
-may perform advisory checks, but only server-side retrieval proves that the
-provider can use the reference.
+An origin policy or relay may become relevant for a concrete deployment. It is
+optional until the tender commitments or a tested service require it.
 
-User-controlled references also have security implications. Deployments should
-apply an explicit URL/origin policy to avoid turning the process server into an
-unrestricted network fetcher.
+### Output references may be malformed
 
-### Output strings and links may be malformed
-
-The observed `Ogr2Ogr` response returned a malformed concatenation of two URLs.
-The client must parse links defensively and must not automatically navigate to
-or fetch an invalid or unexpected URL. Keep the raw value visible so the user
-can diagnose the server response.
+The observed `Ogr2Ogr` response concatenated two URLs into one malformed value.
+The core must not assume every returned string is a valid URL. It should retain
+the raw output so the consumer can report or inspect it.
 
 ### Provider errors may be generic or misleading
 
-Observed execution failures use a generic `NoApplicableCode` problem with a
-free-text `detail`; one supplies no useful provider message at all. The client
-cannot rely on the server to identify a particular input field or consistently
-use a 4xx status for bad user data. Invalid input may surface as HTTP 500.
+Observed failures use a generic `NoApplicableCode` problem with free-text
+`detail`; one supplies no useful provider message. Bad input can surface as
+HTTP 500 rather than a precise 4xx response. The core must preserve status,
+headers, and raw body even when problem parsing succeeds.
 
-## Handling wrong end-user input
+The SAGA cases add two reusable but coarse diagnostics: provider termination by
+`SIGSEGV` and by `SIGABRT`. These safely support a warning that the server-side
+process crashed or aborted. They do not safely identify which input was wrong:
+the same `SIGSEGV` text occurs for distinct repeated-raster, interpolation, and
+point-cloud requests. All distinct observed messages, their occurrences, and
+safe client interpretations are maintained in
+[`evidence/zoo/ERROR_CATALOG.md`](evidence/zoo/ERROR_CATALOG.md).
 
-Validation should be layered so the client catches what it knows without
-masking what only the provider can decide.
+### HTTP success can still contain an unusable result
 
-### 1. Validate the request envelope
+Two SAGA requests returned HTTP 200 with `{}` even though an output was
+requested. Another returned a TIFF reference for a table result, but the target
+TIFF did not exist. Status alone is therefore insufficient: the core should
+retain the response and expose its parsed outputs, while the consumer may warn
+when a requested output identifier is absent or a selected reference cannot be
+retrieved. It must not silently convert such a response into fabricated data.
 
-Before submission, verify that:
+## Handling incorrect end-user input
 
-- the body is valid JSON and the top-level members have supported shapes;
-- `inputs` and `outputs`, when present, are objects;
-- every input/output ID exists in the current process description;
-- no required input is missing;
-- execution, response, format, and transmission choices are advertised;
-- an asynchronous request uses the required header, such as
-  `Prefer: respond-async`.
+The protocol core should validate only what it understands and what is useful
+for constructing a valid protocol request. UI-specific validation and form
+messages remain the consumer's responsibility.
 
-Unknown input IDs should produce a clear error or an explicit expert-mode
-warning. They should not be silently discarded. An expert override may be
-useful for known broken descriptions, but the resulting request must be marked
-as outside the advertised contract.
+### Request-envelope validation
 
-### 2. Validate each value against its advertised schema
+Before submission, the core can verify that:
 
-Check primitive types without broad implicit coercion. In particular:
+- the execute body is valid JSON;
+- `inputs` and `outputs`, when present, have the expected object shape;
+- known input/output IDs match the current process description;
+- required understood inputs are present;
+- requested execution and transmission modes are advertised;
+- an async request carries the required preference header.
 
-- do not turn arbitrary strings into numbers or booleans;
-- distinguish integers from floating-point numbers where required;
-- preserve `0` and `false`;
-- reject `null` unless it is advertised;
-- enforce enums, array sizes, and cardinality;
-- evaluate `oneOf` branches and ask the user to choose when they are ambiguous;
-- validate nested required properties, such as `bbox` and `crs`;
-- validate URI syntax where a URI is required.
+Unknown fields or unsupported schemas should not be silently discarded. In
+raw JSON mode, the core may submit a syntactically valid request while marking
+that it could not completely validate it against the description. This is the
+required escape hatch for incomplete descriptions and unsupported schemas.
 
-Defaults should be visually distinguished from values explicitly entered by
-the user. This lets the request serializer omit an untouched optional value
-instead of changing server behaviour by sending it.
+### Validation of understood values
 
-### 3. Validate complex-value metadata and structure
+For schema constructs it supports, the core or consuming UI can check:
 
-For inline or referenced complex data:
+- primitive JSON types without broad implicit coercion;
+- required versus nullable values;
+- enums, array sizes, and cardinality;
+- nested required properties such as `bbox` and `crs`;
+- the chosen `oneOf` alternative;
+- complex-value wrappers, media type, and encoding.
 
-- require the correct wrapper (`value` or `href`);
-- require a media type when needed and check it against advertised choices;
-- do not confuse `type` on a link with the GeoJSON object's `type` member;
-- apply the advertised content encoding;
-- parse JSON or XML locally when possible;
-- perform format-specific checks, such as GeoJSON object shape, GML geometry
-  type, bounding-box dimension, and CRS syntax;
-- warn that syntactic validation cannot verify provider compatibility.
+Values such as `0` and `false` must be preserved. An untouched advertised
+default should not automatically become an explicitly submitted value.
 
-Do not automatically rewrite coordinates, CRS identifiers, geometry types, or
-axis order. Such transformations are processing decisions and can silently
-change the user's data.
+Format-specific semantic checks, coordinate transformations, CRS conversion,
+and geometry repair are not responsibilities of the protocol core. Simple
+checks can be added in the consumer where they are directly required, but the
+client must not silently change the user's data.
 
-### 4. Submit without hiding the server response
+### Errors and responses
 
-On failure, retain and expose:
+The core should distinguish only the failure categories needed by its callers:
 
-- HTTP method and final URL;
-- response status and headers;
-- submitted body, with secrets redacted;
-- raw response body;
-- parsed problem `title`, `type`, and `detail` where available;
-- process ID and description version/hash;
-- job ID and last known job state for asynchronous execution.
+- transport failure or abort, where no HTTP response was obtained;
+- non-success HTTP response, retaining status, headers, final URL, and body;
+- invalid JSON or an invalid expected protocol document;
+- failed or dismissed asynchronous job.
 
-Map an error to a form field only when the server identifies that field
-unambiguously. Otherwise show it as an execution error rather than guessing.
-Transport errors, request validation errors, provider failures, job failures,
-and response-parse failures should be distinct client states.
+Where possible, it may parse `title`, `type`, and `detail` from an OGC problem
+response. The raw body remains available because provider messages can be
+incomplete. An error should be associated with an input only when the server
+identifies that input unambiguously.
 
-### 5. Treat success defensively
-
-For HTTP 200, parse the response according to its actual `Content-Type` and the
-requested output contract. Check that expected output IDs exist, but retain
-unknown outputs for forward compatibility. A 200 response is not a waiting
-job unless it explicitly contains a job resource; the tested synchronous calls
-have completed at that point.
-
-For HTTP 201, find the job location in the response or headers, poll the
-monitor link, handle `accepted`/`running`/terminal states, and only fetch result
-links after success. A job that was accepted can still fail later, as shown by
-the `demo` case.
-
-## Recommended internal client model
-
-Keep the raw process description alongside a normalized model. The normalized
-model should cover:
-
-```text
-Process
-├── id, title, description, version
-├── execute link and source API origin
-├── job-control and output-transmission capabilities
-├── inputs[]
-│   ├── exact id and display metadata
-│   ├── required, nullable, default, cardinality
-│   ├── raw schema and normalized alternatives
-│   └── literal/complex/bbox and representation choices
-└── outputs[]
-    ├── exact id and display metadata
-    ├── raw schema and normalized alternatives
-    └── representation and transmission choices
-```
-
-Keeping the raw schema is important for forward compatibility, diagnostics,
-and later support for constructs the first form renderer does not understand.
-The client should be able to say "this constraint is not supported" rather
-than crashing or silently accepting everything.
+For HTTP 200, parse the body using its actual `Content-Type` and expected
+protocol resource. Retain unknown outputs for forward compatibility. For HTTP
+201, locate and expose the job, then use job status to determine eventual
+success or failure.
 
 ## Relationship to the generated Postman collection
 
@@ -390,39 +471,39 @@ OGC API Processes tests
     └── <process_id>
 ```
 
-This supports the implementation workflow well:
+It supports the protocol-core work because:
 
-- each canonical request is available as an executable POST example;
+- each canonical request is an executable POST example;
 - each represented process has one deduplicated description GET;
-- request bodies are copied exactly from `cases/<name>/request.json`;
+- bodies are copied exactly from `cases/<name>/request.json`;
 - asynchronous `Prefer` headers are preserved;
-- descriptions and executions can be compared side by side.
+- advertised descriptions and observed executions can be compared directly.
 
-Despite its historical name, `POST_process_sync` currently also contains the
-asynchronous cases whose headers request `respond-async`. Neither the future
-client nor automated analysis should infer execution mode from the folder
-name; use the request headers and process capabilities. A future collection
-revision could rename it to `POST_process_execution` or split synchronous and
-asynchronous requests.
+Despite its historical name, `POST_process_sync` also contains asynchronous
+cases. The protocol core must infer mode from the request and response, not the
+folder name. Renaming it to `POST_process_execution`, or separating sync and
+async examples, is an optional future cleanup.
 
-The collection is a generated inspection and test interface, not the client
-contract. The source of truth remains each `case.json`, `request.json`, fixture,
-captured process description, and observed response.
+The collection is generated test material, not the client contract. The source
+of truth remains each `case.json`, `request.json`, fixture, captured process
+description, and observed response.
 
-## Practical implementation priorities
+## Scope-aligned implementation plan
 
-Based on the current evidence, the client should be implemented in this order:
+1. Define the minimal transport port and implement the browser `fetch` adapter.
+2. Implement landing-page link discovery and `/conformance` handling.
+3. Implement process collection and description retrieval, retaining raw JSON.
+4. Normalize the schema subset needed by Topic 3 and expose raw JSON fallback
+   for unsupported constructs.
+5. Implement synchronous execution and response parsing.
+6. Implement asynchronous submission, job status, results, and dismissal.
+7. Verify the core through the canonical success, expected-error, and async
+   cases in this repository.
+8. Add a relay transport or another optional integration only when a committed
+   use case or tested service demonstrates the need.
 
-1. Fetch and cache process descriptions per API origin and contract hash.
-2. Normalize the common schema features while retaining the raw description.
-3. Generate forms for literals, bounding boxes, complex inline values, and
-   references.
-4. Validate the envelope, identifiers, requiredness, cardinality, and schema
-   constraints before submission.
-5. Support both synchronous results and the complete asynchronous job lifecycle.
-6. Preserve raw requests and responses for useful error reporting.
-7. Add explicit handling for description/provider mismatches without embedding
-   GDAL-, OGR-, GEOS-, or CGAL-specific assumptions in the generic layer.
-8. Run the canonical cases whenever the server profile or description hash
-   changes.
-
+The first implementation should stop there. Form generation, MapLibre
+integration, and result rendering belong to their respective application
+layers. Authentication frameworks, retries, caching, persistence,
+observability, and provider-specific workarounds remain optional future work,
+not hidden requirements of the protocol core.

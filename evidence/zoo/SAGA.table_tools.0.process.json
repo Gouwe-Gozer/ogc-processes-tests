@@ -1,0 +1,139 @@
+{
+  "id": "SAGA.table_tools.0",
+  "title": "Create New Table",
+  "description": "Creates a new empty table.&lt;br/&gt;&lt;br/&gt;Possible field types are:&lt;br/&gt;- string&lt;br/&gt;- date&lt;br/&gt;- color&lt;br/&gt;- unsigned 1 byte integer&lt;br/&gt;- signed 1 byte integer&lt;br/&gt;- unsigned 2 byte integer&lt;br/&gt;- signed 2 byte integer&lt;br/&gt;- unsigned 4 byte integer&lt;br/&gt;- signed 4 byte integer&lt;br/&gt;- unsigned 8 byte integer&lt;br/&gt;- signed 8 byte integer&lt;br/&gt;- 4 byte floating point number&lt;br/&gt;- 8 byte floating point number&lt;br/&gt;- binary&lt;br/&gt;",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.table_tools.0/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/SAGA.table_tools.0/execution.html"
+    }
+  ],
+  "inputs": {
+    "NAME": {
+      "title": "Name",
+      "description": "Name",
+      "minOccurs": 0,
+      "schema": {
+        "type": "string",
+        "default": "New Table",
+        "nullable": true
+      }
+    },
+    "NFIELDS": {
+      "title": "Number of Attributes",
+      "description": "Number of Attributes",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 2,
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "TABLE": {
+      "title": "Table",
+      "description": "Table",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "application/x-ogc-envi",
+                      "application/x-ogc-aaigrid",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-envi"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/x-ogc-aaigrid"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-envi"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/x-ogc-aaigrid"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}
