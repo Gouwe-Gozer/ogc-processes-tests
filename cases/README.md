@@ -74,3 +74,23 @@ python3 scripts/stage_zoo_fixtures.py
 
 This copies `fixtures/` below `/usr/com/zoo-project/ogc-processes-tests/`, the
 configured ZOO `dataPath`. Provider outputs use the configured `/tmp/zTmp`.
+
+## OTB error and schema cases
+
+The five execution fixtures and parameter combinations were also run directly
+with the installed OTB 7.0 CLI and succeeded. The HTTP 500 results therefore
+describe the ZOO OTB adapter environment, not invalid dummy data.
+
+| Process | Case | Observed status |
+|---|---|---|
+| `OTB.PixelValue` | `otb_pixel_value` | expected HTTP 500: `No OTB Application found.` |
+| `OTB.BandMath` | `otb_band_math` | expected HTTP 500: `No OTB Application found.` |
+| `OTB.Rasterization` | `otb_rasterization` | expected HTTP 500: `No OTB Application found.` |
+| `OTB.ComputeImagesStatistics` | `otb_compute_image_statistics` | expected HTTP 500: `No OTB Application found.` |
+| `OTB.Segmentation` | `otb_segmentation` | expected HTTP 500: `No OTB Application found.` |
+| `OTB.ReadImageInfo` | `otb_read_image_info_description_expected_error` | expected GET description HTTP 500 HTML; server log records `SIGSEGV` |
+
+`run_case.py` derives a POST execution URL by default. A case with
+`"operation": "process_description"` instead performs GET on the process URL,
+which keeps the `ReadImageInfo` failure executable without inventing a request
+body from a missing description.

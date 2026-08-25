@@ -2,8 +2,8 @@
 
 ## Purpose and tender scope
 
-This document records lessons from the 44 core process descriptions and their
-47 execution cases in this
+This document records lessons from the 50 selected process entries and their 53
+execution or description cases in this
 repository for the Topic 3 OGC API - Processes client. It focuses on:
 
 - what the protocol core can distil from a process description;
@@ -398,6 +398,33 @@ TIFF did not exist. Status alone is therefore insufficient: the core should
 retain the response and expose its parsed outputs, while the consumer may warn
 when a requested output identifier is absent or a selected reference cannot be
 retrieved. It must not silently convert such a response into fabricated data.
+
+### Input and output identifiers use separate namespaces
+
+The generated OTB descriptions can expose the same identifier in both
+`inputs` and `outputs`. For example, `OTB.BandMath` uses input `out` to select
+the output pixel type and output `out` for the resulting image. A normalized
+model must therefore keep inputs and outputs separate rather than enforcing
+global identifier uniqueness.
+
+OTB descriptions also flatten conditional application metadata. Rasterization
+marks fields from two mutually exclusive modes as required, while Segmentation
+marks parameters from inactive filter and output branches as required. The core
+must preserve that metadata, but a consumer should avoid claiming that it has
+fully understood conditionality that the description does not encode.
+
+### One process description can fail independently
+
+The collection advertises `OTB.ReadImageInfo`, but its individual description
+returns HTTP 500 HTML after the CGI loader receives `SIGSEGV`. Other process
+descriptions remain usable. Discovery should therefore report the individual
+failure without discarding the entire process collection and must retain a
+non-JSON error body.
+
+Five other OTB descriptions load, but execution returns `InternalError: No OTB
+Application found.` before fixtures are processed. The same fixtures and
+parameters succeed through OTB CLI 7.0. This supports a server-runtime warning,
+not an input-validation warning.
 
 ## Handling incorrect end-user input
 

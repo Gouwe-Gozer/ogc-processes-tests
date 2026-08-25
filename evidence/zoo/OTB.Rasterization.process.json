@@ -1,0 +1,397 @@
+{
+  "id": "OTB.Rasterization",
+  "title": "Reproject and rasterize a vector dataset",
+  "description": "Reproject and rasterize a vector dataset. The grid of the rasterized output can be set by using a reference image, or by setting all parmeters (origin, size, spacing) by hand. In the latter case, at least the spacing (ground sampling distance) is needed (other parameters are computed automatically). The rasterized output can also be in a different projection reference system than the input dataset.There are two rasterize mode available in the application. The first is the binary mode: it allows rendering all pixels belonging to a geometry of the input dataset in the foreground color, while rendering the other in background color. The second one allows rendering pixels belonging to a geometry with respect to an attribute of this geometry. The field of the attribute to render can be set by the user. In the second mode, the background value is still used for unassociated pixels.",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/OTB.Rasterization/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/OTB.Rasterization/execution.html"
+    }
+  ],
+  "inputs": {
+    "in": {
+      "title": "The input vector dataset to be rasterized",
+      "description": "The input vector dataset to be rasterized",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml",
+                      "application/vnd.google-earth.kml+xml",
+                      "application/json",
+                      "application/zip"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "application/vnd.google-earth.kml+xml"
+                  },
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "application/zip"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "application/vnd.google-earth.kml+xml"
+          },
+          {
+            "type": "object"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "application/zip"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "out": {
+      "title": "An output image containing the rasterized vector dataset",
+      "description": "An output image containing the rasterized vector dataset",
+      "schema": {
+        "type": "string",
+        "default": "float",
+        "enum": [
+          "uint8",
+          "uint16",
+          "int16",
+          "int32",
+          "int32",
+          "float",
+          "double"
+        ]
+      }
+    },
+    "im": {
+      "title": "A reference image from which to import output grid and projection reference system information.",
+      "description": "A reference image from which to import output grid and projection reference system information.",
+      "minOccurs": 0,
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "image/jpeg",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/jpeg"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "nullable": true
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/jpeg"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "szx": {
+      "title": "Output size along x axis (useless if support image is given)",
+      "description": "Output size along x axis (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "nullable": true
+      }
+    },
+    "szy": {
+      "title": "Output size along y axis (useless if support image is given)",
+      "description": "Output size along y axis (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "nullable": true
+      }
+    },
+    "epsg": {
+      "title": "EPSG code for the output projection reference system (EPSG 4326 for WGS84, 32631 for UTM31N...,useless if support image is given)",
+      "description": "EPSG code for the output projection reference system (EPSG 4326 for WGS84, 32631 for UTM31N...,useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "nullable": true
+      }
+    },
+    "orx": {
+      "title": "Output upper-left corner x coordinate (useless if support image is given)",
+      "description": "Output upper-left corner x coordinate (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "ory": {
+      "title": "Output upper-left corner y coordinate (useless if support image is given)",
+      "description": "Output upper-left corner y coordinate (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "spx": {
+      "title": "Spacing (ground sampling distance) along x axis (useless if support image is given)",
+      "description": "Spacing (ground sampling distance) along x axis (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "spy": {
+      "title": "Spacing (ground sampling distance) along y axis (useless if support image is given)",
+      "description": "Spacing (ground sampling distance) along y axis (useless if support image is given)",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "background": {
+      "title": "Default value for pixels not belonging to any geometry",
+      "description": "Default value for pixels not belonging to any geometry",
+      "schema": {
+        "type": "number",
+        "default": 0,
+        "format": "float"
+      }
+    },
+    "mode": {
+      "title": "Choice of rasterization modes",
+      "description": "Choice of rasterization modes",
+      "schema": {
+        "type": "string",
+        "default": "binary",
+        "enum": [
+          "binary",
+          "attribute"
+        ]
+      }
+    },
+    "mode.binary.foreground": {
+      "title": "Value for pixels inside a geometry",
+      "description": "Value for pixels inside a geometry",
+      "schema": {
+        "type": "number",
+        "default": 255,
+        "format": "float"
+      }
+    },
+    "mode.attribute.field": {
+      "title": "Name of the attribute field to burn",
+      "description": "Name of the attribute field to burn",
+      "schema": {
+        "type": "string",
+        "default": "DN"
+      }
+    },
+    "ram": {
+      "title": "Available memory for processing (in MB).",
+      "description": "Available memory for processing (in MB).",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 256,
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "out": {
+      "title": "An output image containing the rasterized vector dataset",
+      "description": "An output image containing the rasterized vector dataset",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "image/tiff",
+                      "image/jpeg",
+                      "image/png"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/tiff"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/jpeg"
+                  },
+                  {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "contentMediaType": "image/png"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/jpeg"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}

@@ -57,9 +57,11 @@ python3 scripts/run_case.py cases/hellojs_string \
 
 ## Cases
 
-All 44 core selected processes now have an executable case directory. Three
-SAGA raster processes additionally have expected-error cases that preserve the
-provider's failure on advertised repeated inputs, for 47 POST cases in total.
+All 50 selected entries now have a case. The original 44 processes include
+three additional SAGA expected-error variants for advertised repeated inputs.
+The six required OTB entries add five POST execution cases and one GET
+description case. The generated collection therefore contains 52 POST cases
+plus one explicit description case.
 Filename-based GDAL/OGR cases require fixtures to be staged in the local ZOO
 profile first. See `cases/README.md` for the inventory and observed outcomes.
 
@@ -91,6 +93,15 @@ See [`CLIENT_IMPLEMENTATION_LESSONS.md`](CLIENT_IMPLEMENTATION_LESSONS.md) for
 the client-facing lessons from comparing those descriptions with their exact
 requests and observed execution behaviour. The SAGA execution matrix and
 provider failures are indexed under `evidence/zoo/`.
+
+The OTB descriptions, expected execution errors, direct fixture
+validation, and `ReadImageInfo` description failure are summarized in
+[`evidence/zoo/OTB_EXECUTION_OBSERVATIONS.md`](evidence/zoo/OTB_EXECUTION_OBSERVATIONS.md).
+
+[`PROCESS_BEHAVIOUR_FAMILIES.md`](PROCESS_BEHAVIOUR_FAMILIES.md) groups all 44
+core processes by client-observable behaviour and proposes a compact regression
+suite that retains input/output, lifecycle, error-message, and malformed-result
+coverage.
 
 Refresh selected descriptions with the standard-library capture helper:
 

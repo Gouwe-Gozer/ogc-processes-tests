@@ -74,6 +74,38 @@
       ],
       "client_use": "Present the terminal job as failed and show its message even though job submission itself was accepted.",
       "do_not_infer": "A successful asynchronous submission does not make this terminal failure an HTTP submission error."
+    },
+    {
+      "id": "otb-application-registry-empty",
+      "observation": "http_problem",
+      "http_status": 500,
+      "title": "InternalError",
+      "type": "InternalError",
+      "field": "detail",
+      "message": "No OTB Application found.",
+      "cases": [
+        "otb_pixel_value",
+        "otb_band_math",
+        "otb_rasterization",
+        "otb_compute_image_statistics",
+        "otb_segmentation"
+      ],
+      "client_use": "Report that the server-side OTB runtime is unavailable and retain the raw problem response.",
+      "do_not_infer": "The message is emitted before fixture data is processed. Do not attribute it to an input field or retry automatically."
+    },
+    {
+      "id": "description-endpoint-internal-server-error",
+      "observation": "process_description_http_error",
+      "http_status": 500,
+      "content_type": "text/html; charset=iso-8859-1",
+      "field": "html paragraph",
+      "message": "The server encountered an internal error or misconfiguration and was unable to complete your request.",
+      "cases": [
+        "otb_read_image_info_description_expected_error"
+      ],
+      "server_signal": "SIGSEGV",
+      "client_use": "Report that this individual process description could not be loaded, retain the HTML body, and keep the rest of discovery usable.",
+      "do_not_infer": "No execution input exists at this stage, and an HTML 500 body must not be parsed as an OGC problem document."
     }
   ],
   "silent_result_anomalies": [

@@ -1,8 +1,8 @@
 # Error and warning catalogue
 
 [`error.catalog.json`](error.catalog.json) is the machine-readable catalogue of
-every distinct execution or terminal-job error message currently captured for
-the 44 core processes. It preserves the exact server text, groups identical
+every distinct description, execution, or terminal-job error message currently
+captured. It preserves the exact server text, groups identical
 messages across cases, and records the context needed to use the message
 safely.
 
@@ -13,6 +13,8 @@ safely.
 | `... No message provided` | HTTP 500 from `Gdal_Grid` | Say the server supplied no actionable diagnostic detail |
 | `... Failed running from R world!` | HTTP 500 from `failR` | Show the provider detail without assigning it to an input |
 | `... Error executing the service` | terminal `failed` async `demo` job | Show job failure after an accepted submission |
+| `No OTB Application found.` | HTTP 500 from five OTB execution shapes | Identify an unavailable server-side OTB runtime; do not blame fixture input |
+| generic Apache internal-server-error HTML | HTTP 500 from the `OTB.ReadImageInfo` description | Keep discovery usable and report that one description failed |
 
 Identical text is grouped, but every occurrence remains linked to its case and
 raw evidence file. This matters because `SIGSEGV`, for example, occurs for

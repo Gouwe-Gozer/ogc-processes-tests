@@ -555,6 +555,121 @@
           }
         },
         {
+          "name": "otb_band_math",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"il\": [\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}}\n    ],\n    \"out\": \"float\",\n    \"exp\": \"im1b1 + im2b1\"\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/OTB.BandMath/execution",
+            "description": "Add two Alkmaar raster inputs with OTB BandMath\n\nExercises the advertised repeated image list and overlapping out input/output ID. The same fixture and expression run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: cases/otb_band_math"
+          }
+        },
+        {
+          "name": "otb_compute_image_statistics",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"il\": [\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}}\n    ]\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"text/xml\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/OTB.ComputeImagesStatistics/execution",
+            "description": "Compute statistics for two Alkmaar raster inputs\n\nExercises an advertised repeated image list and requests XML inline. The same images run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: cases/otb_compute_image_statistics"
+          }
+        },
+        {
+          "name": "otb_pixel_value",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"in\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"coordx\": 2,\n    \"coordy\": 2,\n    \"mode\": \"index\"\n  },\n  \"outputs\": {\n    \"value\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/OTB.PixelValue/execution",
+            "description": "Read one pixel from the Alkmaar DEM\n\nThe GeoTIFF and parameters run successfully with OTB CLI 7.0. ZOO fails before reading them because its OTB application registry is empty.\n\nCanonical source: cases/otb_pixel_value"
+          }
+        },
+        {
+          "name": "otb_rasterization",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"in\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/fbf931775e224903c8ffa1cfd013a919ff5d16f1/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"out\": \"uint8\",\n    \"im\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"background\": 0,\n    \"mode\": \"binary\",\n    \"mode.binary.foreground\": 255,\n    \"mode.attribute.field\": \"name\"\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/OTB.Rasterization/execution",
+            "description": "Rasterize the Alkmaar polygon with OTB\n\nUses referenced GeoJSON and an inline support image. Both mode-specific inputs are included because the description marks both required. The data run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: cases/otb_rasterization"
+          }
+        },
+        {
+          "name": "otb_segmentation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"in\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"filter\": \"meanshift\",\n    \"filter.meanshift.spatialr\": 2,\n    \"filter.meanshift.ranger\": 1,\n    \"filter.meanshift.thres\": 0.1,\n    \"filter.meanshift.maxiter\": 20,\n    \"filter.meanshift.minsize\": 1,\n    \"filter.cc.expr\": \"distance < 10\",\n    \"filter.watershed.threshold\": 0.01,\n    \"filter.watershed.level\": 0.1,\n    \"filter.mprofiles.size\": 5,\n    \"filter.mprofiles.start\": 1,\n    \"filter.mprofiles.step\": 1,\n    \"filter.mprofiles.sigma\": 1,\n    \"mode\": \"raster\",\n    \"mode.vector.outmode\": \"ulco\",\n    \"mode.vector.neighbor\": false,\n    \"mode.vector.stitch\": true,\n    \"mode.vector.layername\": \"segments\",\n    \"mode.vector.fieldname\": \"DN\",\n    \"mode.vector.tilesize\": 16,\n    \"mode.vector.startlabel\": 1,\n    \"mode.raster.out\": \"uint16\"\n  },\n  \"outputs\": {\n    \"mode.raster.out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/processes/OTB.Segmentation/execution",
+            "description": "Segment the Alkmaar DEM to a raster with OTB\n\nSelects raster mode but includes all branch-specific inputs marked required by the description. Direct OTB CLI execution succeeds; ZOO reports an empty OTB application registry before reading the request data.\n\nCanonical source: cases/otb_segmentation"
+          }
+        },
+        {
           "name": "saga_add_grid_values_points",
           "request": {
             "method": "POST",
@@ -1435,6 +1550,76 @@
           }
         },
         {
+          "name": "OTB.BandMath",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.BandMath",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/otb_band_math"
+          }
+        },
+        {
+          "name": "OTB.ComputeImagesStatistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.ComputeImagesStatistics",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/otb_compute_image_statistics"
+          }
+        },
+        {
+          "name": "OTB.PixelValue",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.PixelValue",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/otb_pixel_value"
+          }
+        },
+        {
+          "name": "OTB.Rasterization",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.Rasterization",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/otb_rasterization"
+          }
+        },
+        {
+          "name": "OTB.Segmentation",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.Segmentation",
+            "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/otb_segmentation"
+          }
+        },
+        {
           "name": "SAGA.grid_calculus.1",
           "request": {
             "method": "GET",
@@ -1726,6 +1911,26 @@
             ],
             "url": "{{baseUrl}}/processes/Union",
             "description": "Process description used by the generated POST request(s).\n\nCanonical case sources: cases/union_polygons"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET_process_description_cases",
+      "description": "Explicit cases for process-description endpoint behaviour.",
+      "item": [
+        {
+          "name": "otb_read_image_info_description_expected_error",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/OTB.ReadImageInfo",
+            "description": "Capture the ReadImageInfo description crash\n\nGET of the advertised process description terminates zoo_loader.cgi with SIGSEGV before an execution request can be constructed. The GeoTIFF succeeds with otbcli_ReadImageInfo but is diagnostic only and is not sent by this GET case.\n\nCanonical source: cases/otb_read_image_info_description_expected_error"
           }
         }
       ]

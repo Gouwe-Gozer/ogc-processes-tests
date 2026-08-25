@@ -1,0 +1,12 @@
+{
+  "id": "otb_band_math",
+  "title": "Add two Alkmaar raster inputs with OTB BandMath",
+  "process_id": "OTB.BandMath",
+  "execution_mode": "sync",
+  "request": "request.json",
+  "fixture": "../../fixtures/raster/alkmaar_dem.tif",
+  "expected": {
+    "http_status": 500
+  },
+  "notes": "Exercises the advertised repeated image list and overlapping out input/output ID. The same fixture and expression run with OTB CLI 7.0; ZOO reports an empty OTB application registry."
+}

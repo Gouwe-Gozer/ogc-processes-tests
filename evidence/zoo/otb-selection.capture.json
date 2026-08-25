@@ -1,0 +1,14 @@
+{
+  "profile_id": "zoo-ubuntu18-gdal3-saga7-otb7",
+  "captured_at": "2026-08-25",
+  "base_url": "http://localhost/ogc-api",
+  "process_count": 6,
+  "description_http_status": {
+    "OTB.PixelValue": 200,
+    "OTB.BandMath": 200,
+    "OTB.Rasterization": 200,
+    "OTB.ComputeImagesStatistics": 200,
+    "OTB.Segmentation": 200,
+    "OTB.ReadImageInfo": 500
+  }
+}

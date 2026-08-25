@@ -16,12 +16,13 @@ The selection favours:
 
 ## Status and interpretation
 
-The 44 core entries below now have captured process descriptions and at least
-one executable case. This is not a claim that all 44 executions are successful:
-the repository deliberately preserves expected errors, empty HTTP-200 results,
-and invalid output references alongside usable results. Each case is derived
-from its description and keeps the exact request and observed response as
-interoperability evidence.
+All 50 selected entries now have a case. Forty-nine process descriptions return
+HTTP 200 and are captured as JSON; the remaining description failure is itself
+a runnable expected-error case. This is not a claim that all executions are
+successful: the repository deliberately preserves expected errors, empty
+HTTP-200 results, invalid output references, and description failures alongside
+usable results. Each execution case is derived from its description and keeps
+the exact request and observed response as interoperability evidence.
 
 The complete ZOO collection advertises the same capabilities for all 703
 entries:
@@ -33,7 +34,7 @@ Consequently, most useful diversity is found in the detailed input/output
 schemas and in actual execution behaviour rather than in the collection-level
 capability fields.
 
-## Core selection: 44 processes
+## Original processing selection: 44 processes
 
 ### Protocol and basic behaviour: 5
 
@@ -110,32 +111,35 @@ whose enums contain the strings `"true"` and `"false"`, and
 `SAGA.table_tools.0` advertising raster media types for a table output. Record
 these as observed server metadata; they are not examples of ideal schemas.
 
-## Optional expected-error selection: 6 processes
+## Required OTB error and schema coverage: 6 processes
 
-> **Warning:** these six OTB processes are not currently approved as successful
-> execution cases. In the current test environment, developers must treat calls
-> to them as **expected-error or pending cases**, not as passing HTTP 200
-> examples. Do not add them to a happy-path test run until their OTB execution
-> behaviour and fixtures have been validated.
+> **Warning:** none of these six OTB processes currently provides a successful
+> API execution path in the tested profile. Five have valid descriptions and
+> exact expected-error execution cases. The sixth fails while loading its
+> description.
 
-OTB is a substantially heavier optional runtime than the core selection. These
+OTB is a separately installed, substantially heavier runtime. These
 processes are retained because they expose useful client edge cases.
 
-| Process ID | Intended future coverage | Current status |
+| Process ID | Intended coverage | Observed status |
 |---|---|---|
-| `OTB.PixelValue` | Raster plus coordinate-mode enum to literal value | Description works; execution must currently be treated as expected-error/pending |
-| `OTB.BandMath` | Raster array plus mathematical expression | Description works; execution must currently be treated as expected-error/pending |
-| `OTB.Rasterization` | Vector-to-raster with many mixed parameters | Description works; execution must currently be treated as expected-error/pending |
-| `OTB.ComputeImagesStatistics` | Up to 1,024 images to XML | Description works; execution must currently be treated as expected-error/pending |
-| `OTB.Segmentation` | Conditional raster/vector modes, 27 inputs and two possible outputs | Description works; execution must currently be treated as expected-error/pending |
-| `OTB.ReadImageInfo` | Failure handling for a process advertised by the collection | `GET /processes/OTB.ReadImageInfo` currently returns HTTP 500 after `zoo_loader.cgi` receives `SIGSEGV` |
+| `OTB.PixelValue` | Raster plus coordinate-mode enum to literal value | Description 200; execution 500 `No OTB Application found.` |
+| `OTB.BandMath` | Raster array, expression, and overlapping input/output ID | Description 200; execution 500 `No OTB Application found.` |
+| `OTB.Rasterization` | Vector-to-raster with conditional mode inputs | Description 200; execution 500 `No OTB Application found.` |
+| `OTB.ComputeImagesStatistics` | Up to 1,024 images to XML | Description 200; execution 500 `No OTB Application found.` |
+| `OTB.Segmentation` | Conditional dotted inputs and raster/vector outputs | Description 200; execution 500 `No OTB Application found.` |
+| `OTB.ReadImageInfo` | Failure while loading one advertised description | Description 500 HTML; `zoo_loader.cgi` receives `SIGSEGV` |
 
-The first five entries have process-description endpoints that return HTTP 200;
-the expected-error warning applies to their **execution cases**, which have not
-yet been validated as successful. `OTB.ReadImageInfo` is more severely broken:
-even its description endpoint currently fails. A client should handle that
-failure without crashing, but HTTP 500 is a server defect and must not be
-treated as compliant success behaviour.
+All six applications accept the GeoTIFF or complete fixture/parameter set
+directly through the installed OTB 7.0 CLI. The API failures occur earlier:
+ZOO's OTB adapter reports an empty application registry before reading the
+request data. This is
+a profile integration defect, not evidence that the dummy input is invalid.
+
+`OTB.ReadImageInfo` is more severely broken because its description endpoint
+fails before an execution request can be constructed. A client should isolate
+that failure to the individual process and retain the non-JSON response body.
+See `evidence/zoo/OTB_EXECUTION_OBSERVATIONS.md` for exact evidence.
 
 ## Separation of concerns
 

@@ -1,0 +1,14 @@
+{
+  "process_id": "OTB.ReadImageInfo",
+  "operation": "GET process description",
+  "observed_at": "2026-08-25",
+  "http_status": 500,
+  "content_type": "text/html; charset=iso-8859-1",
+  "response_body": "OTB.ReadImageInfo.process-error.html",
+  "server_log": {
+    "message": "End of script output before headers: zoo_loader.cgi",
+    "signal": "SIGSEGV",
+    "signal_number": 11
+  },
+  "notes": "The failure occurs before an execution request or fixture is involved."
+}

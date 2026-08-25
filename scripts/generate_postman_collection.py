@@ -111,10 +111,36 @@ def create_process_description_item(
     }
 
 
+def create_description_case_item(
+    case_path: Path, case: dict[str, Any]
+) -> dict[str, Any]:
+    case_name = case_path.parent.name
+    process_id = case.get("process_id")
+    if not isinstance(process_id, str):
+        raise ValueError(f"{case_path}: process_id must be a string")
+
+    description_parts = [str(case.get("title", case_name))]
+    if case.get("notes"):
+        description_parts.append(str(case["notes"]))
+    description_parts.append(f"Canonical source: cases/{case_name}")
+
+    encoded_process_id = urllib.parse.quote(process_id, safe="")
+    return {
+        "name": case_name,
+        "request": {
+            "method": "GET",
+            "header": [{"key": "Accept", "value": "application/json"}],
+            "url": f"{{{{baseUrl}}}}/processes/{encoded_process_id}",
+            "description": "\n\n".join(description_parts),
+        },
+    }
+
+
 def generate_collection(
     cases_dir: Path, base_url: str
-) -> tuple[dict[str, Any], list[str], int, int]:
+) -> tuple[dict[str, Any], list[str], int, int, int]:
     execution_items = []
+    description_case_items = []
     process_cases: dict[str, list[str]] = {}
     pending = []
     case_paths = sorted(cases_dir.glob("*/case.json"), key=lambda path: path.parent.name)
@@ -127,6 +153,11 @@ def generate_collection(
             raise ValueError(f"{case_path} must contain a JSON object")
         if case.get("status") == "pending":
             pending.append(case_path.parent.name)
+            continue
+        if case.get("operation", "execution") == "process_description":
+            description_case_items.append(
+                create_description_case_item(case_path, case)
+            )
             continue
         execution_items.append(create_execution_item(case_path, case))
         process_id = case.get("process_id")
@@ -166,17 +197,34 @@ def generate_collection(
                 ),
                 "item": description_items,
             },
+            {
+                "name": "GET_process_description_cases",
+                "description": (
+                    "Explicit cases for process-description endpoint behaviour."
+                ),
+                "item": description_case_items,
+            },
         ],
     }
-    return collection, pending, len(execution_items), len(description_items)
+    return (
+        collection,
+        pending,
+        len(execution_items),
+        len(description_items),
+        len(description_case_items),
+    )
 
 
 def main() -> int:
     args = parse_args()
     try:
-        collection, pending, execution_count, description_count = generate_collection(
-            args.cases_dir, args.base_url
-        )
+        (
+            collection,
+            pending,
+            execution_count,
+            description_count,
+            description_case_count,
+        ) = generate_collection(args.cases_dir, args.base_url)
     except (OSError, ValueError) as error:
         print(f"error: {error}")
         return 1
@@ -186,9 +234,13 @@ def main() -> int:
         json.dumps(collection, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    description_case_label = (
+        "case" if description_case_count == 1 else "cases"
+    )
     print(
         f"generated {execution_count} POST items and {description_count} "
-        f"process descriptions in {args.output}"
+        f"process descriptions and {description_case_count} explicit description "
+        f"{description_case_label} in {args.output}"
     )
     if pending:
         print(f"skipped {len(pending)} pending cases: {', '.join(pending)}")

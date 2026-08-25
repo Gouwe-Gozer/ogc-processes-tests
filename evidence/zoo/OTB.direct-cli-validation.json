@@ -1,0 +1,50 @@
+{
+  "profile_id": "zoo-ubuntu18-gdal3-saga7-otb7",
+  "observed_at": "2026-08-25",
+  "otb_version": "7.0.0",
+  "fixture": {
+    "path": "fixtures/raster/alkmaar_dem.tif",
+    "sha256": "fafd8aba801d8bb11c9aad5638a28929033f7db31e8e10746226166b0db65d18",
+    "width": 5,
+    "height": 5
+  },
+  "purpose": "Validate fixture readability and parameter viability independently of the ZOO OTB adapter.",
+  "validations": [
+    {
+      "process_id": "OTB.PixelValue",
+      "command_shape": "otbcli_PixelValue -in <fixture> -coordx 2 -coordy 2 -mode index",
+      "exit_status": 0,
+      "observation": "value: [3]"
+    },
+    {
+      "process_id": "OTB.BandMath",
+      "command_shape": "otbcli_BandMath -il <fixture> <fixture> -out <temporary-tiff> float -exp 'im1b1 + im2b1'",
+      "exit_status": 0,
+      "observation": "5-by-5 TIFF written"
+    },
+    {
+      "process_id": "OTB.Rasterization",
+      "command_shape": "otbcli_Rasterization -in <simple-polygon> -im <fixture> -out <temporary-tiff> uint8 -background 0 -mode binary -mode.binary.foreground 255",
+      "exit_status": 0,
+      "observation": "5-by-5 TIFF written"
+    },
+    {
+      "process_id": "OTB.ComputeImagesStatistics",
+      "command_shape": "otbcli_ComputeImagesStatistics -il <fixture> <fixture> -out <temporary-xml>",
+      "exit_status": 0,
+      "observation": "both images processed and XML written"
+    },
+    {
+      "process_id": "OTB.Segmentation",
+      "command_shape": "otbcli_Segmentation -in <fixture> -filter meanshift <tested-controls> -mode raster -mode.raster.out <temporary-tiff> uint16",
+      "exit_status": 0,
+      "observation": "5-by-5 labelled TIFF written"
+    },
+    {
+      "process_id": "OTB.ReadImageInfo",
+      "command_shape": "otbcli_ReadImageInfo -in <fixture>",
+      "exit_status": 0,
+      "observation": "reports one float band and a 5-by-5 image"
+    }
+  ]
+}

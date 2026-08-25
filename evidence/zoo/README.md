@@ -2,8 +2,10 @@
 
 The `*.process.json` files are live process descriptions captured from the
 local ZOO API on 2026-08-24 and 2026-08-25 for profile
-`zoo-ubuntu18-gdal3-saga7-otb7`. All 44 core selected description endpoints
-returned HTTP 200. `selection.capture.json` records the exact selection.
+`zoo-ubuntu18-gdal3-saga7-otb7`. All 44 original description endpoints and five
+of the six OTB description endpoints returned HTTP 200. `selection.capture.json`
+records the original selection and `otb-selection.capture.json` records the OTB
+coverage.
 
 Notable advertised-contract details:
 
@@ -58,3 +60,8 @@ preserved SAGA crash response to its exact runnable request.
 [`ERROR_CATALOG.md`](ERROR_CATALOG.md) and its machine-readable
 [`error.catalog.json`](error.catalog.json) group every distinct captured error
 message and document which client warnings are supported by the evidence.
+
+The required OTB error and schema evidence is indexed in
+[`OTB_EXECUTION_OBSERVATIONS.md`](OTB_EXECUTION_OBSERVATIONS.md). Five OTB
+descriptions are captured as JSON; `OTB.ReadImageInfo` instead preserves its
+HTTP 500 HTML body and matching server-log metadata.

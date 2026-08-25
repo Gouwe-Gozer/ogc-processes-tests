@@ -24,8 +24,10 @@ The generated layout is:
 OGC API Processes tests
 ├── POST_process_sync
 │   └── <case folder name>          POST execution requests
-└── process_descriptions
-    └── <process_id>                GET process descriptions
+├── process_descriptions
+│   └── <process_id>                GET process descriptions
+└── GET_process_description_cases
+    └── <case folder name>          explicit GET behaviour cases
 ```
 
 Each ready `cases/<folder>/` directory becomes one POST item named `<folder>`.
@@ -36,6 +38,11 @@ cases retain their header inside the requested `POST_process_sync` folder.
 The `process_descriptions` folder contains one deduplicated GET request for
 every process represented by a generated POST. Pending cases without a request
 body are reported and skipped from both folders.
+
+The `GET_process_description_cases` folder contains explicit cases whose
+subject is the description endpoint itself, such as an advertised process whose
+description currently returns HTTP 500. These are kept separate from the
+deduplicated convenience requests.
 
 The resulting request has this form:
 

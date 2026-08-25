@@ -1,0 +1,186 @@
+{
+  "id": "OTB.ComputeImagesStatistics",
+  "title": "Computes global mean and standard deviation for each band from a set of images and optionally saves the results in an XML file.",
+  "description": "This application computes a global mean and standard deviation for each band of a set of images and optionally saves the results in an XML file. The output XML is intended to be used as an input for the TrainImagesClassifier application to normalize samples before learning. You can also normalize the image with the XML file in the ImageClassifier application.",
+  "mutable": false,
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute",
+    "async-execute",
+    "dismiss"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "links": [
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "type": "application/json",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/OTB.ComputeImagesStatistics/execution"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Execute End Point",
+      "href": "http://localhost/ogc-api/processes/OTB.ComputeImagesStatistics/execution.html"
+    }
+  ],
+  "inputs": {
+    "il": {
+      "title": "List of input image filenames.",
+      "description": "List of input image filenames.",
+      "maxOccurs": 1024,
+      "extended-schema": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 1024,
+        "items": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "image/jpeg",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/jpeg"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/tiff"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/jpeg"
+          },
+          {
+            "type": "string",
+            "contentEncoding": "base64",
+            "contentMediaType": "image/png"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    },
+    "bv": {
+      "title": "Background value to ignore in computation of statistics.",
+      "description": "Background value to ignore in computation of statistics.",
+      "minOccurs": 0,
+      "schema": {
+        "type": "number",
+        "format": "float",
+        "nullable": true
+      }
+    },
+    "ram": {
+      "title": "Available memory for processing (in MB).",
+      "description": "Available memory for processing (in MB).",
+      "minOccurs": 0,
+      "schema": {
+        "type": "integer",
+        "default": 256,
+        "nullable": true
+      }
+    }
+  },
+  "outputs": {
+    "out": {
+      "title": "XML filename where the statistics are saved for future reuse.",
+      "description": "XML filename where the statistics are saved for future reuse.",
+      "extended-schema": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "http://zoo-project.org/dl/link.json"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "text/xml"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "contentEncoding": "utf-8",
+                    "contentMediaType": "text/xml"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "schema": {
+        "oneOf": [
+          {
+            "type": "string",
+            "contentEncoding": "utf-8",
+            "contentMediaType": "text/xml"
+          }
+        ]
+      },
+      "raw_schema1": "true"
+    }
+  }
+}
