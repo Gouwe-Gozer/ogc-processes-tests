@@ -110,6 +110,12 @@ The initial client protocol suite is documented in
 It covers successful, failed, and dismissed jobs plus request and response
 faults without multiplying every async state across all process families.
 
+The compact 22-process client suite is documented in
+[`client-testcases/process-execution/README.md`](client-testcases/process-execution/README.md).
+It preserves the 23 selected cases, reuses the two async lifecycles, and groups
+the remaining calls by usable results, server paths, incomplete results,
+provider problems, description problems, and validation errors.
+
 [`PROCESS_BEHAVIOUR_FAMILIES.md`](PROCESS_BEHAVIOUR_FAMILIES.md) groups all 50
 selected process IDs by client-observable behaviour and proposes a compact
 regression suite that retains input/output, lifecycle, error-message, and

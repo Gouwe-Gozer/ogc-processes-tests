@@ -1,0 +1,47 @@
+{
+  "id": "process_ogr2ogr_vector",
+  "title": "HTTP success contains a malformed URL-like literal",
+  "category": "incomplete_result",
+  "execution": "live-capable",
+  "process_id": "Ogr2Ogr",
+  "source": {
+    "canonical_case": "../../../../cases/ogr2ogr_vector/case.json",
+    "process_description": "../../../../evidence/zoo/Ogr2Ogr.process.json",
+    "representative_response": "../../../../evidence/zoo/Ogr2Ogr.execution.json"
+  },
+  "client_value": [
+    "Literal output that visually resembles a URL.",
+    "Successful HTTP envelope whose content is not safely usable as a reference."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "OutputedDataSourceName"
+        ],
+        "result_kinds": {
+          "OutputedDataSourceName": "string"
+        },
+        "profile_assessment": "malformed-url-like-literal"
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-result-with-warning",
+        "must": [
+          "Preserve and display the literal string exactly as returned.",
+          "Keep the HTTP execution success separate from whether a consumer can use the value."
+        ],
+        "must_not": [
+          "Treat every string containing http as a reference wrapper.",
+          "Automatically fetch or repair the concatenated URL.",
+          "Change the returned literal into a guessed provider URL."
+        ]
+      }
+    }
+  ]
+}

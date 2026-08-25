@@ -1,0 +1,8 @@
+{
+  "TABLE": {
+    "href": "{{resultUrl}}",
+    "format": {
+      "mediaType": "image/tiff"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Content-Language": "en-US"
+  },
+  "final_url": "{{bgtPrototypeBaseUrl}}/processes/bgt-land-cover-summary/execution?f=json",
+  "body_file": "01-execute.response.body.json"
+}

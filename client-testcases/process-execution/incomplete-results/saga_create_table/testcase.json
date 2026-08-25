@@ -1,0 +1,74 @@
+{
+  "id": "process_saga_create_table",
+  "title": "Advertised table result is an unavailable TIFF reference",
+  "category": "incomplete_result",
+  "execution": "live-capable",
+  "process_id": "SAGA.table_tools.0",
+  "source": {
+    "canonical_case": "../../../../cases/saga_create_table/case.json",
+    "process_description": "../../../../evidence/zoo/SAGA.table_tools.0.process.json",
+    "representative_response": "../../../../evidence/zoo/SAGA.table_tools.0.execution.json",
+    "reference_retrieval": "Captured from the local ZOO profile on 2026-08-25."
+  },
+  "client_value": [
+    "Description metadata advertises raster media types for a logical table output.",
+    "A syntactically valid reference wrapper can point to a missing resource."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "TABLE"
+        ],
+        "result_kinds": {
+          "TABLE": "reference"
+        },
+        "declared_media_types": {
+          "TABLE": "image/tiff"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-reference-advertised",
+        "must": [
+          "Expose the reference and its declared media type without silently correcting the process description.",
+          "Keep execution status separate from a later retrieval attempt."
+        ],
+        "must_not": [
+          "Invent a CSV/table format that was not advertised or returned.",
+          "Claim that the referenced content exists from HTTP 200 alone."
+        ]
+      }
+    },
+    {
+      "id": "fetch-reference",
+      "request": "02-fetch-reference.request.json",
+      "representative_response": "02-fetch-reference.response.json",
+      "expect": {
+        "http_status": [
+          404
+        ],
+        "content_type": [
+          "text/html"
+        ]
+      },
+      "expected_client_behavior": {
+        "classification": "result-reference-unavailable",
+        "must": [
+          "Report reference retrieval failure separately from the successful execution.",
+          "Retain the result href, retrieval status, headers, final URL, and raw HTML."
+        ],
+        "must_not": [
+          "Render returned HTML as trusted markup.",
+          "Rewrite the execution itself as an HTTP failure.",
+          "Return an empty table as if retrieval succeeded."
+        ]
+      }
+    }
+  ]
+}

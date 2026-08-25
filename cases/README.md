@@ -9,6 +9,10 @@ the remaining server-side delivery detail is known.
 
 The runner returns exit code `3` for pending cases.
 
+For client-facing assertions over the compact 22-process selection, including
+representative responses and preferred handling, see
+[`../client-testcases/process-execution/`](../client-testcases/process-execution/).
+
 | Process | Case | Status | Remaining work |
 |---|---|---|---|
 | `hellojs` | `hellojs_string` | ready | — |

@@ -1,0 +1,44 @@
+{
+  "Result": {
+    "value": {
+      "type": "FeatureCollection",
+      "name": "Result",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "gml_id": "polygon_2",
+            "name": "Overlapping Alkmaar test polygon"
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  4.75,
+                  52.636
+                ],
+                [
+                  4.756,
+                  52.636
+                ],
+                [
+                  4.756,
+                  52.631
+                ],
+                [
+                  4.75,
+                  52.631
+                ],
+                [
+                  4.75,
+                  52.636
+                ]
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

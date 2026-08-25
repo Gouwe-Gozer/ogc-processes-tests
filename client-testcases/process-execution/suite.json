@@ -1,0 +1,41 @@
+{
+  "id": "compact_process_execution_suite",
+  "selection": "../../PROCESS_BEHAVIOUR_FAMILIES.md",
+  "profile_id": "zoo-ubuntu18-gdal3-saga7-otb7",
+  "captured_at": "2026-08-25",
+  "process_id_count": 22,
+  "selected_case_count": 23,
+  "implemented_here_count": 21,
+  "covered_elsewhere_count": 2,
+  "additional_validation_case_count": 3,
+  "cases": [
+    {"process_id": "hellojs", "case_id": "hellojs_string", "testcase": "usable-results/hellojs_string/testcase.json"},
+    {"process_id": "EchoProcess", "case_id": "echo_all_input_kinds", "testcase": "usable-results/echo_all_input_kinds/testcase.json"},
+    {"process_id": "longProcess", "case_id": "long_process_async", "covered_by": "../async-jobs/live-lifecycle/successful-long-process/testcase.json"},
+    {"process_id": "demo", "case_id": "demo_async_expected_failure", "covered_by": "../async-jobs/live-lifecycle/failed-demo-process/testcase.json"},
+    {"process_id": "Distance", "case_id": "distance_polygons", "testcase": "usable-results/distance_polygons/testcase.json"},
+    {"process_id": "Contains", "case_id": "contains_polygon_point", "testcase": "usable-results/contains_polygon_point/testcase.json"},
+    {"process_id": "Buffer", "case_id": "buffer_polygon", "testcase": "usable-results/buffer_polygon/testcase.json"},
+    {"process_id": "Intersection", "case_id": "intersection_polygons", "testcase": "usable-results/intersection_polygons/testcase.json"},
+    {"process_id": "Gdal_Translate", "case_id": "gdal_translate_raster", "testcase": "server-file-paths/gdal_translate_raster/testcase.json"},
+    {"process_id": "Gdal_Grid", "case_id": "gdal_grid_points", "testcase": "provider-problems/gdal_grid_points/testcase.json"},
+    {"process_id": "Ogr2Ogr", "case_id": "ogr2ogr_vector", "testcase": "incomplete-results/ogr2ogr_vector/testcase.json"},
+    {"process_id": "GdalExtractProfile", "case_id": "gdal_extract_profile_line", "testcase": "usable-results/gdal_extract_profile_line/testcase.json"},
+    {"process_id": "SAGA.grid_tools.0", "case_id": "saga_resample_rasters", "testcase": "usable-results/saga_resample_rasters/testcase.json"},
+    {"process_id": "SAGA.grid_tools.0", "case_id": "saga_resample_rasters_repeated_input_expected_error", "testcase": "provider-problems/saga_resample_rasters_repeated_input_expected_error/testcase.json"},
+    {"process_id": "SAGA.grid_tools.27", "case_id": "saga_tile_raster", "testcase": "incomplete-results/saga_tile_raster/testcase.json"},
+    {"process_id": "SAGA.shapes_grid.5", "case_id": "saga_contours_raster", "testcase": "usable-results/saga_contours_raster/testcase.json"},
+    {"process_id": "SAGA.shapes_points.16", "case_id": "saga_thiessen_points", "testcase": "provider-problems/saga_thiessen_points/testcase.json"},
+    {"process_id": "SAGA.table_tools.0", "case_id": "saga_create_table", "testcase": "incomplete-results/saga_create_table/testcase.json"},
+    {"process_id": "SAGA.table_tools.3", "case_id": "saga_join_tables", "testcase": "usable-results/saga_join_tables/testcase.json"},
+    {"process_id": "SAGA.pointcloud_tools.4", "case_id": "saga_pointcloud_to_grid", "testcase": "provider-problems/saga_pointcloud_to_grid/testcase.json"},
+    {"process_id": "failR", "case_id": "fail_r_expected_error", "testcase": "provider-problems/fail_r_expected_error/testcase.json"},
+    {"process_id": "OTB.BandMath", "case_id": "otb_band_math", "testcase": "provider-problems/otb_band_math/testcase.json"},
+    {"process_id": "OTB.ReadImageInfo", "case_id": "otb_read_image_info_description_expected_error", "testcase": "description-problems/otb_read_image_info_description_expected_error/testcase.json"}
+  ],
+  "additional_validation_cases": [
+    {"process_id": "hellojs", "case_id": "missing_required_hellojs", "testcase": "validation-errors/missing_required_hellojs/testcase.json"},
+    {"process_id": "EchoProcess", "case_id": "invalid_bbox_echo", "testcase": "validation-errors/invalid_bbox_echo/testcase.json"},
+    {"process_id": "SAGA.grid_tools.0", "case_id": "invalid_enum_saga_resample", "testcase": "validation-errors/invalid_enum_saga_resample/testcase.json"}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "OUTPUT": {
+    "href": "{{resultUrl}}",
+    "format": {
+      "mediaType": "image/tiff"
+    }
+  }
+}

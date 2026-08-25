@@ -201,6 +201,12 @@ The ordered request/response fixtures in
 into client expectations for successful, failed, dismissed, malformed, and
 state-inappropriate exchanges.
 
+The compact process representatives in
+[`client-testcases/process-execution/`](client-testcases/process-execution/)
+apply the same format to synchronous execution, provider problems, incomplete
+results, server-side paths, description failures, and client-detectable invalid
+input.
+
 ## What can be distilled from a process description
 
 ### Process identity and operation links

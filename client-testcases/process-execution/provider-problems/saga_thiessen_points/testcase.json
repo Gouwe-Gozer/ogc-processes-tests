@@ -1,0 +1,46 @@
+{
+  "id": "process_saga_thiessen_points",
+  "title": "Description-conformant vector request terminates with SIGABRT",
+  "category": "provider_problem",
+  "execution": "live-capable",
+  "process_id": "SAGA.shapes_points.16",
+  "source": {
+    "canonical_case": "../../../../cases/saga_thiessen_points/case.json",
+    "process_description": "../../../../evidence/zoo/SAGA.shapes_points.16.process.json",
+    "representative_response": "../../../../evidence/zoo/SAGA.shapes_points.16.execution-error.json"
+  },
+  "client_value": [
+    "Referenced point FeatureCollection plus numeric literal.",
+    "Provider abort after a valid execution envelope."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          500
+        ],
+        "problem_title": [
+          "NoApplicableCode"
+        ],
+        "problem_detail_contains": [
+          "SIGABRT"
+        ]
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-http-problem",
+        "must": [
+          "Treat the problem as a server/provider failure and safely pass through its detail.",
+          "Keep the accepted reference wrapper available for inspection."
+        ],
+        "must_not": [
+          "Convert SIGABRT into an input-validation error.",
+          "Promise that every advertised geometry subtype is implemented.",
+          "Automatically retry the execution."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "process_missing_required_hellojs",
+  "title": "Required hellojs input is omitted",
+  "category": "validation_error",
+  "execution": "manual-only",
+  "process_id": "hellojs",
+  "source": {
+    "process_description": "../../../../evidence/zoo/hellojs.process.json",
+    "representative_response": "Captured from the local ZOO profile on 2026-08-25."
+  },
+  "validation": {
+    "expected": "invalid",
+    "violations": [
+      {
+        "path": "inputs.S",
+        "rule": "required",
+        "received": "absent"
+      }
+    ]
+  },
+  "client_value": [
+    "Requiredness must use the exact opaque input ID.",
+    "A server can return a useful structured problem if raw invalid input is sent."
+  ],
+  "steps": [
+    {
+      "id": "execute-invalid-body",
+      "request": "01-execute-invalid.request.json",
+      "representative_response": "01-execute-invalid.response.json",
+      "expect": {
+        "client_preflight": "invalid",
+        "observed_http_status_if_sent": [400],
+        "problem_title": ["MissingParameterValue"]
+      },
+      "expected_client_behavior": {
+        "classification": "description-validation-error",
+        "must": [
+          "Identify inputs.S as required and normally block submission.",
+          "If explicitly sent as raw JSON, safely display the server problem and retain its raw body."
+        ],
+        "must_not": [
+          "Invent an empty string or null default.",
+          "Derive the required key from the title Name.",
+          "Send this request from the ordinary description-driven form flow."
+        ]
+      }
+    }
+  ]
+}

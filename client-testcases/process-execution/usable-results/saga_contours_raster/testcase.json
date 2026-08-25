@@ -1,0 +1,48 @@
+{
+  "id": "process_saga_contours_raster",
+  "title": "One raster produces two named inline vector outputs",
+  "category": "usable_result",
+  "execution": "live-capable",
+  "process_id": "SAGA.shapes_grid.5",
+  "source": {
+    "canonical_case": "../../../../cases/saga_contours_raster/case.json",
+    "process_description": "../../../../evidence/zoo/SAGA.shapes_grid.5.process.json",
+    "representative_response": "../../../../evidence/zoo/SAGA.shapes_grid.5.execution.json"
+  },
+  "client_value": [
+    "Raster reference with numeric and Boolean controls.",
+    "Multiple named complex outputs in one document."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "CONTOUR",
+          "POLYGONS"
+        ],
+        "result_kinds": {
+          "CONTOUR": "qualified-json-value",
+          "POLYGONS": "qualified-json-value"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-results-available",
+        "must": [
+          "Expose both requested output IDs independently of their order in the JSON object.",
+          "Preserve each qualified GeoJSON value and retain the requested media type as request context."
+        ],
+        "must_not": [
+          "Return only the first complex output.",
+          "Build a fixed two-output limit into the result model.",
+          "Invent response format fields that the server omitted."
+        ]
+      }
+    }
+  ]
+}

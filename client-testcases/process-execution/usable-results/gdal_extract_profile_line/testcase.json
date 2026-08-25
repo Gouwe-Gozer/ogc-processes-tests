@@ -1,0 +1,45 @@
+{
+  "id": "process_gdal_extract_profile_line",
+  "title": "Server filename and remote line produce structured profile coordinates",
+  "category": "usable_result",
+  "execution": "live-capable",
+  "process_id": "GdalExtractProfile",
+  "source": {
+    "canonical_case": "../../../../cases/gdal_extract_profile_line/case.json",
+    "process_description": "../../../../evidence/zoo/GdalExtractProfile.process.json",
+    "representative_response": "../../../../evidence/zoo/GdalExtractProfile.execution.json"
+  },
+  "client_value": [
+    "Mixed server-side filename literal and complex reference.",
+    "Qualified JSON LineString with three-dimensional coordinates."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "Profile"
+        ],
+        "result_kinds": {
+          "Profile": "qualified-json-value"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-results-available",
+        "must": [
+          "Preserve the Profile.value and Profile.format wrapper.",
+          "Retain coordinate tuples of arbitrary supported length, including the elevation ordinate."
+        ],
+        "must_not": [
+          "Rewrite RasterFile into a browser file URL.",
+          "Discard the third coordinate because a map renderer may only use two dimensions."
+        ]
+      }
+    }
+  ]
+}

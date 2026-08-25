@@ -1,0 +1,46 @@
+{
+  "id": "process_gdal_translate_raster",
+  "title": "Server-side raster filenames return a server-local path",
+  "category": "server_file_path",
+  "execution": "live-capable",
+  "process_id": "Gdal_Translate",
+  "source": {
+    "canonical_case": "../../../../cases/gdal_translate_raster/case.json",
+    "process_description": "../../../../evidence/zoo/Gdal_Translate.process.json",
+    "representative_response": "../../../../evidence/zoo/Gdal_Translate.execution.json"
+  },
+  "client_value": [
+    "Literal filename inputs whose meaning is defined by the server environment.",
+    "Successful result is a server-local path rather than a retrievable API reference."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "Result"
+        ],
+        "result_kinds": {
+          "Result": "server-path-literal"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-server-path-result",
+        "must": [
+          "Expose the returned path as a literal server result with a clear server-local warning.",
+          "Retain the exact request and response for profile diagnostics."
+        ],
+        "must_not": [
+          "Prefix the path with baseUrl or attempt to fetch it from the browser.",
+          "Suggest that local fixture staging is intended final-client behaviour.",
+          "Claim the path is downloadable merely because execution returned HTTP 200."
+        ]
+      }
+    }
+  ]
+}

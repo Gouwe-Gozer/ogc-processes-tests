@@ -68,6 +68,11 @@ The following suite contains 22 process IDs and 23 cases, compared with 50
 process IDs and 53 current cases. The second `SAGA.grid_tools.0` case is an
 intentional negative variant of the same process.
 
+The selection is implemented as ordered client request/response fixtures in
+[`client-testcases/process-execution/`](client-testcases/process-execution/).
+The suite documents the useful client assertion for each representative and
+reuses the existing async lifecycle tests for `longProcess` and `demo`.
+
 | Process | Case | Coverage retained |
 |---|---|---|
 | `hellojs` | `hellojs_string` | Minimal synchronous literal request/result |

@@ -1,0 +1,8 @@
+{
+  "inputs": {
+    "F": "GeoJSON",
+    "InputDSN": "ogc-processes-tests/fixtures/polygons/simple_polygon.geojson",
+    "OutputDSN": "ogr2ogr_simple_polygon.geojson"
+  },
+  "response": "document"
+}

@@ -1,0 +1,34 @@
+{
+  "inputs": {
+    "literalInput": "Alkmaar",
+    "complexInput": {
+      "value": {
+        "message": "Hello from Alkmaar"
+      }
+    },
+    "c": {
+      "bbox": [
+        4.74,
+        52.62,
+        4.77,
+        52.65
+      ],
+      "crs": "urn:ogc:def:crs:EPSG:6.6:4326"
+    }
+  },
+  "outputs": {
+    "literalOutput": {
+      "transmissionMode": "value"
+    },
+    "complexOutput": {
+      "format": {
+        "mediaType": "application/json"
+      },
+      "transmissionMode": "value"
+    },
+    "c": {
+      "transmissionMode": "value"
+    }
+  },
+  "response": "document"
+}

@@ -1,0 +1,44 @@
+{
+  "id": "process_otb_read_image_info_description_expected_error",
+  "title": "One advertised process description returns non-JSON HTTP 500",
+  "category": "description_problem",
+  "execution": "live-capable",
+  "process_id": "OTB.ReadImageInfo",
+  "source": {
+    "canonical_case": "../../../../cases/otb_read_image_info_description_expected_error/case.json",
+    "response_metadata": "../../../../evidence/zoo/OTB.ReadImageInfo.process-error.metadata.json",
+    "representative_response": "../../../../evidence/zoo/OTB.ReadImageInfo.process-error.html"
+  },
+  "client_value": [
+    "Collection discovery can succeed while one individual description fails.",
+    "The endpoint returns HTML despite an application/json request."
+  ],
+  "steps": [
+    {
+      "id": "get-description",
+      "request": "01-get-description.request.json",
+      "representative_response": "01-get-description.response.json",
+      "expect": {
+        "http_status": [
+          500
+        ],
+        "content_type": [
+          "text/html"
+        ],
+        "body_parse": "non-json"
+      },
+      "expected_client_behavior": {
+        "classification": "process-description-unavailable",
+        "must": [
+          "Keep the rest of the process collection usable and mark only OTB.ReadImageInfo as unavailable.",
+          "Return status, headers, final URL, and raw HTML with a safe generic message."
+        ],
+        "must_not": [
+          "Attempt to construct an execution form from a missing description.",
+          "Render the returned HTML as trusted application markup.",
+          "Fail or discard all previously discovered processes."
+        ]
+      }
+    }
+  ]
+}

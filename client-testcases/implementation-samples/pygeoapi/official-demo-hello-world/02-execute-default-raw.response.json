@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Content-Language": "en-US"
+  },
+  "final_url": "{{pygeoapiDemoBaseUrl}}/processes/hello-world/execution?f=json",
+  "body_file": "02-execute-default-raw.response.body.json"
+}

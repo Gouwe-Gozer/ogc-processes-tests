@@ -1,0 +1,8 @@
+{
+  "outputs": [
+    {
+      "id": "echo",
+      "value": "Hello OGC API client! Hello from the interoperability fixture."
+    }
+  ]
+}

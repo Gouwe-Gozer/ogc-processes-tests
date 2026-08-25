@@ -1,0 +1,8 @@
+{
+  "status": 404,
+  "headers": {
+    "Content-Type": "text/html; charset=iso-8859-1"
+  },
+  "final_url": "{{resultUrl}}",
+  "body_file": "02-fetch-reference.response.body.html"
+}

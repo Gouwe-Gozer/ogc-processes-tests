@@ -1,0 +1,7 @@
+{
+  "inputs": {
+    "name": "OGC API client",
+    "message": "Hello from the interoperability fixture."
+  },
+  "response": "document"
+}

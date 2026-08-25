@@ -1,0 +1,8 @@
+{
+  "status": 500,
+  "headers": {
+    "Content-Type": "text/html; charset=iso-8859-1"
+  },
+  "final_url": "{{baseUrl}}/processes/OTB.ReadImageInfo",
+  "body_file": "01-get-description.response.body.html"
+}

@@ -21,10 +21,19 @@ success messages.
 ```text
 client-testcases/
 ├── README.md
-└── async-jobs/
-    ├── live-lifecycle/
-    ├── request-errors/
-    └── response-handling/
+├── async-jobs/
+│   ├── live-lifecycle/
+│   ├── request-errors/
+│   └── response-handling/
+├── process-execution/
+│   ├── usable-results/
+│   ├── server-file-paths/
+│   ├── incomplete-results/
+│   ├── provider-problems/
+│   ├── description-problems/
+│   └── validation-errors/
+└── implementation-samples/
+    └── pygeoapi/
 ```
 
 - `live-lifecycle` contains complete sequences that can be exercised against
@@ -34,11 +43,18 @@ client-testcases/
   create work on the server.
 - `response-handling` contains recorded-only transport responses for client
   parser and state-machine tests.
+- `process-execution` contains the compact 22-process selection, grouped by
+  the handling required from the client instead of provider library.
+- `implementation-samples` contains small recorded interoperability fixtures
+  from deployments other than the selected ZOO profile. These are neither
+  conformance suites nor claims that process-specific behaviour is an
+  implementation default.
 
-The later compact process suite from
-[`../PROCESS_BEHAVIOUR_FAMILIES.md`](../PROCESS_BEHAVIOUR_FAMILIES.md) will get
-its own sibling directory. It should reuse this format rather than extending
-the provider-oriented `cases/` format with lifecycle concepts.
+The compact process suite from
+[`../PROCESS_BEHAVIOUR_FAMILIES.md`](../PROCESS_BEHAVIOUR_FAMILIES.md) is
+indexed in
+[`process-execution/suite.json`](process-execution/suite.json). Its two async
+representatives point to the lifecycle fixtures rather than duplicating them.
 
 ## File conventions
 
@@ -71,9 +87,12 @@ Templates currently use:
 | Variable | Meaning |
 |---|---|
 | `{{baseUrl}}` | OGC API base URL without a trailing slash |
+| `{{pygeoapiDemoBaseUrl}}` | Official stable pygeoapi demo root |
+| `{{bgtPrototypeBaseUrl}}` | Optional local BGT prototype root |
 | `{{jobId}}` | Job identifier captured from a response |
 | `{{jobUrl}}` | Resolved job monitor URL |
 | `{{resultsUrl}}` | Resolved results URL |
+| `{{resultUrl}}` | Referenced process-output URL captured from a result wrapper |
 
 Dynamic identifiers and timestamps in representative bodies are normalized.
 This makes the fixtures deterministic while retaining the shape observed from

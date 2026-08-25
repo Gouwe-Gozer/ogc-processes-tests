@@ -1,0 +1,8 @@
+{
+  "inputs": {
+    "OF": "AAIGrid",
+    "InputDSN": "ogc-processes-tests/fixtures/points/five_points_3d.geojson",
+    "OutputDSN": "gdal_grid_alkmaar"
+  },
+  "response": "document"
+}

@@ -1,0 +1,18 @@
+{
+  "inputs": {
+    "InputPolygon": {
+      "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/polygons/simple_polygon.geojson",
+      "type": "application/json"
+    },
+    "BufferDistance": 0.001
+  },
+  "outputs": {
+    "Result": {
+      "format": {
+        "mediaType": "application/json"
+      },
+      "transmissionMode": "value"
+    }
+  },
+  "response": "document"
+}

@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "value": {
+      "process": {
+        "name": "nationwide-bgt-land-cover-summary",
+        "algorithm_version": "0.2.0"
+      },
+      "source": {
+        "name": "PDOK BGT OGC API Features",
+        "retrieved_at": "2026-08-25T00:00:00+00:00",
+        "collections": {
+          "begroeid": "https://api.pdok.nl/lv/bgt/ogc/v1/collections/begroeidterreindeel/items",
+          "onbegroeid": "https://api.pdok.nl/lv/bgt/ogc/v1/collections/onbegroeidterreindeel/items",
+          "water": "https://api.pdok.nl/lv/bgt/ogc/v1/collections/waterdeel/items",
+          "weg": "https://api.pdok.nl/lv/bgt/ogc/v1/collections/wegdeel/items",
+          "pand": "https://api.pdok.nl/lv/bgt/ogc/v1/collections/pand/items"
+        },
+        "feature_counts": {
+          "begroeid": 865,
+          "onbegroeid": 1278,
+          "water": 46,
+          "weg": 2267,
+          "pand": 3690
+        },
+        "page_counts": {
+          "begroeid": 1,
+          "onbegroeid": 2,
+          "water": 1,
+          "weg": 3,
+          "pand": 4
+        }
+      },
+      "input": {
+        "latitude": 52.6324,
+        "longitude": 4.7534,
+        "inner_radius_m": 300,
+        "outer_radius_m": 500
+      },
+      "is_partial": false,
+      "fetch_failures": {},
+      "classification": {
+        "is_official_standard": false,
+        "method": "BKN-oriented proxy derived from BGT physical-appearance types; it does not measure vegetation height or tree-canopy volume.",
+        "unpaved_surface_definition": "Union of low, medium, high and unknown vegetation, water, and BGT terrain explicitly classified as unpaved.",
+        "unknown_vegetation_types": [],
+        "overlap_priority": [
+          "building",
+          "road",
+          "built_area",
+          "high_vegetation",
+          "medium_vegetation"
+        ]
+      },
+      "timing_seconds": {
+        "by_collection": {
+          "begroeid": 0.739,
+          "onbegroeid": 1.033,
+          "water": 3.916,
+          "weg": 19.073,
+          "pand": 1.081
+        },
+        "total": 37.0
+      },
+      "completed_at": "2026-08-25T00:00:00+00:00",
+      "within_inner_radius": {
+        "bkn_indicators": {
+          "low_vegetation_proxy_pct": 5.75,
+          "medium_vegetation_proxy_pct": 0.45,
+          "high_vegetation_proxy_pct": 0.16,
+          "water_surface_pct": 13.22,
+          "unpaved_surface_proxy_pct": 19.6
+        },
+        "supporting_land_cover": {
+          "unknown_vegetation_pct": 0,
+          "road_pct": 28.39,
+          "built_pct": 50.75,
+          "bgt_explicitly_unpaved_pct": 0.02
+        }
+      },
+      "within_outer_radius": {
+        "bkn_indicators": {
+          "low_vegetation_proxy_pct": 6.13,
+          "medium_vegetation_proxy_pct": 0.17,
+          "high_vegetation_proxy_pct": 0.38,
+          "water_surface_pct": 11.83,
+          "unpaved_surface_proxy_pct": 19.96
+        },
+        "supporting_land_cover": {
+          "unknown_vegetation_pct": 0,
+          "road_pct": 25.25,
+          "built_pct": 53.9,
+          "bgt_explicitly_unpaved_pct": 1.45
+        }
+      }
+    }
+  }
+}
