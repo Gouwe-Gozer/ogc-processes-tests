@@ -1,0 +1,20 @@
+{
+  "progress": 2,
+  "id": "{{jobId}}",
+  "jobID": "{{jobId}}",
+  "type": "process",
+  "processID": "longProcess",
+  "created": "2026-08-25T12:22:13.019Z",
+  "started": "2026-08-25T12:22:13.019Z",
+  "updated": "2026-08-25T12:22:13.087Z",
+  "status": "running",
+  "message": "Inputs downloaded, proceed with job status handling",
+  "links": [
+    {
+      "title": "Status location",
+      "rel": "monitor",
+      "type": "application/json",
+      "href": "{{baseUrl}}/jobs/{{jobId}}"
+    }
+  ]
+}

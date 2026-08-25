@@ -1,0 +1,31 @@
+{
+  "id": "async_non_json_job_error",
+  "title": "Job polling returns an HTML HTTP error instead of an OGC JSON problem",
+  "category": "response_handling",
+  "execution": "recorded-only",
+  "steps": [
+    {
+      "id": "poll",
+      "request": "01-poll.request.json",
+      "representative_response": "01-poll.response.json",
+      "expect": {
+        "http_status": [500],
+        "content_type": ["text/html"],
+        "body_parse": "non-json"
+      },
+      "expected_client_behavior": {
+        "classification": "http-error-with-unparsed-body",
+        "must": [
+          "Return an HTTP endpoint error containing status, headers, final URL, content type, and raw HTML.",
+          "Use a generic safe summary when no OGC problem fields can be parsed."
+        ],
+        "must_not": [
+          "Crash while parsing JSON.",
+          "Label the response as a network failure.",
+          "Render the returned HTML as trusted application markup.",
+          "Automatically re-submit the process."
+        ]
+      }
+    }
+  ]
+}

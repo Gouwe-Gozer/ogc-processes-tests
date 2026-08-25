@@ -1,0 +1,29 @@
+{
+  "id": "async_malformed_job_status",
+  "title": "Job polling returns HTTP 200 with malformed JSON",
+  "category": "response_handling",
+  "execution": "recorded-only",
+  "steps": [
+    {
+      "id": "poll",
+      "request": "01-poll.request.json",
+      "representative_response": "01-poll.response.json",
+      "expect": {
+        "http_status": [200],
+        "body_parse": "invalid-json"
+      },
+      "expected_client_behavior": {
+        "classification": "invalid-job-document",
+        "must": [
+          "Return a protocol parsing error containing status, headers, final URL, and raw body.",
+          "Stop a poll-until-terminal helper and let the caller decide whether a later GET is appropriate."
+        ],
+        "must_not": [
+          "Mark the job successful or failed.",
+          "Turn the HTTP response into a no-response network error.",
+          "Re-submit the process execution."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/longProcess/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Prefer": "respond-async"
+  },
+  "body_file": "01-submit.request.body.json"
+}

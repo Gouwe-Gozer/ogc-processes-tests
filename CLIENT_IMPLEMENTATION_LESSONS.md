@@ -196,6 +196,11 @@ an `AbortSignal`. Elaborate scheduling, persistence, and retry infrastructure
 are outside scope. The application remains free to control when status is
 requested.
 
+The ordered request/response fixtures in
+[`client-testcases/async-jobs/`](client-testcases/async-jobs/) turn these rules
+into client expectations for successful, failed, dismissed, malformed, and
+state-inappropriate exchanges.
+
 ## What can be distilled from a process description
 
 ### Process identity and operation links

@@ -1,0 +1,7 @@
+{
+  "method": "DELETE",
+  "url": "{{jobUrl}}",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

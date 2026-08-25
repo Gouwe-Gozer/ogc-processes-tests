@@ -6,7 +6,8 @@ particular client implementation.
 
 ## Canonical artefacts
 
-The source of truth is ordinary, inspectable text:
+The source of truth is ordinary, inspectable text. Provider/profile execution
+cases use:
 
 ```text
 case.json
@@ -17,6 +18,12 @@ fixtures/
 curl, Postman, `scripts/run_case.py`, and a future Topic 3 client are consumers
 of those artefacts. Process descriptions captured under `evidence/` record why
 a request has its particular shape.
+
+Client protocol behaviour is kept separately under
+[`client-testcases/`](client-testcases/). Those ordered HTTP exchanges cover
+successful and incorrect requests, async polling, results, dismissal, HTTP
+problems, and malformed responses. Every step states how the client should
+classify the returned body and what misleading behaviour it must avoid.
 
 ## Quick start
 
@@ -98,10 +105,15 @@ The OTB descriptions, expected execution errors, direct fixture
 validation, and `ReadImageInfo` description failure are summarized in
 [`evidence/zoo/OTB_EXECUTION_OBSERVATIONS.md`](evidence/zoo/OTB_EXECUTION_OBSERVATIONS.md).
 
-[`PROCESS_BEHAVIOUR_FAMILIES.md`](PROCESS_BEHAVIOUR_FAMILIES.md) groups all 44
-core processes by client-observable behaviour and proposes a compact regression
-suite that retains input/output, lifecycle, error-message, and malformed-result
-coverage.
+The initial client protocol suite is documented in
+[`client-testcases/async-jobs/README.md`](client-testcases/async-jobs/README.md).
+It covers successful, failed, and dismissed jobs plus request and response
+faults without multiplying every async state across all process families.
+
+[`PROCESS_BEHAVIOUR_FAMILIES.md`](PROCESS_BEHAVIOUR_FAMILIES.md) groups all 50
+selected process IDs by client-observable behaviour and proposes a compact
+regression suite that retains input/output, lifecycle, error-message, and
+malformed-result coverage.
 
 Refresh selected descriptions with the standard-library capture helper:
 

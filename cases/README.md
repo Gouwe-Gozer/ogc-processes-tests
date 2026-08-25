@@ -13,8 +13,8 @@ The runner returns exit code `3` for pending cases.
 |---|---|---|---|
 | `hellojs` | `hellojs_string` | ready | — |
 | `EchoProcess` | `echo_all_input_kinds` | ready | — |
-| `longProcess` | `long_process_async` | ready | Polling and dismissal are future cases |
-| `demo` | `demo_async_expected_failure` | ready | Poll the created job to assert its eventual failure |
+| `longProcess` | `long_process_async` | ready | Full polling, results, premature-results, and dismissal sequences are in `client-testcases/async-jobs/` |
+| `demo` | `demo_async_expected_failure` | ready | Terminal failure polling is in `client-testcases/async-jobs/` |
 | `failR` | `fail_r_expected_error` | ready | — |
 | `Gdal_Translate` | `gdal_translate_raster` | ready | Requires local fixture staging |
 | `Gdal_Warp` | `gdal_warp_raster` | ready | Requires local fixture staging |

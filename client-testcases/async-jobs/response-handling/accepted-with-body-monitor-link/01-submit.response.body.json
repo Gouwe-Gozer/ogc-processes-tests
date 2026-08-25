@@ -1,0 +1,13 @@
+{
+  "jobID": "{{jobId}}",
+  "type": "process",
+  "processID": "longProcess",
+  "status": "accepted",
+  "links": [
+    {
+      "rel": "monitor",
+      "type": "application/json",
+      "href": "/ogc-api/jobs/{{jobId}}"
+    }
+  ]
+}

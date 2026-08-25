@@ -1,0 +1,5 @@
+{
+  "title": "NoSuchJob",
+  "type": "http://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-job",
+  "detail": "The JobID from the request does not match any of the Jobs running on this server"
+}

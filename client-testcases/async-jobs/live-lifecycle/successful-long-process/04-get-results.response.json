@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-results>; rel=\"profile\""
+  },
+  "final_url": "{{resultsUrl}}",
+  "body_file": "04-get-results.response.body.json"
+}

@@ -1,0 +1,8 @@
+{
+  "status": 201,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "final_url": "https://processing.example.test/ogc-api/processes/longProcess/execution",
+  "body_file": "01-submit.response.body.json"
+}

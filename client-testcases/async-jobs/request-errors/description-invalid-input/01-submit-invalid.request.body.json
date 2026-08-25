@@ -1,0 +1,6 @@
+{
+  "inputs": {
+    "sid": "not-an-integer"
+  },
+  "response": "document"
+}

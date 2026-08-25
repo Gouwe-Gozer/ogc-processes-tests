@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "final_url": "{{jobUrl}}",
+  "body_file": "01-poll.response.body.json"
+}
