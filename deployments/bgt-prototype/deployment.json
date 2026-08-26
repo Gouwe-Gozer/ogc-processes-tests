@@ -1,0 +1,14 @@
+{
+  "id": "bgt-prototype",
+  "title": "Local BGT land-cover prototype",
+  "implementation": {
+    "name": "pygeoapi",
+    "version_at_capture": "0.23.4"
+  },
+  "base_url": {
+    "variable": "bgtPrototypeBaseUrl",
+    "default": "http://localhost:5001"
+  },
+  "captured_at": "2026-08-25",
+  "availability": "local-only"
+}

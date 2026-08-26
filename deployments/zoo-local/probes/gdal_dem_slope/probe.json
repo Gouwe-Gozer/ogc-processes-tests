@@ -1,0 +1,21 @@
+{
+  "id": "gdal_dem_slope",
+  "title": "Calculate slope from the small Alkmaar DEM",
+  "process_id": "Gdal_Dem",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/Gdal_Dem/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.asc",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Local-profile case. This provider uses paths directly, so the request names the staged dataPath input and tmpPath output explicitly. Hillshade is not used because the implementation requires an unadvertised z input.",
+  "deployment": "zoo-local"
+}

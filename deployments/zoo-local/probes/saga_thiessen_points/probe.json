@@ -1,0 +1,21 @@
+{
+  "id": "saga_thiessen_points",
+  "title": "Create Thiessen polygons from five Alkmaar points",
+  "process_id": "SAGA.shapes_points.16",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/SAGA.shapes_points.16/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixture": "../../../../fixtures/points/five_points.geojson",
+  "expected": {
+    "http_status": 500
+  },
+  "notes": "The request follows the advertised schema using referenced GeoJSON points. The tested provider reproducibly terminates with SIGABRT.",
+  "deployment": "zoo-local"
+}

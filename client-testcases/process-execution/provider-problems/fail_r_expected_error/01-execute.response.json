@@ -1,8 +1,0 @@
-{
-  "status": 500,
-  "headers": {
-    "Content-Type": "application/json;charset=UTF-8"
-  },
-  "final_url": "{{baseUrl}}/processes/failR/execution",
-  "body_file": "01-execute.response.body.json"
-}

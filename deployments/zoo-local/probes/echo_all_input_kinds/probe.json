@@ -1,0 +1,20 @@
+{
+  "id": "echo_all_input_kinds",
+  "title": "Echo literal, JSON, and bounding-box inputs",
+  "process_id": "EchoProcess",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/EchoProcess/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Exercises the three optional input and output shapes advertised by EchoProcess.",
+  "deployment": "zoo-local"
+}

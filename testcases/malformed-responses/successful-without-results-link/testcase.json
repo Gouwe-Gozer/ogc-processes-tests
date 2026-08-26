@@ -1,0 +1,35 @@
+{
+  "id": "async_successful_without_results_link",
+  "title": "Successful job status omits the results relation",
+  "category": "malformed-responses",
+  "execution": "recorded-only",
+  "steps": [
+    {
+      "id": "poll-successful",
+      "request": "01-poll-successful.request.json",
+      "representative_response": "01-poll-successful.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "job_status": [
+          "successful"
+        ],
+        "usable_results_links": 0
+      },
+      "expected_client_behavior": {
+        "classification": "job-successful-results-location-missing",
+        "must": [
+          "Expose the job itself as successfully completed.",
+          "Report separately that the response has no advertised OGC results resource.",
+          "Preserve all links and the raw job document for diagnostics."
+        ],
+        "must_not": [
+          "Change the terminal job status to failed.",
+          "Invent a results URL or return an empty successful result.",
+          "Keep polling a terminal job in the hope that a link appears."
+        ]
+      }
+    }
+  ]
+}

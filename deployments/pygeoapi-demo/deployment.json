@@ -1,0 +1,13 @@
+{
+  "id": "pygeoapi-demo",
+  "title": "Official pygeoapi stable demo",
+  "implementation": {
+    "name": "pygeoapi",
+    "version_at_capture": "0.24.0"
+  },
+  "base_url": {
+    "variable": "pygeoapiDemoBaseUrl",
+    "default": "https://demo.pygeoapi.io/stable"
+  },
+  "captured_at": "2026-08-25"
+}

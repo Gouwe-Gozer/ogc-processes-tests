@@ -1,0 +1,21 @@
+{
+  "id": "saga_tin_to_shapes",
+  "title": "Build a TIN from Alkmaar points and export its shapes",
+  "process_id": "SAGA.tin_tools.3",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/SAGA.tin_tools.3/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixture": "../../../../fixtures/points/five_points_3d.geojson",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "The ZOO SAGA adapter advertises vector representations for TIN and internally converts the supplied shapes to a TIN.",
+  "deployment": "zoo-local"
+}

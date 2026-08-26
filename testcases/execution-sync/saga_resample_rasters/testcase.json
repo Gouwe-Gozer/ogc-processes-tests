@@ -1,0 +1,50 @@
+{
+  "id": "process_saga_resample_rasters",
+  "title": "Referenced raster produces a TIFF result by reference",
+  "category": "execution-sync",
+  "execution": "live-capable",
+  "process_id": "SAGA.grid_tools.0",
+  "source": {
+    "canonical_case": "../../../deployments/zoo-local/probes/saga_resample_rasters/probe.json",
+    "process_description": "../../../deployments/zoo-local/captures/descriptions/SAGA.grid_tools.0.process.json",
+    "representative_response": "../../../deployments/zoo-local/captures/executions/SAGA.grid_tools.0.execution.json"
+  },
+  "client_value": [
+    "Referenced AAIGrid plus Boolean, enum, and numeric controls.",
+    "A repeatable input represented as a singleton object when only one value is supplied.",
+    "Complex raster output transmitted by reference."
+  ],
+  "steps": [
+    {
+      "id": "execute",
+      "request": "01-execute.request.json",
+      "representative_response": "01-execute.response.json",
+      "expect": {
+        "http_status": [
+          200
+        ],
+        "result_ids": [
+          "OUTPUT"
+        ],
+        "result_kinds": {
+          "OUTPUT": "reference"
+        },
+        "declared_media_types": {
+          "OUTPUT": "image/tiff"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "synchronous-results-available",
+        "must": [
+          "Expose the output href and declared image/tiff media type as a reference.",
+          "Keep reference retrieval failure separate from execution status if a later fetch fails."
+        ],
+        "must_not": [
+          "Treat the href string as inline TIFF data.",
+          "Persist or download the raster inside the protocol core without a consumer request."
+        ]
+      }
+    }
+  ],
+  "deployment": "zoo-local"
+}

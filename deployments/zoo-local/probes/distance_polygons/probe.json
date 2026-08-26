@@ -1,0 +1,24 @@
+{
+  "id": "distance_polygons",
+  "title": "Calculate the distance between two Alkmaar polygons",
+  "process_id": "Distance",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/Distance/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixtures": [
+    "../../fixtures/gml/simple_polygon.gml",
+    "../../fixtures/gml/overlapping_polygon.gml"
+  ],
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Uses pinned polygon GML references. Although the process describes generic geometries, this provider's parser rejects point GML and explicitly extracts only Polygon or MultiPolygon; the overlapping fixtures produce distance zero.",
+  "deployment": "zoo-local"
+}

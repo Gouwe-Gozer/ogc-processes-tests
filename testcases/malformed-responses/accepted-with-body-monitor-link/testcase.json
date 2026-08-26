@@ -1,0 +1,39 @@
+{
+  "id": "async_accepted_with_body_monitor_link",
+  "title": "Accepted submission has no Location header but has a usable monitor link",
+  "category": "malformed-responses",
+  "execution": "recorded-only",
+  "steps": [
+    {
+      "id": "submit",
+      "request": "01-submit.request.json",
+      "representative_response": "01-submit.response.json",
+      "expect": {
+        "http_status": [
+          201
+        ],
+        "absent_response_headers": [
+          "location"
+        ],
+        "job_status": [
+          "accepted"
+        ],
+        "capture": {
+          "jobUrl": "response.body.links[rel=monitor].href",
+          "jobId": "response.body.jobID"
+        }
+      },
+      "expected_client_behavior": {
+        "classification": "job-accepted-with-protocol-warning",
+        "must": [
+          "Find the monitor link by relation and resolve its root-relative href against the final submission URL.",
+          "Expose the accepted job and retain that the required Location header was absent."
+        ],
+        "must_not": [
+          "Reject a usable job solely because the fallback monitor link is in the body.",
+          "Match the link by human-readable title or array position."
+        ]
+      }
+    }
+  ]
+}

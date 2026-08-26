@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/Gdal_Grid/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body_file": "../../../deployments/zoo-local/probes/gdal_grid_points/request.json"
+}

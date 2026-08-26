@@ -1,0 +1,21 @@
+{
+  "id": "is_valid_polygon",
+  "title": "Validate the simple Alkmaar polygon",
+  "process_id": "IsValid",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/IsValid/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixture": "../../../../fixtures/gml/simple_polygon.gml",
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Reference-input case pinned to the explicitly closed GML fixture and intended to produce true.",
+  "deployment": "zoo-local"
+}

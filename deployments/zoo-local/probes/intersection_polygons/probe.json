@@ -1,0 +1,24 @@
+{
+  "id": "intersection_polygons",
+  "title": "Intersect two overlapping Alkmaar polygons",
+  "process_id": "Intersection",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/Intersection/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixtures": [
+    "../../fixtures/gml/simple_polygon.gml",
+    "../../fixtures/gml/overlapping_polygon.gml"
+  ],
+  "expected": {
+    "http_status": 200
+  },
+  "notes": "Both required reference inputs are pinned to the published GML 3.1 fixtures.",
+  "deployment": "zoo-local"
+}

@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/SAGA.table_tools.0/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body_file": "../../../deployments/zoo-local/probes/saga_create_table/request.json"
+}

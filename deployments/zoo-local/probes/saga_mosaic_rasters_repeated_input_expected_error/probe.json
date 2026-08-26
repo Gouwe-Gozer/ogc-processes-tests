@@ -1,0 +1,24 @@
+{
+  "id": "saga_mosaic_rasters_repeated_input_expected_error",
+  "title": "Mosaic two rasters (provider crash evidence)",
+  "process_id": "SAGA.grid_tools.3",
+  "execution_mode": "sync",
+  "request": {
+    "method": "POST",
+    "path": "/processes/SAGA.grid_tools.3/execution",
+    "headers": {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    "body_file": "request.json"
+  },
+  "fixtures": [
+    "../../fixtures/raster/alkmaar_dem.asc",
+    "../../fixtures/raster/alkmaar_values.asc"
+  ],
+  "expected": {
+    "http_status": 500
+  },
+  "notes": "Both GRIDS values conform to the advertised repeated raster schema. The tested provider reproducibly terminates with SIGSEGV.",
+  "deployment": "zoo-local"
+}

@@ -1,5 +1,5 @@
 # GML fixtures
 
-These deliberately small GML 3.1 feature collections mirror the Alkmaar
-GeoJSON fixtures for processes that advertise only `text/xml` input. Their
-coordinates use WGS 84 longitude/latitude (OGC CRS84 coordinate order).
+These small GML 3.1 feature collections contain the same Alkmaar geometries as
+the GeoJSON fixtures. They are used by processes that only accept `text/xml`.
+Coordinates use WGS 84 longitude/latitude order (`OGC:CRS84`).

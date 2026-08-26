@@ -1,7 +1,0 @@
-{
-  "method": "GET",
-  "url": "{{pygeoapiDemoBaseUrl}}/processes/hello-world?f=json",
-  "headers": {
-    "Accept": "application/json"
-  }
-}

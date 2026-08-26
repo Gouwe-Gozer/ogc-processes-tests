@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/Contains/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body_file": "../../../deployments/zoo-local/probes/contains_polygon_point/request.json"
+}

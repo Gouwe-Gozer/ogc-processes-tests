@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/hello-world?f=json",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

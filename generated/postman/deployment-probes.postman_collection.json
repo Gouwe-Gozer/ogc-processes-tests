@@ -1,0 +1,2154 @@
+{
+  "info": {
+    "_postman_id": "469e6f6e-fd9b-5bfa-8411-6098ab0c9b09",
+    "name": "OGC API Processes deployment probes",
+    "description": "Generated from deployments/*/probes. Do not edit by hand.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "zooLocalBaseUrl",
+      "value": "http://localhost/ogc-api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "zoo-local",
+      "item": [
+        {
+          "name": "POST_process_sync",
+          "item": [
+            {
+              "name": "boundary_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Boundary/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the boundary of the simple Alkmaar polygon\n\nReference-input case pinned to the published GML 3.1 fixture.\n\nCanonical source: deployments/zoo-local/probes/boundary_polygon/probe.json"
+              }
+            },
+            {
+              "name": "buffer_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Buffer/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"BufferDistance\": 0.001\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Buffer the simple Alkmaar polygon\n\nReference-input case pinned to the published GeoJSON fixture. Uses a small distance in longitude/latitude coordinate units rather than the advertised default of 10.\n\nCanonical source: deployments/zoo-local/probes/buffer_polygon/probe.json"
+              }
+            },
+            {
+              "name": "centroid_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Centroid/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the centroid of the simple Alkmaar polygon\n\nReference-input case pinned to the published GML 3.1 fixture.\n\nCanonical source: deployments/zoo-local/probes/centroid_polygon/probe.json"
+              }
+            },
+            {
+              "name": "contains_polygon_point",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Contains/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/inside_point.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Test whether the Alkmaar polygon contains an interior point\n\nUses pinned GML references with the polygon as InputEntity1 and its interior point as InputEntity2.\n\nCanonical source: deployments/zoo-local/probes/contains_polygon_point/probe.json"
+              }
+            },
+            {
+              "name": "convex_hull_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/ConvexHull/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the convex hull of the simple Alkmaar polygon\n\nReference-input case pinned to the published GML 3.1 fixture.\n\nCanonical source: deployments/zoo-local/probes/convex_hull_polygon/probe.json"
+              }
+            },
+            {
+              "name": "delaunay_five_points",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Delaunay/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPoints\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/five_points.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Create a Delaunay triangulation from five Alkmaar points\n\nReference-input case pinned to the published five-point GML 3.1 fixture.\n\nCanonical source: deployments/zoo-local/probes/delaunay_five_points/probe.json"
+              }
+            },
+            {
+              "name": "difference_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Difference/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/overlapping_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Subtract one overlapping Alkmaar polygon from another\n\nDirection-sensitive reference-input case using the pinned simple polygon as InputEntity1.\n\nCanonical source: deployments/zoo-local/probes/difference_polygons/probe.json"
+              }
+            },
+            {
+              "name": "distance_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Distance/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/overlapping_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Distance\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the distance between two Alkmaar polygons\n\nUses pinned polygon GML references. Although the process describes generic geometries, this provider's parser rejects point GML and explicitly extracts only Polygon or MultiPolygon; the overlapping fixtures produce distance zero.\n\nCanonical source: deployments/zoo-local/probes/distance_polygons/probe.json"
+              }
+            },
+            {
+              "name": "echo_all_input_kinds",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/EchoProcess/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"literalInput\": \"Alkmaar\",\n    \"complexInput\": {\n      \"value\": {\n        \"message\": \"Hello from Alkmaar\"\n      }\n    },\n    \"c\": {\n      \"bbox\": [4.74, 52.62, 4.77, 52.65],\n      \"crs\": \"urn:ogc:def:crs:EPSG:6.6:4326\"\n    }\n  },\n  \"outputs\": {\n    \"literalOutput\": {\n      \"transmissionMode\": \"value\"\n    },\n    \"complexOutput\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"c\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Echo literal, JSON, and bounding-box inputs\n\nExercises the three optional input and output shapes advertised by EchoProcess.\n\nCanonical source: deployments/zoo-local/probes/echo_all_input_kinds/probe.json"
+              }
+            },
+            {
+              "name": "fail_r_expected_error",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/failR/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"S\": \"Codex\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Capture the failR provider-level error\n\nExpected-error case: the R provider deliberately reports service failure.\n\nCanonical source: deployments/zoo-local/probes/fail_r_expected_error/probe.json"
+              }
+            },
+            {
+              "name": "gdal_contour_dem",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Contour/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputDSN\": \"/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"/tmp/zTmp/gdal_contour_alkmaar.shp\",\n    \"i\": \"1\",\n    \"a\": \"elevation\",\n    \"b\": 1\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Create contours from the small Alkmaar DEM\n\nLocal-profile case. This provider uses paths directly and writes an ESRI Shapefile dataset below ZOO tmpPath.\n\nCanonical source: deployments/zoo-local/probes/gdal_contour_dem/probe.json"
+              }
+            },
+            {
+              "name": "gdal_dem_slope",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Dem/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputDSN\": \"/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"/tmp/zTmp/gdal_dem_slope.tif\",\n    \"utility\": \"slope\",\n    \"s\": \"111120\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate slope from the small Alkmaar DEM\n\nLocal-profile case. This provider uses paths directly, so the request names the staged dataPath input and tmpPath output explicitly. Hillshade is not used because the implementation requires an unadvertised z input.\n\nCanonical source: deployments/zoo-local/probes/gdal_dem_slope/probe.json"
+              }
+            },
+            {
+              "name": "gdal_extract_profile_line",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/GdalExtractProfile/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"RasterFile\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"Geometry\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/lines/simple_line.geojson\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"outputs\": {\n    \"Profile\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Extract an elevation profile along the Alkmaar line\n\nLocal-profile case. RasterFile is relative to ZOO dataPath; Geometry uses the commit-pinned public GeoJSON line reference.\n\nCanonical source: deployments/zoo-local/probes/gdal_extract_profile_line/probe.json"
+              }
+            },
+            {
+              "name": "gdal_grid_points",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Grid/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"OF\": \"AAIGrid\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/points/five_points_3d.geojson\",\n    \"OutputDSN\": \"gdal_grid_alkmaar\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Grid the five Alkmaar elevation points\n\nExpected-error local-profile case. The advertised inputs reach the provider, but it returns 500 without a useful message because its implementation needs unadvertised layer/band parameters. The request intentionally does not invent them.\n\nCanonical source: deployments/zoo-local/probes/gdal_grid_points/probe.json"
+              }
+            },
+            {
+              "name": "gdal_translate_raster",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Translate/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"Format\": \"GTiff\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"gdal_translate_alkmaar\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Translate the small Alkmaar DEM\n\nLocal-profile case. Stage fixtures with scripts/deployments/stage_zoo_fixtures.py; InputDSN is relative to ZOO dataPath and OutputDSN is created below tmpPath.\n\nCanonical source: deployments/zoo-local/probes/gdal_translate_raster/probe.json"
+              }
+            },
+            {
+              "name": "gdal_warp_raster",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Warp/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"Format\": \"GTiff\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/raster/alkmaar_dem.asc\",\n    \"OutputDSN\": \"gdal_warp_alkmaar\",\n    \"s_srs\": \"OGC:CRS84\",\n    \"t_srs\": \"EPSG:3857\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Warp the small Alkmaar DEM\n\nLocal-profile case. Stage fixtures first; the DEM is reprojected from OGC CRS84 to EPSG:3857 and written below ZOO tmpPath.\n\nCanonical source: deployments/zoo-local/probes/gdal_warp_raster/probe.json"
+              }
+            },
+            {
+              "name": "get_area_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/GetArea/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Area\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the area of the simple Alkmaar polygon\n\nReference-input case pinned to the GML 3.1 fixture. The result is in square coordinate units unless the service reprojects.\n\nCanonical source: deployments/zoo-local/probes/get_area_polygon/probe.json"
+              }
+            },
+            {
+              "name": "hellojs_string",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/hellojs/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"S\": \"Codex\"\n  }\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Execute hellojs with a string input\n\nBasic literal-input smoke test.\n\nCanonical source: deployments/zoo-local/probes/hellojs_string/probe.json"
+              }
+            },
+            {
+              "name": "intersection_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Intersection/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/overlapping_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Intersect two overlapping Alkmaar polygons\n\nBoth required reference inputs are pinned to the published GML 3.1 fixtures.\n\nCanonical source: deployments/zoo-local/probes/intersection_polygons/probe.json"
+              }
+            },
+            {
+              "name": "is_valid_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/IsValid/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Validate the simple Alkmaar polygon\n\nReference-input case pinned to the explicitly closed GML fixture and intended to produce true.\n\nCanonical source: deployments/zoo-local/probes/is_valid_polygon/probe.json"
+              }
+            },
+            {
+              "name": "ogr2ogr_vector",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Ogr2Ogr/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"F\": \"GeoJSON\",\n    \"InputDSN\": \"ogc-processes-tests/fixtures/polygons/simple_polygon.geojson\",\n    \"OutputDSN\": \"ogr2ogr_simple_polygon.geojson\"\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Convert the Alkmaar polygon vector dataset\n\nLocal-profile case. Stage fixtures first; InputDSN is relative to dataPath and the GeoJSON output is created below tmpPath.\n\nCanonical source: deployments/zoo-local/probes/ogr2ogr_vector/probe.json"
+              }
+            },
+            {
+              "name": "otb_band_math",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.BandMath/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"il\": [\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}}\n    ],\n    \"out\": \"float\",\n    \"exp\": \"im1b1 + im2b1\"\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Add two Alkmaar raster inputs with OTB BandMath\n\nExercises the advertised repeated image list and overlapping out input/output ID. The same fixture and expression run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: deployments/zoo-local/probes/otb_band_math/probe.json"
+              }
+            },
+            {
+              "name": "otb_compute_image_statistics",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.ComputeImagesStatistics/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"il\": [\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n      {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}}\n    ]\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"text/xml\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Compute statistics for two Alkmaar raster inputs\n\nExercises an advertised repeated image list and requests XML inline. The same images run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: deployments/zoo-local/probes/otb_compute_image_statistics/probe.json"
+              }
+            },
+            {
+              "name": "otb_pixel_value",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.PixelValue/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"in\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"coordx\": 2,\n    \"coordy\": 2,\n    \"mode\": \"index\"\n  },\n  \"outputs\": {\n    \"value\": {\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Read one pixel from the Alkmaar DEM\n\nThe GeoTIFF and parameters run successfully with OTB CLI 7.0. ZOO fails before reading them because its OTB application registry is empty.\n\nCanonical source: deployments/zoo-local/probes/otb_pixel_value/probe.json"
+              }
+            },
+            {
+              "name": "otb_rasterization",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.Rasterization/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"in\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/fbf931775e224903c8ffa1cfd013a919ff5d16f1/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"out\": \"uint8\",\n    \"im\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"background\": 0,\n    \"mode\": \"binary\",\n    \"mode.binary.foreground\": 255,\n    \"mode.attribute.field\": \"name\"\n  },\n  \"outputs\": {\n    \"out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Rasterize the Alkmaar polygon with OTB\n\nUses referenced GeoJSON and an inline support image. Both mode-specific inputs are included because the description marks both required. The data run with OTB CLI 7.0; ZOO reports an empty OTB application registry.\n\nCanonical source: deployments/zoo-local/probes/otb_rasterization/probe.json"
+              }
+            },
+            {
+              "name": "otb_segmentation",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.Segmentation/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"in\": {\"value\":\"SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==\",\"format\":{\"mediaType\":\"image/tiff\",\"encoding\":\"base64\"}},\n    \"filter\": \"meanshift\",\n    \"filter.meanshift.spatialr\": 2,\n    \"filter.meanshift.ranger\": 1,\n    \"filter.meanshift.thres\": 0.1,\n    \"filter.meanshift.maxiter\": 20,\n    \"filter.meanshift.minsize\": 1,\n    \"filter.cc.expr\": \"distance < 10\",\n    \"filter.watershed.threshold\": 0.01,\n    \"filter.watershed.level\": 0.1,\n    \"filter.mprofiles.size\": 5,\n    \"filter.mprofiles.start\": 1,\n    \"filter.mprofiles.step\": 1,\n    \"filter.mprofiles.sigma\": 1,\n    \"mode\": \"raster\",\n    \"mode.vector.outmode\": \"ulco\",\n    \"mode.vector.neighbor\": false,\n    \"mode.vector.stitch\": true,\n    \"mode.vector.layername\": \"segments\",\n    \"mode.vector.fieldname\": \"DN\",\n    \"mode.vector.tilesize\": 16,\n    \"mode.vector.startlabel\": 1,\n    \"mode.raster.out\": \"uint16\"\n  },\n  \"outputs\": {\n    \"mode.raster.out\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Segment the Alkmaar DEM to a raster with OTB\n\nSelects raster mode but includes all branch-specific inputs marked required by the description. Direct OTB CLI execution succeeds; ZOO reports an empty OTB application registry before reading the request data.\n\nCanonical source: deployments/zoo-local/probes/otb_segmentation/probe.json"
+              }
+            },
+            {
+              "name": "saga_add_grid_values_points",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_grid.0/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"SHAPES\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/points/five_points.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"GRIDS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"RESAMPLING\": \"Bilinear Interpolation\"\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Add Alkmaar DEM values to point features\n\nCombines a referenced vector with the required raster list input.\n\nCanonical source: deployments/zoo-local/probes/saga_add_grid_values_points/probe.json"
+              }
+            },
+            {
+              "name": "saga_contours_raster",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_grid.5/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRID\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"ZMIN\": 2,\n    \"ZMAX\": 4,\n    \"ZSTEP\": 0.5,\n    \"LINE_PARTS\": true,\n    \"POLY_PARTS\": false\n  },\n  \"outputs\": {\n    \"CONTOUR\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"POLYGONS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Create contour lines and polygons from the Alkmaar DEM\n\nExercises two vector outputs from one raster input.\n\nCanonical source: deployments/zoo-local/probes/saga_contours_raster/probe.json"
+              }
+            },
+            {
+              "name": "saga_create_table",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.table_tools.0/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"NAME\": \"Alkmaar table\",\n    \"NFIELDS\": 2\n  },\n  \"outputs\": {\n    \"TABLE\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Create an empty two-field SAGA table\n\nRetains the observed metadata anomaly: this table output is advertised with raster media types.\n\nCanonical source: deployments/zoo-local/probes/saga_create_table/probe.json"
+              }
+            },
+            {
+              "name": "saga_dissolve_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_polygons.5/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"POLYGONS\": {\n      \"value\": {\n        \"type\": \"FeatureCollection\",\n        \"features\": [\n          {\n            \"type\": \"Feature\",\n            \"id\": \"group_a_1\",\n            \"properties\": {\n              \"group\": \"A\",\n              \"value\": 2\n            },\n            \"geometry\": {\n              \"type\": \"Polygon\",\n              \"coordinates\": [\n                [\n                  [4.744, 52.628],\n                  [4.75, 52.628],\n                  [4.75, 52.636],\n                  [4.744, 52.636],\n                  [4.744, 52.628]\n                ]\n              ]\n            }\n          },\n          {\n            \"type\": \"Feature\",\n            \"id\": \"group_a_2\",\n            \"properties\": {\n              \"group\": \"A\",\n              \"value\": 3\n            },\n            \"geometry\": {\n              \"type\": \"Polygon\",\n              \"coordinates\": [\n                [\n                  [4.75, 52.628],\n                  [4.756, 52.628],\n                  [4.756, 52.636],\n                  [4.75, 52.636],\n                  [4.75, 52.628]\n                ]\n              ]\n            }\n          }\n        ]\n      },\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      }\n    },\n    \"STAT_AVG\": true,\n    \"STAT_SUM\": false,\n    \"BND_KEEP\": false,\n    \"MIN_AREA\": 0\n  },\n  \"outputs\": {\n    \"DISSOLVED\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Dissolve two adjacent Alkmaar polygons\n\nUses an inline GeoJSON fixture and exercises Boolean dissolve options without the anomalous generated field-selector input.\n\nCanonical source: deployments/zoo-local/probes/saga_dissolve_polygons/probe.json"
+              }
+            },
+            {
+              "name": "saga_gaussian_filter",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_filter.1/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"INPUT\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"SIGMA\": 1,\n    \"KERNEL_TYPE\": \"Circle\",\n    \"KERNEL_RADIUS\": 1\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Apply a Gaussian filter to the Alkmaar DEM\n\nSAGA 7.3 provider-profile case using a referenced AAIGrid input.\n\nCanonical source: deployments/zoo-local/probes/saga_gaussian_filter/probe.json"
+              }
+            },
+            {
+              "name": "saga_grid_calculator",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_calculus.1/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRIDS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"FORMULA\": \"g1 * 2\",\n    \"NAME\": \"Alkmaar sum\",\n    \"TYPE\": \"4 byte floating point number\"\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Multiply an Alkmaar raster with the SAGA grid calculator\n\nA single referenced AAIGrid succeeds. Supplying two advertised repeated GRIDS values crashes this provider; see saga_grid_calculator_repeated_input_expected_error.\n\nCanonical source: deployments/zoo-local/probes/saga_grid_calculator/probe.json"
+              }
+            },
+            {
+              "name": "saga_grid_calculator_repeated_input_expected_error",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_calculus.1/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRIDS\": [\n      {\n        \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n        \"type\": \"application/x-ogc-aaigrid\"\n      },\n      {\n        \"value\": \"bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxMiAxNCAxNiAxOCAyMAoxMSAxMyAxNSAxNyAxOQoxMCAxMiAxNCAxNiAxOAo5IDExIDEzIDE1IDE3CjggMTAgMTIgMTQgMTYK\",\n        \"format\": {\n          \"mediaType\": \"application/x-ogc-aaigrid\",\n          \"encoding\": \"base64\"\n        }\n      }\n    ],\n    \"FORMULA\": \"g1 + g2\",\n    \"NAME\": \"Alkmaar sum\",\n    \"TYPE\": \"4 byte floating point number\"\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate with two rasters (provider crash evidence)\n\nBoth GRIDS values and the g1 + g2 expression conform to the advertised schema. The tested provider reproducibly terminates with SIGSEGV.\n\nCanonical source: deployments/zoo-local/probes/saga_grid_calculator_repeated_input_expected_error/probe.json"
+              }
+            },
+            {
+              "name": "saga_idw_points",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_gridding.1/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"POINTS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/points/five_points_3d.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"TARGET_DEFINITION\": \"user defined\",\n    \"TARGET_USER_SIZE\": 0.005,\n    \"TARGET_USER_XMIN\": 4.74,\n    \"TARGET_USER_XMAX\": 4.765,\n    \"TARGET_USER_YMIN\": 52.625,\n    \"TARGET_USER_YMAX\": 52.65,\n    \"TARGET_USER_COLS\": 5,\n    \"TARGET_USER_ROWS\": 5,\n    \"TARGET_USER_FITS\": \"cells\",\n    \"SEARCH_RANGE\": \"global\",\n    \"DW_WEIGHTING\": \"inverse distance to a power\",\n    \"DW_IDW_POWER\": 2\n  },\n  \"outputs\": {\n    \"TARGET_OUT_GRID\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Interpolate the Alkmaar elevation points to a raster\n\nThe request follows the advertised schema using point Z values and a user-defined grid. The tested provider reproducibly terminates with SIGSEGV.\n\nCanonical source: deployments/zoo-local/probes/saga_idw_points/probe.json"
+              }
+            },
+            {
+              "name": "saga_intersect_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_polygons.14/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"A\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"B\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/overlapping_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"SPLIT\": true\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Intersect two Alkmaar polygon layers with SAGA\n\nThe request follows the advertised schema using two referenced vector inputs and a JSON Boolean. The tested provider reproducibly terminates with SIGABRT.\n\nCanonical source: deployments/zoo-local/probes/saga_intersect_polygons/probe.json"
+              }
+            },
+            {
+              "name": "saga_join_tables",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.table_tools.3/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"TABLE_A\": {\n      \"value\": \"id,name,elevation_m\\n1,Waagplein,2.1\\n2,Victoriepark,3.4\\n3,Alkmaarderhout,1.8\\n\",\n      \"format\": {\n        \"mediaType\": \"text/csv\",\n        \"encoding\": \"utf-8\"\n      }\n    },\n    \"TABLE_B\": {\n      \"value\": \"id,category\\n1,centre\\n2,park\\n3,woodland\\n\",\n      \"format\": {\n        \"mediaType\": \"text/csv\",\n        \"encoding\": \"utf-8\"\n      }\n    },\n    \"FIELDS_ALL\": true,\n    \"KEEP_ALL\": true,\n    \"CMP_CASE\": true\n  },\n  \"outputs\": {\n    \"RESULT\": {\n      \"format\": {\n        \"mediaType\": \"text/csv\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Join two small Alkmaar CSV tables\n\nUses inline UTF-8 CSV tables and defaults to their first fields as join identifiers.\n\nCanonical source: deployments/zoo-local/probes/saga_join_tables/probe.json"
+              }
+            },
+            {
+              "name": "saga_line_polygon_intersection",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_lines.3/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"LINES\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/lines/simple_line.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"POLYGONS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"ATTRIBUTES\": \"line and polygon\"\n  },\n  \"outputs\": {\n    \"INTERSECT\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"DIFFERENCE\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Split an Alkmaar line by a polygon\n\nExercises two vector inputs and the process's intersection and difference outputs.\n\nCanonical source: deployments/zoo-local/probes/saga_line_polygon_intersection/probe.json"
+              }
+            },
+            {
+              "name": "saga_mosaic_rasters",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.3/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRIDS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"NAME\": \"Alkmaar mosaic\",\n    \"OVERLAP\": \"mean\",\n    \"TARGET_DEFINITION\": \"user defined\",\n    \"TARGET_USER_SIZE\": 0.005,\n    \"TARGET_USER_XMIN\": 4.74,\n    \"TARGET_USER_XMAX\": 4.765,\n    \"TARGET_USER_YMIN\": 52.625,\n    \"TARGET_USER_YMAX\": 52.65,\n    \"TARGET_USER_COLS\": 5,\n    \"TARGET_USER_ROWS\": 5,\n    \"TARGET_USER_FITS\": \"cells\"\n  },\n  \"outputs\": {\n    \"TARGET_OUT_GRID\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Mosaic one Alkmaar raster\n\nA single referenced AAIGrid succeeds. Supplying two advertised repeated GRIDS values crashes this provider; see saga_mosaic_rasters_repeated_input_expected_error.\n\nCanonical source: deployments/zoo-local/probes/saga_mosaic_rasters/probe.json"
+              }
+            },
+            {
+              "name": "saga_mosaic_rasters_repeated_input_expected_error",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.3/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRIDS\": [\n      {\n        \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n        \"type\": \"application/x-ogc-aaigrid\"\n      },\n      {\n        \"value\": \"bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxMiAxNCAxNiAxOCAyMAoxMSAxMyAxNSAxNyAxOQoxMCAxMiAxNCAxNiAxOAo5IDExIDEzIDE1IDE3CjggMTAgMTIgMTQgMTYK\",\n        \"format\": {\n          \"mediaType\": \"application/x-ogc-aaigrid\",\n          \"encoding\": \"base64\"\n        }\n      }\n    ],\n    \"NAME\": \"Alkmaar mosaic\",\n    \"OVERLAP\": \"mean\",\n    \"TARGET_DEFINITION\": \"user defined\",\n    \"TARGET_USER_SIZE\": 0.005,\n    \"TARGET_USER_XMIN\": 4.74,\n    \"TARGET_USER_XMAX\": 4.765,\n    \"TARGET_USER_YMIN\": 52.625,\n    \"TARGET_USER_YMAX\": 52.65,\n    \"TARGET_USER_COLS\": 5,\n    \"TARGET_USER_ROWS\": 5,\n    \"TARGET_USER_FITS\": \"cells\"\n  },\n  \"outputs\": {\n    \"TARGET_OUT_GRID\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Mosaic two rasters (provider crash evidence)\n\nBoth GRIDS values conform to the advertised repeated raster schema. The tested provider reproducibly terminates with SIGSEGV.\n\nCanonical source: deployments/zoo-local/probes/saga_mosaic_rasters_repeated_input_expected_error/probe.json"
+              }
+            },
+            {
+              "name": "saga_pointcloud_to_grid",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.pointcloud_tools.4/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"POINTS\": {\n      \"value\": \"TEFTRgAAAAAAAAAAAAAAAAAAAAAAAAAAAQJPR0MgUHJvY2Vzc2VzIHRlc3RzAAAAAAAAAAAAAAAAAGdlbmVyYXRlX2xhc19maXh0dXJlLnB5AAAAAAAAAAAA7QDqB+MA4wAAAAAAAAAAFAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAACN7bWg98awPo3ttaD3xrA+/Knx0k1iUD8AAAAAAAAQQAAAAAAAAEpAAAAAAAAAAAB1kxgEVg4TQBBYObTI9hJANV66SQxSSkDjpZvEIFBKQM3MzMzMzBBAzczMzMzM/D+ITgsAUI0JADQIAAAAAAkBAAAAAIB5CwDApAkASA0AAAAACQEAAAAAYKgLADiRCQAIBwAAAAAJAQAAAAD4ZQsA6McJAGgQAAAAAAkBAAAAAMCYCwAwvAkAVAsAAAAACQEAAAAA\",\n      \"format\": {\n        \"mediaType\": \"application/x-ogc-lasf\",\n        \"encoding\": \"base64\"\n      }\n    },\n    \"OUTPUT\": \"only z\",\n    \"AGGREGATION\": \"mean value\",\n    \"CELLSIZE\": 0.005\n  },\n  \"outputs\": {\n    \"GRID\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    },\n    \"COUNT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Convert five LAS points to small rasters\n\nThe request follows the advertised schema using an inline base64 LAS 1.2 fixture. The tested provider reproducibly terminates with SIGSEGV.\n\nCanonical source: deployments/zoo-local/probes/saga_pointcloud_to_grid/probe.json"
+              }
+            },
+            {
+              "name": "saga_resample_rasters",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.0/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"INPUT\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"KEEP_TYPE\": true,\n    \"TARGET_DEFINITION\": \"user defined\",\n    \"TARGET_USER_SIZE\": 0.005,\n    \"TARGET_USER_XMIN\": 4.74,\n    \"TARGET_USER_XMAX\": 4.765,\n    \"TARGET_USER_YMIN\": 52.625,\n    \"TARGET_USER_YMAX\": 52.65,\n    \"TARGET_USER_COLS\": 5,\n    \"TARGET_USER_ROWS\": 5,\n    \"TARGET_USER_FITS\": \"cells\"\n  },\n  \"outputs\": {\n    \"OUTPUT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Resample one Alkmaar raster to a user-defined grid\n\nA single referenced AAIGrid succeeds. Supplying two advertised repeated INPUT values crashes this provider; see saga_resample_rasters_repeated_input_expected_error.\n\nCanonical source: deployments/zoo-local/probes/saga_resample_rasters/probe.json"
+              }
+            },
+            {
+              "name": "saga_resample_rasters_repeated_input_expected_error",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.0/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"INPUT\": [\n      {\n        \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n        \"type\": \"application/x-ogc-aaigrid\"\n      },\n      {\n        \"value\": \"bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxMiAxNCAxNiAxOCAyMAoxMSAxMyAxNSAxNyAxOQoxMCAxMiAxNCAxNiAxOAo5IDExIDEzIDE1IDE3CjggMTAgMTIgMTQgMTYK\",\n        \"format\": {\n          \"mediaType\": \"application/x-ogc-aaigrid\",\n          \"encoding\": \"base64\"\n        }\n      }\n    ],\n    \"KEEP_TYPE\": true,\n    \"TARGET_DEFINITION\": \"user defined\",\n    \"TARGET_USER_SIZE\": 0.005,\n    \"TARGET_USER_XMIN\": 4.74,\n    \"TARGET_USER_XMAX\": 4.765,\n    \"TARGET_USER_YMIN\": 52.625,\n    \"TARGET_USER_YMAX\": 52.65,\n    \"TARGET_USER_COLS\": 5,\n    \"TARGET_USER_ROWS\": 5,\n    \"TARGET_USER_FITS\": \"cells\"\n  },\n  \"outputs\": {\n    \"OUTPUT\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Resample two rasters (provider crash evidence)\n\nBoth INPUT values conform to the advertised repeated raster schema. The tested provider reproducibly terminates with SIGSEGV.\n\nCanonical source: deployments/zoo-local/probes/saga_resample_rasters_repeated_input_expected_error/probe.json"
+              }
+            },
+            {
+              "name": "saga_shapes_to_tin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.tin_tools.2/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"SHAPES\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/points/five_points_3d.geojson\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"outputs\": {\n    \"TIN_POINTS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"TIN_CENTER\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"TIN_EDGES\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"TIN_TRIANGLES\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"TIN_POLYGONS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Convert five Alkmaar points to TIN-derived shapes\n\nRequests all five advertised vector outputs from the 3D point fixture.\n\nCanonical source: deployments/zoo-local/probes/saga_shapes_to_tin/probe.json"
+              }
+            },
+            {
+              "name": "saga_thiessen_points",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_points.16/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"POINTS\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/points/five_points.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"FRAME\": 10\n  },\n  \"outputs\": {\n    \"POLYGONS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Create Thiessen polygons from five Alkmaar points\n\nThe request follows the advertised schema using referenced GeoJSON points. The tested provider reproducibly terminates with SIGABRT.\n\nCanonical source: deployments/zoo-local/probes/saga_thiessen_points/probe.json"
+              }
+            },
+            {
+              "name": "saga_tile_raster",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.27/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"GRID\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"METHOD\": \"number of grid cells per tile\",\n    \"NX\": 3,\n    \"NY\": 3,\n    \"OVERLAP\": 0,\n    \"TILES_SAVE\": false\n  },\n  \"outputs\": {\n    \"TILES\": {\n      \"format\": {\n        \"mediaType\": \"image/tiff\"\n      },\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Split the Alkmaar DEM into small tiles\n\nUses the cell-count tiling method and a repeated raster output.\n\nCanonical source: deployments/zoo-local/probes/saga_tile_raster/probe.json"
+              }
+            },
+            {
+              "name": "saga_tin_to_shapes",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.tin_tools.3/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"TIN\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/points/five_points_3d.geojson\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"outputs\": {\n    \"POINTS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"CENTER\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"EDGES\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"TRIANGLES\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    },\n    \"POLYGONS\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Build a TIN from Alkmaar points and export its shapes\n\nThe ZOO SAGA adapter advertises vector representations for TIN and internally converts the supplied shapes to a TIN.\n\nCanonical source: deployments/zoo-local/probes/saga_tin_to_shapes/probe.json"
+              }
+            },
+            {
+              "name": "saga_zonal_statistics",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.statistics_grid.5/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"ZONES\": {\n      \"value\": \"bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxIDEgMSAyIDIKMSAxIDEgMiAyCjEgMSAxIDIgMgozIDMgMyAyIDIKMyAzIDMgMiAyCg==\",\n      \"format\": {\n        \"mediaType\": \"application/x-ogc-aaigrid\",\n        \"encoding\": \"base64\"\n      }\n    },\n    \"STATLIST\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc\",\n      \"type\": \"application/x-ogc-aaigrid\"\n    },\n    \"SHORTNAMES\": true\n  },\n  \"outputs\": {\n    \"OUTTAB\": {\n      \"format\": {\n        \"mediaType\": \"text/csv\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate DEM statistics for three Alkmaar raster zones\n\nCombines an inline base64 zone grid with a referenced statistics grid and requests CSV output.\n\nCanonical source: deployments/zoo-local/probes/saga_zonal_statistics/probe.json"
+              }
+            },
+            {
+              "name": "simplify_polygon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Simplify/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputPolygon\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/polygons/simple_polygon.geojson\",\n      \"type\": \"application/json\"\n    },\n    \"Tolerance\": 0.0001\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Simplify the simple Alkmaar polygon\n\nReference-input case pinned to the published GeoJSON fixture. Uses a tolerance appropriate to longitude/latitude coordinate units.\n\nCanonical source: deployments/zoo-local/probes/simplify_polygon/probe.json"
+              }
+            },
+            {
+              "name": "symmetric_difference_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SymDifference/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/overlapping_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Calculate the symmetric difference of two Alkmaar polygons\n\nBoth required reference inputs are pinned to the published GML 3.1 fixtures.\n\nCanonical source: deployments/zoo-local/probes/symmetric_difference_polygons/probe.json"
+              }
+            },
+            {
+              "name": "union_polygons",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Union/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"InputEntity1\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml\",\n      \"type\": \"text/xml\"\n    },\n    \"InputEntity2\": {\n      \"href\": \"https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/overlapping_polygon.gml\",\n      \"type\": \"text/xml\"\n    }\n  },\n  \"outputs\": {\n    \"Result\": {\n      \"format\": {\n        \"mediaType\": \"application/json\"\n      },\n      \"transmissionMode\": \"value\"\n    }\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Union two overlapping Alkmaar polygons\n\nBoth required reference inputs are pinned to the published GML 3.1 fixtures.\n\nCanonical source: deployments/zoo-local/probes/union_polygons/probe.json"
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST_process_async",
+          "item": [
+            {
+              "name": "demo_async_expected_failure",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/demo/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Start the deliberately failing demo process asynchronously\n\nThe initial execution request creates a job. The provider is designed to fail later; status polling will be a separate test.\n\nCanonical source: deployments/zoo-local/probes/demo_async_expected_failure/probe.json"
+              }
+            },
+            {
+              "name": "long_process_async",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/longProcess/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Start longProcess asynchronously\n\nVerifies asynchronous job creation. Job polling and dismissal will be separate cases.\n\nCanonical source: deployments/zoo-local/probes/long_process_async/probe.json"
+              }
+            }
+          ]
+        },
+        {
+          "name": "process_descriptions",
+          "item": [
+            {
+              "name": "Boundary",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Boundary",
+                "description": "Descriptions for probes: boundary_polygon"
+              }
+            },
+            {
+              "name": "Buffer",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Buffer",
+                "description": "Descriptions for probes: buffer_polygon"
+              }
+            },
+            {
+              "name": "Centroid",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Centroid",
+                "description": "Descriptions for probes: centroid_polygon"
+              }
+            },
+            {
+              "name": "Contains",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Contains",
+                "description": "Descriptions for probes: contains_polygon_point"
+              }
+            },
+            {
+              "name": "ConvexHull",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/ConvexHull",
+                "description": "Descriptions for probes: convex_hull_polygon"
+              }
+            },
+            {
+              "name": "Delaunay",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Delaunay",
+                "description": "Descriptions for probes: delaunay_five_points"
+              }
+            },
+            {
+              "name": "demo",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/demo",
+                "description": "Descriptions for probes: demo_async_expected_failure"
+              }
+            },
+            {
+              "name": "Difference",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Difference",
+                "description": "Descriptions for probes: difference_polygons"
+              }
+            },
+            {
+              "name": "Distance",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Distance",
+                "description": "Descriptions for probes: distance_polygons"
+              }
+            },
+            {
+              "name": "EchoProcess",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/EchoProcess",
+                "description": "Descriptions for probes: echo_all_input_kinds"
+              }
+            },
+            {
+              "name": "failR",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/failR",
+                "description": "Descriptions for probes: fail_r_expected_error"
+              }
+            },
+            {
+              "name": "Gdal_Contour",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Contour",
+                "description": "Descriptions for probes: gdal_contour_dem"
+              }
+            },
+            {
+              "name": "Gdal_Dem",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Dem",
+                "description": "Descriptions for probes: gdal_dem_slope"
+              }
+            },
+            {
+              "name": "Gdal_Grid",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Grid",
+                "description": "Descriptions for probes: gdal_grid_points"
+              }
+            },
+            {
+              "name": "Gdal_Translate",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Translate",
+                "description": "Descriptions for probes: gdal_translate_raster"
+              }
+            },
+            {
+              "name": "Gdal_Warp",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Gdal_Warp",
+                "description": "Descriptions for probes: gdal_warp_raster"
+              }
+            },
+            {
+              "name": "GdalExtractProfile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/GdalExtractProfile",
+                "description": "Descriptions for probes: gdal_extract_profile_line"
+              }
+            },
+            {
+              "name": "GetArea",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/GetArea",
+                "description": "Descriptions for probes: get_area_polygon"
+              }
+            },
+            {
+              "name": "hellojs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/hellojs",
+                "description": "Descriptions for probes: hellojs_string"
+              }
+            },
+            {
+              "name": "Intersection",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Intersection",
+                "description": "Descriptions for probes: intersection_polygons"
+              }
+            },
+            {
+              "name": "IsValid",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/IsValid",
+                "description": "Descriptions for probes: is_valid_polygon"
+              }
+            },
+            {
+              "name": "longProcess",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/longProcess",
+                "description": "Descriptions for probes: long_process_async"
+              }
+            },
+            {
+              "name": "Ogr2Ogr",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Ogr2Ogr",
+                "description": "Descriptions for probes: ogr2ogr_vector"
+              }
+            },
+            {
+              "name": "OTB.BandMath",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.BandMath",
+                "description": "Descriptions for probes: otb_band_math"
+              }
+            },
+            {
+              "name": "OTB.ComputeImagesStatistics",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.ComputeImagesStatistics",
+                "description": "Descriptions for probes: otb_compute_image_statistics"
+              }
+            },
+            {
+              "name": "OTB.PixelValue",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.PixelValue",
+                "description": "Descriptions for probes: otb_pixel_value"
+              }
+            },
+            {
+              "name": "OTB.Rasterization",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.Rasterization",
+                "description": "Descriptions for probes: otb_rasterization"
+              }
+            },
+            {
+              "name": "OTB.Segmentation",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.Segmentation",
+                "description": "Descriptions for probes: otb_segmentation"
+              }
+            },
+            {
+              "name": "SAGA.grid_calculus.1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_calculus.1",
+                "description": "Descriptions for probes: saga_grid_calculator, saga_grid_calculator_repeated_input_expected_error"
+              }
+            },
+            {
+              "name": "SAGA.grid_filter.1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_filter.1",
+                "description": "Descriptions for probes: saga_gaussian_filter"
+              }
+            },
+            {
+              "name": "SAGA.grid_gridding.1",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_gridding.1",
+                "description": "Descriptions for probes: saga_idw_points"
+              }
+            },
+            {
+              "name": "SAGA.grid_tools.0",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.0",
+                "description": "Descriptions for probes: saga_resample_rasters, saga_resample_rasters_repeated_input_expected_error"
+              }
+            },
+            {
+              "name": "SAGA.grid_tools.27",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.27",
+                "description": "Descriptions for probes: saga_tile_raster"
+              }
+            },
+            {
+              "name": "SAGA.grid_tools.3",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.grid_tools.3",
+                "description": "Descriptions for probes: saga_mosaic_rasters, saga_mosaic_rasters_repeated_input_expected_error"
+              }
+            },
+            {
+              "name": "SAGA.pointcloud_tools.4",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.pointcloud_tools.4",
+                "description": "Descriptions for probes: saga_pointcloud_to_grid"
+              }
+            },
+            {
+              "name": "SAGA.shapes_grid.0",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_grid.0",
+                "description": "Descriptions for probes: saga_add_grid_values_points"
+              }
+            },
+            {
+              "name": "SAGA.shapes_grid.5",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_grid.5",
+                "description": "Descriptions for probes: saga_contours_raster"
+              }
+            },
+            {
+              "name": "SAGA.shapes_lines.3",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_lines.3",
+                "description": "Descriptions for probes: saga_line_polygon_intersection"
+              }
+            },
+            {
+              "name": "SAGA.shapes_points.16",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_points.16",
+                "description": "Descriptions for probes: saga_thiessen_points"
+              }
+            },
+            {
+              "name": "SAGA.shapes_polygons.14",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_polygons.14",
+                "description": "Descriptions for probes: saga_intersect_polygons"
+              }
+            },
+            {
+              "name": "SAGA.shapes_polygons.5",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.shapes_polygons.5",
+                "description": "Descriptions for probes: saga_dissolve_polygons"
+              }
+            },
+            {
+              "name": "SAGA.statistics_grid.5",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.statistics_grid.5",
+                "description": "Descriptions for probes: saga_zonal_statistics"
+              }
+            },
+            {
+              "name": "SAGA.table_tools.0",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.table_tools.0",
+                "description": "Descriptions for probes: saga_create_table"
+              }
+            },
+            {
+              "name": "SAGA.table_tools.3",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.table_tools.3",
+                "description": "Descriptions for probes: saga_join_tables"
+              }
+            },
+            {
+              "name": "SAGA.tin_tools.2",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.tin_tools.2",
+                "description": "Descriptions for probes: saga_shapes_to_tin"
+              }
+            },
+            {
+              "name": "SAGA.tin_tools.3",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SAGA.tin_tools.3",
+                "description": "Descriptions for probes: saga_tin_to_shapes"
+              }
+            },
+            {
+              "name": "Simplify",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Simplify",
+                "description": "Descriptions for probes: simplify_polygon"
+              }
+            },
+            {
+              "name": "SymDifference",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/SymDifference",
+                "description": "Descriptions for probes: symmetric_difference_polygons"
+              }
+            },
+            {
+              "name": "Union",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/Union",
+                "description": "Descriptions for probes: union_polygons"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET_process_description_cases",
+          "item": [
+            {
+              "name": "otb_read_image_info_description_expected_error",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.ReadImageInfo",
+                "description": "Capture the ReadImageInfo description crash\n\nGET of the advertised process description terminates zoo_loader.cgi with SIGSEGV before an execution request can be constructed. The GeoTIFF succeeds with otbcli_ReadImageInfo but is diagnostic only and is not sent by this GET case.\n\nCanonical source: deployments/zoo-local/probes/otb_read_image_info_description_expected_error/probe.json"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

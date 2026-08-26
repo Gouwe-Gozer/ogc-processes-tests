@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/SAGA.grid_tools.27/execution",
+  "body_file": "../../../deployments/zoo-local/captures/executions/SAGA.grid_tools.27.execution.json"
+}

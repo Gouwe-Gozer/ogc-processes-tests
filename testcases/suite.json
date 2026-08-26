@@ -1,0 +1,305 @@
+{
+  "id": "ogc-processes-client-protocol-suite",
+  "title": "OGC API Processes client protocol scenarios",
+  "description": "Behavior-oriented scenarios. Deployment-specific evidence is referenced but not duplicated.",
+  "case_count": 39,
+  "cases": [
+    {
+      "id": "process_otb_read_image_info_description_expected_error",
+      "path": "descriptions/otb_read_image_info_description_expected_error/testcase.json",
+      "category": "descriptions",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "OTB.ReadImageInfo"
+    },
+    {
+      "id": "process_fail_r_expected_error",
+      "path": "errors/fail_r_expected_error/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "failR"
+    },
+    {
+      "id": "process_gdal_grid_points",
+      "path": "errors/gdal_grid_points/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Gdal_Grid"
+    },
+    {
+      "id": "process_otb_band_math",
+      "path": "errors/otb_band_math/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "OTB.BandMath"
+    },
+    {
+      "id": "process_saga_pointcloud_to_grid",
+      "path": "errors/saga_pointcloud_to_grid/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.pointcloud_tools.4"
+    },
+    {
+      "id": "process_saga_resample_rasters_repeated_input_expected_error",
+      "path": "errors/saga_resample_rasters_repeated_input_expected_error/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.grid_tools.0"
+    },
+    {
+      "id": "process_saga_thiessen_points",
+      "path": "errors/saga_thiessen_points/testcase.json",
+      "category": "errors",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.shapes_points.16"
+    },
+    {
+      "id": "process_buffer_polygon",
+      "path": "execution-sync/buffer_polygon/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Buffer"
+    },
+    {
+      "id": "process_contains_polygon_point",
+      "path": "execution-sync/contains_polygon_point/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Contains"
+    },
+    {
+      "id": "pygeoapi_bgt_sync_deeply_nested_json_output",
+      "path": "execution-sync/deeply-nested-json-output/testcase.json",
+      "category": "execution-sync",
+      "execution": "recorded-only",
+      "deployment": "bgt-prototype",
+      "process_id": "bgt-land-cover-summary"
+    },
+    {
+      "id": "process_distance_polygons",
+      "path": "execution-sync/distance_polygons/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Distance"
+    },
+    {
+      "id": "process_echo_all_input_kinds",
+      "path": "execution-sync/echo_all_input_kinds/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "EchoProcess"
+    },
+    {
+      "id": "process_gdal_extract_profile_line",
+      "path": "execution-sync/gdal_extract_profile_line/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "GdalExtractProfile"
+    },
+    {
+      "id": "process_gdal_translate_raster",
+      "path": "execution-sync/gdal_translate_raster/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Gdal_Translate"
+    },
+    {
+      "id": "process_hellojs_string",
+      "path": "execution-sync/hellojs_string/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "hellojs"
+    },
+    {
+      "id": "process_intersection_polygons",
+      "path": "execution-sync/intersection_polygons/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Intersection"
+    },
+    {
+      "id": "pygeoapi_demo_hello_world",
+      "path": "execution-sync/raw-versus-document-response/testcase.json",
+      "category": "execution-sync",
+      "execution": "recorded-only",
+      "deployment": "pygeoapi-demo",
+      "process_id": "hello-world"
+    },
+    {
+      "id": "process_saga_contours_raster",
+      "path": "execution-sync/saga_contours_raster/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.shapes_grid.5"
+    },
+    {
+      "id": "process_saga_join_tables",
+      "path": "execution-sync/saga_join_tables/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.table_tools.3"
+    },
+    {
+      "id": "process_saga_resample_rasters",
+      "path": "execution-sync/saga_resample_rasters/testcase.json",
+      "category": "execution-sync",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.grid_tools.0"
+    },
+    {
+      "id": "async_dismiss_running_job",
+      "path": "jobs/dismiss-running-job/testcase.json",
+      "category": "jobs",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "longProcess"
+    },
+    {
+      "id": "async_failed_demo_process",
+      "path": "jobs/failed-demo-process/testcase.json",
+      "category": "jobs",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "demo"
+    },
+    {
+      "id": "async_results_not_ready",
+      "path": "jobs/results-not-ready/testcase.json",
+      "category": "jobs",
+      "execution": "manual-only",
+      "deployment": "zoo-local",
+      "process_id": "longProcess"
+    },
+    {
+      "id": "async_successful_long_process",
+      "path": "jobs/successful-long-process/testcase.json",
+      "category": "jobs",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "longProcess"
+    },
+    {
+      "id": "async_unknown_job",
+      "path": "jobs/unknown-job/testcase.json",
+      "category": "jobs",
+      "execution": "live-capable",
+      "deployment": "zoo-local"
+    },
+    {
+      "id": "async_accepted_with_body_monitor_link",
+      "path": "malformed-responses/accepted-with-body-monitor-link/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_accepted_without_job_location",
+      "path": "malformed-responses/accepted-without-job-location/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_malformed_job_status",
+      "path": "malformed-responses/malformed-job-status/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_malformed_results_link",
+      "path": "malformed-responses/malformed-results-link/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_non_json_job_error",
+      "path": "malformed-responses/non-json-job-error/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "process_ogr2ogr_vector",
+      "path": "malformed-responses/ogr2ogr_vector/testcase.json",
+      "category": "malformed-responses",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "Ogr2Ogr"
+    },
+    {
+      "id": "process_saga_create_table",
+      "path": "malformed-responses/saga_create_table/testcase.json",
+      "category": "malformed-responses",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.table_tools.0"
+    },
+    {
+      "id": "process_saga_tile_raster",
+      "path": "malformed-responses/saga_tile_raster/testcase.json",
+      "category": "malformed-responses",
+      "execution": "live-capable",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.grid_tools.27"
+    },
+    {
+      "id": "async_successful_without_results_link",
+      "path": "malformed-responses/successful-without-results-link/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_unknown_job_status",
+      "path": "malformed-responses/unknown-job-status/testcase.json",
+      "category": "malformed-responses",
+      "execution": "recorded-only"
+    },
+    {
+      "id": "async_description_invalid_input",
+      "path": "validation/description-invalid-input/testcase.json",
+      "category": "validation",
+      "execution": "manual-only",
+      "deployment": "zoo-local",
+      "process_id": "longProcess"
+    },
+    {
+      "id": "process_invalid_bbox_echo",
+      "path": "validation/invalid_bbox_echo/testcase.json",
+      "category": "validation",
+      "execution": "manual-only",
+      "deployment": "zoo-local",
+      "process_id": "EchoProcess"
+    },
+    {
+      "id": "process_invalid_enum_saga_resample",
+      "path": "validation/invalid_enum_saga_resample/testcase.json",
+      "category": "validation",
+      "execution": "manual-only",
+      "deployment": "zoo-local",
+      "process_id": "SAGA.grid_tools.0"
+    },
+    {
+      "id": "process_missing_required_hellojs",
+      "path": "validation/missing_required_hellojs/testcase.json",
+      "category": "validation",
+      "execution": "manual-only",
+      "deployment": "zoo-local",
+      "process_id": "hellojs"
+    }
+  ]
+}
