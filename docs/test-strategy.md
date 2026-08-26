@@ -25,6 +25,35 @@ After adding or moving a testcase, update the list and check all files:
 python3 scripts/validate_repository.py --write-suite
 ```
 
+## Coverage of the Topic 3 plan
+
+This repository supplies test data and evidence for the OGC API Processes
+client described in the Topic 3 plan of approach. It does not implement the
+client or prove that a client feature works by itself. A feature is verified
+only after a test calls the actual client and checks its behavior against these
+examples.
+
+The current coverage is:
+
+| Topic 3 commitment | Coverage in this repository |
+|---|---|
+| Process discovery and descriptions | Partial: process descriptions are captured, but landing-page, conformance, and process-list testcases are still missing |
+| Generated forms | Partial: required inputs, enums, bounding boxes, and primitive types are represented, but the generated UI is not tested here |
+| Raw JSON fallback | Documented, but not yet tested through a client |
+| Synchronous execution | Strong coverage of successful, failed, raw, and document responses |
+| Async submission, polling, results, and dismiss | Strong coverage of successful, failed, incomplete, and dismissed jobs |
+| Result rendering | Partial: useful result samples exist, but the choice between map, inline view, JSON view, and download is not tested |
+| CORS and exposed `Location` | Missing |
+| Subscriber callbacks and polling reconciliation | Missing |
+| OGC API Processes v1 and v2 selection | Missing |
+| Different server implementations | Limited: most live testcases use the local ZOO deployment; two recorded pygeoapi examples cover additional response shapes |
+| Interoperability matrix | The repository can provide evidence for it, but the matrix has not been created yet |
+
+Provider-specific failures remain useful as evidence, but they should not
+create provider-specific client behavior. For example, separate OTB, SAGA, and
+GDAL failures can all verify the same client rule: preserve the HTTP response,
+show the server message safely, and keep the rest of the client usable.
+
 ## Testcase folders
 
 | Folder | What is tested |
