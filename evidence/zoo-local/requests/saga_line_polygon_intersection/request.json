@@ -1,0 +1,46 @@
+{
+  "id": "saga_line_polygon_intersection",
+  "title": "Split an Alkmaar line by a polygon",
+  "process_id": "SAGA.shapes_lines.3",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/SAGA.shapes_lines.3/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "LINES": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/lines/simple_line.geojson",
+        "type": "application/json"
+      },
+      "POLYGONS": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/simple_polygon.geojson",
+        "type": "application/json"
+      },
+      "ATTRIBUTES": "line and polygon"
+    },
+    "outputs": {
+      "INTERSECT": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      },
+      "DIFFERENCE": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/lines/simple_line.geojson",
+    "../../../../fixtures/polygons/simple_polygon.geojson"
+  ],
+  "expected_status": 200,
+  "notes": "Exercises two vector inputs and the process's intersection and difference outputs."
+}

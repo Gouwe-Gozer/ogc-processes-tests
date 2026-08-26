@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/Distance/execution",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "../../../deployments/zoo-local/probes/distance_polygons/request.json"
-}

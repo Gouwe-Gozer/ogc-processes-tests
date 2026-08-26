@@ -1,0 +1,36 @@
+{
+  "id": "gdal_extract_profile_line",
+  "title": "Extract an elevation profile along the Alkmaar line",
+  "process_id": "GdalExtractProfile",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/GdalExtractProfile/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "RasterFile": "ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "Geometry": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/lines/simple_line.geojson",
+        "type": "application/json"
+      }
+    },
+    "outputs": {
+      "Profile": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/raster/alkmaar_dem.asc",
+    "../../../../fixtures/lines/simple_line.geojson"
+  ],
+  "expected_status": 200,
+  "notes": "Local-profile case. RasterFile is relative to ZOO dataPath; Geometry uses the commit-pinned public GeoJSON line reference."
+}

@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/Buffer/execution",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "../../../deployments/zoo-local/probes/buffer_polygon/request.json"
-}

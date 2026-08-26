@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/Ogr2Ogr/execution",
+  "body": {
+    "OutputedDataSourceName": "http://localhost/cgi-bin/zoo_loader.cgihttp://localhost/temp//ogr2ogr_simple_polygon.geojson"
+  }
+}

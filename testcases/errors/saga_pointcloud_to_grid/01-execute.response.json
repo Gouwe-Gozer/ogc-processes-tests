@@ -1,8 +1,0 @@
-{
-  "status": 500,
-  "headers": {
-    "Content-Type": "application/json;charset=UTF-8"
-  },
-  "final_url": "{{baseUrl}}/processes/SAGA.pointcloud_tools.4/execution",
-  "body_file": "../../../deployments/zoo-local/captures/executions/SAGA.pointcloud_tools.4.execution-error.json"
-}

@@ -1,0 +1,26 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{jobUrl}}",
+  "body": {
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "status": "dismissed",
+    "message": "ZOO-Kernel successfully dismissed your service!",
+    "links": [
+      {
+        "title": "The job list for the current process",
+        "rel": "parent",
+        "type": "application/json",
+        "href": "{{baseUrl}}/jobs"
+      }
+    ],
+    "type": "process",
+    "processID": "longProcess",
+    "created": "2026-08-25T12:23:00.689Z",
+    "started": "2026-08-25T12:23:00.689Z",
+    "updated": "2026-08-25T12:23:20.038Z"
+  }
+}

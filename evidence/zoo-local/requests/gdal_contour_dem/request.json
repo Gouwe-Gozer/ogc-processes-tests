@@ -1,0 +1,25 @@
+{
+  "id": "gdal_contour_dem",
+  "title": "Create contours from the small Alkmaar DEM",
+  "process_id": "Gdal_Contour",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Gdal_Contour/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "InputDSN": "/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "OutputDSN": "/tmp/zTmp/gdal_contour_alkmaar.shp",
+      "i": "1",
+      "a": "elevation",
+      "b": 1
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.asc",
+  "expected_status": 200,
+  "notes": "Local-profile case. This provider uses paths directly and writes an ESRI Shapefile dataset below ZOO tmpPath."
+}

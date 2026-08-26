@@ -1,182 +1,137 @@
-# Test strategy
+# Selecting and using examples
 
-## Probes and client testcases
+## Purpose
 
-The repository contains two kinds of tests:
+The goal of this repository is to collect a small set of representative OGC
+API Processes requests and responses that our client should handle.
 
-- `deployments/<name>/probes/` contains requests that can be sent to a specific
-  server. Use these to reproduce and capture server behavior.
-- `testcases/` contains request and response examples with the behavior we
-  expect from the client.
+There are two levels:
 
-For example, a ZOO probe may record that a SAGA process crashes. The related
-client testcase checks that the client shows an HTTP error and keeps the server
-message. The client does not need SAGA-specific code.
+- [`../examples/`](../examples/) is the main set used while implementing and
+  testing the client.
+- [`../evidence/`](../evidence/) keeps similar processes, provider-specific
+  failures, process descriptions, and other observations that may be useful
+  later.
 
-`testcases/suite.json` lists all 39 client testcases:
+The examples are fixtures, not an independent test framework. The client
+project should load them and make assertions with its normal TypeScript test
+tools.
 
-- 25 can be run against a live server;
-- 5 are manual because timing or client-side validation matters;
-- 9 use recorded responses for errors that are difficult to reproduce safely.
+## Current main examples
 
-After adding or moving a testcase, update the list and check all files:
+The first three examples establish the format:
 
-```bash
-python3 scripts/validate_repository.py --write-suite
-```
-
-## Coverage of the Topic 3 plan
-
-This repository supplies test data and evidence for the OGC API Processes
-client described in the Topic 3 plan of approach. It does not implement the
-client or prove that a client feature works by itself. A feature is verified
-only after a test calls the actual client and checks its behavior against these
-examples.
-
-The current coverage is:
-
-| Topic 3 commitment | Coverage in this repository |
+| Example | What it represents |
 |---|---|
-| Process discovery and descriptions | Partial: process descriptions are captured, but landing-page, conformance, and process-list testcases are still missing |
-| Generated forms | Partial: required inputs, enums, bounding boxes, and primitive types are represented, but the generated UI is not tested here |
-| Raw JSON fallback | Documented, but not yet tested through a client |
-| Synchronous execution | Strong coverage of successful, failed, raw, and document responses |
-| Async submission, polling, results, and dismiss | Strong coverage of successful, failed, incomplete, and dismissed jobs |
-| Result rendering | Partial: useful result samples exist, but the choice between map, inline view, JSON view, and download is not tested |
-| CORS and exposed `Location` | Missing |
-| Subscriber callbacks and polling reconciliation | Missing |
-| OGC API Processes v1 and v2 selection | Missing |
-| Different server implementations | Limited: most live testcases use the local ZOO deployment; two recorded pygeoapi examples cover additional response shapes |
-| Interoperability matrix | The repository can provide evidence for it, but the matrix has not been created yet |
+| `sync/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
+| `async/successful-job` | Submission, running status, successful status, and result retrieval |
+| `errors/non-json-error` | An HTTP 500 response containing HTML instead of an OGC JSON problem |
 
-Provider-specific failures remain useful as evidence, but they should not
-create provider-specific client behavior. For example, separate OTB, SAGA, and
-GDAL failures can all verify the same client rule: preserve the HTTP response,
-show the server message safely, and keep the rest of the client usable.
+Each request file contains its method, URL, headers, and body. Each response
+file contains its status, headers, final URL, and body. The README explains why
+the exchange matters.
 
-## Testcase folders
+## Choosing the rest of the main set
 
-| Folder | What is tested |
-|---|---|
-| `descriptions` | One process description fails without breaking the full process list |
-| `errors` | The server returns an HTTP error |
-| `execution-sync` | A synchronous request returns usable results |
-| `jobs` | Submit, poll, fetch results, and dismiss asynchronous jobs |
-| `malformed-responses` | The server returns incomplete or invalid data |
-| `validation` | The client finds bad input before sending it |
+Add an example when it introduces a different client-facing behaviour:
 
-Landing-page and conformance tests have not been added yet. When they are
-added, put them in `testcases/discovery/`.
+- a new input shape needed by form generation;
+- a new response mode or output shape;
+- a different asynchronous job transition;
+- an error or malformed response that requires different handling;
+- an unsupported schema that must fall back to raw JSON.
 
-## Choosing a smaller process set
+Do not add another main example only because it uses a different processing
+library or algorithm. Similar requests remain available under `evidence/`.
 
-The local ZOO server has many processes that look different but require the
-same client behavior. For example, `Intersection`, `Union`, and `Difference`
-all send two geometries and receive one geometry. One successful example is
-usually enough to test that request and result shape.
+A useful final main set will probably contain 12–15 examples, including:
 
-Keep another process when it adds a different input, result, job flow, or error.
+- a simple process description;
+- a complex or unsupported schema;
+- simple synchronous JSON;
+- GeoJSON input and output;
+- raw and document responses;
+- deeply nested JSON;
+- an output returned by reference;
+- async success, failure, and dismissal;
+- a structured OGC error;
+- a non-JSON error;
+- HTTP 200 with a missing or unusable output;
+- an accepted job without a usable location;
+- invalid input according to the process description.
 
-| Request or result shape | Processes considered | Main examples kept for client tests |
+## Process families found in the ZOO evidence
+
+Many ZOO processes use the same client-facing shapes. The full request and
+response material remains in [`../evidence/zoo-local/`](../evidence/zoo-local/).
+
+| Request or result shape | Processes considered | Representative candidates |
 |---|---|---|
 | Simple text input and output | `hellojs` | `hellojs` |
 | Mixed text, JSON, and bounding box | `EchoProcess` | `EchoProcess` |
 | Asynchronous job | `longProcess`, `demo` | both, because one succeeds and one fails |
-| Geometry to number or Boolean | `GetArea`, `Distance`, `Contains`, `IsValid` | `Distance`, `Contains` |
-| One geometry to one geometry | GEOS and SAGA single-input tools | `Buffer` plus a SAGA error |
+| Geometry to number or Boolean | `GetArea`, `Distance`, `Contains`, `IsValid` | `Distance` or `Contains` |
+| One geometry to one geometry | GEOS and SAGA single-input tools | `Buffer` |
 | Two geometries to one geometry | GEOS and SAGA two-input tools | `Intersection` |
-| Filenames inside the server | GDAL/OGR wrappers | `Gdal_Translate`, `Gdal_Grid`, `Ogr2Ogr` |
-| Server raster plus remote geometry | `GdalExtractProfile` | `GdalExtractProfile` |
-| Raster to raster | SAGA grid tools and `OTB.BandMath` | SAGA success, missing result, repeated-input crash, and OTB error |
-| Vector or LAS to raster | SAGA gridding/point-cloud and OTB rasterization | LAS request and OTB conditional description |
-| Several named vector outputs | SAGA shape/TIN tools and OTB segmentation | SAGA contour outputs and OTB description |
-| CSV, table, or XML output | SAGA table/statistics and OTB statistics | usable CSV, bad output link, and OTB description |
+| Filenames inside the server | GDAL and OGR wrappers | evidence only unless a target service requires this pattern |
+| Raster to raster | SAGA grid tools and `OTB.BandMath` | one success and one useful failure |
+| Vector or LAS to raster | SAGA point-cloud tools and OTB rasterization | one request if its result shape is needed |
+| Several named vector outputs | SAGA shape/TIN tools and OTB segmentation | SAGA contours |
+| CSV, table, or XML output | SAGA table/statistics and OTB statistics | one usable reference output |
 | Immediate server error | `failR` | `failR` |
-| Raster to simple value | `OTB.PixelValue` | OTB description and shared OTB runtime error |
-| Broken process description | `OTB.ReadImageInfo` | `OTB.ReadImageInfo` |
+| Broken process description | `OTB.ReadImageInfo` | one unavailable-description example |
 
-The smaller ZOO client set uses these 22 process IDs:
+## Bad input and bad responses
 
-```text
-hellojs, EchoProcess, longProcess, demo, Distance, Contains, Buffer,
-Intersection, Gdal_Translate, Gdal_Grid, Ogr2Ogr, GdalExtractProfile,
-SAGA.grid_tools.0, SAGA.grid_tools.27, SAGA.shapes_grid.5,
-SAGA.shapes_points.16, SAGA.table_tools.0, SAGA.table_tools.3,
-SAGA.pointcloud_tools.4, failR, OTB.BandMath, OTB.ReadImageInfo
-```
+Keep evidence from these groups, but only promote a response to `examples/`
+when it requires distinct client behaviour:
 
-The full set of 53 probes is still useful when checking the ZOO container or a
-new provider version. The two pygeoapi examples add a deeply nested JSON result
-and raw-versus-document responses. They do not repeat the full ZOO set.
+1. The client can identify invalid input from the process description.
+2. The request follows the description, but the server fails.
+3. The request is valid, but the processing software cannot use its data.
+4. HTTP 200 contains a missing or unusable output.
+5. An asynchronous job fails after its submission was accepted.
 
-## Bad input and bad response cases
-
-The test suite needs examples from each of these groups:
-
-1. **The client can find the input error.** Examples: missing required input,
-   wrong type, invalid allowed value, wrong bounding-box length, or too many
-   repeated values.
-2. **The request follows the description, but the server fails.** Examples:
-   HTTP 500, a provider crash, an unavailable OTB runtime, or a hidden required
-   parameter.
-3. **The request is valid, but its data cannot be used.** Examples: an input URL
-   the server cannot reach, corrupt base64 data, or a local computer path sent
-   to a server-side filename input.
-4. **HTTP 200 contains an unusable result.** Examples: a missing output, invalid
-   URL text, or a link to a file that does not exist.
-5. **An asynchronous job fails later.** HTTP 201 only confirms that the job was
-   accepted.
-
-Keep every distinct server error in the deployment captures. The client may
-show all of them with the same basic UI: the type of failure followed by the
-escaped server message.
-
-## Asynchronous coverage
-
-It is not necessary to run every process through every job state. The job tests
-cover this flow once:
+Several different server errors may all use the same client handling:
 
 ```text
-POST with Prefer: respond-async
-  └─ accepted or running
-      ├─ successful → follow the results link
-      ├─ failed → show the job message
-      └─ DELETE → dismissed or an HTTP error
+Request failed — server message: “<server detail>”
+Job failed — server message: “<job message>”
 ```
 
-Recorded tests also cover missing job links, invalid JSON, unknown status
-values, missing result links, and non-JSON errors.
+Keep the distinct raw messages under `evidence/`; do not create
+provider-specific client code for them.
 
-## Files in a testcase
+## Using the files in client tests
 
-Each testcase folder contains:
+Recorded tests should call the client's public API with a fake implementation
+of its small HTTP transport. The fake transport returns a response from an
+example, after which the TypeScript test checks the client result.
 
-- `testcase.json`: the ordered steps and expected client behavior;
-- `NN-name.request.json`: method, URL, headers, and optional body file;
-- `NN-name.response.json`: status, headers, final URL, and optional body file;
-- a local body file only when the same body is not already stored as a probe or
-  captured response.
+Live tests should call a small selection through the real browser transport
+against ZOO, pygeoapi, or a testbed service. Compare stable properties such as
+status, job state, output IDs, media types, and usable links. Do not compare
+job IDs, timestamps, temporary filenames, exact coordinates, or exact error
+wording.
 
-Source request URLs use `{{baseUrl}}`. The testcase's `deployment` tells tools
-which URL to use. Later steps can use values captured from an earlier response:
+Postman and `run_evidence_request.py` are useful for inspecting a server. They
+bypass the client and therefore do not count as client tests.
 
-- `{{jobId}}` and `{{jobUrl}}` for a job;
-- `{{resultsUrl}}` for a job result document;
-- `{{resultUrl}}` for one linked process output.
+## Coverage of the Topic 3 plan
 
-In `expected_client_behavior`, `classification` is the short result name.
-`must` lists required behavior. `must_not` lists mistakes the test prevents.
+This table describes test material in this repository. A feature is verified
+only when an actual client test uses that material.
 
-## What to compare
-
-For live tests, compare:
-
-- HTTP and job state;
-- expected output IDs;
-- JSON wrappers and media types;
-- whether an output link can be used.
-
-Do not compare changing job IDs, timestamps, temporary filenames, exact error
-wording, or every coordinate byte for byte.
-
-Recorded tests can compare their fixed response files exactly.
+| Topic 3 commitment | Coverage in this repository |
+|---|---|
+| Process discovery and descriptions | Partial: many descriptions are captured, but landing-page, conformance, and process-list examples are still missing |
+| Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, and primitive types, but generated UI behaviour must be tested in the client project |
+| Raw JSON fallback | Documented, but no main example has been selected yet |
+| Synchronous execution | A main GeoJSON example and broader supporting evidence are available |
+| Async submission, polling, results, and dismiss | Async success is a main example; failure and dismissal remain in supporting evidence |
+| Result rendering | Result samples exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
+| CORS and exposed `Location` | Missing |
+| Subscriber callbacks and polling reconciliation | Missing |
+| OGC API Processes v1 and v2 selection | Missing |
+| Different server implementations | Limited: ZOO supplies most live evidence; two pygeoapi servers supply recorded response shapes |
+| Interoperability matrix | The evidence can supply observations, but the matrix has not been created yet |

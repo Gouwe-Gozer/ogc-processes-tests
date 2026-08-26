@@ -1,0 +1,24 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "body": {
+    "literalOutput": "Alkmaar",
+    "complexOutput": {
+      "value": {
+        "message": "Hello from Alkmaar"
+      }
+    },
+    "c": {
+      "bbox": [
+        4.74,
+        52.62,
+        4.77,
+        52.65
+      ],
+      "crs": "urn:ogc:def:crs:EPSG:6.6:4326"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/Distance/execution",
+  "body": {
+    "Distance": 0
+  }
+}

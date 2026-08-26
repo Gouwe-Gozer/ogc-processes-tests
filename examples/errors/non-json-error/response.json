@@ -1,0 +1,8 @@
+{
+  "status": 500,
+  "headers": {
+    "Content-Type": "text/html; charset=UTF-8"
+  },
+  "final_url": "{{jobUrl}}",
+  "body": "<!doctype html>\n<html lang=\"en\">\n  <head><title>500 Internal Server Error</title></head>\n  <body><h1>Internal Server Error</h1></body>\n</html>\n"
+}

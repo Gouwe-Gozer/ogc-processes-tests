@@ -1,0 +1,24 @@
+{
+  "id": "gdal_dem_slope",
+  "title": "Calculate slope from the small Alkmaar DEM",
+  "process_id": "Gdal_Dem",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Gdal_Dem/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "InputDSN": "/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "OutputDSN": "/tmp/zTmp/gdal_dem_slope.tif",
+      "utility": "slope",
+      "s": "111120"
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.asc",
+  "expected_status": 200,
+  "notes": "Local-profile case. This provider uses paths directly, so the request names the staged dataPath input and tmpPath output explicitly. Hillshade is not used because the implementation requires an unadvertised z input."
+}

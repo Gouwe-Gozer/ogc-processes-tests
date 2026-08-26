@@ -1,8 +1,0 @@
-{
-  "status": 404,
-  "headers": {
-    "Content-Type": "application/json;charset=UTF-8"
-  },
-  "final_url": "{{jobUrl}}",
-  "body_file": "04-repeat-dismiss.response.body.json"
-}

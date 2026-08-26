@@ -1,0 +1,27 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{jobUrl}}",
+  "body": {
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "type": "process",
+    "processID": "demo",
+    "created": "2026-08-24T10:41:38.119Z",
+    "started": "2026-08-24T10:41:38.119Z",
+    "finished": "2026-08-24T10:42:29.772Z",
+    "updated": "2026-08-24T10:42:29.158Z",
+    "status": "failed",
+    "message": "Unable to run the Service. The message returned back by the Service was the following: Error executing the service",
+    "links": [
+      {
+        "title": "Status location",
+        "rel": "monitor",
+        "type": "application/json",
+        "href": "{{jobUrl}}"
+      }
+    ]
+  }
+}

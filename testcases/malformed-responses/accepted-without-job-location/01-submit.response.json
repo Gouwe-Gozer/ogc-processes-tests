@@ -1,8 +1,0 @@
-{
-  "status": 201,
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "final_url": "{{baseUrl}}/processes/longProcess/execution",
-  "body_file": "01-submit.response.body.json"
-}

@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/SAGA.grid_tools.0/execution",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "01-execute-invalid.request.body.json"
-}

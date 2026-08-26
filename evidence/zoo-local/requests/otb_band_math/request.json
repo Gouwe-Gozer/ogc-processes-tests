@@ -1,0 +1,46 @@
+{
+  "id": "otb_band_math",
+  "title": "Add two Alkmaar raster inputs with OTB BandMath",
+  "process_id": "OTB.BandMath",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/OTB.BandMath/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "il": [
+        {
+          "value": "SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==",
+          "format": {
+            "mediaType": "image/tiff",
+            "encoding": "base64"
+          }
+        },
+        {
+          "value": "SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==",
+          "format": {
+            "mediaType": "image/tiff",
+            "encoding": "base64"
+          }
+        }
+      ],
+      "out": "float",
+      "exp": "im1b1 + im2b1"
+    },
+    "outputs": {
+      "out": {
+        "format": {
+          "mediaType": "image/tiff"
+        },
+        "transmissionMode": "reference"
+      }
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.tif",
+  "expected_status": 500,
+  "notes": "Exercises the advertised repeated image list and overlapping out input/output ID. The same fixture and expression run with OTB CLI 7.0; ZOO reports an empty OTB application registry."
+}

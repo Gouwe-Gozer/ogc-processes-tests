@@ -1,0 +1,19 @@
+{
+  "id": "hellojs_string",
+  "title": "Execute hellojs with a string input",
+  "process_id": "hellojs",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/hellojs/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "S": "Codex"
+    }
+  },
+  "expected_status": 200,
+  "notes": "Basic literal-input smoke test."
+}

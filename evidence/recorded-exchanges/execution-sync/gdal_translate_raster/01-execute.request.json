@@ -1,0 +1,16 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/Gdal_Translate/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "Format": "GTiff",
+      "InputDSN": "ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "OutputDSN": "gdal_translate_alkmaar"
+    },
+    "response": "document"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/SAGA.grid_tools.0/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "INPUT": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc",
+        "type": "application/x-ogc-aaigrid"
+      },
+      "KEEP_TYPE": true,
+      "TARGET_DEFINITION": "not advertised",
+      "TARGET_USER_SIZE": 0.005,
+      "TARGET_USER_XMIN": 4.74,
+      "TARGET_USER_XMAX": 4.765,
+      "TARGET_USER_YMIN": 52.625,
+      "TARGET_USER_YMAX": 52.65,
+      "TARGET_USER_COLS": 5,
+      "TARGET_USER_ROWS": 5,
+      "TARGET_USER_FITS": "cells"
+    },
+    "outputs": {
+      "OUTPUT": {
+        "format": {
+          "mediaType": "image/tiff"
+        },
+        "transmissionMode": "reference"
+      }
+    },
+    "response": "document"
+  }
+}

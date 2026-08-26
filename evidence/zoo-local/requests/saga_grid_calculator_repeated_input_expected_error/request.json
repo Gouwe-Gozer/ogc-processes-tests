@@ -1,0 +1,47 @@
+{
+  "id": "saga_grid_calculator_repeated_input_expected_error",
+  "title": "Calculate with two rasters (provider crash evidence)",
+  "process_id": "SAGA.grid_calculus.1",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/SAGA.grid_calculus.1/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "GRIDS": [
+        {
+          "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc",
+          "type": "application/x-ogc-aaigrid"
+        },
+        {
+          "value": "bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxMiAxNCAxNiAxOCAyMAoxMSAxMyAxNSAxNyAxOQoxMCAxMiAxNCAxNiAxOAo5IDExIDEzIDE1IDE3CjggMTAgMTIgMTQgMTYK",
+          "format": {
+            "mediaType": "application/x-ogc-aaigrid",
+            "encoding": "base64"
+          }
+        }
+      ],
+      "FORMULA": "g1 + g2",
+      "NAME": "Alkmaar sum",
+      "TYPE": "4 byte floating point number"
+    },
+    "outputs": {
+      "RESULT": {
+        "format": {
+          "mediaType": "image/tiff"
+        },
+        "transmissionMode": "reference"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/raster/alkmaar_dem.asc",
+    "../../../../fixtures/raster/alkmaar_values.asc"
+  ],
+  "expected_status": 500,
+  "notes": "Both GRIDS values and the g1 + g2 expression conform to the advertised schema. The tested provider reproducibly terminates with SIGSEGV."
+}

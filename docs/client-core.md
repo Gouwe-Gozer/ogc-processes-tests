@@ -133,4 +133,4 @@ second implementation of the small transport interface.
 4. Supported schema fields plus raw JSON fallback.
 5. Synchronous execution and results.
 6. Asynchronous submission, status, results, and dismissal.
-7. Tests based on [`../testcases/suite.json`](../testcases/suite.json).
+7. Tests using the representative exchanges in [`../examples/`](../examples/).

@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/bgt-land-cover-summary/execution?f=json",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "01-execute.request.body.json"
-}

@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/Ogr2Ogr/execution",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "../../../deployments/zoo-local/probes/ogr2ogr_vector/request.json"
-}

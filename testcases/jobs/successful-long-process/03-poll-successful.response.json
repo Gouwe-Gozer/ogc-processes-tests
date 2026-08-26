@@ -1,9 +1,0 @@
-{
-  "status": 200,
-  "headers": {
-    "Content-Type": "application/json;charset=UTF-8",
-    "Link": "<https://www.opengis.net/dev/profile/OGC/0/jobs-description>; rel=\"profile\""
-  },
-  "final_url": "{{jobUrl}}",
-  "body_file": "03-poll-successful.response.body.json"
-}

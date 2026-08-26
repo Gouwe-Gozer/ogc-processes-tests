@@ -1,27 +1,15 @@
 #!/usr/bin/env python3
-"""Generate deployment probes and live client scenarios as Postman collections."""
+"""Generate Postman collections from examples and runnable evidence requests."""
 
 from __future__ import annotations
 
 import argparse
-import copy
-import http.client
 import json
-import re
-import sys
-import urllib.parse
 import uuid
 from pathlib import Path
 from typing import Any
 
-from support.repository import (
-    REPOSITORY_ROOT,
-    RepositoryError,
-    deployment_variable,
-    load_deployment,
-    read_json,
-    reference_path,
-)
+from support.repository import REPOSITORY_ROOT, RepositoryError, read_json
 
 
 COLLECTION_SCHEMA = (
@@ -32,346 +20,197 @@ COLLECTION_SCHEMA = (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--deployment",
-        action="append",
-        dest="deployments",
-        help="include only this deployment ID (repeatable)",
-    )
-    parser.add_argument(
-        "--deployments-dir",
+        "--output-dir",
         type=Path,
-        default=REPOSITORY_ROOT / "deployments",
-    )
-    parser.add_argument(
-        "--testcases-dir", type=Path, default=REPOSITORY_ROOT / "testcases"
-    )
-    parser.add_argument(
-        "--output-dir", type=Path, default=REPOSITORY_ROOT / "generated/postman"
+        default=REPOSITORY_ROOT / "generated" / "postman",
     )
     return parser.parse_args()
 
 
 def collection_id(name: str) -> str:
-    return str(
-        uuid.uuid5(
-            uuid.NAMESPACE_URL,
-            f"https://github.com/Gouwe-Gozer/ogc-processes-tests#{name}",
-        )
-    )
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"ogc-processes-tests:{name}"))
 
 
-def header_list(headers: dict[str, str]) -> list[dict[str, str]]:
-    return [{"key": key, "value": value} for key, value in headers.items()]
+def headers(values: object) -> list[dict[str, str]]:
+    if not isinstance(values, dict):
+        return []
+    return [{"key": str(key), "value": str(value)} for key, value in values.items()]
 
 
-def deployment_url(target: str, variable: str) -> str:
-    base = "{{" + variable + "}}"
-    if "{{baseUrl}}" in target:
-        return target.replace("{{baseUrl}}", base)
-    if target.startswith("/"):
-        return base + target
-    return target
+def raw_body(value: object) -> str:
+    if isinstance(value, str):
+        return value
+    return json.dumps(value, indent=2, ensure_ascii=False)
 
 
-def request_body(owner: Path, body_file: object) -> dict[str, Any] | None:
-    if body_file is None:
-        return None
-    if not isinstance(body_file, str):
-        raise RepositoryError(f"{owner}: body_file must be a string")
-    path = reference_path(owner, body_file)
-    raw = path.read_text(encoding="utf-8")
-    language = "json" if path.suffix == ".json" else "text"
-    return {
-        "mode": "raw",
-        "raw": raw,
-        "options": {"raw": {"language": language}},
+def postman_request(record: dict[str, Any], url: str) -> dict[str, Any]:
+    request: dict[str, Any] = {
+        "method": record["method"],
+        "header": headers(record.get("headers")),
+        "url": url,
     }
-
-
-def postman_request(
-    descriptor: dict[str, Any], descriptor_path: Path, variable: str
-) -> dict[str, Any]:
-    method = descriptor.get("method")
-    target = descriptor.get("url") or descriptor.get("path")
-    headers = descriptor.get("headers", {})
-    if method not in {"GET", "POST", "DELETE"} or not isinstance(target, str):
-        raise RepositoryError(f"{descriptor_path}: invalid method or URL")
-    if not isinstance(headers, dict):
-        raise RepositoryError(f"{descriptor_path}: headers must be an object")
-    result: dict[str, Any] = {
-        "method": method,
-        "header": header_list(headers),
-        "url": deployment_url(target, variable),
-    }
-    body = request_body(descriptor_path, descriptor.get("body_file"))
-    if body is not None:
-        result["body"] = body
-    return result
+    if "body" in record:
+        request["body"] = {
+            "mode": "raw",
+            "raw": raw_body(record["body"]),
+            "options": {"raw": {"language": "json"}},
+        }
+    return request
 
 
 def response_example(
-    response_path: Path, original_request: dict[str, Any], variable: str
+    record: dict[str, Any], original_request: dict[str, Any]
 ) -> dict[str, Any]:
-    descriptor = read_json(response_path)
-    if not isinstance(descriptor, dict) or not isinstance(descriptor.get("status"), int):
-        raise RepositoryError(f"{response_path}: invalid response descriptor")
-    headers = descriptor.get("headers", {})
-    if not isinstance(headers, dict):
-        raise RepositoryError(f"{response_path}: headers must be an object")
-    body = ""
-    body_file = descriptor.get("body_file")
-    if isinstance(body_file, str):
-        body = reference_path(response_path, body_file).read_text(
-            encoding="utf-8", errors="replace"
-        )
-    deployment_base = "{{" + variable + "}}"
-    body = body.replace("{{baseUrl}}", deployment_base)
-    headers = {
-        key: value.replace("{{baseUrl}}", deployment_base)
-        for key, value in headers.items()
-    }
-    status = descriptor["status"]
-    content_type = next(
-        (value for key, value in headers.items() if key.lower() == "content-type"),
-        "",
-    )
     return {
-        "name": f"Representative HTTP {status}",
-        "originalRequest": copy.deepcopy(original_request),
-        "status": http.client.responses.get(status, "Recorded response"),
-        "code": status,
-        "_postman_previewlanguage": "json" if "json" in content_type else "text",
-        "header": header_list(headers),
-        "cookie": [],
-        "body": body,
+        "name": f"HTTP {record['status']}",
+        "originalRequest": original_request,
+        "status": str(record["status"]),
+        "code": record["status"],
+        "header": headers(record.get("headers")),
+        "body": raw_body(record.get("body", "")),
     }
 
 
-def load_deployments(
-    deployments_dir: Path, selected: list[str] | None
-) -> dict[str, tuple[dict[str, Any], Path]]:
-    ids = selected or sorted(
-        path.parent.name for path in deployments_dir.glob("*/deployment.json")
-    )
-    if not ids:
-        raise RepositoryError(f"no deployment manifests found below {deployments_dir}")
+def paired_response(request_path: Path) -> Path:
+    if request_path.name == "request.json":
+        return request_path.with_name("response.json")
+    return request_path.with_name(request_path.name.replace(".request.json", ".response.json"))
+
+
+def example_item(request_path: Path) -> dict[str, Any]:
+    record = read_json(request_path)
+    if not isinstance(record, dict):
+        raise RepositoryError(f"{request_path} must contain an object")
+    request = postman_request(record, str(record.get("url") or record.get("path")))
+    response_path = paired_response(request_path)
+    name = request_path.name.removesuffix(".request.json")
+    if name == "request.json":
+        name = request_path.parent.name
+    item: dict[str, Any] = {"name": name, "request": request}
+    if response_path.is_file():
+        response = read_json(response_path)
+        if isinstance(response, dict):
+            item["response"] = [response_example(response, request)]
+    return item
+
+
+def add_to_tree(tree: dict[str, Any], parts: tuple[str, ...], item: dict[str, Any]) -> None:
+    current = tree
+    for part in parts:
+        current = current.setdefault(part, {})
+    current.setdefault("__items__", []).append(item)
+
+
+def tree_items(tree: dict[str, Any]) -> list[dict[str, Any]]:
+    result = list(tree.get("__items__", []))
+    for name in sorted(key for key in tree if key != "__items__"):
+        result.append({"name": name, "item": tree_items(tree[name])})
+    return result
+
+
+def generate_examples() -> dict[str, Any]:
+    root = REPOSITORY_ROOT / "examples"
+    request_paths = sorted(root.rglob("*.request.json"))
+    request_paths.extend(sorted(root.glob("*/*/request.json")))
+    tree: dict[str, Any] = {}
+    for path in request_paths:
+        relative = path.parent.relative_to(root)
+        add_to_tree(tree, relative.parts, example_item(path))
     return {
-        deployment_id: load_deployment(deployment_id, deployments_dir)
-        for deployment_id in ids
-    }
-
-
-def probe_item(
-    probe: dict[str, Any], probe_path: Path, variable: str
-) -> dict[str, Any]:
-    descriptor = probe.get("request")
-    if not isinstance(descriptor, dict):
-        raise RepositoryError(f"{probe_path}: request must be an object")
-    request = postman_request(descriptor, probe_path, variable)
-    description = [str(probe.get("title", probe.get("id", probe_path.parent.name)))]
-    if probe.get("notes"):
-        description.append(str(probe["notes"]))
-    description.append(f"Canonical source: {probe_path.relative_to(REPOSITORY_ROOT)}")
-    request["description"] = "\n\n".join(description)
-    return {"name": str(probe.get("id", probe_path.parent.name)), "request": request}
-
-
-def description_item(
-    process_id: str, variable: str, source_names: list[str]
-) -> dict[str, Any]:
-    return {
-        "name": process_id,
-        "request": {
-            "method": "GET",
-            "header": [{"key": "Accept", "value": "application/json"}],
-            "url": (
-                "{{"
-                + variable
-                + "}}/processes/"
-                + urllib.parse.quote(process_id, safe="")
-            ),
-            "description": "Descriptions for probes: " + ", ".join(source_names),
+        "info": {
+            "_postman_id": collection_id("representative-examples"),
+            "name": "OGC API Processes representative examples",
+            "description": "Generated from examples/. Do not edit by hand.",
+            "schema": COLLECTION_SCHEMA,
         },
+        "variable": [
+            {"key": "baseUrl", "value": "http://localhost/ogc-api", "type": "string"},
+            {"key": "jobId", "value": "", "type": "string"},
+            {"key": "jobUrl", "value": "", "type": "string"},
+            {"key": "resultsUrl", "value": "", "type": "string"},
+        ],
+        "item": tree_items(tree),
     }
 
 
-def generate_probe_collection(
-    deployments: dict[str, tuple[dict[str, Any], Path]]
-) -> dict[str, Any]:
-    deployment_folders = []
+def evidence_request_item(record: dict[str, Any], variable: str) -> dict[str, Any]:
+    target = record.get("url") or record.get("path")
+    if not isinstance(target, str):
+        raise RepositoryError("evidence request requires a path or url")
+    url = target if target.startswith(("http://", "https://")) else f"{{{{{variable}}}}}/{target.lstrip('/')}"
+    request = postman_request(record, url)
+    description = str(record.get("notes", ""))
+    if description:
+        request["description"] = description
+    return {"name": str(record.get("id", "request")), "request": request}
+
+
+def generate_evidence() -> dict[str, Any]:
+    server_folders = []
     variables = []
-    for deployment_id, (manifest, deployment_dir) in deployments.items():
-        probes_name = manifest.get("probes")
-        if not isinstance(probes_name, str):
+    for server_path in sorted((REPOSITORY_ROOT / "evidence").glob("*/server.json")):
+        server = read_json(server_path)
+        if not isinstance(server, dict):
             continue
-        probe_paths = sorted((deployment_dir / probes_name).glob("*/probe.json"))
-        if not probe_paths:
-            continue
-        variable = deployment_variable(manifest)
+        variable = server["base_url"]["variable"]
         variables.append(
-            {"key": variable, "value": manifest["base_url"]["default"], "type": "string"}
+            {"key": variable, "value": server["base_url"]["default"], "type": "string"}
         )
-        sync_items: list[dict[str, Any]] = []
-        async_items: list[dict[str, Any]] = []
-        explicit_descriptions: list[dict[str, Any]] = []
-        process_sources: dict[str, list[str]] = {}
-        for probe_path in probe_paths:
-            probe = read_json(probe_path)
-            if not isinstance(probe, dict) or probe.get("status") == "pending":
+        request_items = []
+        process_ids = set()
+        for path in sorted((server_path.parent / "requests").glob("*/request.json")):
+            record = read_json(path)
+            if not isinstance(record, dict):
                 continue
-            item = probe_item(probe, probe_path, variable)
-            request = probe.get("request", {})
-            method = request.get("method") if isinstance(request, dict) else None
-            if method == "GET":
-                explicit_descriptions.append(item)
-            elif probe.get("execution_mode") == "async":
-                async_items.append(item)
-            else:
-                sync_items.append(item)
-            if method == "POST" and isinstance(probe.get("process_id"), str):
-                process_sources.setdefault(probe["process_id"], []).append(probe["id"])
-        descriptions = [
-            description_item(process_id, variable, process_sources[process_id])
-            for process_id in sorted(process_sources, key=str.casefold)
-        ]
-        deployment_folders.append(
+            request_items.append(evidence_request_item(record, variable))
+            if isinstance(record.get("process_id"), str):
+                process_ids.add(record["process_id"])
+        description_items = [
             {
-                "name": deployment_id,
-                "item": [
-                    {"name": "POST_process_sync", "item": sync_items},
-                    {"name": "POST_process_async", "item": async_items},
-                    {"name": "process_descriptions", "item": descriptions},
-                    {
-                        "name": "GET_process_description_cases",
-                        "item": explicit_descriptions,
-                    },
-                ],
+                "name": process_id,
+                "request": {
+                    "method": "GET",
+                    "header": [{"key": "Accept", "value": "application/json"}],
+                    "url": f"{{{{{variable}}}}}/processes/{process_id}",
+                },
             }
-        )
-    return {
-        "info": {
-            "_postman_id": collection_id("deployment-probes"),
-            "name": "OGC API Processes deployment probes",
-            "description": "Generated from deployments/*/probes. Do not edit by hand.",
-            "schema": COLLECTION_SCHEMA,
-        },
-        "variable": variables,
-        "item": deployment_folders,
-    }
-
-
-def scenario_folder(
-    testcase: dict[str, Any], testcase_path: Path, variable: str
-) -> dict[str, Any]:
-    items = []
-    for step in testcase.get("steps", []):
-        request_name = step.get("request")
-        if not isinstance(request_name, str):
-            raise RepositoryError(f"{testcase_path}: step request must be a string")
-        request_path = testcase_path.parent / request_name
-        descriptor = read_json(request_path)
-        if not isinstance(descriptor, dict):
-            raise RepositoryError(f"{request_path}: expected an object")
-        request = postman_request(descriptor, request_path, variable)
-        behavior = step.get("expected_client_behavior", {})
-        must = behavior.get("must", []) if isinstance(behavior, dict) else []
-        if must:
-            request["description"] = "Preferred client behaviour:\n- " + "\n- ".join(must)
-        item: dict[str, Any] = {"name": str(step.get("id", request_path.stem)), "request": request}
-        response_name = step.get("representative_response")
-        if isinstance(response_name, str):
-            item["response"] = [
-                response_example(
-                    testcase_path.parent / response_name, request, variable
-                )
-            ]
-        items.append(item)
-    return {
-        "name": testcase_path.parent.name,
-        "description": str(testcase.get("title", testcase.get("id", ""))),
-        "item": items,
-    }
-
-
-def generate_scenario_collection(
-    deployments: dict[str, tuple[dict[str, Any], Path]], testcases_dir: Path
-) -> dict[str, Any]:
-    grouped: dict[str, dict[str, list[dict[str, Any]]]] = {}
-    used_deployments: set[str] = set()
-    for testcase_path in sorted(testcases_dir.rglob("testcase.json")):
-        testcase = read_json(testcase_path)
-        if not isinstance(testcase, dict) or testcase.get("execution") != "live-capable":
-            continue
-        deployment_id = testcase.get("deployment")
-        if deployment_id not in deployments:
-            continue
-        category = str(testcase.get("category", "uncategorized"))
-        manifest = deployments[deployment_id][0]
-        variable = deployment_variable(manifest)
-        grouped.setdefault(deployment_id, {}).setdefault(category, []).append(
-            scenario_folder(testcase, testcase_path, variable)
-        )
-        used_deployments.add(deployment_id)
-
-    items = []
-    for deployment_id in sorted(grouped):
-        categories = [
-            {"name": category, "item": grouped[deployment_id][category]}
-            for category in sorted(grouped[deployment_id])
+            for process_id in sorted(process_ids)
         ]
-        items.append({"name": deployment_id, "item": categories})
-    variables = [
-        {
-            "key": deployment_variable(deployments[deployment_id][0]),
-            "value": deployments[deployment_id][0]["base_url"]["default"],
-            "type": "string",
-        }
-        for deployment_id in sorted(used_deployments)
-    ]
-    serialized = json.dumps(items)
-    deployment_vars = {entry["key"] for entry in variables}
-    dynamic = sorted(
-        set(re.findall(r"\{\{([A-Za-z][A-Za-z0-9]*)\}\}", serialized))
-        - deployment_vars
-    )
-    variables.extend({"key": name, "value": "", "type": "string"} for name in dynamic)
+        if request_items or description_items:
+            server_folders.append(
+                {
+                    "name": server["id"],
+                    "item": [
+                        {"name": "requests", "item": request_items},
+                        {"name": "process-descriptions", "item": description_items},
+                    ],
+                }
+            )
     return {
         "info": {
-            "_postman_id": collection_id("client-scenarios"),
-            "name": "OGC API Processes live client scenarios",
-            "description": (
-                "Generated from live-capable testcases. Representative responses "
-                "are examples; lifecycle variables must be captured while running."
-            ),
+            "_postman_id": collection_id("evidence-requests"),
+            "name": "OGC API Processes evidence requests",
+            "description": "Generated from evidence/*/requests. Do not edit by hand.",
             "schema": COLLECTION_SCHEMA,
         },
         "variable": variables,
-        "item": items,
+        "item": server_folders,
     }
 
 
-def write_collection(path: Path, collection: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(collection, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+def write(path: Path, value: dict[str, Any]) -> None:
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def main() -> int:
     args = parse_args()
-    try:
-        deployments = load_deployments(args.deployments_dir, args.deployments)
-        probes = generate_probe_collection(deployments)
-        scenarios = generate_scenario_collection(deployments, args.testcases_dir)
-        probe_path = args.output_dir / "deployment-probes.postman_collection.json"
-        scenario_path = args.output_dir / "client-scenarios.postman_collection.json"
-        write_collection(probe_path, probes)
-        write_collection(scenario_path, scenarios)
-    except (OSError, RepositoryError, ValueError) as error:
-        print(f"error: {error}", file=sys.stderr)
-        return 1
-    print(f"generated: {probe_path}")
-    print(f"generated: {scenario_path}")
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    examples_path = args.output_dir / "representative-examples.postman_collection.json"
+    evidence_path = args.output_dir / "evidence-requests.postman_collection.json"
+    write(examples_path, generate_examples())
+    write(evidence_path, generate_evidence())
+    print(f"generated: {examples_path}")
+    print(f"generated: {evidence_path}")
     return 0
 
 

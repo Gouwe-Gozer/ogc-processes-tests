@@ -1,0 +1,40 @@
+{
+  "id": "saga_intersect_polygons",
+  "title": "Intersect two Alkmaar polygon layers with SAGA",
+  "process_id": "SAGA.shapes_polygons.14",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/SAGA.shapes_polygons.14/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "A": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/simple_polygon.geojson",
+        "type": "application/json"
+      },
+      "B": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/overlapping_polygon.geojson",
+        "type": "application/json"
+      },
+      "SPLIT": true
+    },
+    "outputs": {
+      "RESULT": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/polygons/simple_polygon.geojson",
+    "../../../../fixtures/polygons/overlapping_polygon.geojson"
+  ],
+  "expected_status": 500,
+  "notes": "The request follows the advertised schema using two referenced vector inputs and a JSON Boolean. The tested provider reproducibly terminates with SIGABRT."
+}

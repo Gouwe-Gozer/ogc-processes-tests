@@ -4,7 +4,7 @@ A deployment is one running OGC API - Processes server with a specific set of
 software, process plugins, and configuration. Two deployments using the same
 server product can expose different processes and responses.
 
-This repository records three deployments:
+This repository keeps evidence from three deployments under `evidence/`:
 
 - `zoo-local`: the local ZOO server used for most live tests;
 - `pygeoapi-demo`: the public pygeoapi demo used for `hello-world`;
@@ -71,14 +71,14 @@ same server code.
 
 ## Checking an upgrade
 
-1. Add the upgraded server as a new deployment instead of replacing old
-   captures.
+1. Add the upgraded server as a new evidence folder instead of replacing old
+   responses.
 2. Capture its landing page, conformance response, process list, and selected
    descriptions.
 3. Compare process IDs, inputs, outputs, and supported modes.
 4. Mark each change as expected, breaking, or a server error.
-5. Run the client testcases that the new server can support.
-6. Run process-specific probes only when the new description still matches the
+5. Run the representative client examples that the new server can support.
+6. Run process-specific evidence requests only when the new description still matches the
    request.
 7. Record the results before making the new deployment the main test server.
 

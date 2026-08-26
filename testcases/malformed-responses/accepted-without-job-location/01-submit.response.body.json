@@ -1,7 +1,0 @@
-{
-  "jobID": "{{jobId}}",
-  "type": "process",
-  "processID": "longProcess",
-  "status": "accepted",
-  "links": []
-}

@@ -1,0 +1,15 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/SAGA.table_tools.0/execution",
+  "body": {
+    "TABLE": {
+      "href": "{{resultUrl}}",
+      "format": {
+        "mediaType": "image/tiff"
+      }
+    }
+  }
+}

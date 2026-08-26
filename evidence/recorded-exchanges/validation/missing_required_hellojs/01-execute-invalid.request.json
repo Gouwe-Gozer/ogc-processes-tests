@@ -1,0 +1,12 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/hellojs/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {},
+    "response": "document"
+  }
+}

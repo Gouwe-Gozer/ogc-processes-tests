@@ -1,0 +1,29 @@
+{
+  "id": "get_area_polygon",
+  "title": "Calculate the area of the simple Alkmaar polygon",
+  "process_id": "GetArea",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/GetArea/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "InputPolygon": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml",
+        "type": "text/xml"
+      }
+    },
+    "outputs": {
+      "Area": {
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/gml/simple_polygon.gml",
+  "expected_status": 200,
+  "notes": "Reference-input case pinned to the GML 3.1 fixture. The result is in square coordinate units unless the service reprojects."
+}

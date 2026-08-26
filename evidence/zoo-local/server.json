@@ -1,0 +1,18 @@
+{
+  "id": "zoo-local",
+  "title": "Local ZOO-Project test deployment",
+  "implementation": {
+    "name": "ZOO-Project",
+    "profile": "Ubuntu 18 / GDAL 3 / SAGA 7 / OTB 7"
+  },
+  "base_url": {
+    "variable": "zooLocalBaseUrl",
+    "default": "http://localhost/ogc-api"
+  },
+  "requests": "requests",
+  "responses": "responses",
+  "fixture_staging": {
+    "container": "zoo-project-zoofpm-1",
+    "destination": "/usr/com/zoo-project/ogc-processes-tests/fixtures"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": 404,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/jobs/00000000-0000-0000-0000-000000000000",
+  "body": {
+    "title": "NoSuchJob",
+    "type": "http://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-job",
+    "detail": "The JobID from the request does not match any of the Jobs running on this server"
+  }
+}

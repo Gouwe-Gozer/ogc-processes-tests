@@ -21,5 +21,5 @@ Some older `Gdal_*` processes expect filenames inside the ZOO container. After
 starting ZOO, copy these fixtures with:
 
 ```bash
-python3 scripts/deployments/stage_zoo_fixtures.py
+python3 scripts/stage_zoo_fixtures.py
 ```

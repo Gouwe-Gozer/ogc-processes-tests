@@ -1,0 +1,12 @@
+{
+  "status": 404,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{jobUrl}}/results",
+  "body": {
+    "title": "ResultNotReady",
+    "type": "http://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/result-not-ready",
+    "detail": "The job is still running."
+  }
+}

@@ -1,12 +1,34 @@
-# OGC API Processes tests
+# OGC API Processes examples
 
-This repository contains requests and example responses for testing an OGC API
-- Processes client. Most live requests use a local ZOO-Project server. Two
-recorded pygeoapi examples cover other response shapes.
+This repository collects representative OGC API Processes requests and
+responses that our client should be able to handle.
 
-## Before you start
+Start with [`examples/`](examples/). It contains a small, readable set for
+client implementation and tests. [`evidence/`](evidence/) contains the larger
+collection of provider-specific requests, responses, and process descriptions
+that led to those choices.
 
-Clone the [ZOO-Project fork used for these tests](https://github.com/Gouwe-Gozer/ZOO-Project),
+The files are test data. They do not test a client by themselves. Actual
+assertions belong in the client project's normal TypeScript test suite.
+
+## Folder guide
+
+| Folder | Contents |
+|---|---|
+| `examples/` | Small representative request-response exchanges |
+| `evidence/` | Runnable provider requests and captured responses kept for reference |
+| `fixtures/` | Small raster, vector, table, and point-cloud input files |
+| `scripts/` | Commands for running evidence requests and updating captures |
+| `generated/postman/` | Postman collections generated from `examples/` and `evidence/` |
+| `docs/` | Client scope, lessons learned, and example-selection notes |
+
+An example contains complete HTTP request and response records. An evidence
+request records one exact request for one server, including why it was kept and
+the status observed during testing.
+
+## Before running ZOO requests
+
+Clone the [ZOO-Project fork used for these requests](https://github.com/Gouwe-Gozer/ZOO-Project),
 then build and start its containers:
 
 ```bash
@@ -20,101 +42,77 @@ docker-compose up
 Keep that command running. The local API should become available at
 `http://localhost/ogc-api`.
 
-Open another terminal and go to this repository before running the commands
-below.
+## Run an evidence request
 
-## Quick start
-
-Check that all JSON files and file links are valid:
+Print a stored request as `curl`:
 
 ```bash
-python3 scripts/validate_repository.py
+python3 scripts/run_evidence_request.py hellojs_string --print-curl
 ```
 
-Print a request as a `curl` command:
+Send it to the local ZOO server:
 
 ```bash
-python3 scripts/run_probe.py hellojs_string --print-curl
+python3 scripts/run_evidence_request.py hellojs_string
 ```
 
-Send that request to the local ZOO server:
+The command reads the default URL from
+[`evidence/zoo-local/server.json`](evidence/zoo-local/server.json). Override it
+when needed:
 
 ```bash
-python3 scripts/run_probe.py hellojs_string
-```
-
-The runner reads the URL from `deployments/zoo-local/deployment.json`. Use
-`--base-url` to send the same request to another URL:
-
-```bash
-python3 scripts/run_probe.py hellojs_string \
+python3 scripts/run_evidence_request.py hellojs_string \
   --base-url https://demo-ets.geolabs.fr/ogc-api
 ```
 
-### Processes that need files inside the ZOO container
+### Requests that need files inside the ZOO container
 
-Some GDAL and OGR processes expect a filename on the server. Copy the test
-fixtures into the running container before testing those processes:
+Some older GDAL and OGR processes expect a filename inside the server. Copy the
+fixtures into the local ZOO container before running those requests:
 
 ```bash
-python3 scripts/deployments/stage_zoo_fixtures.py --dry-run
-python3 scripts/deployments/stage_zoo_fixtures.py
+python3 scripts/stage_zoo_fixtures.py --dry-run
+python3 scripts/stage_zoo_fixtures.py
 ```
 
-The default container name is `zoo-project-zoofpm-1`. If Docker Compose uses a
-different name, pass it with `--container`.
+This is local evidence infrastructure. A browser client does not stage files
+inside a processing server.
 
-### Capture process descriptions
+## Update captured descriptions
 
-This command saves the response body, HTTP status, headers, and final URL:
+This command saves a process description, response status, headers, and final
+URL under `evidence/zoo-local/responses/descriptions/`:
 
 ```bash
 python3 scripts/capture_process_descriptions.py hellojs Buffer
 ```
 
-### Generate Postman collections
+## Generate Postman collections
 
 ```bash
 python3 scripts/generate_postman_collections.py
 ```
 
-The generated files are written to `generated/postman/`.
-
-## Folder guide
-
-| Folder | Contents |
-|---|---|
-| `deployments/` | Server URLs, runnable requests, and responses captured from each server |
-| `testcases/` | Expected client behavior for successful and unsuccessful responses |
-| `fixtures/` | Small raster, vector, table, and point-cloud input files |
-| `scripts/` | Commands for running requests, capturing responses, and generating files |
-| `generated/postman/` | Generated Postman collections |
-| `docs/` | Notes for implementing and testing the client |
-
-A **probe** is an exact request sent to one server. A **testcase** describes how
-the client should handle a request and response. Several testcases refer to the
-same probe or captured response.
+The generated files are written to [`generated/postman/`](generated/postman/).
 
 ## Documentation
 
-- [`docs/client-core.md`](docs/client-core.md): which features belong in the
+- [`docs/client-core.md`](docs/client-core.md): features that belong in the
   OGC API Processes client library.
-- [`docs/client-behaviour.md`](docs/client-behaviour.md): what the client can
-  learn from process descriptions and how it should handle bad input or bad
-  responses.
-- [`docs/test-strategy.md`](docs/test-strategy.md): which processes and error
-  cases are useful for client testing.
+- [`docs/client-behaviour.md`](docs/client-behaviour.md): information from
+  process descriptions and handling of bad input or responses.
+- [`docs/test-strategy.md`](docs/test-strategy.md): how representative examples
+  are selected and used.
 - [`docs/deployment-compatibility.md`](docs/deployment-compatibility.md): why
-  results can differ between servers and software versions.
-- [`deployments/zoo-local/README.md`](deployments/zoo-local/README.md): details
-  about the local ZOO test server.
+  results differ between servers and software versions.
+- [`evidence/zoo-local/README.md`](evidence/zoo-local/README.md): details about
+  the local ZOO evidence.
 
 ## Editing the repository
 
-- Edit probes and testcases, not the generated Postman JSON.
-- Run `python3 scripts/validate_repository.py --write-suite` after adding or
-  moving a testcase.
-- Run `python3 scripts/generate_postman_collections.py` after changing a probe,
-  testcase, or deployment URL.
-- Keep the raw response body when adding an error example. The exact server
-  message may help explain a later failure.
+- Keep the main `examples/` set small. Add an example only when it introduces
+  a different input, output, job flow, or error shape.
+- Put similar processes and provider-specific details under `evidence/`.
+- Keep raw error bodies. Exact server messages can help explain failures.
+- Regenerate the Postman collections after changing examples, evidence
+  requests, or server URLs.

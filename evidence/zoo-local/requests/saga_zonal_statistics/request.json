@@ -1,0 +1,43 @@
+{
+  "id": "saga_zonal_statistics",
+  "title": "Calculate DEM statistics for three Alkmaar raster zones",
+  "process_id": "SAGA.statistics_grid.5",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/SAGA.statistics_grid.5/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "ZONES": {
+        "value": "bmNvbHMgNQpucm93cyA1CnhsbGNvcm5lciA0Ljc0MAp5bGxjb3JuZXIgNTIuNjI1CmNlbGxzaXplIDAuMDA1Ck5PREFUQV92YWx1ZSAtOTk5OQoxIDEgMSAyIDIKMSAxIDEgMiAyCjEgMSAxIDIgMgozIDMgMyAyIDIKMyAzIDMgMiAyCg==",
+        "format": {
+          "mediaType": "application/x-ogc-aaigrid",
+          "encoding": "base64"
+        }
+      },
+      "STATLIST": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/raster/alkmaar_dem.asc",
+        "type": "application/x-ogc-aaigrid"
+      },
+      "SHORTNAMES": true
+    },
+    "outputs": {
+      "OUTTAB": {
+        "format": {
+          "mediaType": "text/csv"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/raster/alkmaar_zones.asc",
+    "../../../../fixtures/raster/alkmaar_dem.asc"
+  ],
+  "expected_status": 200,
+  "notes": "Combines an inline base64 zone grid with a referenced statistics grid and requests CSV output."
+}

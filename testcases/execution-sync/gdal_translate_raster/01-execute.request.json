@@ -1,9 +1,0 @@
-{
-  "method": "POST",
-  "url": "{{baseUrl}}/processes/Gdal_Translate/execution",
-  "headers": {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  },
-  "body_file": "../../../deployments/zoo-local/probes/gdal_translate_raster/request.json"
-}

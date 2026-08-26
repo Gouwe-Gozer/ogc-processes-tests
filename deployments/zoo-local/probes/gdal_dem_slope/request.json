@@ -1,9 +1,0 @@
-{
-  "inputs": {
-    "InputDSN": "/usr/com/zoo-project/ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
-    "OutputDSN": "/tmp/zTmp/gdal_dem_slope.tif",
-    "utility": "slope",
-    "s": "111120"
-  },
-  "response": "document"
-}

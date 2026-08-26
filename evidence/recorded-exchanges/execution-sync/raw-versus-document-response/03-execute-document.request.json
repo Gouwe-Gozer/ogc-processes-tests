@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "name": "OGC API client",
+      "message": "Hello from the interoperability fixture."
+    },
+    "response": "document"
+  }
+}

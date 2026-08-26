@@ -1,0 +1,47 @@
+{
+  "id": "otb_rasterization",
+  "title": "Rasterize the Alkmaar polygon with OTB",
+  "process_id": "OTB.Rasterization",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/OTB.Rasterization/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "in": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/fbf931775e224903c8ffa1cfd013a919ff5d16f1/fixtures/polygons/simple_polygon.geojson",
+        "type": "application/json"
+      },
+      "out": "uint8",
+      "im": {
+        "value": "SUkqAAgAAAARAAABAwABAAAABQAAAAEBAwABAAAABQAAAAIBAwABAAAAIAAAAAMBAwABAAAAAQAAAAYBAwABAAAAAQAAABEBBAABAAAAgAEAABUBAwABAAAAAQAAABYBAwABAAAABQAAABcBBAABAAAAZAAAABwBAwABAAAAAQAAAFMBAwABAAAAAwAAAA6DDAADAAAA4AAAAIKEDAAGAAAA+AAAAK+HAwAgAAAAKAEAALCHDAACAAAAaAEAALGHAgAIAAAAeAEAAIGkAgAGAAAA2gAAAAAAAAAtOTk5OQB7FK5H4Xp0P3sUrkfhenQ/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KFyPwvUSQDMzMzMzU0pAAAAAAAAAAAABAAEAAAAHAAAEAAABAAIAAQQAAAEAAQAACAAAAQDmEAEIsYcHAAAABggAAAEAjiMJCLCHAQABAAsIsIcBAAAAiG10lh2kckAAAABAplRYQVdHUyA4NHwAMzMzQGZmRkAAAGBAzcxMQJqZOUAAACBAmpk5QJqZWUDNzGxAMzNTQM3MDEBmZiZAAABAQAAAYEAzM3NAMzPzPzMzE0DNzCxAZmZGQJqZWUDNzMw/AAAAQJqZGUAzMzNAZmZGQA==",
+        "format": {
+          "mediaType": "image/tiff",
+          "encoding": "base64"
+        }
+      },
+      "background": 0,
+      "mode": "binary",
+      "mode.binary.foreground": 255,
+      "mode.attribute.field": "name"
+    },
+    "outputs": {
+      "out": {
+        "format": {
+          "mediaType": "image/tiff"
+        },
+        "transmissionMode": "reference"
+      }
+    },
+    "response": "document"
+  },
+  "fixtures": [
+    "../../../../fixtures/polygons/simple_polygon.geojson",
+    "../../../../fixtures/raster/alkmaar_dem.tif"
+  ],
+  "expected_status": 500,
+  "notes": "Uses referenced GeoJSON and an inline support image. Both mode-specific inputs are included because the description marks both required. The data run with OTB CLI 7.0; ZOO reports an empty OTB application registry."
+}

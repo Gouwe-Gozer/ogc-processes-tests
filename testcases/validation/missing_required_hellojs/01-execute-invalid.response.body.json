@@ -1,5 +1,0 @@
-{
-  "title": "MissingParameterValue",
-  "type": "MissingParameterValue",
-  "detail": "The <S> argument was not specified in DataInputs but is required according to the ZOO ServicesProvider configuration file."
-}

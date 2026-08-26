@@ -1,0 +1,29 @@
+{
+  "status": 201,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8",
+    "Location": "{{baseUrl}}/jobs/{{jobId}}",
+    "Preference-Applied": "respond-async"
+  },
+  "final_url": "{{baseUrl}}/processes/longProcess/execution",
+  "body": {
+    "progress": 0,
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "type": "process",
+    "processID": "longProcess",
+    "created": "2026-08-25T12:20:41.350Z",
+    "started": "2026-08-25T12:20:41.350Z",
+    "updated": "2026-08-25T12:20:41.350Z",
+    "status": "running",
+    "message": "ZOO-Kernel accepted to run your service!",
+    "links": [
+      {
+        "title": "Status location",
+        "rel": "monitor",
+        "type": "application/json",
+        "href": "{{baseUrl}}/jobs/{{jobId}}"
+      }
+    ]
+  }
+}

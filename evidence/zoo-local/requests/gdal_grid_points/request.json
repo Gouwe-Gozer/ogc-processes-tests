@@ -1,0 +1,23 @@
+{
+  "id": "gdal_grid_points",
+  "title": "Grid the five Alkmaar elevation points",
+  "process_id": "Gdal_Grid",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Gdal_Grid/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "OF": "AAIGrid",
+      "InputDSN": "ogc-processes-tests/fixtures/points/five_points_3d.geojson",
+      "OutputDSN": "gdal_grid_alkmaar"
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/points/five_points_3d.geojson",
+  "expected_status": 500,
+  "notes": "Expected-error local-profile case. The advertised inputs reach the provider, but it returns 500 without a useful message because its implementation needs unadvertised layer/band parameters. The request intentionally does not invent them."
+}

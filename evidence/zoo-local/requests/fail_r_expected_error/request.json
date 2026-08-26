@@ -1,0 +1,20 @@
+{
+  "id": "fail_r_expected_error",
+  "title": "Capture the failR provider-level error",
+  "process_id": "failR",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/failR/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "S": "Codex"
+    },
+    "response": "document"
+  },
+  "expected_status": 500,
+  "notes": "Expected-error case: the R provider deliberately reports service failure."
+}

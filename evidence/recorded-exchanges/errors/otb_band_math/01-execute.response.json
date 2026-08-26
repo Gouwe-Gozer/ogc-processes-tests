@@ -1,0 +1,12 @@
+{
+  "status": 500,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/OTB.BandMath/execution",
+  "body": {
+    "title": "InternalError",
+    "type": "InternalError",
+    "detail": "No OTB Application found."
+  }
+}

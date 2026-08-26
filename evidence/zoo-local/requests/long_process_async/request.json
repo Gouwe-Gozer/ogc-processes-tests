@@ -1,0 +1,21 @@
+{
+  "id": "long_process_async",
+  "title": "Start longProcess asynchronously",
+  "process_id": "longProcess",
+  "execution_mode": "async",
+  "method": "POST",
+  "path": "/processes/longProcess/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Prefer": "respond-async"
+  },
+  "body": {
+    "inputs": {
+      "sid": 1
+    },
+    "response": "document"
+  },
+  "expected_status": 201,
+  "notes": "Verifies asynchronous job creation. Job polling and dismissal will be separate cases."
+}

@@ -1,0 +1,14 @@
+{
+  "status": 201,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "final_url": "{{baseUrl}}/processes/longProcess/execution",
+  "body": {
+    "jobID": "{{jobId}}",
+    "type": "process",
+    "processID": "longProcess",
+    "status": "accepted",
+    "links": []
+  }
+}

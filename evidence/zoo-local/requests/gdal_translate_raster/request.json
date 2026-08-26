@@ -1,0 +1,23 @@
+{
+  "id": "gdal_translate_raster",
+  "title": "Translate the small Alkmaar DEM",
+  "process_id": "Gdal_Translate",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Gdal_Translate/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "Format": "GTiff",
+      "InputDSN": "ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "OutputDSN": "gdal_translate_alkmaar"
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.asc",
+  "expected_status": 200,
+  "notes": "Local-profile case. Stage fixtures with scripts/stage_zoo_fixtures.py; InputDSN is relative to ZOO dataPath and OutputDSN is created below tmpPath."
+}

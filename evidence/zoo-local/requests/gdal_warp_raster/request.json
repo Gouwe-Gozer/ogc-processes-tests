@@ -1,0 +1,25 @@
+{
+  "id": "gdal_warp_raster",
+  "title": "Warp the small Alkmaar DEM",
+  "process_id": "Gdal_Warp",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Gdal_Warp/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "Format": "GTiff",
+      "InputDSN": "ogc-processes-tests/fixtures/raster/alkmaar_dem.asc",
+      "OutputDSN": "gdal_warp_alkmaar",
+      "s_srs": "OGC:CRS84",
+      "t_srs": "EPSG:3857"
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/raster/alkmaar_dem.asc",
+  "expected_status": 200,
+  "notes": "Local-profile case. Stage fixtures first; the DEM is reprojected from OGC CRS84 to EPSG:3857 and written below ZOO tmpPath."
+}

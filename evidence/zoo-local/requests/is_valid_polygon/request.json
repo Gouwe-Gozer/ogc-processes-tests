@@ -1,0 +1,29 @@
+{
+  "id": "is_valid_polygon",
+  "title": "Validate the simple Alkmaar polygon",
+  "process_id": "IsValid",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/IsValid/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "InputPolygon": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/simple_polygon.gml",
+        "type": "text/xml"
+      }
+    },
+    "outputs": {
+      "Result": {
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/gml/simple_polygon.gml",
+  "expected_status": 200,
+  "notes": "Reference-input case pinned to the explicitly closed GML fixture and intended to produce true."
+}

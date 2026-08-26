@@ -13,8 +13,8 @@ from pathlib import Path
 
 from support.repository import (
     RepositoryError,
-    deployment_base_url,
-    load_deployment,
+    load_server,
+    server_base_url,
 )
 
 
@@ -22,13 +22,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("process_ids", nargs="+", help="process IDs to capture")
     parser.add_argument(
-        "--deployment", default="zoo-local", help="deployment manifest ID"
+        "--server", default="zoo-local", help="server evidence folder"
     )
     parser.add_argument("--base-url", help="override deployment base_url.default")
     parser.add_argument(
         "--output-dir",
         type=Path,
-        help="override the deployment descriptions capture directory",
+        help="override the server descriptions response directory",
     )
     parser.add_argument("--timeout", type=float, default=20.0)
     return parser.parse_args()
@@ -97,12 +97,9 @@ def capture_one(process_id: str, base_url: str, output_dir: Path, timeout: float
 def main() -> int:
     args = parse_args()
     try:
-        deployment, deployment_dir = load_deployment(args.deployment)
-        base_url = deployment_base_url(deployment, args.base_url)
-        captures_name = deployment.get("captures", "captures")
-        if not isinstance(captures_name, str):
-            raise RepositoryError("deployment captures must be a string")
-        output_dir = args.output_dir or deployment_dir / captures_name / "descriptions"
+        server, server_dir = load_server(args.server)
+        base_url = server_base_url(server, args.base_url)
+        output_dir = args.output_dir or server_dir / "responses" / "descriptions"
         output_dir.mkdir(parents=True, exist_ok=True)
     except (OSError, RepositoryError) as error:
         print(f"error: {error}", file=sys.stderr)

@@ -1,8 +1,0 @@
-{
-  "status": 500,
-  "headers": {
-    "Content-Type": "application/json;charset=UTF-8"
-  },
-  "final_url": "{{baseUrl}}/processes/Gdal_Grid/execution",
-  "body_file": "../../../deployments/zoo-local/captures/executions/Gdal_Grid.execution-error.json"
-}
