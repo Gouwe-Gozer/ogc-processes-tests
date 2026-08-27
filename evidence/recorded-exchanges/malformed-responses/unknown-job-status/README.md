@@ -1,6 +1,6 @@
 # Job polling returns a syntactically valid but unknown status
 
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## poll
 

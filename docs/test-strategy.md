@@ -30,15 +30,15 @@ For now, this repository should:
 
 - capture real process descriptions, requests, responses, headers, and final
   URLs;
-- keep a small representative set under [`../examples/`](../examples/);
+- keep a small representative set under [`../scenarios/`](../scenarios/);
 - keep similar processes and provider-specific observations under
   [`../evidence/`](../evidence/);
 - provide fixtures and Postman collections for inspecting live APIs;
 - record enough provider information to understand where an exchange came
   from.
 
-The name `examples/` is a working name. Its contents are future test material,
-but they are not executable client tests yet.
+The contents of `scenarios/` are future test material, but they are not
+executable client tests yet.
 
 ## Decisions that wait for the client
 
@@ -46,8 +46,8 @@ Do not build a test framework in this repository before the client has a
 public API, module boundaries, and a TypeScript test runner. In particular,
 wait before deciding:
 
-- whether `examples/` becomes `scenarios/`, moves into the client repository,
-  or remains an external fixture set;
+- whether `scenarios/` eventually moves into the client repository or remains
+  an external fixture set;
 - the fake transport implementation and its response queue;
 - assertion helpers or a machine-readable testcase manifest;
 - the final folder layout of protocol, form, result, and live tests;
@@ -56,15 +56,15 @@ wait before deciding:
 Those decisions should follow the actual client design. Until then, plain JSON
 records and short README files are sufficient.
 
-## Current main examples
+## Current main scenarios
 
-The current examples establish the file format:
+The current scenarios establish the file format:
 
-| Example | What it represents |
+| Scenario | What it represents |
 |---|---|
-| `sync/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
-| `async/successful-job` | Submission, running status, successful status, and result retrieval |
-| `errors/non-json-error` | An HTTP 500 response containing HTML instead of an OGC JSON problem |
+| `sync/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
+| `async/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
+| `errors/synthetic/non-json-error` | An HTTP 500 response containing HTML instead of an OGC JSON problem |
 
 Each request file contains its method, URL, headers, and body. Each response
 file contains its status, headers, final URL, and body. The README explains why
@@ -72,7 +72,7 @@ the exchange matters.
 
 ## Choosing the rest of the main set
 
-Add an example when it introduces a different client-facing behaviour:
+Add a scenario when it introduces a different client-facing behaviour:
 
 - a new input shape needed by form generation;
 - a new response mode or output shape;
@@ -80,7 +80,7 @@ Add an example when it introduces a different client-facing behaviour:
 - an error or malformed response that requires different handling;
 - an unsupported schema that must fall back to raw JSON.
 
-Do not add another main example only because it uses a different processing
+Do not add another main scenario only because it uses a different processing
 library or algorithm. Similar requests remain available under `evidence/`.
 
 The final number is determined by coverage rather than a fixed target. The set
@@ -116,10 +116,14 @@ did. For each additional implementation, collect only the useful minimum:
 - one asynchronous flow when supported;
 - one useful error or provider-specific response shape.
 
-Do not repeat every process and data shape for every implementation. When the
-client starts consuming these files, a likely curated layout is behaviour,
-then provider, then scenario. Confirm that layout against the client tests
-before moving folders.
+Do not repeat every process and data shape for every implementation. Curated
+scenarios are grouped by behaviour, then provider, then scenario. This makes
+provider differences visible without prescribing the future client test
+folder layout.
+
+This folder structure does not prescribe a fake transport interface. A future
+fake transport can load the request and response sequence from any selected
+scenario after the client's real transport contract has been defined.
 
 ## Process families found in the ZOO evidence
 
@@ -140,11 +144,11 @@ response material remains in [`../evidence/zoo-local/`](../evidence/zoo-local/).
 | Several named vector outputs | SAGA shape/TIN tools and OTB segmentation | SAGA contours |
 | CSV, table, or XML output | SAGA table/statistics and OTB statistics | one usable reference output |
 | Immediate server error | `failR` | `failR` |
-| Broken process description | `OTB.ReadImageInfo` | one unavailable-description example |
+| Broken process description | `OTB.ReadImageInfo` | one unavailable-description scenario |
 
 ## Bad input and bad responses
 
-Keep evidence from these groups, but only promote a response to `examples/`
+Keep evidence from these groups, but only promote a response to `scenarios/`
 when it requires distinct client behaviour:
 
 1. The client can identify invalid input from the process description.
@@ -192,11 +196,11 @@ only when an actual client test uses the material.
 
 | Topic 3 commitment | Coverage in this repository |
 |---|---|
-| Process discovery and descriptions | Partial: many descriptions are captured, but landing-page, conformance, and process-list examples are still missing |
+| Process discovery and descriptions | Partial: many descriptions are captured, but landing-page, conformance, and process-list scenarios are still missing |
 | Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, and primitive types, but generated UI behaviour must be tested in the client project |
-| Raw JSON fallback | Documented, but no main example has been selected yet |
-| Synchronous execution | A main GeoJSON example and broader supporting evidence are available |
-| Async submission, polling, results, and dismiss | Async success is a main example; failure and dismissal remain in supporting evidence |
+| Raw JSON fallback | Documented, but no main scenario has been selected yet |
+| Synchronous execution | A main GeoJSON scenario and broader supporting evidence are available |
+| Async submission, polling, results, and dismiss | Async success is a main scenario; failure and dismissal remain in supporting evidence |
 | Result rendering | Result samples exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
 | CORS and exposed `Location` | Missing |
 | Subscriber callbacks and polling reconciliation | Missing |

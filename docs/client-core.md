@@ -139,4 +139,4 @@ This order applies to development of the client project:
 4. Supported schema fields plus raw JSON fallback.
 5. Synchronous execution and results.
 6. Asynchronous submission, status, results, and dismissal.
-7. Tests using the representative exchanges in [`../examples/`](../examples/).
+7. Tests using the representative exchanges in [`../scenarios/`](../scenarios/).

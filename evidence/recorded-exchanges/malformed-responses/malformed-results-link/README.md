@@ -1,6 +1,6 @@
 # Successful job advertises an OGC results relation with an invalid URL
 
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## poll-successful
 

@@ -1,6 +1,6 @@
 # Successful asynchronous job
 
-This example was captured from the ZOO `longProcess` process on 25 August
+This scenario was captured from the ZOO `longProcess` process on 25 August
 2026. Job IDs and URLs are represented by placeholders.
 
 The three requests show:

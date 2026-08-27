@@ -2,7 +2,7 @@
 
 Process: `SAGA.table_tools.3`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## Why it may be useful
 

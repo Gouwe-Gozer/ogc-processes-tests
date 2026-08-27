@@ -1,9 +1,9 @@
-# OGC API Processes examples
+# OGC API Processes scenarios
 
 This repository collects representative OGC API Processes requests and
 responses that our client should be able to handle.
 
-Start with [`examples/`](examples/). It contains a small, readable set intended
+Start with [`scenarios/`](scenarios/). It contains a small, readable set intended
 for future client implementation and tests. [`evidence/`](evidence/) contains
 the larger collection of provider-specific requests, responses, and process
 descriptions that led to those choices.
@@ -18,14 +18,14 @@ documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 
 | Folder | Contents |
 |---|---|
-| `examples/` | Small representative request-response exchanges |
+| `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Runnable provider requests and captured responses kept for reference |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
-| `generated/postman/` | Postman collections generated from `examples/` and `evidence/` |
-| `docs/` | Client scope, lessons learned, and example-selection notes |
+| `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |
+| `docs/` | Client scope, lessons learned, and scenario-selection notes |
 
-An example contains complete HTTP request and response records. An evidence
+A scenario contains complete HTTP request and response records. An evidence
 request records one exact request for one server, including why it was kept and
 the status observed during testing.
 
@@ -97,10 +97,10 @@ python3 scripts/generate_postman_collections.py
 ```
 
 The generated files are written to [`generated/postman/`](generated/postman/).
-Run the `async/successful-job` folder with Postman's Collection Runner to run
-the full sequence. Its post-response scripts save the job URL and ID, repeat
-the status request until the job finishes, and save the results URL for the
-last request.
+Run the `async/zoo-local/successful-job` folder with Postman's Collection
+Runner to run the full sequence. Its post-response scripts save the job URL
+and ID, repeat the status request until the job finishes, and save the results
+URL for the last request.
 
 ## Documentation
 
@@ -108,7 +108,7 @@ last request.
   OGC API Processes client library.
 - [`docs/client-behaviour.md`](docs/client-behaviour.md): information from
   process descriptions and handling of bad input or responses.
-- [`docs/test-strategy.md`](docs/test-strategy.md): repository scope, example
+- [`docs/test-strategy.md`](docs/test-strategy.md): repository scope, scenario
   selection, and the future client test suites.
 - [`docs/deployment-compatibility.md`](docs/deployment-compatibility.md): why
   results differ between servers and software versions.
@@ -117,9 +117,9 @@ last request.
 
 ## Editing the repository
 
-- Keep the main `examples/` set small. Add an example only when it introduces
+- Keep the main `scenarios/` set small. Add a scenario only when it introduces
   a different input, output, job flow, or error shape.
 - Put similar processes and provider-specific details under `evidence/`.
 - Keep raw error bodies. Exact server messages can help explain failures.
-- Regenerate the Postman collections after changing examples, evidence
+- Regenerate the Postman collections after changing scenarios, evidence
   requests, or server URLs.

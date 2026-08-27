@@ -1,6 +1,6 @@
 # Accepted submission has neither a Location header nor a usable monitor link
 
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## submit
 

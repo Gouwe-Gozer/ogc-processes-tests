@@ -2,7 +2,7 @@
 
 Process: `longProcess`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## Validation observation
 

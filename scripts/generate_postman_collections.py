@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Postman collections from examples and runnable evidence requests."""
+"""Generate Postman collections from scenarios and runnable evidence requests."""
 
 from __future__ import annotations
 
@@ -115,7 +115,7 @@ def post_response_event(request_path: Path) -> list[dict[str, Any]]:
     ]
 
 
-def example_item(request_path: Path) -> dict[str, Any]:
+def scenario_item(request_path: Path) -> dict[str, Any]:
     record = read_json(request_path)
     if not isinstance(record, dict):
         raise RepositoryError(f"{request_path} must contain an object")
@@ -151,19 +151,20 @@ def tree_items(tree: dict[str, Any]) -> list[dict[str, Any]]:
     return result
 
 
-def generate_examples() -> dict[str, Any]:
-    root = REPOSITORY_ROOT / "examples"
-    request_paths = sorted(root.rglob("*.request.json"))
-    request_paths.extend(sorted(root.glob("*/*/request.json")))
+def generate_scenarios() -> dict[str, Any]:
+    root = REPOSITORY_ROOT / "scenarios"
+    request_paths = sorted(
+        set(root.rglob("*.request.json")) | set(root.rglob("request.json"))
+    )
     tree: dict[str, Any] = {}
     for path in request_paths:
         relative = path.parent.relative_to(root)
-        add_to_tree(tree, relative.parts, example_item(path))
+        add_to_tree(tree, relative.parts, scenario_item(path))
     return {
         "info": {
-            "_postman_id": collection_id("representative-examples"),
-            "name": "OGC API Processes representative examples",
-            "description": "Generated from examples/. Do not edit by hand.",
+            "_postman_id": collection_id("representative-scenarios"),
+            "name": "OGC API Processes representative scenarios",
+            "description": "Generated from scenarios/. Do not edit by hand.",
             "schema": COLLECTION_SCHEMA,
         },
         "variable": [
@@ -252,11 +253,13 @@ def write(path: Path, value: dict[str, Any]) -> None:
 def main() -> int:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    examples_path = args.output_dir / "representative-examples.postman_collection.json"
+    scenarios_path = (
+        args.output_dir / "representative-scenarios.postman_collection.json"
+    )
     evidence_path = args.output_dir / "evidence-requests.postman_collection.json"
-    write(examples_path, generate_examples())
+    write(scenarios_path, generate_scenarios())
     write(evidence_path, generate_evidence())
-    print(f"generated: {examples_path}")
+    print(f"generated: {scenarios_path}")
     print(f"generated: {evidence_path}")
     return 0
 

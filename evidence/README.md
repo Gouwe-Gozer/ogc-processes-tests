@@ -2,7 +2,7 @@
 
 This folder keeps provider-specific material that may help explain client or
 server behaviour but is not part of the small representative set in
-[`../examples/`](../examples/).
+[`../scenarios/`](../scenarios/).
 
 The three server folders contain server details and captured material:
 
@@ -14,7 +14,7 @@ The three server folders contain server details and captured material:
   prototype.
 
 [`recorded-exchanges/`](recorded-exchanges/) contains complete request and
-response pairs that are not in the main example set. These include similar
+response pairs that are not in the main scenario set. These include similar
 processes, provider-specific failures, validation observations, and unusual
 responses. Their README files explain why each exchange was kept.
 

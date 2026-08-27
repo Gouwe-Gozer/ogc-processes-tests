@@ -1,6 +1,6 @@
 # Job polling returns HTTP 200 with malformed JSON
 
-Stored as supporting evidence; it is not part of the small representative example set.
+Stored as supporting evidence; it is not part of the small representative scenario set.
 
 ## poll
 
