@@ -10,9 +10,8 @@ Scenarios are grouped by API behaviour, then provider, then scenario name.
 Each scenario records what was sent, what was returned, and why the exchange
 matters.
 
-The provider folder records the source deployment. Use `synthetic` for a
-deliberately constructed response that was not captured from a live provider.
-It does not imply provider-specific client code.
+The provider folder records the source deployment. It does not imply
+provider-specific client code.
 
 Placeholders such as `{{baseUrl}}`, `{{jobId}}`, and `{{jobUrl}}` stand for
 values supplied by a deployment or obtained from an earlier response.

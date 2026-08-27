@@ -1,7 +1,0 @@
-{
-  "method": "GET",
-  "url": "{{jobUrl}}",
-  "headers": {
-    "Accept": "application/json"
-  }
-}

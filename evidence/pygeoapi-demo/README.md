@@ -9,7 +9,7 @@ The recorded `hello-world` exchanges cover:
 - an example where the described output type does not match the returned value.
 
 See
-[`../recorded-exchanges/execution-sync/raw-versus-document-response/`](../recorded-exchanges/execution-sync/raw-versus-document-response/).
+[`exchanges/execution-sync/raw-versus-document-response/`](exchanges/execution-sync/raw-versus-document-response/).
 The checked-in responses allow the test to run when the public demo is offline.
 
 These results describe `hello-world`, not every process served by pygeoapi.

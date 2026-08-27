@@ -88,7 +88,6 @@ require another protocol-core scenario:
 | Similar GEOS and SAGA executions | They use request and result envelopes already represented by the selected synchronous scenarios |
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
 | Unknown jobs, premature results, and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
-| Synthetic missing or malformed job links and statuses | Keep until the async client API exists and its defensive assertions can be written precisely |
 | Bounding boxes, enums, repeated inputs, and nested schemas | Promote when form-generation tests begin |
 | CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |

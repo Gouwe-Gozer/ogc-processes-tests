@@ -16,7 +16,7 @@ The four server folders contain server details and captured material:
   missing-CORS observation, and an advertised process description that returned
   HTTP 403.
 
-[`recorded-exchanges/`](recorded-exchanges/) contains complete request and
+Provider folders can contain an `exchanges/` folder with complete request and
 response pairs that are not in the main scenario set. These include similar
 processes, provider-specific failures, validation observations, and unusual
 responses. Their README files explain why each exchange was kept.

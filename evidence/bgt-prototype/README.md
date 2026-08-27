@@ -10,5 +10,5 @@ objects, dates, URLs, booleans, and numbers unchanged. A field such as
 status.
 
 See
-[`../recorded-exchanges/execution-sync/deeply-nested-json-output/`](../recorded-exchanges/execution-sync/deeply-nested-json-output/).
+[`exchanges/execution-sync/deeply-nested-json-output/`](exchanges/execution-sync/deeply-nested-json-output/).
 The recorded response avoids calling PDOK during normal tests.

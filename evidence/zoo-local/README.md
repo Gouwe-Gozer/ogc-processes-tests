@@ -23,6 +23,8 @@ responses captured on 2026-08-25
 - [`server.json`](server.json): base URL, container name, and fixture
   path.
 - [`requests/`](requests/): runnable requests, including their headers and body.
+- [`exchanges/`](exchanges/): complete request-response pairs kept for
+  comparison and future tests.
 - [`responses/descriptions/`](responses/descriptions/): process descriptions and
   the HTML error returned by `OTB.ReadImageInfo`.
 - [`responses/executions/`](responses/executions/): execution and job response
