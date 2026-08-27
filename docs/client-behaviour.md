@@ -1,5 +1,9 @@
 # What the client can learn from a process description
 
+This document records behaviour for the future client and its tests. This
+repository supplies the descriptions and exchanges but does not enforce the
+behaviour itself.
+
 A process description tells the client how to build a request for that process.
 It can provide:
 

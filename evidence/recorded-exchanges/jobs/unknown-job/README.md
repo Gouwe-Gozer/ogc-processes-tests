@@ -10,7 +10,7 @@ Handling: `job-resource-missing`
 Expected client handling
 
 - Expose the parsed NoSuchJob problem together with status, headers, final URL, and raw body.
-- Keep an existing caller-side job record available for diagnostics.
+- Return enough detail for the calling application to keep its own job context.
 
 Avoid
 

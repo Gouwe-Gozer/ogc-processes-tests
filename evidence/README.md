@@ -18,6 +18,10 @@ response pairs that are not in the main example set. These include similar
 processes, provider-specific failures, validation observations, and unusual
 responses. Their README files explain why each exchange was kept.
 
+Names such as `Handling` and `Expected client handling` in those notes are
+plain-language classifications. They do not define a required client API,
+testcase format, or provider-specific adapter.
+
 Each file below `zoo-local/requests/` contains one complete runnable request:
 method, path, headers, body, expected status, and supporting notes. Run one with
 [`../scripts/run_evidence_request.py`](../scripts/run_evidence_request.py).

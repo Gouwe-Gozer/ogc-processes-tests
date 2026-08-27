@@ -43,8 +43,7 @@ For each server it connects to, the client should:
 2. fetch the current process list and descriptions;
 3. use those descriptions to build and check requests;
 4. keep unknown schema fields available as raw JSON;
-5. tell the user when a saved request no longer matches the description;
-6. handle new valid error and result shapes without crashing.
+5. handle new valid error and result shapes without crashing.
 
 A provider update may change a process-specific request without breaking the
 generic client. Tests should focus on HTTP behavior, input/output structure,
@@ -53,34 +52,26 @@ may change between versions.
 
 ## What to record for a deployment
 
-For a repeatable test, record:
+For useful evidence, record at least:
 
 ```text
 deployment name and capture date
 base URL
-server version or commit
-container image and immutable digest
-processing-library and module versions
-process-list hash
-conformance response
-network or relay settings that affect links
+process ID
+server or processing-library version when known
 ```
 
-An image tag such as `latest` is not enough to prove that two tests used the
-same server code.
+More exact details such as commits, container image digests, conformance
+responses, and network settings can be added when investigating a deployment
+difference. Their absence should not prevent keeping an otherwise useful
+request and response.
 
 ## Checking an upgrade
 
-1. Add the upgraded server as a new evidence folder instead of replacing old
-   responses.
-2. Capture its landing page, conformance response, process list, and selected
-   descriptions.
-3. Compare process IDs, inputs, outputs, and supported modes.
-4. Mark each change as expected, breaking, or a server error.
-5. Run the representative client examples that the new server can support.
-6. Run process-specific evidence requests only when the new description still matches the
-   request.
-7. Record the results before making the new deployment the main test server.
+Keep older responses when they explain a relevant difference. Capture selected
+descriptions and executions from the upgraded deployment, then compare stable
+client-facing properties such as process IDs, inputs, outputs, modes, status,
+and links.
 
 Authentication, relays, retries, and server-specific fixes should only be
 added when a target server or tender requirement needs them.

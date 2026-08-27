@@ -1,25 +1,64 @@
-# Selecting and using examples
+# Repository scope and future test strategy
 
-## Purpose
+## End goal
 
-The goal of this repository is to collect a small set of representative OGC
-API Processes requests and responses that our client should handle.
+This repository prepares representative OGC API Processes material that will
+eventually be used by the client's automated test suite. It should cover:
 
-There are two levels:
+- different OGC API Processes implementations;
+- discovery, descriptions, synchronous execution, asynchronous jobs, and
+  errors;
+- process descriptions with different input schemas for generated forms;
+- results that need different presentation, such as maps, JSON views, text,
+  and downloads.
 
-- [`../examples/`](../examples/) is the main set used while implementing and
-  testing the client.
-- [`../evidence/`](../evidence/) keeps similar processes, provider-specific
-  failures, process descriptions, and other observations that may be useful
-  later.
+The future client tests should be separated by concern:
 
-The examples are fixtures, not an independent test framework. The client
-project should load them and make assertions with its normal TypeScript test
-tools.
+| Test area | What it should verify |
+|---|---|
+| Protocol core | HTTP requests, discovery, execution, job transitions, links, and errors |
+| Form generation | How process-description schemas become form fields and when raw JSON fallback is needed |
+| Result handling | How output descriptions and returned media types select maps, JSON views, text, or downloads |
+| Live provider compatibility | A small smoke set against each real implementation |
+
+One recorded exchange may support several test areas. Do not duplicate it just
+to place it under several headings.
+
+## Scope of this repository now
+
+For now, this repository should:
+
+- capture real process descriptions, requests, responses, headers, and final
+  URLs;
+- keep a small representative set under [`../examples/`](../examples/);
+- keep similar processes and provider-specific observations under
+  [`../evidence/`](../evidence/);
+- provide fixtures and Postman collections for inspecting live APIs;
+- record enough provider information to understand where an exchange came
+  from.
+
+The name `examples/` is a working name. Its contents are future test material,
+but they are not executable client tests yet.
+
+## Decisions that wait for the client
+
+Do not build a test framework in this repository before the client has a
+public API, module boundaries, and a TypeScript test runner. In particular,
+wait before deciding:
+
+- whether `examples/` becomes `scenarios/`, moves into the client repository,
+  or remains an external fixture set;
+- the fake transport implementation and its response queue;
+- assertion helpers or a machine-readable testcase manifest;
+- the final folder layout of protocol, form, result, and live tests;
+- the interfaces used by form generation and result rendering.
+
+Those decisions should follow the actual client design. Until then, plain JSON
+records and short README files are sufficient.
 
 ## Current main examples
 
-The first three examples establish the format:
+The current examples establish the file format:
 
 | Example | What it represents |
 |---|---|
@@ -44,7 +83,8 @@ Add an example when it introduces a different client-facing behaviour:
 Do not add another main example only because it uses a different processing
 library or algorithm. Similar requests remain available under `evidence/`.
 
-A useful final main set will probably contain 12–15 examples, including:
+The final number is determined by coverage rather than a fixed target. The set
+should eventually include:
 
 - a simple process description;
 - a complex or unsupported schema;
@@ -59,6 +99,27 @@ A useful final main set will probably contain 12–15 examples, including:
 - HTTP 200 with a missing or unusable output;
 - an accepted job without a usable location;
 - invalid input according to the process description.
+
+Requests alone are not enough for UI tests. A form-generation scenario needs
+the process description. A result-handling scenario needs the output
+description and an actual returned value or reference, including its media
+type when available.
+
+## Adding server implementations
+
+Evidence remains grouped by provider because it records what one deployment
+did. For each additional implementation, collect only the useful minimum:
+
+- landing page, conformance response, and process list;
+- at least one representative process description;
+- one synchronous execution when supported;
+- one asynchronous flow when supported;
+- one useful error or provider-specific response shape.
+
+Do not repeat every process and data shape for every implementation. When the
+client starts consuming these files, a likely curated layout is behaviour,
+then provider, then scenario. Confirm that layout against the client tests
+before moving folders.
 
 ## Process families found in the ZOO evidence
 
@@ -104,9 +165,15 @@ provider-specific client code for them.
 
 ## Using the files in client tests
 
-Recorded tests should call the client's public API with a fake implementation
-of its small HTTP transport. The fake transport returns a response from an
-example, after which the TypeScript test checks the client result.
+After the client exists, deterministic protocol tests can call its public API
+with a small fake transport. The fake transport will return the recorded
+responses while the test checks the requests made and values returned. The
+fake belongs in the client test suite, not in this repository today.
+
+Form tests should load recorded process descriptions and check the client's
+form model. Result tests should load recorded output descriptions and values
+and check the selected presentation. Those tests should use the same source
+material where possible.
 
 Live tests should call a small selection through the real browser transport
 against ZOO, pygeoapi, or a testbed service. Compare stable properties such as
@@ -119,8 +186,9 @@ bypass the client and therefore do not count as client tests.
 
 ## Coverage of the Topic 3 plan
 
-This table describes test material in this repository. A feature is verified
-only when an actual client test uses that material.
+This table describes available source material. It is not a request to
+implement missing client features in this repository. A feature is verified
+only when an actual client test uses the material.
 
 | Topic 3 commitment | Coverage in this repository |
 |---|---|

@@ -16,9 +16,25 @@ The command creates:
 Each server has its own Postman variable, such as `{{zooLocalBaseUrl}}`. Job
 steps also use variables such as `{{jobUrl}}` and `{{resultsUrl}}`.
 
-The representative collection includes example responses, but it does not
-automatically save job IDs or poll jobs. Use it as request documentation and
-for manual tests.
+The representative collection includes recorded response examples. Its async
+workflow also includes post-response scripts that:
+
+1. save `jobId` and `jobUrl` after job submission;
+2. repeat the status request while the job is `accepted` or `running`;
+3. save `resultsUrl` after a successful status response;
+4. let the next request retrieve the results.
+
+Run the `async/successful-job` folder with the Collection Runner, Postman CLI,
+or Newman to use the complete sequence. Sending one request manually still
+saves variables, but Postman only follows `setNextRequest` while running a
+collection. Change `pollDelayMs` or `maxPollAttempts` in the collection
+variables if needed.
+
+Post-response scripts come from matching `.post-response.js` files beside the
+example requests.
+
+These scripts automate live API inspection in Postman. They are not the future
+client implementation or its automated test suite.
 
 Do not edit the generated JSON files. Change an example, evidence request,
 server file, or the generator and run the command again.

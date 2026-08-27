@@ -3,13 +3,16 @@
 This repository collects representative OGC API Processes requests and
 responses that our client should be able to handle.
 
-Start with [`examples/`](examples/). It contains a small, readable set for
-client implementation and tests. [`evidence/`](evidence/) contains the larger
-collection of provider-specific requests, responses, and process descriptions
-that led to those choices.
+Start with [`examples/`](examples/). It contains a small, readable set intended
+for future client implementation and tests. [`evidence/`](evidence/) contains
+the larger collection of provider-specific requests, responses, and process
+descriptions that led to those choices.
 
 The files are test data. They do not test a client by themselves. Actual
 assertions belong in the client project's normal TypeScript test suite.
+
+The end goal, current limits, and decisions that wait for the client are
+documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 
 ## Folder guide
 
@@ -94,6 +97,10 @@ python3 scripts/generate_postman_collections.py
 ```
 
 The generated files are written to [`generated/postman/`](generated/postman/).
+Run the `async/successful-job` folder with Postman's Collection Runner to run
+the full sequence. Its post-response scripts save the job URL and ID, repeat
+the status request until the job finishes, and save the results URL for the
+last request.
 
 ## Documentation
 
@@ -101,8 +108,8 @@ The generated files are written to [`generated/postman/`](generated/postman/).
   OGC API Processes client library.
 - [`docs/client-behaviour.md`](docs/client-behaviour.md): information from
   process descriptions and handling of bad input or responses.
-- [`docs/test-strategy.md`](docs/test-strategy.md): how representative examples
-  are selected and used.
+- [`docs/test-strategy.md`](docs/test-strategy.md): repository scope, example
+  selection, and the future client test suites.
 - [`docs/deployment-compatibility.md`](docs/deployment-compatibility.md): why
   results differ between servers and software versions.
 - [`evidence/zoo-local/README.md`](evidence/zoo-local/README.md): details about

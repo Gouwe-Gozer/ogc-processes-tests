@@ -59,10 +59,15 @@ def postman_request(record: dict[str, Any], url: str) -> dict[str, Any]:
 
 
 def response_example(
-    record: dict[str, Any], original_request: dict[str, Any]
+    record: dict[str, Any],
+    original_request: dict[str, Any],
+    label: str | None = None,
 ) -> dict[str, Any]:
+    name = f"HTTP {record['status']}"
+    if label:
+        name = f"{label.replace('-', ' ')} — {name}"
     return {
-        "name": f"HTTP {record['status']}",
+        "name": name,
         "originalRequest": original_request,
         "status": str(record["status"]),
         "code": record["status"],
@@ -71,10 +76,43 @@ def response_example(
     }
 
 
-def paired_response(request_path: Path) -> Path:
+def paired_responses(request_path: Path) -> list[tuple[str | None, Path]]:
     if request_path.name == "request.json":
-        return request_path.with_name("response.json")
-    return request_path.with_name(request_path.name.replace(".request.json", ".response.json"))
+        response_path = request_path.with_name("response.json")
+        return [(None, response_path)] if response_path.is_file() else []
+
+    prefix = request_path.name.removesuffix(".request.json")
+    responses: list[tuple[str | None, Path]] = []
+    response_path = request_path.with_name(f"{prefix}.response.json")
+    if response_path.is_file():
+        responses.append((None, response_path))
+    for variant_path in sorted(request_path.parent.glob(f"{prefix}.*.response.json")):
+        label = variant_path.name.removeprefix(f"{prefix}.").removesuffix(
+            ".response.json"
+        )
+        responses.append((label, variant_path))
+    return responses
+
+
+def post_response_event(request_path: Path) -> list[dict[str, Any]]:
+    if request_path.name == "request.json":
+        script_path = request_path.with_name("post-response.js")
+    else:
+        script_path = request_path.with_name(
+            request_path.name.replace(".request.json", ".post-response.js")
+        )
+    if not script_path.is_file():
+        return []
+    script = script_path.read_text(encoding="utf-8")
+    return [
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": script.rstrip().splitlines(),
+            },
+        }
+    ]
 
 
 def example_item(request_path: Path) -> dict[str, Any]:
@@ -82,15 +120,20 @@ def example_item(request_path: Path) -> dict[str, Any]:
     if not isinstance(record, dict):
         raise RepositoryError(f"{request_path} must contain an object")
     request = postman_request(record, str(record.get("url") or record.get("path")))
-    response_path = paired_response(request_path)
     name = request_path.name.removesuffix(".request.json")
     if name == "request.json":
         name = request_path.parent.name
     item: dict[str, Any] = {"name": name, "request": request}
-    if response_path.is_file():
+    response_examples = []
+    for label, response_path in paired_responses(request_path):
         response = read_json(response_path)
         if isinstance(response, dict):
-            item["response"] = [response_example(response, request)]
+            response_examples.append(response_example(response, request, label))
+    if response_examples:
+        item["response"] = response_examples
+    events = post_response_event(request_path)
+    if events:
+        item["event"] = events
     return item
 
 
@@ -128,6 +171,10 @@ def generate_examples() -> dict[str, Any]:
             {"key": "jobId", "value": "", "type": "string"},
             {"key": "jobUrl", "value": "", "type": "string"},
             {"key": "resultsUrl", "value": "", "type": "string"},
+            {"key": "jobStatus", "value": "", "type": "string"},
+            {"key": "pollAttempt", "value": "0", "type": "string"},
+            {"key": "pollDelayMs", "value": "1000", "type": "string"},
+            {"key": "maxPollAttempts", "value": "60", "type": "string"},
         ],
         "item": tree_items(tree),
     }

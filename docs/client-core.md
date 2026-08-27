@@ -1,5 +1,9 @@
 # OGC API Processes client core
 
+This document describes the planned client library. It does not describe code
+that should be added to this evidence repository. Final interfaces and tests
+should be implemented in the client project when its public API exists.
+
 The client core is the part of the library that understands OGC API -
 Processes. It should support:
 
@@ -126,6 +130,8 @@ Applications can still supply custom headers. A relay can still be added as a
 second implementation of the small transport interface.
 
 ## Suggested implementation order
+
+This order applies to development of the client project:
 
 1. HTTP interface and browser `fetch` implementation.
 2. Landing-page links and conformance.

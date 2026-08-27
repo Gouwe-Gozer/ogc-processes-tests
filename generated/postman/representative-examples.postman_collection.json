@@ -25,6 +25,26 @@
       "key": "resultsUrl",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "jobStatus",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "pollAttempt",
+      "value": "0",
+      "type": "string"
+    },
+    {
+      "key": "pollDelayMs",
+      "value": "1000",
+      "type": "string"
+    },
+    {
+      "key": "maxPollAttempts",
+      "value": "60",
+      "type": "string"
     }
   ],
   "item": [
@@ -111,10 +131,96 @@
                   ],
                   "body": "{\n  \"progress\": 0,\n  \"id\": \"{{jobId}}\",\n  \"jobID\": \"{{jobId}}\",\n  \"type\": \"process\",\n  \"processID\": \"longProcess\",\n  \"created\": \"2026-08-25T12:20:41.350Z\",\n  \"started\": \"2026-08-25T12:20:41.350Z\",\n  \"updated\": \"2026-08-25T12:20:41.350Z\",\n  \"status\": \"running\",\n  \"message\": \"ZOO-Kernel accepted to run your service!\",\n  \"links\": [\n    {\n      \"title\": \"Status location\",\n      \"rel\": \"monitor\",\n      \"type\": \"application/json\",\n      \"href\": \"{{baseUrl}}/jobs/{{jobId}}\"\n    }\n  ]\n}"
                 }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "(function () {",
+                      "    function resolveLink(href) {",
+                      "        const value = pm.variables.replaceIn(String(href || \"\").trim());",
+                      "        if (/^https?:\\/\\//i.test(value)) {",
+                      "            return value;",
+                      "        }",
+                      "",
+                      "        const requestUrl = pm.variables.replaceIn(pm.request.url.toString());",
+                      "        const origin = requestUrl.match(/^(https?:\\/\\/[^/]+)/i);",
+                      "        if (value.startsWith(\"/\") && origin) {",
+                      "            return origin[1] + value;",
+                      "        }",
+                      "",
+                      "        const requestPath = requestUrl.split(/[?#]/)[0];",
+                      "        const lastSlash = requestPath.lastIndexOf(\"/\");",
+                      "        if (lastSlash >= 0) {",
+                      "            return requestPath.slice(0, lastSlash + 1) + value.replace(/^\\.\\//, \"\");",
+                      "        }",
+                      "        return value;",
+                      "    }",
+                      "",
+                      "    pm.test(\"Job submission returns HTTP 201\", function () {",
+                      "        pm.expect(pm.response.code).to.eql(201);",
+                      "    });",
+                      "",
+                      "    if (pm.response.code !== 201) {",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    let body;",
+                      "    try {",
+                      "        body = pm.response.json();",
+                      "    } catch (error) {",
+                      "        pm.test(\"Job submission has a JSON response body\", function () {",
+                      "            throw error;",
+                      "        });",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const monitorLink = Array.isArray(body.links)",
+                      "        ? body.links.find(function (link) { return link.rel === \"monitor\"; })",
+                      "        : undefined;",
+                      "    const location = pm.response.headers.get(\"Location\");",
+                      "    const monitorHref = location || (monitorLink && monitorLink.href);",
+                      "",
+                      "    pm.test(\"Job submission includes a monitor URL\", function () {",
+                      "        pm.expect(monitorHref).to.be.a(\"string\").and.not.empty;",
+                      "    });",
+                      "",
+                      "    if (!monitorHref) {",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const jobUrl = resolveLink(monitorHref);",
+                      "    const jobPath = jobUrl.split(/[?#]/)[0].replace(/\\/+$/, \"\");",
+                      "    const jobIdMatch = jobPath.match(/\\/jobs\\/([^/]+)$/);",
+                      "    const jobIdFromUrl = jobIdMatch && decodeURIComponent(jobIdMatch[1]);",
+                      "    const jobId = body.jobID || body.id || jobIdFromUrl;",
+                      "",
+                      "    pm.test(\"Job ID is available\", function () {",
+                      "        pm.expect(jobId).to.not.be.oneOf([undefined, null, \"\"]);",
+                      "    });",
+                      "",
+                      "    if (jobId === undefined || jobId === null || jobId === \"\") {",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    pm.collectionVariables.set(\"jobUrl\", jobUrl);",
+                      "    pm.collectionVariables.set(\"jobId\", String(jobId));",
+                      "    pm.collectionVariables.set(\"pollAttempt\", \"0\");",
+                      "    pm.collectionVariables.unset(\"resultsUrl\");",
+                      "})();"
+                    ]
+                  }
+                }
               ]
             },
             {
-              "name": "02-poll-running",
+              "name": "02-poll",
               "request": {
                 "method": "GET",
                 "header": [
@@ -127,7 +233,7 @@
               },
               "response": [
                 {
-                  "name": "HTTP 200",
+                  "name": "running — HTTP 200",
                   "originalRequest": {
                     "method": "GET",
                     "header": [
@@ -151,24 +257,9 @@
                     }
                   ],
                   "body": "{\n  \"progress\": 80,\n  \"id\": \"{{jobId}}\",\n  \"jobID\": \"{{jobId}}\",\n  \"type\": \"process\",\n  \"processID\": \"longProcess\",\n  \"created\": \"2026-08-25T12:20:41.350Z\",\n  \"started\": \"2026-08-25T12:20:41.350Z\",\n  \"updated\": \"2026-08-25T12:20:57.807Z\",\n  \"status\": \"running\",\n  \"message\": \"Step 80\",\n  \"links\": [\n    {\n      \"title\": \"Status location\",\n      \"rel\": \"monitor\",\n      \"type\": \"application/json\",\n      \"href\": \"{{jobUrl}}\"\n    }\n  ]\n}"
-                }
-              ]
-            },
-            {
-              "name": "03-poll-successful",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": "{{jobUrl}}"
-              },
-              "response": [
+                },
                 {
-                  "name": "HTTP 200",
+                  "name": "successful — HTTP 200",
                   "originalRequest": {
                     "method": "GET",
                     "header": [
@@ -193,10 +284,113 @@
                   ],
                   "body": "{\n  \"id\": \"{{jobId}}\",\n  \"jobID\": \"{{jobId}}\",\n  \"type\": \"process\",\n  \"processID\": \"longProcess\",\n  \"created\": \"2026-08-25T12:20:41.350Z\",\n  \"started\": \"2026-08-25T12:20:41.350Z\",\n  \"finished\": \"2026-08-25T12:21:02.002Z\",\n  \"updated\": \"2026-08-25T12:21:00.866Z\",\n  \"status\": \"successful\",\n  \"message\": \"ZOO-Kernel successfully run your service!\",\n  \"links\": [\n    {\n      \"title\": \"Status location\",\n      \"rel\": \"monitor\",\n      \"type\": \"application/json\",\n      \"href\": \"{{jobUrl}}\"\n    },\n    {\n      \"title\": \"Result location\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/results\",\n      \"type\": \"application/json\",\n      \"href\": \"{{baseUrl}}/jobs/{{jobId}}/results\"\n    }\n  ]\n}"
                 }
+              ],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "(function () {",
+                      "    function resolveLink(href) {",
+                      "        const value = pm.variables.replaceIn(String(href || \"\").trim());",
+                      "        if (/^https?:\\/\\//i.test(value)) {",
+                      "            return value;",
+                      "        }",
+                      "",
+                      "        const requestUrl = pm.variables.replaceIn(pm.request.url.toString());",
+                      "        const origin = requestUrl.match(/^(https?:\\/\\/[^/]+)/i);",
+                      "        if (value.startsWith(\"/\") && origin) {",
+                      "            return origin[1] + value;",
+                      "        }",
+                      "",
+                      "        const requestPath = requestUrl.split(/[?#]/)[0];",
+                      "        const lastSlash = requestPath.lastIndexOf(\"/\");",
+                      "        if (lastSlash >= 0) {",
+                      "            return requestPath.slice(0, lastSlash + 1) + value.replace(/^\\.\\//, \"\");",
+                      "        }",
+                      "        return value;",
+                      "    }",
+                      "",
+                      "    pm.test(\"Job status request returns HTTP 200\", function () {",
+                      "        pm.expect(pm.response.code).to.eql(200);",
+                      "    });",
+                      "",
+                      "    if (pm.response.code !== 200) {",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    let body;",
+                      "    try {",
+                      "        body = pm.response.json();",
+                      "    } catch (error) {",
+                      "        pm.test(\"Job status has a JSON response body\", function () {",
+                      "            throw error;",
+                      "        });",
+                      "        pm.execution.setNextRequest(null);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    const status = typeof body.status === \"string\" ? body.status.toLowerCase() : \"\";",
+                      "    pm.collectionVariables.set(\"jobStatus\", status);",
+                      "",
+                      "    if (status === \"accepted\" || status === \"running\") {",
+                      "        const attempt = Number(pm.collectionVariables.get(\"pollAttempt\") || 0) + 1;",
+                      "        const maximum = Number(pm.collectionVariables.get(\"maxPollAttempts\") || 60);",
+                      "        pm.collectionVariables.set(\"pollAttempt\", String(attempt));",
+                      "",
+                      "        pm.test(\"Job polling stays within the configured limit\", function () {",
+                      "            pm.expect(attempt).to.be.below(maximum);",
+                      "        });",
+                      "",
+                      "        if (attempt >= maximum) {",
+                      "            pm.execution.setNextRequest(null);",
+                      "            return;",
+                      "        }",
+                      "",
+                      "        const delay = Math.max(0, Number(pm.collectionVariables.get(\"pollDelayMs\") || 1000));",
+                      "        setTimeout(function () {",
+                      "            pm.execution.setNextRequest(pm.info.requestId);",
+                      "        }, delay);",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    if (status === \"successful\") {",
+                      "        const resultsRelation = \"http://www.opengis.net/def/rel/ogc/1.0/results\";",
+                      "        const resultsLink = Array.isArray(body.links)",
+                      "            ? body.links.find(function (link) {",
+                      "                return link.rel === resultsRelation || link.rel === \"results\";",
+                      "            })",
+                      "            : undefined;",
+                      "        const resultsHref = resultsLink && resultsLink.href;",
+                      "",
+                      "        pm.test(\"Successful job includes a results URL\", function () {",
+                      "            pm.expect(resultsHref).to.be.a(\"string\").and.not.empty;",
+                      "        });",
+                      "",
+                      "        if (!resultsHref) {",
+                      "            pm.execution.setNextRequest(null);",
+                      "            return;",
+                      "        }",
+                      "",
+                      "        pm.collectionVariables.set(\"resultsUrl\", resolveLink(resultsHref));",
+                      "        pm.collectionVariables.unset(\"pollAttempt\");",
+                      "        return;",
+                      "    }",
+                      "",
+                      "    pm.test(\"Job reaches the successful state\", function () {",
+                      "        pm.expect(status, body.message || \"Unexpected job status\").to.eql(\"successful\");",
+                      "    });",
+                      "    pm.execution.setNextRequest(null);",
+                      "})();"
+                    ]
+                  }
+                }
               ]
             },
             {
-              "name": "04-results",
+              "name": "03-results",
               "request": {
                 "method": "GET",
                 "header": [

@@ -37,7 +37,8 @@ Handling: `job-resource-missing`
 Expected client handling
 
 - Return the parsed problem with status, headers, final URL, and raw body.
-- Retain the previously observed dismissed terminal state in the caller's job record.
+- Do not overwrite a previously observed dismissed state held by the calling
+  application.
 
 Avoid
 
