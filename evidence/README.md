@@ -4,14 +4,17 @@ This folder keeps provider-specific material that may help explain client or
 server behaviour but is not part of the small representative set in
 [`../scenarios/`](../scenarios/).
 
-The three server folders contain server details and captured material:
+The four server folders contain server details and captured material:
 
 - [`zoo-local/`](zoo-local/): 53 runnable requests plus captured process
   descriptions, execution responses, errors, and diagnostics;
 - [`pygeoapi-demo/`](pygeoapi-demo/): details of the public pygeoapi demo used
   for the recorded `hello-world` exchanges;
 - [`bgt-prototype/`](bgt-prototype/): details of the local pygeoapi-based BGT
-  prototype.
+  prototype;
+- [`weaver-redoak/`](weaver-redoak/): public Weaver discovery responses, a
+  missing-CORS observation, and an advertised process description that returned
+  HTTP 403.
 
 [`recorded-exchanges/`](recorded-exchanges/) contains complete request and
 response pairs that are not in the main scenario set. These include similar

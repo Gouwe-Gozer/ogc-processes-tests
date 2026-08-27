@@ -2,7 +2,7 @@
 
 Process: `failR`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`errors/zoo-local/structured-execution-error`](../../../../scenarios/errors/zoo-local/structured-execution-error/).
 
 ## Why it may be useful
 

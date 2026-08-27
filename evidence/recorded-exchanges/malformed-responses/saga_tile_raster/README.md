@@ -2,7 +2,7 @@
 
 Process: `SAGA.grid_tools.27`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`errors/zoo-local/missing-requested-output`](../../../../scenarios/errors/zoo-local/missing-requested-output/).
 
 ## Why it may be useful
 

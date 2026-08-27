@@ -17,6 +17,11 @@
       "type": "string"
     },
     {
+      "key": "weaverRedoakBaseUrl",
+      "value": "https://redoak.cs.toronto.edu/weaver",
+      "type": "string"
+    },
+    {
       "key": "zooLocalBaseUrl",
       "value": "http://localhost/ogc-api",
       "type": "string"

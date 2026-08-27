@@ -2,7 +2,7 @@
 
 Process: `hello-world`
 Source server: `pygeoapi-demo`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`sync/pygeoapi-demo/raw-versus-document-response`](../../../../scenarios/sync/pygeoapi-demo/raw-versus-document-response/).
 
 ## Why it may be useful
 

@@ -1,0 +1,14 @@
+{
+  "id": "weaver-redoak",
+  "title": "University of Toronto RedOak Weaver deployment",
+  "implementation": {
+    "name": "Weaver",
+    "version_at_capture": "6.8.3",
+    "configuration": "HYBRID"
+  },
+  "base_url": {
+    "variable": "weaverRedoakBaseUrl",
+    "default": "https://redoak.cs.toronto.edu/weaver"
+  },
+  "captured_at": "2026-08-27"
+}

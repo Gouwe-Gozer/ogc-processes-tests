@@ -1,0 +1,9 @@
+{
+  "status": 403,
+  "headers": {
+    "Content-Type": "text/html",
+    "Server": "nginx/1.31.1"
+  },
+  "final_url": "{{baseUrl}}/processes/EchoProcess:1.0.0",
+  "body": "<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidden</h1></center>\n<hr><center>nginx/1.31.1</center>\n</body>\n</html>"
+}

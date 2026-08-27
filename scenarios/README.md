@@ -17,8 +17,5 @@ It does not imply provider-specific client code.
 Placeholders such as `{{baseUrl}}`, `{{jobId}}`, and `{{jobUrl}}` stand for
 values supplied by a deployment or obtained from an earlier response.
 
-The current set contains:
-
-- a successful synchronous execution with inline GeoJSON;
-- a complete successful asynchronous job;
-- a non-JSON HTTP error returned while polling a job.
+The current scenarios and the reason each was selected are listed in the
+[test strategy](../docs/test-strategy.md#current-protocol-core-scenarios).

@@ -56,19 +56,42 @@ wait before deciding:
 Those decisions should follow the actual client design. Until then, plain JSON
 records and short README files are sufficient.
 
-## Current main scenarios
+## Current protocol-core scenarios
 
-The current scenarios establish the file format:
+The current scenarios cover these distinct protocol behaviours:
 
 | Scenario | What it represents |
 |---|---|
+| `discovery/weaver-redoak/basic-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
 | `sync/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
+| `sync/zoo-local/result-by-reference` | Synchronous result returned as an `href` with a media type |
+| `sync/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |
 | `async/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
-| `errors/synthetic/non-json-error` | An HTTP 500 response containing HTML instead of an OGC JSON problem |
+| `async/zoo-local/failed-job` | Accepted submission followed by a failed terminal job state |
+| `async/zoo-local/dismiss-running-job` | Accepted submission followed by `DELETE` and a dismissed terminal state |
+| `errors/zoo-local/process-description-html-error` | One process description returns HTTP 500 with HTML instead of JSON |
+| `errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
+| `errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
+| `errors/zoo-local/missing-requested-output` | HTTP 200 response omits an explicitly requested output |
 
 Each request file contains its method, URL, headers, and body. Each response
 file contains its status, headers, final URL, and body. The README explains why
 the exchange matters.
+
+## Evidence not promoted yet
+
+The remaining recorded exchanges are still useful, but they do not currently
+require another protocol-core scenario:
+
+| Evidence group | Why it remains evidence |
+|---|---|
+| Similar GEOS and SAGA executions | They use request and result envelopes already represented by the selected synchronous scenarios |
+| Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
+| Unknown jobs, premature results, and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
+| Synthetic missing or malformed job links and statuses | Keep until the async client API exists and its defensive assertions can be written precisely |
+| Bounding boxes, enums, repeated inputs, and nested schemas | Promote when form-generation tests begin |
+| CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin |
+| Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |
 
 ## Choosing the rest of the main set
 
@@ -196,14 +219,14 @@ only when an actual client test uses the material.
 
 | Topic 3 commitment | Coverage in this repository |
 |---|---|
-| Process discovery and descriptions | Partial: many descriptions are captured, but landing-page, conformance, and process-list scenarios are still missing |
+| Process discovery and descriptions | Weaver landing-page, conformance, and process-list responses are selected, together with successful and failing descriptions from other providers |
 | Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, and primitive types, but generated UI behaviour must be tested in the client project |
-| Raw JSON fallback | Documented, but no main scenario has been selected yet |
-| Synchronous execution | A main GeoJSON scenario and broader supporting evidence are available |
-| Async submission, polling, results, and dismiss | Async success is a main scenario; failure and dismissal remain in supporting evidence |
+| Raw JSON fallback | The pygeoapi raw-versus-document scenario preserves a description/result mismatch for this path |
+| Synchronous execution | Inline document, raw, and referenced results are selected |
+| Async submission, polling, results, and dismiss | Successful, failed, and dismissed job flows are selected |
 | Result rendering | Result samples exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
-| CORS and exposed `Location` | Missing |
+| CORS and exposed `Location` | Partial: the RedOak responses capture missing CORS headers; exposed async `Location` still needs a browser-facing test in the client project |
 | Subscriber callbacks and polling reconciliation | Missing |
 | OGC API Processes v1 and v2 selection | Missing |
-| Different server implementations | Limited: ZOO supplies most live evidence; two pygeoapi servers supply recorded response shapes |
+| Different server implementations | ZOO, the public pygeoapi demo, and public Weaver discovery are represented in the main set; the BGT prototype remains supporting evidence |
 | Interoperability matrix | The evidence can supply observations, but the matrix has not been created yet |

@@ -18,13 +18,13 @@ In the evidence collection, each server has its own Postman variable, such as
 for the provider folder you want to run. Job steps also use variables such as
 `{{jobUrl}}` and `{{resultsUrl}}`.
 
-The representative collection includes recorded response examples. Its async
-workflow also includes post-response scripts that:
+The representative collection includes recorded response examples. Async
+submission scripts save `jobId` and `jobUrl` for subsequent status or dismiss
+requests. The successful-job workflow also:
 
-1. save `jobId` and `jobUrl` after job submission;
-2. repeat the status request while the job is `accepted` or `running`;
-3. save `resultsUrl` after a successful status response;
-4. let the next request retrieve the results.
+1. repeats the status request while the job is `accepted` or `running`;
+2. saves `resultsUrl` after a successful status response;
+3. lets the next request retrieve the results.
 
 Run the `async/zoo-local/successful-job` folder with the Collection Runner,
 Postman CLI, or Newman to use the complete sequence. Sending one request

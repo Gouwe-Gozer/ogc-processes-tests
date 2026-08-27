@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Content-Language": "en-US"
+  },
+  "final_url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+  "body": {
+    "outputs": [
+      {
+        "id": "echo",
+        "value": "Hello OGC API client! Hello from the interoperability fixture."
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 Process: `longProcess`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`async/zoo-local/dismiss-running-job`](../../../../scenarios/async/zoo-local/dismiss-running-job/).
 
 ## submit
 

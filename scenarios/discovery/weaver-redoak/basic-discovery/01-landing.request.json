@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/",
+  "headers": {
+    "Accept": "application/json",
+    "Origin": "http://localhost:5173"
+  }
+}

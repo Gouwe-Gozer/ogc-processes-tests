@@ -2,7 +2,7 @@
 
 Process: `OTB.ReadImageInfo`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`errors/zoo-local/process-description-html-error`](../../../../scenarios/errors/zoo-local/process-description-html-error/).
 
 ## Why it may be useful
 

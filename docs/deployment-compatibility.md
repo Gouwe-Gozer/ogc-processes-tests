@@ -4,16 +4,23 @@ A deployment is one running OGC API - Processes server with a specific set of
 software, process plugins, and configuration. Two deployments using the same
 server product can expose different processes and responses.
 
-This repository keeps evidence from three deployments under `evidence/`:
+This repository keeps evidence from four deployments under `evidence/`:
 
 - `zoo-local`: the local ZOO server used for most live tests;
 - `pygeoapi-demo`: the public pygeoapi demo used for `hello-world`;
-- `bgt-prototype`: a local pygeoapi-based BGT process.
+- `bgt-prototype`: a local pygeoapi-based BGT process;
+- `weaver-redoak`: a public Weaver deployment used for discovery and relay
+  evidence.
 
 The two pygeoapi deployments are different because each process plugin defines
 its own inputs, outputs, supported execution modes, dependencies, and result
 data. Behavior seen in one process should not be assumed for every pygeoapi
 server.
+
+The RedOak deployment provides public landing, conformance, and process-list
+responses without CORS headers. Its advertised process descriptions returned
+HTTP 403 at capture time, so it is not currently used for execution scenarios.
+These are properties of that deployment, not defaults for Weaver.
 
 ## Why software versions matter
 

@@ -2,7 +2,7 @@
 
 Process: `hellojs`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`errors/zoo-local/missing-required-input`](../../../../scenarios/errors/zoo-local/missing-required-input/).
 
 ## Why it may be useful
 

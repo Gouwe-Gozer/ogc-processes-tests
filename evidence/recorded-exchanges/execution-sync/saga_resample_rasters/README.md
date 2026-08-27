@@ -2,7 +2,7 @@
 
 Process: `SAGA.grid_tools.0`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`sync/zoo-local/result-by-reference`](../../../../scenarios/sync/zoo-local/result-by-reference/).
 
 ## Why it may be useful
 

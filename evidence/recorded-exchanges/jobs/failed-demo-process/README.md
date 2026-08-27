@@ -2,7 +2,7 @@
 
 Process: `demo`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as [`async/zoo-local/failed-job`](../../../../scenarios/async/zoo-local/failed-job/).
 
 ## submit
 

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/OTB.ReadImageInfo",
+  "headers": {
+    "Accept": "application/json"
+  }
+}
