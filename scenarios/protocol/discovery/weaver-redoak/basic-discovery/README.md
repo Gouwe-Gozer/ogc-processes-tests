@@ -20,6 +20,6 @@ responses included `Access-Control-Allow-Origin`, so a browser cannot read them
 directly. The same protocol parsing should work when a relay transport supplies
 them.
 
-The advertised `EchoProcess` description returned HTTP 403. That separate
-exchange remains in
-[`evidence/weaver-redoak/`](../../../../../evidence/weaver-redoak/).
+The advertised `EchoProcess` description returned HTTP 403. It is selected as
+the separate
+[`process-description-forbidden`](../process-description-forbidden/) scenario.

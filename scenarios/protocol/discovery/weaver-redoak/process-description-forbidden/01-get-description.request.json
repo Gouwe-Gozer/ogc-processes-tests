@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/EchoProcess:1.0.0",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

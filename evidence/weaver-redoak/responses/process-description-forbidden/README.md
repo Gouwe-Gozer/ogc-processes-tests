@@ -1,5 +1,8 @@
 # Advertised process description returns HTTP 403
 
+Selected as
+[`protocol/discovery/weaver-redoak/process-description-forbidden`](../../../../scenarios/protocol/discovery/weaver-redoak/process-description-forbidden/).
+
 The public process list advertised
 `/processes/EchoProcess:1.0.0` as the JSON description of the current process
 revision. A direct GET returned HTTP 403 with a generic nginx HTML body.

@@ -239,6 +239,52 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "name": "process-description-forbidden",
+                  "item": [
+                    {
+                      "name": "01-get-description",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{weaverRedoakBaseUrl}}/processes/EchoProcess:1.0.0"
+                      },
+                      "response": [
+                        {
+                          "name": "HTTP 403",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": "{{weaverRedoakBaseUrl}}/processes/EchoProcess:1.0.0"
+                          },
+                          "status": "403",
+                          "code": 403,
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "text/html"
+                            },
+                            {
+                              "key": "Server",
+                              "value": "nginx/1.31.1"
+                            }
+                          ],
+                          "body": "<html>\n<head><title>403 Forbidden</title></head>\n<body>\n<center><h1>403 Forbidden</h1></center>\n<hr><center>nginx/1.31.1</center>\n</body>\n</html>"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

@@ -41,6 +41,11 @@ For now, this repository should:
 The contents of `scenarios/` are future test material, but they are not
 executable client tests yet.
 
+This repository does not need a provider scenario for every defensive branch
+in the client. Its main job is to preserve useful differences observed in real
+OGC API Processes services. Controlled conditions that do not depend on a real
+provider belong in the future client repository.
+
 ## Decisions that wait for the client
 
 Do not build a test framework in this repository before the client has a
@@ -65,6 +70,7 @@ can still be reused by tests for another concern.
 | Scenario | What it represents |
 |---|---|
 | `protocol/discovery/weaver-redoak/basic-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
+| `protocol/discovery/weaver-redoak/process-description-forbidden` | An advertised versioned process-description link returns HTTP 403 with HTML |
 | `protocol/execution/zoo-local/simple-sync` | Minimal synchronous HTTP 200 execution with one string input and one string result |
 | `protocol/execution/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |
 | `protocol/jobs/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
@@ -123,7 +129,6 @@ should eventually include:
 - a structured OGC error;
 - a non-JSON error;
 - HTTP 200 with a missing or unusable output;
-- an accepted job without a usable location;
 - invalid input according to the process description;
 - input allowed by the description but rejected by an undocumented provider
   rule.
@@ -207,6 +212,46 @@ should cover request-option forwarding, HTTP responses including 4xx and 5xx,
 redirected final URLs, rejected requests, and aborts. They do not need a real
 OGC provider or a scenario folder here.
 
+### Provider evidence and controlled client tests
+
+Some important client behaviours may never appear in the selected live
+services. Do not invent provider evidence for them. Test them later with
+controlled responses in the client project.
+
+| Behaviour | Where it should be tested | When it belongs here |
+|---|---|---|
+| Resolve relative links against the final response URL | Protocol-core unit test | Keep a real capture if a provider advertises relative links |
+| Preserve requested and redirected final URLs | HTTP transport unit test | Keep a real redirect only when it helps explain a provider |
+| Continue when one process description fails | Protocol-core unit test using several controlled responses | Keep each real failing description as provider evidence |
+| Read `Location` without depending on capitalization | HTTP transport or job unit test | No separate provider scenario is needed |
+| Use a body monitor link when `Location` is absent | Async-job unit test | Keep a real capture if a provider behaves this way |
+| Reject an accepted job with no usable monitor location | Async-job unit test | Keep a real capture if encountered |
+| Handle network failure and `AbortSignal` | HTTP transport unit test | Not provider evidence because no HTTP response exists |
+| Stop polling without dismissing the server job | Polling unit test | A live smoke test may confirm it, but no recorded response can prove it |
+| Detect CORS restrictions and use a relay when required | Browser integration and live provider test | Response headers and affected providers are useful evidence here |
+| Subscriber callbacks and version selection | Client feature and integration tests if these commitments remain in scope | Add provider evidence only for services that expose these capabilities |
+
+### Current evidence audit
+
+The evidence was checked for these behaviours on 28 August 2026:
+
+| Behaviour | What is currently recorded |
+|---|---|
+| Relative links | None. All recorded `href` values are absolute URLs or placeholders for absolute URLs |
+| Redirected final URLs | None. Recorded request and final URLs match, and no HTTP 3xx exchange is stored |
+| One unavailable process description | ZOO returns HTTP 500 for `OTB.ReadImageInfo`; Weaver returns HTTP 403 for its advertised `EchoProcess:1.0.0` link. Both are selected scenarios |
+| Missing or unusable async location | None. Every recorded HTTP 201 response contains a `Location` header and the recorded job submissions also contain a monitor link |
+| Different `Location` capitalization | None. All captures use `Location` |
+| CORS differences | Weaver discovery lacks `Access-Control-Allow-Origin`; DIRECTED responses allow `*` and expose response headers. Both behaviours are already represented in selected scenarios |
+| Network failure and abort | Not recordable as provider responses because no HTTP response is produced |
+| Callbacks | Weaver advertises callback conformance, but there is no callback execution capture |
+| OGC API Processes parts | Weaver advertises conformance classes from Parts 1, 2, 3, and 4, but the evidence does not exercise client selection or the additional operations |
+
+The Weaver conformance response therefore suggests two possible future evidence
+runs: callback execution and the additional Processes-part operations. Its
+public process descriptions returned HTTP 403 during this capture, so those
+claims are not yet backed by executable request and response evidence.
+
 Form tests should load recorded process descriptions and check the client's
 form model. Result tests should load recorded output descriptions and values
 and check the selected presentation. Those tests should use the same source
@@ -236,7 +281,7 @@ only when an actual client test uses the material.
 | Async submission, polling, results, and dismiss | Successful, failed, and dismissed job flows are selected |
 | Result rendering | Result samples and measured large-CSV evidence exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
 | CORS and exposed `Location` | Partial: RedOak captures missing CORS headers, while DIRECTED exposes `Location` from a synchronous response; browser-facing relay and async-header tests still belong in the client project |
-| Subscriber callbacks and polling reconciliation | Missing |
-| OGC API Processes v1 and v2 selection | Missing |
+| Subscriber callbacks and polling reconciliation | Weaver advertises callback conformance and ZOO polling flows are selected, but no callback request has been captured |
+| OGC API Processes v1 and v2 selection | Weaver advertises conformance classes from multiple OGC API Processes parts, but no client selection behaviour has been captured |
 | Different server implementations | ZOO, two pygeoapi deployments, and public Weaver discovery are represented in the main set; the BGT prototype remains supporting evidence |
 | Interoperability matrix | The evidence can supply observations, but the matrix has not been created yet |
