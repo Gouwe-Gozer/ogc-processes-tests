@@ -1,0 +1,77 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:10 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "930",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/hellojs",
+  "body": {
+    "id": "hellojs",
+    "title": "HelloWorld Service in JavaScript",
+    "description": "Output and Hello Wolrd string",
+    "mutable": false,
+    "version": "2.0.0",
+    "metadata": [
+      {
+        "title": "Demo"
+      }
+    ],
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/hellojs/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/hellojs/execution.html"
+      }
+    ],
+    "inputs": {
+      "S": {
+        "title": "Name",
+        "description": "The name to display in the hello message",
+        "schema": {
+          "type": "string"
+        },
+        "metadata": [
+          {
+            "title": "Mon test  "
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "result": {
+        "title": "The resulting string",
+        "description": "The string created by service.",
+        "schema": {
+          "type": "string"
+        },
+        "metadata": [
+          {
+            "title": "Mon test  "
+          }
+        ]
+      }
+    }
+  }
+}

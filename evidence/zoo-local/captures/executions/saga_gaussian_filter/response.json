@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:04 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "147",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.grid_filter.1/execution",
+  "body": {
+    "RESULT": {
+      "href": "http://localhost/temp///Output_RESULT_b21182b6-a2e5-11f1-8aff-3e6610d44e17_1.tiff",
+      "format": {
+        "mediaType": "image/tiff"
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@ from support.repository import (
 
 
 MAX_INLINE_BODY_BYTES = 1_000_000
+MAX_PRINT_BODY_BYTES = 20_000
 
 
 def parse_args() -> argparse.Namespace:
@@ -219,7 +220,10 @@ def execute(
     print(f"Status: {status}")
     print(f"Content-Type: {content_type}")
     print("Body:")
-    print(raw.decode(charset, errors="replace"))
+    print(raw[:MAX_PRINT_BODY_BYTES].decode(charset, errors="replace"))
+    if len(raw) > MAX_PRINT_BODY_BYTES:
+        omitted = len(raw) - MAX_PRINT_BODY_BYTES
+        print(f"... {omitted} additional bytes omitted from console output")
 
     expected = record.get("expected_status")
     if expected is None:

@@ -1,0 +1,69 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:09 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "1042",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/demo",
+  "body": {
+    "id": "demo",
+    "title": "Demo long process. ",
+    "description": "This service doesn't do anything except taking its time to return an error message, it demonstrates how to use the update_status function of the Python ZOO-API from your services code.",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/demo/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/demo/execution.html"
+      }
+    ],
+    "inputs": {
+      "sid": {
+        "title": "Service ID",
+        "description": "A ZOO Service ID (unused).",
+        "minOccurs": 0,
+        "schema": {
+          "type": "integer",
+          "nullable": true
+        }
+      }
+    },
+    "outputs": {
+      "Result": {
+        "title": "ExecuteResponse document",
+        "description": "The resulting ExecuteResponse document.",
+        "schema": {
+          "type": "string"
+        },
+        "metadata": [
+          {
+            "title": "Demo XSL use case"
+          }
+        ]
+      }
+    }
+  }
+}

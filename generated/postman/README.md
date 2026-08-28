@@ -56,10 +56,10 @@ variables for manual use.
 A single-request case becomes one Postman item. A case containing several
 requests becomes a folder containing its ordered steps.
 
-Complete matching `response.json` files become Postman response examples.
-Requests without a complete response are still included, but historical
-`response-body.json` and `response-observation.json` files are not presented as
-response examples because they lack a complete HTTP response or body.
+Complete matching response files with an inline `body` become Postman response
+examples. Large or binary responses that use `body_file` remain in the evidence
+folder but are not copied into the collection. This avoids duplicating large
+files inside generated JSON.
 
 Evidence collections do not include Postman JavaScript. They are intended for
 manual provider inspection. JavaScript copied into Postman by a user is not

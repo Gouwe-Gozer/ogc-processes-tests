@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:57 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "78",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/Gdal_Contour/execution",
+  "body": {
+    "Result": "File /tmp/zTmp/gdal_contour_alkmaar.shp successfully created."
+  }
+}

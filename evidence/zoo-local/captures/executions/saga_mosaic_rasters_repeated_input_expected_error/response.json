@@ -1,0 +1,16 @@
+{
+  "status": 500,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:20 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "Connection": "close",
+    "Transfer-Encoding": "chunked",
+    "Content-Type": "application/json;encoding=utf-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.grid_tools.3/execution",
+  "body": {
+    "title": "NoApplicableCode",
+    "type": "NoApplicableCode",
+    "detail": "ZOO Kernel failed to process your request, receiving signal 11 = SIGSEGV "
+  }
+}

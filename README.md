@@ -27,7 +27,7 @@ documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 
 A scenario contains representative material for future client tests. Evidence
 keeps each provider request beside the response that was actually observed.
-Older incomplete captures are clearly marked until they can be rerun.
+Complete evidence records the response status, headers, final URL, and body.
 
 ## Before running ZOO requests
 

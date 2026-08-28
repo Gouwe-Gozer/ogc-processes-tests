@@ -1,0 +1,99 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:32 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "441",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SymDifference/execution",
+  "body": {
+    "Result": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Result",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "gml_id": "polygon_2",
+              "name": "Overlapping Alkmaar test polygon"
+            },
+            "geometry": {
+              "type": "MultiPolygon",
+              "coordinates": [
+                [
+                  [
+                    [
+                      4.756,
+                      52.631
+                    ],
+                    [
+                      4.756,
+                      52.628
+                    ],
+                    [
+                      4.744,
+                      52.628
+                    ],
+                    [
+                      4.744,
+                      52.636
+                    ],
+                    [
+                      4.75,
+                      52.636
+                    ],
+                    [
+                      4.75,
+                      52.631
+                    ],
+                    [
+                      4.756,
+                      52.631
+                    ]
+                  ]
+                ],
+                [
+                  [
+                    [
+                      4.756,
+                      52.631
+                    ],
+                    [
+                      4.756,
+                      52.636
+                    ],
+                    [
+                      4.75,
+                      52.636
+                    ],
+                    [
+                      4.75,
+                      52.639
+                    ],
+                    [
+                      4.762,
+                      52.639
+                    ],
+                    [
+                      4.762,
+                      52.631
+                    ],
+                    [
+                      4.756,
+                      52.631
+                    ]
+                  ]
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

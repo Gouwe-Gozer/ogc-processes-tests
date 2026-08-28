@@ -1,0 +1,111 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:15 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "846",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.shapes_lines.3/execution",
+  "body": {
+    "INTERSECT": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_INTERSECT_b8d7feb8-a2e5-11f1-a410-3e6610d44e17_2",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "line_1",
+              "name": "Alkmaar test line"
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.744,
+                  52.631,
+                  0.0
+                ],
+                [
+                  4.748,
+                  52.633,
+                  0.0
+                ],
+                [
+                  4.754,
+                  52.631,
+                  0.0
+                ],
+                [
+                  4.756,
+                  52.63242857142857,
+                  0.0
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DIFFERENCE": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_DIFFERENCE_b8d7feb8-a2e5-11f1-a410-3e6610d44e17_3",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "line_1",
+              "name": "Alkmaar test line"
+            },
+            "geometry": {
+              "type": "MultiLineString",
+              "coordinates": [
+                [
+                  [
+                    4.742,
+                    52.63,
+                    0.0
+                  ],
+                  [
+                    4.744,
+                    52.631,
+                    0.0
+                  ]
+                ],
+                [
+                  [
+                    4.756,
+                    52.63242857142857,
+                    0.0
+                  ],
+                  [
+                    4.761,
+                    52.636,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

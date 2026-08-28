@@ -1,0 +1,64 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:09 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "843",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/failR",
+  "body": {
+    "id": "failR",
+    "title": "HelloWorld Service in R",
+    "description": "Output and Hello Wolrd string",
+    "mutable": false,
+    "version": "2.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/failR/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/failR/execution.html"
+      }
+    ],
+    "inputs": {
+      "S": {
+        "title": "Name",
+        "description": "The name to display in the hello message",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "nullable": true
+        }
+      }
+    },
+    "outputs": {
+      "Result": {
+        "title": "The resulting string",
+        "description": "The string created by service.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

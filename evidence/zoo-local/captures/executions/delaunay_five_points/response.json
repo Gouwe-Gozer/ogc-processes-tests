@@ -1,0 +1,151 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:57 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "829",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/Delaunay/execution",
+  "body": {
+    "Result": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Result",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "GeometryCollection",
+              "geometries": [
+                {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        4.747,
+                        52.641
+                      ],
+                      [
+                        4.741,
+                        52.626
+                      ],
+                      [
+                        4.752,
+                        52.632
+                      ],
+                      [
+                        4.747,
+                        52.641
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "GeometryCollection",
+              "geometries": [
+                {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        4.747,
+                        52.641
+                      ],
+                      [
+                        4.752,
+                        52.632
+                      ],
+                      [
+                        4.76,
+                        52.638
+                      ],
+                      [
+                        4.747,
+                        52.641
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "GeometryCollection",
+              "geometries": [
+                {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        4.752,
+                        52.632
+                      ],
+                      [
+                        4.764,
+                        52.627
+                      ],
+                      [
+                        4.76,
+                        52.638
+                      ],
+                      [
+                        4.752,
+                        52.632
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "GeometryCollection",
+              "geometries": [
+                {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        4.752,
+                        52.632
+                      ],
+                      [
+                        4.741,
+                        52.626
+                      ],
+                      [
+                        4.764,
+                        52.627
+                      ],
+                      [
+                        4.752,
+                        52.632
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

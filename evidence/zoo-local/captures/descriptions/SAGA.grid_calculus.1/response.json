@@ -1,0 +1,404 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:08 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "11043",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.grid_calculus.1",
+  "body": {
+    "id": "SAGA.grid_calculus.1",
+    "title": "Grid Calculator",
+    "description": "The Grid Calculator calculates a new grid based on existing grids and a mathematical formula. The grid variables in the formula begin with the letter 'g' followed by a position index, which corresponds to the order of the grids in the input grid list (i.e.: g1, g2, g3, ... correspond to the first, second, third, ... grid in list). Grids from other systems than the default one can be addressed likewise using the letter 'h' (h1, h2, h3, ...), which correspond to the 'Grids from different Systems' list.&lt;br/&gt;&lt;br/&gt;Example:\t sin(g1) * g2 + 2 * h1&lt;br/&gt;&lt;br/&gt;The following operators are available for the formula definition:&lt;br/&gt;&lt;table border=\"0\"&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;+&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Addition&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;-&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Subtraction&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;*&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Multiplication&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;/&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Division&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;abs(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Absolute Value&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;mod(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns the floating point remainder of x/y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;int(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns the integer part of floating point value x&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;sqr(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Square&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;sqrt(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Square Root&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;exp(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Exponential&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;pow(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns x raised to the power of y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;x ^ y&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns x raised to the power of y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;ln(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Natural Logarithm&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;log(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Base 10 Logarithm&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;pi()&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns the value of Pi&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;sin(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sine&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;cos(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Cosine&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;tan(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Tangent&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;asin(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arcsine&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;acos(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arccosine&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;atan(x)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arctangent&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;atan2(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Arctangent of x/y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;min(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns the minimum of values x and y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;max(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns the maximum of values x and y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;gt(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x is greater than y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;x &gt; y&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x is greater than y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;lt(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x is less than y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;x &lt; y&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x is less than y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;eq(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x equals y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;x = y&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if x equals y, else false (0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;and(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if both x and y are true (i.e. not 0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;or(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns true (1), if at least one of both x and y is true (i.e. not 0)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;ifelse(c, x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns x, if condition c is true (i.e. not 0), else y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;rand_u(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Random number, uniform distribution with minimum x and maximum y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;rand_g(x, y)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Random number, Gaussian distribution with mean x and standard deviation y&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;xpos(), ypos()&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Get the x/y coordinates for the current cell&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;col(), row()&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Get the current cell's column/row index&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;ncols(), nrows()&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Get the number of columns/rows&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;nodata()&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Returns resulting grid's no-data value&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/SAGA.grid_calculus.1/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/SAGA.grid_calculus.1/execution.html"
+      }
+    ],
+    "inputs": {
+      "RESAMPLING": {
+        "title": "Resampling",
+        "description": "Resampling",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "B-Spline Interpolation",
+          "enum": [
+            "Nearest Neighbour",
+            "Bilinear Interpolation",
+            "Bicubic Spline Interpolation",
+            "B-Spline Interpolation"
+          ],
+          "nullable": true
+        }
+      },
+      "FORMULA": {
+        "title": "Formula",
+        "description": "Formula",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "(g1 - g2) / (g1 + g2)",
+          "nullable": true
+        }
+      },
+      "NAME": {
+        "title": "Name",
+        "description": "Name",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "Calculation",
+          "nullable": true
+        }
+      },
+      "FNAME": {
+        "title": "Take Formula",
+        "description": "Take Formula",
+        "minOccurs": 0,
+        "schema": {
+          "type": "boolean",
+          "default": false,
+          "enum": [
+            "true",
+            "false"
+          ],
+          "nullable": true
+        }
+      },
+      "USE_NODATA": {
+        "title": "Use No-Data",
+        "description": "Check this in order to include no-data cells in the calculation.",
+        "minOccurs": 0,
+        "schema": {
+          "type": "boolean",
+          "default": false,
+          "enum": [
+            "true",
+            "false"
+          ],
+          "nullable": true
+        }
+      },
+      "TYPE": {
+        "title": "Data Type",
+        "description": "Data Type",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "4 byte floating point number",
+          "enum": [
+            "bit",
+            "unsigned 1 byte integer",
+            "signed 1 byte integer",
+            "unsigned 2 byte integer",
+            "signed 2 byte integer",
+            "unsigned 4 byte integer",
+            "signed 4 byte integer",
+            "4 byte floating point number",
+            "8 byte floating point number"
+          ],
+          "nullable": true
+        }
+      },
+      "GRIDS": {
+        "title": "Grids",
+        "description": "in the formula these grids are addressed in order of the list as 'g1, g2, g3, ...'",
+        "minOccurs": 0,
+        "maxOccurs": 1024,
+        "extended-schema": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1024,
+          "items": {
+            "oneOf": [
+              {
+                "allOf": [
+                  {
+                    "$ref": "http://zoo-project.org/dl/link.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "image/tiff",
+                          "application/x-ogc-envi",
+                          "application/x-ogc-aaigrid",
+                          "image/png"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/tiff"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-envi"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-aaigrid"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/png"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "XGRIDS": {
+        "title": "Grids from different Systems",
+        "description": "in the formula these grids are addressed in order of the list as 'h1, h2, h3, ...'",
+        "minOccurs": 0,
+        "maxOccurs": 1024,
+        "extended-schema": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1024,
+          "items": {
+            "oneOf": [
+              {
+                "allOf": [
+                  {
+                    "$ref": "http://zoo-project.org/dl/link.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "image/tiff",
+                          "application/x-ogc-envi",
+                          "application/x-ogc-aaigrid",
+                          "image/png"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/tiff"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-envi"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-aaigrid"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/png"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    },
+    "outputs": {
+      "RESULT": {
+        "title": "Result",
+        "description": "Result",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "application/x-ogc-envi",
+                        "application/x-ogc-aaigrid",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-envi"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-aaigrid"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    }
+  }
+}

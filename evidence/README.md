@@ -55,23 +55,19 @@ captures/jobs/successful-job/
 Errors stay with the operation that returned them. For example, an execution
 that returned HTTP 500 remains under `captures/executions/`.
 
-## Complete and incomplete historical captures
+## Complete captures
 
-The standard format is a matching `request.json` and `response.json` pair.
-Some older evidence was not originally stored that way:
+Every stored request should have a complete response. The standard format is a
+matching `request.json` and `response.json` pair. A response records:
 
-- `request.json` without a response means the old response was lost;
-- `response-body.json` means the real body survived, but its status, headers,
-  and final URL did not;
-- `*.response-observation.json` records the size and shape of a large response
-  whose full body was not committed.
+- the HTTP status;
+- the response headers;
+- the final URL after redirects;
+- the body itself, or `body_file` for a large or binary body stored beside it.
 
-These are temporary incomplete captures. Rerunning them should add a normal
-`response.json`. The incomplete file can then be removed after the new capture
-has been checked.
-
-There is no separate folder for missing responses. They can be found from the
-absence of a response file in the case folder.
+A request may have more than one named response when the same request was
+observed in different states. For example, one polling request can have both a
+`running` and a `successful` response.
 
 ## Request file format
 

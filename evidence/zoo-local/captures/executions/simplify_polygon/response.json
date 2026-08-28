@@ -1,0 +1,57 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:31 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "283",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/Simplify/execution",
+  "body": {
+    "Result": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Result",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "polygon_1",
+              "name": "Alkmaar test polygon"
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.744,
+                    52.628
+                  ],
+                  [
+                    4.756,
+                    52.628
+                  ],
+                  [
+                    4.756,
+                    52.636
+                  ],
+                  [
+                    4.744,
+                    52.636
+                  ],
+                  [
+                    4.744,
+                    52.628
+                  ]
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

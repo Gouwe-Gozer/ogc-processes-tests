@@ -1,0 +1,18 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Fri, 28 Aug 2026 13:49:35 GMT",
+    "Connection": "close",
+    "Content-Type": "text/csv",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Preference-Applied": "wait",
+    "Location": "http://localhost:5000/jobs/4a767519-a2e7-11f1-a802-1d7116c46821",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*",
+    "Content-Length": "18849968"
+  },
+  "final_url": "http://localhost:5000/processes/climada-simple-example-denmark-process/execution",
+  "body_file": "01-execute-raw.body.csv"
+}

@@ -1,0 +1,585 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:38:25 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "5107",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.tin_tools.3/execution",
+  "body": {
+    "POINTS": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_POINTS_bef8f25c-a2e5-11f1-b721-3e6610d44e17_2",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_1",
+              "name": "Alkmaar elevation point 1",
+              "elevation_m": 2.1
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.741,
+                52.626,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_2",
+              "name": "Alkmaar elevation point 2",
+              "elevation_m": 3.4
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.752,
+                52.632,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_3",
+              "name": "Alkmaar elevation point 3",
+              "elevation_m": 1.8
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.764,
+                52.627,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_4",
+              "name": "Alkmaar elevation point 4",
+              "elevation_m": 4.2
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.747,
+                52.641,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_5",
+              "name": "Alkmaar elevation point 5",
+              "elevation_m": 2.9
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.76,
+                52.638,
+                0.0
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "CENTER": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_CENTER_bef8f25c-a2e5-11f1-b721-3e6610d44e17_3",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1,
+              "POINT_ID_B": 4,
+              "POINT_ID_C": 2
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.758758928571427,
+                52.631321428571425,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 0,
+              "POINT_ID_B": 1,
+              "POINT_ID_C": 2
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.752901574803151,
+                52.61726377952755,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1,
+              "POINT_ID_B": 3,
+              "POINT_ID_C": 4
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.753294117647059,
+                52.63860784313725,
+                0.0
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 0,
+              "POINT_ID_B": 3,
+              "POINT_ID_C": 1
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                4.744058139534883,
+                52.63347674418605,
+                0.0
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "EDGES": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_EDGES_bef8f25c-a2e5-11f1-b721-3e6610d44e17_4",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.752,
+                  52.632,
+                  0.0
+                ],
+                [
+                  4.76,
+                  52.638,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.76,
+                  52.638,
+                  0.0
+                ],
+                [
+                  4.764,
+                  52.627,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.764,
+                  52.627,
+                  0.0
+                ],
+                [
+                  4.752,
+                  52.632,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.741,
+                  52.626,
+                  0.0
+                ],
+                [
+                  4.752,
+                  52.632,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.764,
+                  52.627,
+                  0.0
+                ],
+                [
+                  4.741,
+                  52.626,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.752,
+                  52.632,
+                  0.0
+                ],
+                [
+                  4.747,
+                  52.641,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.747,
+                  52.641,
+                  0.0
+                ],
+                [
+                  4.76,
+                  52.638,
+                  0.0
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902
+            },
+            "geometry": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  4.741,
+                  52.626,
+                  0.0
+                ],
+                [
+                  4.747,
+                  52.641,
+                  0.0
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "TRIANGLES": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_TRIANGLES_bef8f25c-a2e5-11f1-b721-3e6610d44e17_5",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902,
+              "POINT_ID_C": 1650553902
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ],
+                  [
+                    4.76,
+                    52.638,
+                    0.0
+                  ],
+                  [
+                    4.764,
+                    52.627,
+                    0.0
+                  ],
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902,
+              "POINT_ID_C": 1650553902
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.741,
+                    52.626,
+                    0.0
+                  ],
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ],
+                  [
+                    4.764,
+                    52.627,
+                    0.0
+                  ],
+                  [
+                    4.741,
+                    52.626,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902,
+              "POINT_ID_C": 1650553902
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ],
+                  [
+                    4.747,
+                    52.641,
+                    0.0
+                  ],
+                  [
+                    4.76,
+                    52.638,
+                    0.0
+                  ],
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          },
+          {
+            "type": "Feature",
+            "properties": {
+              "POINT_ID_A": 1650553902,
+              "POINT_ID_B": 1650553902,
+              "POINT_ID_C": 1650553902
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.741,
+                    52.626,
+                    0.0
+                  ],
+                  [
+                    4.747,
+                    52.641,
+                    0.0
+                  ],
+                  [
+                    4.752,
+                    52.632,
+                    0.0
+                  ],
+                  [
+                    4.741,
+                    52.626,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "POLYGONS": {
+      "value": {
+        "type": "FeatureCollection",
+        "name": "Output_POLYGONS_bef8f25c-a2e5-11f1-b721-3e6610d44e17_6",
+        "crs": {
+          "type": "name",
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          }
+        },
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {
+              "id": "point_2",
+              "name": "Alkmaar elevation point 2",
+              "elevation_m": 3.4
+            },
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    4.758758928571427,
+                    52.631321428571425,
+                    0.0
+                  ],
+                  [
+                    4.752901574803151,
+                    52.61726377952755,
+                    0.0
+                  ],
+                  [
+                    4.744058139534883,
+                    52.63347674418605,
+                    0.0
+                  ],
+                  [
+                    4.753294117647059,
+                    52.63860784313725,
+                    0.0
+                  ],
+                  [
+                    4.758758928571427,
+                    52.631321428571425,
+                    0.0
+                  ]
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

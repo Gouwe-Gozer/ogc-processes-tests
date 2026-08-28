@@ -1,0 +1,580 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:08 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "8661",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/processes/SAGA.grid_tools.3",
+  "body": {
+    "id": "SAGA.grid_tools.3",
+    "title": "Mosaicking",
+    "description": "The tool allows one to merge multiple grids into one single grid. This involves resampling if the input grids have different cell sizes or are not aligned to each other. Besides different resampling methods, the tool provides several options on how to handle overlapping areas. It is also possible to apply a histogram matching. &lt;br/&gt;&lt;br/&gt;In order to be able to also merge a large amount of grids, which, for example, would exceed the maximum command line length, the tools has the option to provide a file list as input (instead of using the input grid list). This is a text file with the full path to an input grid on each line. Please note the limitations: (i) the target grid system is set automatically in this case (the extent is calculated from all inputs and the cell size is set to the smallest one detected) and (ii) the input grids must still fit into memory, i.e. are all loaded at once.&lt;br/&gt;&lt;br/&gt;",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/SAGA.grid_tools.3/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "http://localhost/ogc-api/processes/SAGA.grid_tools.3/execution.html"
+      }
+    ],
+    "inputs": {
+      "GRIDS": {
+        "title": "Grids",
+        "description": "Grids",
+        "minOccurs": 0,
+        "maxOccurs": 1024,
+        "extended-schema": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 1024,
+          "items": {
+            "oneOf": [
+              {
+                "allOf": [
+                  {
+                    "$ref": "http://zoo-project.org/dl/link.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "image/tiff",
+                          "application/x-ogc-envi",
+                          "application/x-ogc-aaigrid",
+                          "image/png"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/tiff"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-envi"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-aaigrid"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/png"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "FILE_LIST": {
+        "title": "Input File List",
+        "description": "A text file with the full path to an input grid on each line",
+        "minOccurs": 0,
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/plain"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/plain"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/plain"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "NAME": {
+        "title": "Name",
+        "description": "Name",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "Mosaic",
+          "nullable": true
+        }
+      },
+      "TYPE": {
+        "title": "Data Storage Type",
+        "description": "Data Storage Type",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "same as first grid in list",
+          "enum": [
+            "1 bit",
+            "1 byte unsigned integer",
+            "1 byte signed integer",
+            "2 byte unsigned integer",
+            "2 byte signed integer",
+            "4 byte unsigned integer",
+            "4 byte signed integer",
+            "4 byte floating point",
+            "8 byte floating point",
+            "same as first grid in list"
+          ],
+          "nullable": true
+        }
+      },
+      "RESAMPLING": {
+        "title": "Resampling",
+        "description": "Resampling",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "B-Spline Interpolation",
+          "enum": [
+            "Nearest Neighbour",
+            "Bilinear Interpolation",
+            "Bicubic Spline Interpolation",
+            "B-Spline Interpolation"
+          ],
+          "nullable": true
+        }
+      },
+      "OVERLAP": {
+        "title": "Overlapping Areas",
+        "description": "Overlapping Areas",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "last",
+          "enum": [
+            "first",
+            "last",
+            "minimum",
+            "maximum",
+            "mean",
+            "blend boundary",
+            "feathering"
+          ],
+          "nullable": true
+        }
+      },
+      "BLEND_DIST": {
+        "title": "Blending Distance",
+        "description": "blending distance given in map units",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 10,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "BLEND_BND": {
+        "title": "Blending Boundary",
+        "description": "blending boundary for distance calculation",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "valid data cells",
+          "enum": [
+            "valid data cells",
+            "grid boundaries",
+            "vertical grid boundaries",
+            "horizontal grid boundaries"
+          ],
+          "nullable": true
+        }
+      },
+      "MATCH": {
+        "title": "Match",
+        "description": "Match",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "match histogram of first grid in list",
+            "match histogram of overlapping area",
+            "regression"
+          ],
+          "nullable": true
+        }
+      },
+      "TARGET_DEFINITION": {
+        "title": "Target Grid System",
+        "description": "Target Grid System",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "user defined",
+          "enum": [
+            "user defined",
+            "grid or grid system"
+          ],
+          "nullable": true
+        }
+      },
+      "TARGET_USER_SIZE": {
+        "title": "Cellsize",
+        "description": "Cellsize",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 1,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "TARGET_USER_XMIN": {
+        "title": "West",
+        "description": "West",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 0,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "TARGET_USER_XMAX": {
+        "title": "East",
+        "description": "East",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 100,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "TARGET_USER_YMIN": {
+        "title": "South",
+        "description": "South",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 0,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "TARGET_USER_YMAX": {
+        "title": "North",
+        "description": "North",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 100,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "TARGET_USER_COLS": {
+        "title": "Columns",
+        "description": "Number of cells in East-West direction.",
+        "minOccurs": 0,
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "nullable": true
+        }
+      },
+      "TARGET_USER_ROWS": {
+        "title": "Rows",
+        "description": "Number of cells in North-South direction.",
+        "minOccurs": 0,
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "nullable": true
+        }
+      },
+      "TARGET_USER_FITS": {
+        "title": "Fit",
+        "description": "Fit",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "nodes",
+          "enum": [
+            "nodes",
+            "cells"
+          ],
+          "nullable": true
+        }
+      },
+      "TARGET_TEMPLATE": {
+        "title": "Target System",
+        "description": "use this grid's system for output grids",
+        "minOccurs": 0,
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "application/x-ogc-envi",
+                        "application/x-ogc-aaigrid",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-envi"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-aaigrid"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    },
+    "outputs": {
+      "TARGET_OUT_GRID": {
+        "title": "Target Grid",
+        "description": "Target Grid",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "application/x-ogc-envi",
+                        "application/x-ogc-aaigrid",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-envi"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-aaigrid"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    }
+  }
+}
