@@ -1,0 +1,18 @@
+{
+  "status": 400,
+  "headers": {
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Preference-Applied": "wait",
+    "Location": "{{baseUrl}}/jobs/{{jobId}}",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*"
+  },
+  "final_url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+  "body": {
+    "type": "InvalidParameterValue",
+    "code": "InvalidParameterValue",
+    "description": "Error executing process: The intensity tuple must have three elements, 2 found"
+  }
+}

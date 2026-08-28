@@ -1,0 +1,13 @@
+{
+  "id": "directed-local",
+  "title": "Local DIRECTED pygeoapi deployment",
+  "implementation": {
+    "name": "pygeoapi",
+    "version_at_capture": "0.25.dev0"
+  },
+  "base_url": {
+    "variable": "directedLocalBaseUrl",
+    "default": "http://localhost:5000"
+  },
+  "captured_at": "2026-08-27"
+}

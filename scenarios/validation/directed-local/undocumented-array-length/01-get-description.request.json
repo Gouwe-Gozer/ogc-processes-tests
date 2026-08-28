@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

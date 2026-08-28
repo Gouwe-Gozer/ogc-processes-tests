@@ -1621,6 +1621,161 @@
           ]
         }
       ]
+    },
+    {
+      "name": "validation",
+      "item": [
+        {
+          "name": "directed-local",
+          "item": [
+            {
+              "name": "undocumented-array-length",
+              "item": [
+                {
+                  "name": "01-get-description",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process"
+                  },
+                  "response": [
+                    {
+                      "name": "HTTP 200",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process"
+                      },
+                      "status": "200",
+                      "code": 200,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "pygeoapi 0.25.dev0"
+                        },
+                        {
+                          "key": "Content-Language",
+                          "value": "en-US"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        },
+                        {
+                          "key": "Access-Control-Expose-Headers",
+                          "value": "*"
+                        }
+                      ],
+                      "body": "{\n  \"version\": \"0.1.0\",\n  \"id\": \"climada-simple-example-denmark-process\",\n  \"title\": \"CLIMADA simple example for Denmark\",\n  \"description\": \"A simple example process on how to use CLIMADA in Denmark to calculate the impact of storm events.\",\n  \"jobControlOptions\": [\n    \"sync-execute\",\n    \"async-execute\"\n  ],\n  \"outputTransmission\": [\n    \"value\",\n    \"reference\"\n  ],\n  \"keywords\": [\n    \"directed\",\n    \"climada\",\n    \"simple example\"\n  ],\n  \"links\": [\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"information\",\n      \"href\": \"https://github.com/CLIMADA-project/climada_python\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=json\",\n      \"title\": \"Process description as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=html\",\n      \"title\": \"Process description as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5000/jobs?f=html\",\n      \"title\": \"Jobs list as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5000/jobs?f=json\",\n      \"title\": \"Jobs list as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process/execution?f=json\",\n      \"title\": \"Execution for this process as JSON\",\n      \"hreflang\": \"en-US\"\n    }\n  ],\n  \"inputs\": {\n    \"intensity\": {\n      \"title\": \"intensity\",\n      \"description\": \"mandatory; the intensity steps used for defining the impact function\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"intensity\"\n      ]\n    },\n    \"climate_scenario\": {\n      \"title\": \"climate_scenario\",\n      \"description\": \"optional; climate scenario\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"climate_scenario\"\n      ]\n    },\n    \"data_source\": {\n      \"title\": \"data_source\",\n      \"description\": \"optional; data source\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"data_source\"\n      ]\n    },\n    \"gcm\": {\n      \"title\": \"GCM\",\n      \"description\": \"optional; Global Climate Model (GCM) to use\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"gcm\"\n      ]\n    },\n    \"mdd\": {\n      \"title\": \"mdd\",\n      \"description\": \"optional; mean damage (impact) degree\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"mdd\"\n      ]\n    },\n    \"paa\": {\n      \"title\": \"paa\",\n      \"description\": \"optional; percentage of affected assets (exposures)\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"paa\"\n      ]\n    },\n    \"nearest_neighbor_threshold\": {\n      \"title\": \"nearest_neighbor_threshold\",\n      \"description\": \"optional; nearest neighbor threshold\",\n      \"schema\": {\n        \"type\": \"number\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"nearest_neighbor_threshold\"\n      ]\n    },\n    \"return_periods\": {\n      \"title\": \"return_periods\",\n      \"description\": \"optional; return periods\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"return_periods\"\n      ]\n    }\n  },\n  \"outputs\": {\n    \"impact\": {\n      \"title\": \"impact\",\n      \"description\": \"Calculated impact\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"contentMediaType\": \"text/csv\"\n      }\n    }\n  },\n  \"example\": {\n    \"inputs\": {\n      \"intensity\": [\n        0,\n        30,\n        80\n      ]\n    }\n  }\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "02-execute-invalid",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30\n    ]\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "HTTP 400",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30\n    ]\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "400",
+                      "code": 400,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "key": "X-Powered-By",
+                          "value": "pygeoapi 0.25.dev0"
+                        },
+                        {
+                          "key": "Content-Language",
+                          "value": "en-US"
+                        },
+                        {
+                          "key": "Preference-Applied",
+                          "value": "wait"
+                        },
+                        {
+                          "key": "Location",
+                          "value": "{{baseUrl}}/jobs/{{jobId}}"
+                        },
+                        {
+                          "key": "Access-Control-Allow-Origin",
+                          "value": "*"
+                        },
+                        {
+                          "key": "Access-Control-Expose-Headers",
+                          "value": "*"
+                        }
+                      ],
+                      "body": "{\n  \"type\": \"InvalidParameterValue\",\n  \"code\": \"InvalidParameterValue\",\n  \"description\": \"Error executing process: The intensity tuple must have three elements, 2 found\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

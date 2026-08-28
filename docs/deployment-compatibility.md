@@ -4,15 +4,16 @@ A deployment is one running OGC API - Processes server with a specific set of
 software, process plugins, and configuration. Two deployments using the same
 server product can expose different processes and responses.
 
-This repository keeps evidence from four deployments under `evidence/`:
+This repository keeps evidence from five deployments under `evidence/`:
 
 - `zoo-local`: the local ZOO server used for most live tests;
 - `pygeoapi-demo`: the public pygeoapi demo used for `hello-world`;
 - `bgt-prototype`: a local pygeoapi-based BGT process;
+- `directed-local`: a local pygeoapi-based CLIMADA process;
 - `weaver-redoak`: a public Weaver deployment used for discovery and relay
   evidence.
 
-The two pygeoapi deployments are different because each process plugin defines
+The three pygeoapi deployments are different because each process plugin defines
 its own inputs, outputs, supported execution modes, dependencies, and result
 data. Behavior seen in one process should not be assumed for every pygeoapi
 server.

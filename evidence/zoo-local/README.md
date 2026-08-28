@@ -34,6 +34,10 @@ responses captured on 2026-08-25
 - [`responses/diagnostics/`](responses/diagnostics/): process-selection records
   and direct OTB command-line checks.
 
+See [How evidence is organized](../README.md#how-evidence-is-organized) for the
+reason these files are grouped by purpose and for an explanation of every field
+in an evidence request.
+
 ## Run a request
 
 ```bash

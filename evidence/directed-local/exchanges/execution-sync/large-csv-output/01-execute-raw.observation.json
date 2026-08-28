@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "text/csv",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Preference-Applied": "wait",
+    "Location": "{{baseUrl}}/jobs/{{jobId}}",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*",
+    "Content-Length": "18849968"
+  },
+  "final_url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+  "body_observation": {
+    "stored": false,
+    "media_type": "text/csv",
+    "byte_length": 18849968,
+    "line_count": 328321,
+    "sha256": "676ec1ac1862942992367c8eb7ab5de7328ae92047777375e427fdacc9cd06d6",
+    "header": "haz_type,unit,tot_value,aai_agg,event_id,event_name,event_date,event_frequency,frequency_unit,at_event,eai_exp,exp_lat,exp_lon,exp_crs"
+  }
+}

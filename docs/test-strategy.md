@@ -73,6 +73,7 @@ The current scenarios cover these distinct protocol behaviours:
 | `errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
 | `errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
 | `errors/zoo-local/missing-requested-output` | HTTP 200 response omits an explicitly requested output |
+| `validation/directed-local/undocumented-array-length` | An array accepted by the published schema is rejected because the provider requires an undocumented length |
 
 Each request file contains its method, URL, headers, and body. Each response
 file contains its status, headers, final URL, and body. The README explains why
@@ -89,7 +90,7 @@ require another protocol-core scenario:
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
 | Unknown jobs, premature results, and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
 | Bounding boxes, enums, repeated inputs, and nested schemas | Promote when form-generation tests begin |
-| CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin |
+| Large CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin; the CLIMADA evidence records its 18.8 MB CSV without checking the full body into Git |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |
 
 ## Choosing the rest of the main set
@@ -120,7 +121,9 @@ should eventually include:
 - a non-JSON error;
 - HTTP 200 with a missing or unusable output;
 - an accepted job without a usable location;
-- invalid input according to the process description.
+- invalid input according to the process description;
+- input allowed by the description but rejected by an undocumented provider
+  rule.
 
 Requests alone are not enough for UI tests. A form-generation scenario needs
 the process description. A result-handling scenario needs the output
@@ -219,13 +222,13 @@ only when an actual client test uses the material.
 | Topic 3 commitment | Coverage in this repository |
 |---|---|
 | Process discovery and descriptions | Weaver landing-page, conformance, and process-list responses are selected, together with successful and failing descriptions from other providers |
-| Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, and primitive types, but generated UI behaviour must be tested in the client project |
+| Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, primitive types, and an array without item details that requires raw JSON fallback; generated UI behaviour must be tested in the client project |
 | Raw JSON fallback | The pygeoapi raw-versus-document scenario preserves a description/result mismatch for this path |
 | Synchronous execution | Inline document, raw, and referenced results are selected |
 | Async submission, polling, results, and dismiss | Successful, failed, and dismissed job flows are selected |
-| Result rendering | Result samples exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
-| CORS and exposed `Location` | Partial: the RedOak responses capture missing CORS headers; exposed async `Location` still needs a browser-facing test in the client project |
+| Result rendering | Result samples and measured large-CSV evidence exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
+| CORS and exposed `Location` | Partial: RedOak captures missing CORS headers, while DIRECTED exposes `Location` from a synchronous response; browser-facing relay and async-header tests still belong in the client project |
 | Subscriber callbacks and polling reconciliation | Missing |
 | OGC API Processes v1 and v2 selection | Missing |
-| Different server implementations | ZOO, the public pygeoapi demo, and public Weaver discovery are represented in the main set; the BGT prototype remains supporting evidence |
+| Different server implementations | ZOO, two pygeoapi deployments, and public Weaver discovery are represented in the main set; the BGT prototype remains supporting evidence |
 | Interoperability matrix | The evidence can supply observations, but the matrix has not been created yet |

@@ -1,0 +1,26 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Preference-Applied": "wait",
+    "Location": "{{baseUrl}}/jobs/{{jobId}}",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*",
+    "Content-Length": "19506672"
+  },
+  "final_url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+  "body_observation": {
+    "stored": false,
+    "media_type": "application/json",
+    "byte_length": 19506672,
+    "sha256": "b1da17442f92ba5e28f7e67ed827790679dd1c853f3b7e9935cc8e9b9ac7b67e",
+    "shape": {
+      "outputs": "array containing one CSV string",
+      "output_count": 1,
+      "csv_string_length": 18849968
+    },
+    "requested_transmission_mode": "reference",
+    "observed_transmission_mode": "inline value"
+  }
+}

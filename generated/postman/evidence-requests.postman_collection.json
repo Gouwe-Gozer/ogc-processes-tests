@@ -12,6 +12,11 @@
       "type": "string"
     },
     {
+      "key": "directedLocalBaseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
       "key": "pygeoapiDemoBaseUrl",
       "value": "https://demo.pygeoapi.io/stable",
       "type": "string"
