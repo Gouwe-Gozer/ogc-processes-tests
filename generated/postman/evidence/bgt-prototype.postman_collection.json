@@ -1,0 +1,89 @@
+{
+  "info": {
+    "_postman_id": "e1c50fd6-3622-50fb-8c0f-a7378c64034a",
+    "name": "OGC API Processes evidence — Local BGT land-cover prototype",
+    "description": "Generated from evidence/bgt-prototype/captures. Do not edit by hand.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "executions",
+      "item": [
+        {
+          "name": "deeply-nested-json-output",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/bgt-land-cover-summary/execution?f=json",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"response\": \"document\",\n  \"inputs\": {\n    \"latitude\": 52.6324,\n    \"longitude\": 4.7534,\n    \"inner_radius_m\": 300,\n    \"outer_radius_m\": 500\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/bgt-land-cover-summary/execution?f=json",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"response\": \"document\",\n  \"inputs\": {\n    \"latitude\": 52.6324,\n    \"longitude\": 4.7534,\n    \"inner_radius_m\": 300,\n    \"outer_radius_m\": 500\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                }
+              ],
+              "body": "{\n  \"summary\": {\n    \"value\": {\n      \"process\": {\n        \"name\": \"nationwide-bgt-land-cover-summary\",\n        \"algorithm_version\": \"0.2.0\"\n      },\n      \"source\": {\n        \"name\": \"PDOK BGT OGC API Features\",\n        \"retrieved_at\": \"2026-08-25T00:00:00+00:00\",\n        \"collections\": {\n          \"begroeid\": \"https://api.pdok.nl/lv/bgt/ogc/v1/collections/begroeidterreindeel/items\",\n          \"onbegroeid\": \"https://api.pdok.nl/lv/bgt/ogc/v1/collections/onbegroeidterreindeel/items\",\n          \"water\": \"https://api.pdok.nl/lv/bgt/ogc/v1/collections/waterdeel/items\",\n          \"weg\": \"https://api.pdok.nl/lv/bgt/ogc/v1/collections/wegdeel/items\",\n          \"pand\": \"https://api.pdok.nl/lv/bgt/ogc/v1/collections/pand/items\"\n        },\n        \"feature_counts\": {\n          \"begroeid\": 865,\n          \"onbegroeid\": 1278,\n          \"water\": 46,\n          \"weg\": 2267,\n          \"pand\": 3690\n        },\n        \"page_counts\": {\n          \"begroeid\": 1,\n          \"onbegroeid\": 2,\n          \"water\": 1,\n          \"weg\": 3,\n          \"pand\": 4\n        }\n      },\n      \"input\": {\n        \"latitude\": 52.6324,\n        \"longitude\": 4.7534,\n        \"inner_radius_m\": 300,\n        \"outer_radius_m\": 500\n      },\n      \"is_partial\": false,\n      \"fetch_failures\": {},\n      \"classification\": {\n        \"is_official_standard\": false,\n        \"method\": \"BKN-oriented proxy derived from BGT physical-appearance types; it does not measure vegetation height or tree-canopy volume.\",\n        \"unpaved_surface_definition\": \"Union of low, medium, high and unknown vegetation, water, and BGT terrain explicitly classified as unpaved.\",\n        \"unknown_vegetation_types\": [],\n        \"overlap_priority\": [\n          \"building\",\n          \"road\",\n          \"built_area\",\n          \"high_vegetation\",\n          \"medium_vegetation\"\n        ]\n      },\n      \"timing_seconds\": {\n        \"by_collection\": {\n          \"begroeid\": 0.739,\n          \"onbegroeid\": 1.033,\n          \"water\": 3.916,\n          \"weg\": 19.073,\n          \"pand\": 1.081\n        },\n        \"total\": 37.0\n      },\n      \"completed_at\": \"2026-08-25T00:00:00+00:00\",\n      \"within_inner_radius\": {\n        \"bkn_indicators\": {\n          \"low_vegetation_proxy_pct\": 5.75,\n          \"medium_vegetation_proxy_pct\": 0.45,\n          \"high_vegetation_proxy_pct\": 0.16,\n          \"water_surface_pct\": 13.22,\n          \"unpaved_surface_proxy_pct\": 19.6\n        },\n        \"supporting_land_cover\": {\n          \"unknown_vegetation_pct\": 0,\n          \"road_pct\": 28.39,\n          \"built_pct\": 50.75,\n          \"bgt_explicitly_unpaved_pct\": 0.02\n        }\n      },\n      \"within_outer_radius\": {\n        \"bkn_indicators\": {\n          \"low_vegetation_proxy_pct\": 6.13,\n          \"medium_vegetation_proxy_pct\": 0.17,\n          \"high_vegetation_proxy_pct\": 0.38,\n          \"water_surface_pct\": 11.83,\n          \"unpaved_surface_proxy_pct\": 19.96\n        },\n        \"supporting_land_cover\": {\n          \"unknown_vegetation_pct\": 0,\n          \"road_pct\": 25.25,\n          \"built_pct\": 53.9,\n          \"bgt_explicitly_unpaved_pct\": 1.45\n        }\n      }\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

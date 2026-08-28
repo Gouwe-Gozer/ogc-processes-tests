@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generate Postman collections from scenarios and runnable evidence requests."""
+"""Generate the scenario collection and one evidence collection per provider."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import uuid
 from pathlib import Path
 from typing import Any
@@ -21,8 +22,10 @@ FOLDER_ORDER = {
     "results": 2,
     "discovery": 10,
     "execution": 11,
-    "jobs": 12,
-    "errors": 13,
+    "descriptions": 11,
+    "executions": 12,
+    "jobs": 13,
+    "errors": 14,
     "maps": 20,
     "downloads": 21,
 }
@@ -88,6 +91,14 @@ def response_example(
 
 
 def paired_responses(request_path: Path) -> list[tuple[str | None, Path]]:
+    if request_path.name == "request.json":
+        response_path = request_path.with_name("response.json")
+        responses = [(None, response_path)] if response_path.is_file() else []
+        for variant_path in sorted(request_path.parent.glob("*.response.json")):
+            label = variant_path.name.removesuffix(".response.json")
+            responses.append((label, variant_path))
+        return responses
+
     prefix = request_path.name.removesuffix(".request.json")
     responses: list[tuple[str | None, Path]] = []
     response_path = request_path.with_name(f"{prefix}.response.json")
@@ -119,25 +130,44 @@ def post_response_event(request_path: Path) -> list[dict[str, Any]]:
     ]
 
 
-def scenario_item(request_path: Path, base_url_variable: str) -> dict[str, Any]:
+def collection_url(record: dict[str, Any], base_url_variable: str) -> str:
+    target = record.get("url") or record.get("path")
+    if not isinstance(target, str):
+        raise RepositoryError("request requires a string path or url")
+    if "{{baseUrl}}" in target:
+        return target.replace("{{baseUrl}}", f"{{{{{base_url_variable}}}}}")
+    if target.startswith(("http://", "https://", "{{")):
+        return target
+    return f"{{{{{base_url_variable}}}}}/{target.lstrip('/')}"
+
+
+def collection_item(
+    request_path: Path,
+    base_url_variable: str,
+    *,
+    include_post_response: bool = True,
+) -> dict[str, Any]:
     record = read_json(request_path)
     if not isinstance(record, dict):
         raise RepositoryError(f"{request_path} must contain an object")
-    url = str(record.get("url") or record.get("path"))
-    url = url.replace("{{baseUrl}}", f"{{{{{base_url_variable}}}}}")
+    url = collection_url(record, base_url_variable)
     request = postman_request(record, url)
+    notes = record.get("notes")
+    if isinstance(notes, str) and notes:
+        request["description"] = notes
     name = request_path.name.removesuffix(".request.json")
     item: dict[str, Any] = {"name": name, "request": request}
     response_examples = []
     for label, response_path in paired_responses(request_path):
         response = read_json(response_path)
-        if isinstance(response, dict):
+        if isinstance(response, dict) and "body" in response:
             response_examples.append(response_example(response, request, label))
     if response_examples:
         item["response"] = response_examples
-    events = post_response_event(request_path)
-    if events:
-        item["event"] = events
+    if include_post_response:
+        events = post_response_event(request_path)
+        if events:
+            item["event"] = events
     return item
 
 
@@ -156,6 +186,25 @@ def tree_items(tree: dict[str, Any]) -> list[dict[str, Any]]:
         key=lambda value: (FOLDER_ORDER.get(value, 100), value),
     ):
         result.append({"name": name, "item": tree_items(tree[name])})
+    return result
+
+
+def evidence_tree_items(tree: dict[str, Any]) -> list[dict[str, Any]]:
+    result = list(tree.get("__items__", []))
+    names = (key for key in tree if key != "__items__")
+    for name in sorted(
+        names,
+        key=lambda value: (FOLDER_ORDER.get(value, 100), value),
+    ):
+        child = tree[name]
+        child_items = child.get("__items__", [])
+        child_folders = [key for key in child if key != "__items__"]
+        if len(child_items) == 1 and not child_folders:
+            item = dict(child_items[0])
+            item["name"] = name
+            result.append(item)
+        else:
+            result.append({"name": name, "item": evidence_tree_items(child)})
     return result
 
 
@@ -191,7 +240,7 @@ def generate_scenarios() -> dict[str, Any]:
         add_to_tree(
             tree,
             relative.parts,
-            scenario_item(path, base_url_variable),
+            collection_item(path, base_url_variable),
         )
 
     used_providers = {
@@ -221,77 +270,67 @@ def generate_scenarios() -> dict[str, Any]:
     }
 
 
-def evidence_request_item(record: dict[str, Any], variable: str) -> dict[str, Any]:
-    target = record.get("url") or record.get("path")
-    if not isinstance(target, str):
-        raise RepositoryError("evidence request requires a path or url")
-    url = target if target.startswith(("http://", "https://")) else f"{{{{{variable}}}}}/{target.lstrip('/')}"
-    request = postman_request(record, url)
-    description = str(record.get("notes", ""))
-    if description:
-        request["description"] = description
-    return {"name": str(record.get("id", "request")), "request": request}
-
-
-def generate_evidence() -> dict[str, Any]:
-    server_folders = []
-    variables = []
-    for server_path in sorted((REPOSITORY_ROOT / "evidence").glob("*/server.json")):
-        server = read_json(server_path)
-        if not isinstance(server, dict):
-            continue
-        variable = server["base_url"]["variable"]
-        variables.append(
-            {"key": variable, "value": server["base_url"]["default"], "type": "string"}
+def template_variables(records: list[dict[str, Any]]) -> list[dict[str, str]]:
+    names = set()
+    for record in records:
+        names.update(
+            re.findall(r"{{([A-Za-z][A-Za-z0-9_]*)}}", json.dumps(record))
         )
-        request_items = []
-        process_ids = set()
-        capture_requests = (server_path.parent / "captures").rglob("*request.json")
-        for path in sorted(capture_requests):
-            record = read_json(path)
-            if not isinstance(record, dict) or not isinstance(record.get("id"), str):
-                continue
-            request_items.append(evidence_request_item(record, variable))
-            if isinstance(record.get("process_id"), str):
-                process_ids.add(record["process_id"])
-        description_items = [
-            {
-                "name": process_id,
-                "request": {
-                    "method": "GET",
-                    "header": [{"key": "Accept", "value": "application/json"}],
-                    "url": f"{{{{{variable}}}}}/processes/{process_id}",
-                },
-            }
-            for process_id in sorted(process_ids)
-        ]
-        if request_items or description_items:
-            server_folders.append(
-                {
-                    "name": server["id"],
-                    "item": [
-                        {"name": "requests", "item": request_items},
-                        {"name": "process-descriptions", "item": description_items},
-                    ],
-                }
-            )
+    names.discard("baseUrl")
+    return [
+        {"key": name, "value": "", "type": "string"}
+        for name in sorted(names)
+    ]
+
+
+def generate_evidence(server_path: Path) -> dict[str, Any]:
+    server = read_json(server_path)
+    if not isinstance(server, dict):
+        raise RepositoryError(f"{server_path} must contain an object")
+    capture_root = server_path.parent / "captures"
+    request_paths = sorted(capture_root.rglob("*request.json"))
+    records = []
+    tree: dict[str, Any] = {}
+    for path in request_paths:
+        record = read_json(path)
+        if not isinstance(record, dict):
+            raise RepositoryError(f"{path} must contain an object")
+        records.append(record)
+        add_to_tree(
+            tree,
+            path.parent.relative_to(capture_root).parts,
+            collection_item(path, "baseUrl", include_post_response=False),
+        )
+
+    title = str(server.get("title") or server["id"])
     return {
         "info": {
-            "_postman_id": collection_id("evidence-requests"),
-            "name": "OGC API Processes evidence requests",
+            "_postman_id": collection_id(f"evidence-{server['id']}"),
+            "name": f"OGC API Processes evidence — {title}",
             "description": (
-                "Generated from runnable requests in evidence/*/captures. "
+                f"Generated from evidence/{server['id']}/captures. "
                 "Do not edit by hand."
             ),
             "schema": COLLECTION_SCHEMA,
         },
-        "variable": variables,
-        "item": server_folders,
+        "variable": [
+            {
+                "key": "baseUrl",
+                "value": server["base_url"]["default"],
+                "type": "string",
+            },
+            *template_variables(records),
+        ],
+        "item": evidence_tree_items(tree),
     }
 
 
 def write(path: Path, value: dict[str, Any]) -> None:
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(value, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
 
 
 def main() -> int:
@@ -300,11 +339,16 @@ def main() -> int:
     scenarios_path = (
         args.output_dir / "representative-scenarios.postman_collection.json"
     )
-    evidence_path = args.output_dir / "evidence-requests.postman_collection.json"
     write(scenarios_path, generate_scenarios())
-    write(evidence_path, generate_evidence())
     print(f"generated: {scenarios_path}")
-    print(f"generated: {evidence_path}")
+    evidence_dir = args.output_dir / "evidence"
+    for server_path in sorted((REPOSITORY_ROOT / "evidence").glob("*/server.json")):
+        evidence_path = (
+            evidence_dir
+            / f"{server_path.parent.name}.postman_collection.json"
+        )
+        write(evidence_path, generate_evidence(server_path))
+        print(f"generated: {evidence_path}")
     return 0
 
 

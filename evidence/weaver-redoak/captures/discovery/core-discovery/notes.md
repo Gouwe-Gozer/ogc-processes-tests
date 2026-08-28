@@ -2,7 +2,7 @@
 
 Source server: `weaver-redoak`
 
-This scenario contains the public landing page, conformance declaration, and
+This capture contains the public landing page, conformance declaration, and
 process list captured from RedOak on 27 August 2026. It covers discovery from
 an implementation other than ZOO-Project and pygeoapi.
 

@@ -1,6 +1,6 @@
 # Postman collections
 
-Generate both collections with:
+Generate the collections with:
 
 ```bash
 python3 scripts/generate_postman_collections.py
@@ -8,37 +8,62 @@ python3 scripts/generate_postman_collections.py
 
 The command creates:
 
-- `representative-scenarios.postman_collection.json`: the small scenario set,
-  including its recorded responses;
-- `evidence-requests.postman_collection.json`: runnable provider-specific
-  requests found in provider captures and one process-description request per
-  represented process.
+```text
+generated/postman/
+├── representative-scenarios.postman_collection.json
+└── evidence/
+    ├── bgt-prototype.postman_collection.json
+    ├── directed-local.postman_collection.json
+    ├── pygeoapi-demo.postman_collection.json
+    ├── weaver-redoak.postman_collection.json
+    └── zoo-local.postman_collection.json
+```
 
-Both collections give each server its own Postman variable, such as
-`{{zooLocalBaseUrl}}`, `{{pygeoapiDemoBaseUrl}}`, or
-`{{weaverRedoakBaseUrl}}`. The generator selects the variable from the provider
-folder, so requests from different services can live in the same collection.
-Job steps also use variables such as `{{jobUrl}}` and `{{resultsUrl}}`.
+## Representative scenarios
 
-The representative collection includes recorded response examples. Async
-submission scripts save `jobId` and `jobUrl` for subsequent status or dismiss
-requests. The successful-job workflow also:
+The representative collection follows the structure under `scenarios/`. It
+contains the small cross-provider set intended for future client tests.
 
-1. repeats the status request while the job is `accepted` or `running`;
-2. saves `resultsUrl` after a successful status response;
-3. lets the next request retrieve the results.
+Its recorded `response.json` files become Postman response examples. Matching
+`.post-response.js` files are also included. The current asynchronous scripts
+save job variables and repeat polling when the collection is run with Postman's
+Collection Runner, Postman CLI, or Newman.
 
-Run the `protocol/jobs/zoo-local/successful-job` folder with the Collection
-Runner, Postman CLI, or Newman to use the complete sequence. Sending one
-request manually still saves variables, but Postman only follows
-`setNextRequest` while running a collection. Change `pollDelayMs` or
-`maxPollAttempts` in the collection variables if needed.
+## Provider evidence
 
-Post-response scripts come from matching `.post-response.js` files beside the
-scenario requests.
+Each provider gets a separate collection. Its folders are generated from every
+request below:
 
-These scripts automate live API inspection in Postman. They are not the future
-client implementation or its automated test suite.
+```text
+evidence/<provider>/captures/
+```
 
-Do not edit the generated JSON files. Change a scenario, captured request,
-server file, or the generator and run the command again.
+For example, adding future BGT captures under:
+
+```text
+evidence/bgt-prototype/captures/discovery/core-discovery/
+```
+
+automatically adds `discovery/core-discovery` to the BGT collection. The
+generator does not contain a fixed list of providers, operations, processes, or
+cases.
+
+Each evidence collection has its own `{{baseUrl}}` collection variable. Its
+default comes from that provider's `server.json`. Other placeholders found in
+requests, such as `{{jobUrl}}` or `{{resultUrl}}`, are added as empty collection
+variables for manual use.
+
+A single-request case becomes one Postman item. A case containing several
+requests becomes a folder containing its ordered steps.
+
+Complete matching `response.json` files become Postman response examples.
+Requests without a complete response are still included, but historical
+`response-body.json` and `response-observation.json` files are not presented as
+response examples because they lack a complete HTTP response or body.
+
+Evidence collections do not include Postman JavaScript. They are intended for
+manual provider inspection. JavaScript copied into Postman by a user is not
+written back to these generated files.
+
+Do not edit the generated JSON files. Change a scenario, provider capture,
+`server.json`, or the generator and run the command again.

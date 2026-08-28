@@ -1,0 +1,211 @@
+{
+  "info": {
+    "_postman_id": "c781a0a2-cd72-5eff-9a5c-ab4f485f47fd",
+    "name": "OGC API Processes evidence — Official pygeoapi stable demo",
+    "description": "Generated from evidence/pygeoapi-demo/captures. Do not edit by hand.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://demo.pygeoapi.io/stable",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "descriptions",
+      "item": [
+        {
+          "name": "hello-world",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/hello-world?f=json"
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/hello-world?f=json"
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "pygeoapi 0.24.0"
+                }
+              ],
+              "body": "{\n  \"version\": \"0.2.0\",\n  \"id\": \"hello-world\",\n  \"title\": \"Hello World\",\n  \"description\": \"An example process that takes a name as input, and echoes it back as output. Intended to demonstrate a simple process with a single literal input.\",\n  \"jobControlOptions\": [\n    \"sync-execute\",\n    \"async-execute\"\n  ],\n  \"keywords\": [\n    \"hello world\",\n    \"example\",\n    \"echo\"\n  ],\n  \"links\": [\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"information\",\n      \"href\": \"https://example.org/process\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=json\",\n      \"title\": \"Process description as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=html\",\n      \"title\": \"Process description as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world/execution?f=json\",\n      \"title\": \"Execution for this process as JSON\",\n      \"hreflang\": \"en-US\"\n    }\n  ],\n  \"inputs\": {\n    \"name\": {\n      \"title\": \"Name\",\n      \"description\": \"The name of the person or entity that you wish tobe echoed back as an output\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"full name\",\n        \"personal\"\n      ]\n    },\n    \"message\": {\n      \"title\": \"Message\",\n      \"description\": \"An optional message to echo as well\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"message\"\n      ]\n    },\n    \"as_bytes\": {\n      \"title\": \"As bytes\",\n      \"description\": \"Whether to force return as bytes\",\n      \"schema\": {\n        \"type\": \"boolean\",\n        \"default\": false\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"as_bytes\"\n      ]\n    },\n    \"media_type\": {\n      \"title\": \"Media type\",\n      \"description\": \"Force a specific media type\",\n      \"schema\": {\n        \"type\": \"string\",\n        \"default\": \"application/json\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"media_type\"\n      ]\n    }\n  },\n  \"outputs\": {\n    \"echo\": {\n      \"title\": \"Hello, world\",\n      \"description\": \"A \\\"hello world\\\" echo with the name and (optional) message submitted for processing\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"contentMediaType\": \"application/json\"\n      }\n    }\n  },\n  \"example\": {\n    \"inputs\": {\n      \"name\": \"World\",\n      \"message\": \"An optional message.\"\n    }\n  },\n  \"outputTransmission\": [\n    \"value\"\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "executions",
+      "item": [
+        {
+          "name": "raw-versus-document-response",
+          "item": [
+            {
+              "name": "02-execute-default-raw",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"name\": \"OGC API client\",\n    \"message\": \"Raw response check.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"inputs\": {\n    \"name\": \"OGC API client\",\n    \"message\": \"Raw response check.\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    }
+                  ],
+                  "body": "{\n  \"id\": \"echo\",\n  \"value\": \"Hello OGC API client! Raw response check.\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "03-execute-document",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"name\": \"OGC API client\",\n    \"message\": \"Hello from the interoperability fixture.\"\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes/hello-world/execution?f=json",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"inputs\": {\n    \"name\": \"OGC API client\",\n    \"message\": \"Hello from the interoperability fixture.\"\n  },\n  \"response\": \"document\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    }
+                  ],
+                  "body": "{\n  \"outputs\": [\n    {\n      \"id\": \"echo\",\n      \"value\": \"Hello OGC API client! Hello from the interoperability fixture.\"\n    }\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

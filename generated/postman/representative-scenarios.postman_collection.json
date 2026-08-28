@@ -73,7 +73,7 @@
               "name": "weaver-redoak",
               "item": [
                 {
-                  "name": "basic-discovery",
+                  "name": "core-discovery",
                   "item": [
                     {
                       "name": "01-landing",

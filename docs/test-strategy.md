@@ -69,7 +69,7 @@ can still be reused by tests for another concern.
 
 | Scenario | What it represents |
 |---|---|
-| `protocol/discovery/weaver-redoak/basic-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
+| `protocol/discovery/weaver-redoak/core-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
 | `protocol/discovery/weaver-redoak/process-description-forbidden` | An advertised versioned process-description link returns HTTP 403 with HTML |
 | `protocol/execution/zoo-local/simple-sync` | Minimal synchronous HTTP 200 execution with one string input and one string result |
 | `protocol/execution/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |

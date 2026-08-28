@@ -1,0 +1,79 @@
+{
+  "info": {
+    "_postman_id": "c65fa8a5-7ca2-5796-9700-464270f662f6",
+    "name": "OGC API Processes evidence — Local DIRECTED pygeoapi deployment",
+    "description": "Generated from evidence/directed-local/captures. Do not edit by hand.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "executions",
+      "item": [
+        {
+          "name": "large-csv-output",
+          "item": [
+            {
+              "name": "01-execute-raw",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30,\n      80\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "02-execute-reference",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30,\n      80\n    ]\n  },\n  \"outputs\": {\n    \"impact\": {\n      \"transmissionMode\": \"reference\"\n    }\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
