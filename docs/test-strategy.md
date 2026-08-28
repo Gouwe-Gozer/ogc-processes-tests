@@ -16,6 +16,7 @@ The future client tests should be separated by concern:
 
 | Test area | What it should verify |
 |---|---|
+| HTTP transport | Injected `fetch`, request forwarding, response envelopes, redirects, aborts, and failures that produced no HTTP response |
 | Protocol core | HTTP requests, discovery, execution, job transitions, links, and errors |
 | Form generation | How process-description schemas become form fields and when raw JSON fallback is needed |
 | Result handling | How output descriptions and returned media types select maps, JSON views, text, or downloads |
@@ -56,24 +57,26 @@ wait before deciding:
 Those decisions should follow the actual client design. Until then, plain JSON
 records and short README files are sufficient.
 
-## Current protocol-core scenarios
+## Current representative scenarios
 
-The current scenarios cover these distinct protocol behaviours:
+The current scenarios are placed under their main client concern. A scenario
+can still be reused by tests for another concern.
 
 | Scenario | What it represents |
 |---|---|
-| `discovery/weaver-redoak/basic-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
-| `sync/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
-| `sync/zoo-local/result-by-reference` | Synchronous result returned as an `href` with a media type |
-| `sync/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |
-| `async/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
-| `async/zoo-local/failed-job` | Accepted submission followed by a failed terminal job state |
-| `async/zoo-local/dismiss-running-job` | Accepted submission followed by `DELETE` and a dismissed terminal state |
-| `errors/zoo-local/process-description-html-error` | One process description returns HTTP 500 with HTML instead of JSON |
-| `errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
-| `errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
-| `errors/zoo-local/missing-requested-output` | HTTP 200 response omits an explicitly requested output |
-| `validation/directed-local/undocumented-array-length` | An array accepted by the published schema is rejected because the provider requires an undocumented length |
+| `protocol/discovery/weaver-redoak/basic-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
+| `protocol/execution/zoo-local/simple-sync` | Minimal synchronous HTTP 200 execution with one string input and one string result |
+| `protocol/execution/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |
+| `protocol/jobs/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
+| `protocol/jobs/zoo-local/failed-job` | Accepted submission followed by a failed terminal job state |
+| `protocol/jobs/zoo-local/dismiss-running-job` | Accepted submission followed by `DELETE` and a dismissed terminal state |
+| `protocol/errors/zoo-local/process-description-html-error` | One process description returns HTTP 500 with HTML instead of JSON |
+| `protocol/errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
+| `protocol/errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
+| `protocol/errors/zoo-local/missing-requested-output` | HTTP 200 response omits an explicitly requested output |
+| `forms/validation/directed-local/undocumented-array-length` | An array accepted by the published schema is rejected because the provider requires an undocumented length |
+| `results/maps/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
+| `results/downloads/zoo-local/result-by-reference` | Synchronous result returned as an `href` with a media type |
 
 Each request file contains its method, URL, headers, and body. Each response
 file contains its status, headers, final URL, and body. The README explains why
@@ -142,9 +145,9 @@ did. For each additional implementation, collect only the useful minimum:
 - one useful error or provider-specific response shape.
 
 Do not repeat every process and data shape for every implementation. Curated
-scenarios are grouped by behaviour, then provider, then scenario. This makes
-provider differences visible without prescribing the future client test
-folder layout.
+scenarios are grouped by client concern, specific behaviour, provider, and
+scenario. This keeps provider differences visible while allowing pygeoapi,
+Weaver, ZOO, and future services to appear under the same behaviour.
 
 This folder structure does not prescribe a fake transport interface. A future
 fake transport can load the request and response sequence from any selected
@@ -198,6 +201,11 @@ After the client exists, deterministic protocol tests can call its public API
 with a small fake transport. The fake transport will return the recorded
 responses while the test checks the requests made and values returned. The
 fake belongs in the client test suite, not in this repository today.
+
+Test the real HTTP adapter separately with an injected `fetch`. Those tests
+should cover request-option forwarding, HTTP responses including 4xx and 5xx,
+redirected final URLs, rejected requests, and aborts. They do not need a real
+OGC provider or a scenario folder here.
 
 Form tests should load recorded process descriptions and check the client's
 form model. Result tests should load recorded output descriptions and values

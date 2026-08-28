@@ -2,7 +2,7 @@
 
 Process: `SAGA.grid_tools.27`
 Source server: `zoo-local`
-Selected as [`errors/zoo-local/missing-requested-output`](../../../../../scenarios/errors/zoo-local/missing-requested-output/).
+Selected as [`protocol/errors/zoo-local/missing-requested-output`](../../../../../scenarios/protocol/errors/zoo-local/missing-requested-output/).
 
 ## Why it may be useful
 

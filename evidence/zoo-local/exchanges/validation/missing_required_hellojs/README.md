@@ -2,7 +2,7 @@
 
 Process: `hellojs`
 Source server: `zoo-local`
-Selected as [`errors/zoo-local/missing-required-input`](../../../../../scenarios/errors/zoo-local/missing-required-input/).
+Selected as [`protocol/errors/zoo-local/missing-required-input`](../../../../../scenarios/protocol/errors/zoo-local/missing-required-input/).
 
 ## Why it may be useful
 

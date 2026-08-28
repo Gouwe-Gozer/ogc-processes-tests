@@ -97,10 +97,10 @@ python3 scripts/generate_postman_collections.py
 ```
 
 The generated files are written to [`generated/postman/`](generated/postman/).
-Run the `async/zoo-local/successful-job` folder with Postman's Collection
-Runner to run the full sequence. Its post-response scripts save the job URL
-and ID, repeat the status request until the job finishes, and save the results
-URL for the last request.
+Run the `protocol/jobs/zoo-local/successful-job` folder with Postman's
+Collection Runner to run the full sequence. Its post-response scripts save the
+job URL and ID, repeat the status request until the job finishes, and save the
+results URL for the last request.
 
 ## Documentation
 

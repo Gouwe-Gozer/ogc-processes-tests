@@ -2,7 +2,7 @@
 
 Process: `longProcess`
 Source server: `zoo-local`
-Selected as [`async/zoo-local/dismiss-running-job`](../../../../../scenarios/async/zoo-local/dismiss-running-job/).
+Selected as [`protocol/jobs/zoo-local/dismiss-running-job`](../../../../../scenarios/protocol/jobs/zoo-local/dismiss-running-job/).
 
 ## submit
 

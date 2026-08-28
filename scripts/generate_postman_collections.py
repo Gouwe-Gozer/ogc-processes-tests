@@ -15,6 +15,17 @@ from support.repository import REPOSITORY_ROOT, RepositoryError, read_json
 COLLECTION_SCHEMA = (
     "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 )
+FOLDER_ORDER = {
+    "protocol": 0,
+    "forms": 1,
+    "results": 2,
+    "discovery": 10,
+    "execution": 11,
+    "jobs": 12,
+    "errors": 13,
+    "maps": 20,
+    "downloads": 21,
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -77,10 +88,6 @@ def response_example(
 
 
 def paired_responses(request_path: Path) -> list[tuple[str | None, Path]]:
-    if request_path.name == "request.json":
-        response_path = request_path.with_name("response.json")
-        return [(None, response_path)] if response_path.is_file() else []
-
     prefix = request_path.name.removesuffix(".request.json")
     responses: list[tuple[str | None, Path]] = []
     response_path = request_path.with_name(f"{prefix}.response.json")
@@ -95,12 +102,9 @@ def paired_responses(request_path: Path) -> list[tuple[str | None, Path]]:
 
 
 def post_response_event(request_path: Path) -> list[dict[str, Any]]:
-    if request_path.name == "request.json":
-        script_path = request_path.with_name("post-response.js")
-    else:
-        script_path = request_path.with_name(
-            request_path.name.replace(".request.json", ".post-response.js")
-        )
+    script_path = request_path.with_name(
+        request_path.name.replace(".request.json", ".post-response.js")
+    )
     if not script_path.is_file():
         return []
     script = script_path.read_text(encoding="utf-8")
@@ -115,14 +119,14 @@ def post_response_event(request_path: Path) -> list[dict[str, Any]]:
     ]
 
 
-def scenario_item(request_path: Path) -> dict[str, Any]:
+def scenario_item(request_path: Path, base_url_variable: str) -> dict[str, Any]:
     record = read_json(request_path)
     if not isinstance(record, dict):
         raise RepositoryError(f"{request_path} must contain an object")
-    request = postman_request(record, str(record.get("url") or record.get("path")))
+    url = str(record.get("url") or record.get("path"))
+    url = url.replace("{{baseUrl}}", f"{{{{{base_url_variable}}}}}")
+    request = postman_request(record, url)
     name = request_path.name.removesuffix(".request.json")
-    if name == "request.json":
-        name = request_path.parent.name
     item: dict[str, Any] = {"name": name, "request": request}
     response_examples = []
     for label, response_path in paired_responses(request_path):
@@ -146,20 +150,57 @@ def add_to_tree(tree: dict[str, Any], parts: tuple[str, ...], item: dict[str, An
 
 def tree_items(tree: dict[str, Any]) -> list[dict[str, Any]]:
     result = list(tree.get("__items__", []))
-    for name in sorted(key for key in tree if key != "__items__"):
+    names = (key for key in tree if key != "__items__")
+    for name in sorted(
+        names,
+        key=lambda value: (FOLDER_ORDER.get(value, 100), value),
+    ):
         result.append({"name": name, "item": tree_items(tree[name])})
     return result
 
 
 def generate_scenarios() -> dict[str, Any]:
     root = REPOSITORY_ROOT / "scenarios"
-    request_paths = sorted(
-        set(root.rglob("*.request.json")) | set(root.rglob("request.json"))
-    )
+    providers: dict[str, tuple[str, str]] = {}
+    for server_path in sorted((REPOSITORY_ROOT / "evidence").glob("*/server.json")):
+        server = read_json(server_path)
+        if not isinstance(server, dict):
+            continue
+        base_url = server.get("base_url")
+        if not isinstance(base_url, dict):
+            continue
+        providers[server_path.parent.name] = (
+            str(base_url["variable"]),
+            str(base_url["default"]),
+        )
+
+    request_paths = sorted(root.rglob("*.request.json"))
     tree: dict[str, Any] = {}
     for path in request_paths:
         relative = path.parent.relative_to(root)
-        add_to_tree(tree, relative.parts, scenario_item(path))
+        if len(relative.parts) < 2:
+            raise RepositoryError(
+                f"{path} must be stored below a provider and scenario folder"
+            )
+        provider = relative.parts[-2]
+        if provider not in providers:
+            raise RepositoryError(
+                f"{path} uses provider {provider!r} without evidence/{provider}/server.json"
+            )
+        base_url_variable, _ = providers[provider]
+        add_to_tree(
+            tree,
+            relative.parts,
+            scenario_item(path, base_url_variable),
+        )
+
+    used_providers = {
+        path.parent.relative_to(root).parts[-2] for path in request_paths
+    }
+    provider_variables = [
+        {"key": providers[name][0], "value": providers[name][1], "type": "string"}
+        for name in sorted(used_providers)
+    ]
     return {
         "info": {
             "_postman_id": collection_id("representative-scenarios"),
@@ -167,8 +208,7 @@ def generate_scenarios() -> dict[str, Any]:
             "description": "Generated from scenarios/. Do not edit by hand.",
             "schema": COLLECTION_SCHEMA,
         },
-        "variable": [
-            {"key": "baseUrl", "value": "http://localhost/ogc-api", "type": "string"},
+        "variable": provider_variables + [
             {"key": "jobId", "value": "", "type": "string"},
             {"key": "jobUrl", "value": "", "type": "string"},
             {"key": "resultsUrl", "value": "", "type": "string"},

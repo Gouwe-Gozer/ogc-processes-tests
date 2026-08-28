@@ -13,10 +13,11 @@ The command creates:
 - `evidence-requests.postman_collection.json`: all runnable provider-specific
   requests and one process-description request per represented process.
 
-In the evidence collection, each server has its own Postman variable, such as
-`{{zooLocalBaseUrl}}`. The representative collection uses `{{baseUrl}}`; set it
-for the provider folder you want to run. Job steps also use variables such as
-`{{jobUrl}}` and `{{resultsUrl}}`.
+Both collections give each server its own Postman variable, such as
+`{{zooLocalBaseUrl}}`, `{{pygeoapiDemoBaseUrl}}`, or
+`{{weaverRedoakBaseUrl}}`. The generator selects the variable from the provider
+folder, so requests from different services can live in the same collection.
+Job steps also use variables such as `{{jobUrl}}` and `{{resultsUrl}}`.
 
 The representative collection includes recorded response examples. Async
 submission scripts save `jobId` and `jobUrl` for subsequent status or dismiss
@@ -26,11 +27,11 @@ requests. The successful-job workflow also:
 2. saves `resultsUrl` after a successful status response;
 3. lets the next request retrieve the results.
 
-Run the `async/zoo-local/successful-job` folder with the Collection Runner,
-Postman CLI, or Newman to use the complete sequence. Sending one request
-manually still saves variables, but Postman only follows `setNextRequest` while
-running a collection. Change `pollDelayMs` or `maxPollAttempts` in the
-collection variables if needed.
+Run the `protocol/jobs/zoo-local/successful-job` folder with the Collection
+Runner, Postman CLI, or Newman to use the complete sequence. Sending one
+request manually still saves variables, but Postman only follows
+`setNextRequest` while running a collection. Change `pollDelayMs` or
+`maxPollAttempts` in the collection variables if needed.
 
 Post-response scripts come from matching `.post-response.js` files beside the
 scenario requests.

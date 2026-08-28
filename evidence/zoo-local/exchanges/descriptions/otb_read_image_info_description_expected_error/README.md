@@ -2,7 +2,7 @@
 
 Process: `OTB.ReadImageInfo`
 Source server: `zoo-local`
-Selected as [`errors/zoo-local/process-description-html-error`](../../../../../scenarios/errors/zoo-local/process-description-html-error/).
+Selected as [`protocol/errors/zoo-local/process-description-html-error`](../../../../../scenarios/protocol/errors/zoo-local/process-description-html-error/).
 
 ## Why it may be useful
 

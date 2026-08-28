@@ -2,7 +2,8 @@
 
 Process: `hellojs`
 Source server: `zoo-local`
-Stored as supporting evidence; it is not part of the small representative scenario set.
+Selected as
+[`protocol/execution/zoo-local/simple-sync`](../../../../../scenarios/protocol/execution/zoo-local/simple-sync/).
 
 ## Why it may be useful
 

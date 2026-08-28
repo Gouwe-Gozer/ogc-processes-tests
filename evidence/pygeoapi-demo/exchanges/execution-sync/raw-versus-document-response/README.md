@@ -2,7 +2,7 @@
 
 Process: `hello-world`
 Source server: `pygeoapi-demo`
-Selected as [`sync/pygeoapi-demo/raw-versus-document-response`](../../../../../scenarios/sync/pygeoapi-demo/raw-versus-document-response/).
+Selected as [`protocol/execution/pygeoapi-demo/raw-versus-document-response`](../../../../../scenarios/protocol/execution/pygeoapi-demo/raw-versus-document-response/).
 
 ## Why it may be useful
 

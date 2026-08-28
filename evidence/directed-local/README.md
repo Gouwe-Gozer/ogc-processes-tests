@@ -20,4 +20,4 @@ SHA-256 hashes are stored under
 
 The process description and its undocumented array-length error form the
 representative scenario at
-[`../../scenarios/validation/directed-local/undocumented-array-length/`](../../scenarios/validation/directed-local/undocumented-array-length/).
+[`../../scenarios/forms/validation/directed-local/undocumented-array-length/`](../../scenarios/forms/validation/directed-local/undocumented-array-length/).

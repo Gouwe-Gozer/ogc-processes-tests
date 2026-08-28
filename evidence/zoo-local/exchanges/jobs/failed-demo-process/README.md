@@ -2,7 +2,7 @@
 
 Process: `demo`
 Source server: `zoo-local`
-Selected as [`async/zoo-local/failed-job`](../../../../../scenarios/async/zoo-local/failed-job/).
+Selected as [`protocol/jobs/zoo-local/failed-job`](../../../../../scenarios/protocol/jobs/zoo-local/failed-job/).
 
 ## submit
 

@@ -2,7 +2,7 @@
 
 Process: `failR`
 Source server: `zoo-local`
-Selected as [`errors/zoo-local/structured-execution-error`](../../../../../scenarios/errors/zoo-local/structured-execution-error/).
+Selected as [`protocol/errors/zoo-local/structured-execution-error`](../../../../../scenarios/protocol/errors/zoo-local/structured-execution-error/).
 
 ## Why it may be useful
 

@@ -2,7 +2,7 @@
 
 Process: `SAGA.grid_tools.0`
 Source server: `zoo-local`
-Selected as [`sync/zoo-local/result-by-reference`](../../../../../scenarios/sync/zoo-local/result-by-reference/).
+Selected as [`results/downloads/zoo-local/result-by-reference`](../../../../../scenarios/results/downloads/zoo-local/result-by-reference/).
 
 ## Why it may be useful
 

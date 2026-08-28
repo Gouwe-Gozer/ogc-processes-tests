@@ -5,7 +5,7 @@ was captured on 27 August 2026.
 
 The landing page, conformance declaration, and process list returned JSON with
 HTTP 200. They form the representative discovery scenario at
-[`../../scenarios/discovery/weaver-redoak/basic-discovery/`](../../scenarios/discovery/weaver-redoak/basic-discovery/).
+[`../../scenarios/protocol/discovery/weaver-redoak/basic-discovery/`](../../scenarios/protocol/discovery/weaver-redoak/basic-discovery/).
 
 The capture also found two deployment-specific limitations:
 
