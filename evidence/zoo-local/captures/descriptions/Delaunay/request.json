@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Delaunay",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

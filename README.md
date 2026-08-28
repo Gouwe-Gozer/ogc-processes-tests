@@ -19,15 +19,15 @@ documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 | Folder | Contents |
 |---|---|
 | `scenarios/` | Small representative request-response exchanges |
-| `evidence/` | Runnable provider requests and captured responses kept for reference |
+| `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |
 | `docs/` | Client scope, lessons learned, and scenario-selection notes |
 
-A scenario contains complete HTTP request and response records. An evidence
-request records one exact request for one server, including why it was kept and
-the status observed during testing.
+A scenario contains representative material for future client tests. Evidence
+keeps each provider request beside the response that was actually observed.
+Older incomplete captures are clearly marked until they can be rerun.
 
 ## Before running ZOO requests
 
@@ -59,6 +59,12 @@ Send it to the local ZOO server:
 python3 scripts/run_evidence_request.py hellojs_string
 ```
 
+Add or replace the matching complete `response.json`:
+
+```bash
+python3 scripts/run_evidence_request.py hellojs_string --save-response
+```
+
 The command reads the default URL from
 [`evidence/zoo-local/server.json`](evidence/zoo-local/server.json). Override it
 when needed:
@@ -83,8 +89,8 @@ inside a processing server.
 
 ## Update captured descriptions
 
-This command saves a process description, response status, headers, and final
-URL under `evidence/zoo-local/responses/descriptions/`:
+This command saves the request, process description, response status, headers,
+and final URL under `evidence/zoo-local/captures/descriptions/<process-id>/`:
 
 ```bash
 python3 scripts/capture_process_descriptions.py hellojs Buffer

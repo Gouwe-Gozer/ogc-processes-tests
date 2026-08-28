@@ -16,8 +16,10 @@ The capture also found two deployment-specific limitations:
 
 The missing CORS header makes this deployment useful for testing access through
 the promised relay transport. The HTTP 403 is separate from CORS: it also
-occurs in direct command-line requests. The versioned 403 exchange is stored
-under [`responses/`](responses/) and selected as
+occurs in direct command-line requests. The versioned 403 capture is stored
+under
+[`captures/descriptions/process-description-forbidden/`](captures/descriptions/process-description-forbidden/)
+and selected as
 [`process-description-forbidden`](../../scenarios/protocol/discovery/weaver-redoak/process-description-forbidden/).
 
 These observations describe this deployment at the capture date. They should

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture process-description bodies plus status, headers, and final URLs."""
+"""Capture complete process-description exchanges."""
 
 from __future__ import annotations
 
@@ -58,7 +58,20 @@ def capture_one(process_id: str, base_url: str, output_dir: Path, timeout: float
     charset = response.headers.get_content_charset() or "utf-8"
     response.close()
 
-    stem = f"{safe_name(process_id)}.process"
+    capture_dir = output_dir / safe_name(process_id)
+    capture_dir.mkdir(parents=True, exist_ok=True)
+    request_record = {
+        "method": "GET",
+        "url": f"{{{{baseUrl}}}}/processes/{encoded}",
+        "headers": {"Accept": "application/json"},
+    }
+    (capture_dir / "request.json").write_text(
+        json.dumps(request_record, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    for old_body in capture_dir.glob("body.*"):
+        old_body.unlink()
+
     parsed = None
     try:
         parsed = json.loads(raw.decode(charset))
@@ -66,31 +79,27 @@ def capture_one(process_id: str, base_url: str, output_dir: Path, timeout: float
         pass
 
     if parsed is not None:
-        body_path = output_dir / f"{stem}.json"
-        body_path.write_text(
-            json.dumps(parsed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-        )
-        metadata_path = output_dir / f"{stem}.metadata.json"
+        response_body = {"body": parsed}
     else:
         extension = "html" if content_type == "text/html" else "txt"
-        body_path = output_dir / f"{stem}-error.{extension}"
+        body_path = capture_dir / f"body.{extension}"
         body_path.write_bytes(raw)
-        metadata_path = output_dir / f"{stem}-error.metadata.json"
+        response_body = {"body_file": body_path.name}
 
-    metadata = {
-        "process_id": process_id,
-        "request": {"method": "GET", "url": url, "headers": {"Accept": "application/json"}},
-        "response": {
-            "status": status,
-            "headers": headers,
-            "final_url": final_url,
-            "body_file": body_path.name,
-        },
+    response_record = {
+        "status": status,
+        "headers": headers,
+        "final_url": final_url,
+        **response_body,
     }
-    metadata_path.write_text(
-        json.dumps(metadata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    (capture_dir / "response.json").write_text(
+        json.dumps(response_record, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
     )
-    print(f"captured: {process_id}: HTTP {status} -> {body_path}")
+    legacy_body = capture_dir / "response-body.json"
+    if legacy_body.exists():
+        legacy_body.unlink()
+    print(f"captured: {process_id}: HTTP {status} -> {capture_dir}")
     return status < 400
 
 
@@ -99,7 +108,7 @@ def main() -> int:
     try:
         server, server_dir = load_server(args.server)
         base_url = server_base_url(server, args.base_url)
-        output_dir = args.output_dir or server_dir / "responses" / "descriptions"
+        output_dir = args.output_dir or server_dir / "captures" / "descriptions"
         output_dir.mkdir(parents=True, exist_ok=True)
     except (OSError, RepositoryError) as error:
         print(f"error: {error}", file=sys.stderr)

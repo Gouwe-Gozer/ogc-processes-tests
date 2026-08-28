@@ -1,0 +1,28 @@
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/jobs-description>; rel=\"profile\""
+  },
+  "final_url": "{{jobUrl}}",
+  "body": {
+    "progress": 80,
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "type": "process",
+    "processID": "longProcess",
+    "created": "2026-08-25T12:20:41.350Z",
+    "started": "2026-08-25T12:20:41.350Z",
+    "updated": "2026-08-25T12:20:57.807Z",
+    "status": "running",
+    "message": "Step 80",
+    "links": [
+      {
+        "title": "Status location",
+        "rel": "monitor",
+        "type": "application/json",
+        "href": "{{jobUrl}}"
+      }
+    ]
+  }
+}

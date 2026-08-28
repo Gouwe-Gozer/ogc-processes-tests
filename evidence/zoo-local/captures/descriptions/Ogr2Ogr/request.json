@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Ogr2Ogr",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

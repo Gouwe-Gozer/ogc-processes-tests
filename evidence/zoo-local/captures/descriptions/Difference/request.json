@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Difference",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

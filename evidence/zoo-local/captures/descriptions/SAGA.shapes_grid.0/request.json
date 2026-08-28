@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/SAGA.shapes_grid.0",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

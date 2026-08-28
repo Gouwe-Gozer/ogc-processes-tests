@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "f23f3d96-e4e6-5a2d-bb5d-861065c01ec2",
     "name": "OGC API Processes evidence requests",
-    "description": "Generated from evidence/*/requests. Do not edit by hand.",
+    "description": "Generated from runnable requests in evidence/*/captures. Do not edit by hand.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -39,6 +39,20 @@
         {
           "name": "requests",
           "item": [
+            {
+              "name": "otb_read_image_info_description_expected_error",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/OTB.ReadImageInfo",
+                "description": "GET of the advertised process description terminates zoo_loader.cgi with SIGSEGV before an execution request can be constructed. The GeoTIFF succeeds with otbcli_ReadImageInfo but is diagnostic only and is not sent by this GET case."
+              }
+            },
             {
               "name": "boundary_polygon",
               "request": {
@@ -199,37 +213,6 @@
                   }
                 },
                 "description": "Reference-input case pinned to the published five-point GML 3.1 fixture."
-              }
-            },
-            {
-              "name": "demo_async_expected_failure",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Prefer",
-                    "value": "respond-async"
-                  }
-                ],
-                "url": "{{zooLocalBaseUrl}}/processes/demo/execution",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "description": "The initial execution request creates a job. The provider is designed to fail later; status polling will be a separate test."
               }
             },
             {
@@ -611,37 +594,6 @@
               }
             },
             {
-              "name": "long_process_async",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Prefer",
-                    "value": "respond-async"
-                  }
-                ],
-                "url": "{{zooLocalBaseUrl}}/processes/longProcess/execution",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "description": "Verifies asynchronous job creation. Job polling and dismissal will be separate cases."
-              }
-            },
-            {
               "name": "ogr2ogr_vector",
               "request": {
                 "method": "POST",
@@ -774,20 +726,6 @@
                   }
                 },
                 "description": "Uses referenced GeoJSON and an inline support image. Both mode-specific inputs are included because the description marks both required. The data run with OTB CLI 7.0; ZOO reports an empty OTB application registry."
-              }
-            },
-            {
-              "name": "otb_read_image_info_description_expected_error",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": "{{zooLocalBaseUrl}}/processes/OTB.ReadImageInfo",
-                "description": "GET of the advertised process description terminates zoo_loader.cgi with SIGSEGV before an execution request can be constructed. The GeoTIFF succeeds with otbcli_ReadImageInfo but is diagnostic only and is not sent by this GET case."
               }
             },
             {
@@ -1463,6 +1401,68 @@
                   }
                 },
                 "description": "Both required reference inputs are pinned to the published GML 3.1 fixtures."
+              }
+            },
+            {
+              "name": "demo_async_expected_failure",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/demo/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "The initial execution request creates a job. The provider is designed to fail later; status polling will be a separate test."
+              }
+            },
+            {
+              "name": "long_process_async",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{zooLocalBaseUrl}}/processes/longProcess/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"sid\": 1\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Verifies asynchronous job creation. Job polling and dismissal will be separate cases."
               }
             }
           ]

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Gdal_Grid",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

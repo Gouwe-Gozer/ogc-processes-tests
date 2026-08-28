@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/SAGA.table_tools.0",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

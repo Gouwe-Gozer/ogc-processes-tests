@@ -246,9 +246,10 @@ def generate_evidence() -> dict[str, Any]:
         )
         request_items = []
         process_ids = set()
-        for path in sorted((server_path.parent / "requests").glob("*/request.json")):
+        capture_requests = (server_path.parent / "captures").rglob("*request.json")
+        for path in sorted(capture_requests):
             record = read_json(path)
-            if not isinstance(record, dict):
+            if not isinstance(record, dict) or not isinstance(record.get("id"), str):
                 continue
             request_items.append(evidence_request_item(record, variable))
             if isinstance(record.get("process_id"), str):
@@ -278,7 +279,10 @@ def generate_evidence() -> dict[str, Any]:
         "info": {
             "_postman_id": collection_id("evidence-requests"),
             "name": "OGC API Processes evidence requests",
-            "description": "Generated from evidence/*/requests. Do not edit by hand.",
+            "description": (
+                "Generated from runnable requests in evidence/*/captures. "
+                "Do not edit by hand."
+            ),
             "schema": COLLECTION_SCHEMA,
         },
         "variable": variables,

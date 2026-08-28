@@ -1,68 +1,88 @@
-# Supporting evidence
+# Provider evidence
 
-This folder keeps provider-specific material that may help explain client or
-server behaviour but is not part of the small representative set in
-[`../scenarios/`](../scenarios/).
+This folder contains requests and responses observed from real OGC API
+Processes deployments. Evidence is grouped first by provider and then by API
+operation.
 
-The five server folders contain server details and captured material:
-
-- [`zoo-local/`](zoo-local/): 53 runnable requests plus captured process
-  descriptions, execution responses, errors, and diagnostics;
-- [`pygeoapi-demo/`](pygeoapi-demo/): details of the public pygeoapi demo used
-  for the recorded `hello-world` exchanges;
-- [`bgt-prototype/`](bgt-prototype/): details of the local pygeoapi-based BGT
-  prototype;
-- [`directed-local/`](directed-local/): a local pygeoapi process with
-  undocumented array constraints and a large CSV result;
-- [`weaver-redoak/`](weaver-redoak/): public Weaver discovery responses, a
-  missing-CORS observation, and an advertised process description that returned
-  HTTP 403.
-
-## How evidence is organized
-
-Evidence is grouped first by server deployment, such as `zoo-local` or
-`pygeoapi-demo`. This makes the source of every observation clear. Inside a
-server folder, files are grouped by what they are used for:
-
-| Folder | What it contains |
-|---|---|
-| `requests/` | Requests that can be sent again with the repository scripts |
-| `responses/descriptions/` | Process descriptions returned by the server |
-| `responses/executions/` | Raw process or job result bodies |
-| `responses/catalogs/` | Summaries built from several captured responses |
-| `responses/diagnostics/` | Investigation notes and checks that are not normal API responses |
-| `exchanges/` | A request and its response stored together, with a README explaining why the observation matters |
-
-This layout is useful for batch work. For example, a script can find all
-runnable requests under `requests/` or recapture all process descriptions into
-`responses/descriptions/` without walking through every process folder.
-
-The trade-off is that all files for one process are not necessarily beside each
-other. To find ZOO material for `Buffer`, search for its process ID:
-
-```bash
-rg -l '"process_id": "Buffer"' evidence/zoo-local/requests
+```text
+evidence/<provider>/
+├── server.json
+├── captures/
+│   ├── discovery/
+│   ├── descriptions/
+│   ├── executions/
+│   └── jobs/
+└── diagnostics/
 ```
 
-Its captured description is
-[`zoo-local/responses/descriptions/Buffer.process.json`](zoo-local/responses/descriptions/Buffer.process.json).
-A layout with one folder per process would make this lookup easier, but would
-make the batch operations above less direct. The current layout favours
-collecting and comparing many processes.
+The provider folders are:
 
-## Evidence request format
+- [`zoo-local/`](zoo-local/): the local ZOO-Project deployment;
+- [`pygeoapi-demo/`](pygeoapi-demo/): the public pygeoapi demo;
+- [`bgt-prototype/`](bgt-prototype/): a local pygeoapi-based prototype;
+- [`directed-local/`](directed-local/): a local pygeoapi deployment with a
+  large CSV result;
+- [`weaver-redoak/`](weaver-redoak/): a public Weaver deployment.
 
-An evidence `request.json` is a small set of instructions for our scripts. It is
-not an OGC standard, and the complete file is not sent to the server.
+## What a capture contains
 
-For example:
+A normal one-step capture keeps the request and its observed response together:
+
+```text
+captures/executions/buffer_polygon/
+├── request.json
+├── response.json
+└── notes.md
+```
+
+- `request.json` contains the HTTP method, URL, headers, and request body.
+- `response.json` contains the status, headers, final URL, and actual response
+  body.
+- `notes.md` is optional. It explains why an unusual result may matter.
+
+Multi-step job captures use numbered filenames:
+
+```text
+captures/jobs/successful-job/
+├── 01-submit.request.json
+├── 01-submit.response.json
+├── 02-poll.request.json
+├── 02-poll.response.json
+├── 03-results.request.json
+└── 03-results.response.json
+```
+
+Errors stay with the operation that returned them. For example, an execution
+that returned HTTP 500 remains under `captures/executions/`.
+
+## Complete and incomplete historical captures
+
+The standard format is a matching `request.json` and `response.json` pair.
+Some older evidence was not originally stored that way:
+
+- `request.json` without a response means the old response was lost;
+- `response-body.json` means the real body survived, but its status, headers,
+  and final URL did not;
+- `*.response-observation.json` records the size and shape of a large response
+  whose full body was not committed.
+
+These are temporary incomplete captures. Rerunning them should add a normal
+`response.json`. The incomplete file can then be removed after the new capture
+has been checked.
+
+There is no separate folder for missing responses. They can be found from the
+absence of a response file in the case folder.
+
+## Request file format
+
+Request files are instructions for the repository scripts. The format is not
+part of the OGC standard.
 
 ```json
 {
   "id": "hellojs_string",
   "title": "Execute hellojs with a string input",
   "process_id": "hellojs",
-  "execution_mode": "sync",
   "method": "POST",
   "path": "/processes/hellojs/execution",
   "headers": {
@@ -74,48 +94,70 @@ For example:
       "S": "Codex"
     }
   },
-  "expected_status": 200,
-  "notes": "Basic literal-input smoke test."
+  "expected_status": 200
 }
 ```
 
-Only four parts describe the HTTP request:
+Only `method`, `path` or `url`, `headers`, and `body` define the HTTP request.
+Fields such as `id`, `title`, `process_id`, `fixtures`, `expected_status`, and
+`notes` help people and repository scripts; they are not sent to the provider.
 
-| Field | Sent as part of the HTTP request? | Purpose |
-|---|---:|---|
-| `method` | Yes | HTTP method, such as `GET`, `POST`, or `DELETE` |
-| `path` or `url` | Yes | Address to call; the script combines a relative path with the server's base URL |
-| `headers` | Yes | HTTP request headers |
-| `body` | Yes | JSON body sent by a `POST` request |
-| `id` | No | Short repository name shown by the runner and Postman |
-| `title` | No | Human-readable explanation of the request |
-| `process_id` | No | Process identifier used by the Postman generator to add a description request |
-| `execution_mode` | No | Notes whether the example is synchronous or asynchronous |
-| `fixture` | No | Points readers to a local input file used by the example |
-| `expected_status` | No | Lets the runner report whether the observed status was expected |
-| `notes` | No | Extra context for readers and the generated Postman request |
+## Response file format
 
-At present, `title`, `execution_mode`, and `fixture` are documentation for
-people reading the files; the scripts do not use them. The other metadata
-fields have the specific script uses listed above.
+JSON and reasonably sized text bodies are stored directly:
 
-`process_id` is related to the real API path, but it is still repository
-metadata. For example, `process_id: "Buffer"` corresponds to
-`/processes/Buffer/execution`; the server never receives a separate
-`process_id` field. Keep these values consistent when editing a request.
+```json
+{
+  "status": 200,
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "final_url": "http://localhost/ogc-api/processes/Buffer/execution",
+  "body": {
+    "Result": {
+      "value": {
+        "type": "FeatureCollection"
+      }
+    }
+  }
+}
+```
 
-Do not pass the whole `request.json` file to `curl --data`. Only the value under
-`body` becomes the JSON request body. The method, URL, and headers become their
-normal HTTP equivalents.
+A large or binary body may be stored beside the response. In that case,
+`response.json` uses `body_file` instead of `body`.
 
-Files under `exchanges/` use a smaller version of the same request envelope.
-Their matching response file records the HTTP `status`, response `headers`,
-`final_url`, and response `body`. These are also repository records, not a
-standard OGC testcase format.
+## Running and completing captures
 
-Names such as `Handling` and `Expected client handling` in exchange notes are
-plain-language explanations. They do not define a required client API or a
-provider-specific adapter.
+Print a request as `curl`:
 
-Run a ZOO evidence request with
-[`../scripts/run_evidence_request.py`](../scripts/run_evidence_request.py).
+```bash
+python3 scripts/run_evidence_request.py hellojs_string --print-curl
+```
+
+Send it without changing the repository:
+
+```bash
+python3 scripts/run_evidence_request.py hellojs_string
+```
+
+Save a complete response beside its request:
+
+```bash
+python3 scripts/run_evidence_request.py hellojs_string --save-response
+```
+
+An exact request-file path can be used when a case contains several steps.
+
+## Finding result shapes
+
+Because all complete execution responses use the same filenames and envelope,
+they can be searched together. For example:
+
+```bash
+rg -l 'FeatureCollection' evidence/*/captures/executions
+rg -l 'text/csv' evidence/*/captures/executions
+rg -l '"href"' evidence/*/captures/executions
+```
+
+This allows result bodies to be classified without separating them from the
+requests that produced them.

@@ -12,4 +12,4 @@ an immediate result, and preserving the response. More complicated input and
 output shapes belong in the form and result scenarios.
 
 The source exchange remains under
-[`evidence/zoo-local/exchanges/execution-sync/hellojs_string/`](../../../../../evidence/zoo-local/exchanges/execution-sync/hellojs_string/).
+[`evidence/zoo-local/captures/executions/hellojs_string/`](../../../../../evidence/zoo-local/captures/executions/hellojs_string/).

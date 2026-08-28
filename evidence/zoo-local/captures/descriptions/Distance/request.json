@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Distance",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

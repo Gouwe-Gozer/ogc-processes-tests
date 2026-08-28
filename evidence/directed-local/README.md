@@ -16,7 +16,7 @@ The process is useful because its description and observed behaviour differ:
 
 The large bodies are not checked into Git. Their response metadata, sizes, and
 SHA-256 hashes are stored under
-[`exchanges/execution-sync/large-csv-output/`](exchanges/execution-sync/large-csv-output/).
+[`captures/executions/large-csv-output/`](captures/executions/large-csv-output/).
 
 The process description and its undocumented array-length error form the
 representative scenario at

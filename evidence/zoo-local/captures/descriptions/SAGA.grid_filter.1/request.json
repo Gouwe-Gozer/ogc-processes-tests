@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/SAGA.grid_filter.1",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

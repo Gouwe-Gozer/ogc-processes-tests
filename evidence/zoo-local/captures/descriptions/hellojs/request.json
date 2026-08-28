@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/hellojs",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

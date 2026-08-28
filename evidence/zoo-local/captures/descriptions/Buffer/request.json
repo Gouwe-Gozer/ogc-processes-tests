@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Buffer",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

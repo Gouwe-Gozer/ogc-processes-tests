@@ -13,4 +13,4 @@ cannot generate a form for this process without a description.
 
 This is a direct HTTP response, not a browser CORS failure. The source exchange
 remains under
-[`evidence/weaver-redoak/responses/process-description-forbidden/`](../../../../../evidence/weaver-redoak/responses/process-description-forbidden/).
+[`evidence/weaver-redoak/captures/descriptions/process-description-forbidden/`](../../../../../evidence/weaver-redoak/captures/descriptions/process-description-forbidden/).

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/SAGA.shapes_lines.3",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

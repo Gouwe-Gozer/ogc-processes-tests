@@ -10,8 +10,9 @@ The command creates:
 
 - `representative-scenarios.postman_collection.json`: the small scenario set,
   including its recorded responses;
-- `evidence-requests.postman_collection.json`: all runnable provider-specific
-  requests and one process-description request per represented process.
+- `evidence-requests.postman_collection.json`: runnable provider-specific
+  requests found in provider captures and one process-description request per
+  represented process.
 
 Both collections give each server its own Postman variable, such as
 `{{zooLocalBaseUrl}}`, `{{pygeoapiDemoBaseUrl}}`, or
@@ -39,5 +40,5 @@ scenario requests.
 These scripts automate live API inspection in Postman. They are not the future
 client implementation or its automated test suite.
 
-Do not edit the generated JSON files. Change a scenario, evidence request,
+Do not edit the generated JSON files. Change a scenario, captured request,
 server file, or the generator and run the command again.

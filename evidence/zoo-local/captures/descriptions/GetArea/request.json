@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/GetArea",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

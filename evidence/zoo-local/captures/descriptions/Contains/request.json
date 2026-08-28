@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/Contains",
+  "headers": {
+    "Accept": "application/json"
+  }
+}
