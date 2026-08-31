@@ -1,0 +1,57 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:49:41 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "Content-Length": "969",
+    "Content-Location": "{{syncJobUrl}}/results",
+    "Link": "<{{syncJobUrl}}>; rel=\"status\"; type=\"application/json\"; title=\"Job status.\"; hreflang=en-CA, <{{syncJobUrl}}>; rel=\"monitor\"; type=\"application/json\"; title=\"Job monitoring location.\"; hreflang=en-CA, <{{baseUrl}}/jobs/{{syncJobId}}?f=json>; rel=\"alternate\"; type=\"application/json\"; title=\"Job status generic endpoint.\"; hreflang=en-CA, <{{baseUrl}}/jobs>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/job-list\"; type=\"application/json\"; title=\"List of submitted jobs.\"; hreflang=en-CA, <{{baseUrl}}/processes/EchoProcess/jobs/execution>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/execute\"; type=\"application/json\"; title=\"New job submission endpoint for the corresponding process.\"; hreflang=en-CA, <{{syncJobUrl}}/inputs>; rel=\"inputs\"; type=\"application/json\"; title=\"Submitted job inputs for process execution.\"; hreflang=en-CA, <{{baseUrl}}/jobs/{{syncJobId}}?f=html>; rel=\"alternate\"; type=\"text/html\"; title=\"HTML Job Status\"; hreflang=en-CA, <{{syncJobUrl}}/outputs>; rel=\"outputs\"; type=\"application/json\"; title=\"Job outputs of successful process execution (extended outputs with metadata).\"; hreflang=en-CA, <{{syncJobUrl}}/results>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/results\"; type=\"application/json\"; title=\"Job results of successful process execution (direct output values mapping).\"; hreflang=en-CA, <{{syncJobUrl}}/statistics>; rel=\"statistics\"; type=\"application/json\"; title=\"Job statistics collected following process execution.\"; hreflang=en-CA, <{{syncJobUrl}}/prov>; rel=\"provenance\"; type=\"application/json\"; title=\"Job provenance collected following process execution.\"; hreflang=en-CA, <{{syncJobUrl}}/prov>; rel=\"https://www.w3.org/ns/prov\"; type=\"application/json\"; title=\"Job provenance collected following process execution.\"; hreflang=en-CA, <{{syncJobUrl}}/arrayOutput?f=application/json>; rel=\"output\"; type=\"application/json\"; title=\"Link to job arrayOutput result in application/json\"; hreflang=en-CA, <{{syncJobUrl}}/arrayOutput?f=text/csv>; rel=\"output\"; type=\"text/csv\"; title=\"Link to job arrayOutput result in text/csv\"; hreflang=en-CA, <{{syncJobUrl}}/arrayOutput?f=application/xml>; rel=\"output\"; type=\"application/xml\"; title=\"Link to job arrayOutput result in application/xml\"; hreflang=en-CA, <{{syncJobUrl}}/arrayOutput?f=application/yaml>; rel=\"output\"; type=\"application/yaml\"; title=\"Link to job arrayOutput result in application/yaml\"; hreflang=en-CA, <{{syncJobUrl}}/complexObjectOutput?f=application/json>; rel=\"output\"; type=\"application/json\"; title=\"Link to job complexObjectOutput result in application/json\"; hreflang=en-CA, <{{syncJobUrl}}/complexObjectOutput?f=text/csv>; rel=\"output\"; type=\"text/csv\"; title=\"Link to job complexObjectOutput result in text/csv\"; hreflang=en-CA, <{{syncJobUrl}}/complexObjectOutput?f=application/xml>; rel=\"output\"; type=\"application/xml\"; title=\"Link to job complexObjectOutput result in application/xml\"; hreflang=en-CA, <{{syncJobUrl}}/complexObjectOutput?f=application/yaml>; rel=\"output\"; type=\"application/yaml\"; title=\"Link to job complexObjectOutput result in application/yaml\"; hreflang=en-CA, <{{syncJobUrl}}/geometryOutput?f=application/json>; rel=\"output\"; type=\"application/json\"; title=\"Link to job geometryOutput result in application/json\"; hreflang=en-CA, <{{syncJobUrl}}/geometryOutput?f=text/csv>; rel=\"output\"; type=\"text/csv\"; title=\"Link to job geometryOutput result in text/csv\"; hreflang=en-CA, <{{syncJobUrl}}/geometryOutput?f=application/xml>; rel=\"output\"; type=\"application/xml\"; title=\"Link to job geometryOutput result in application/xml\"; hreflang=en-CA, <{{syncJobUrl}}/geometryOutput?f=application/yaml>; rel=\"output\"; type=\"application/yaml\"; title=\"Link to job geometryOutput result in application/yaml\"; hreflang=en-CA, <{{syncJobUrl}}/imagesOutput?f=application/json>; rel=\"output\"; type=\"application/json\"; title=\"Link to job imagesOutput result in application/json\"; hreflang=en-CA, <{{syncJobUrl}}/imagesOutput?f=text/csv>; rel=\"output\"; type=\"text/csv\"; title=\"Link to job imagesOutput result in text/csv\"; hreflang=en-CA, <{{syncJobUrl}}/imagesOutput?f=application/xml>; rel=\"output\"; type=\"application/xml\"; title=\"Link to job imagesOutput result in application/xml\"; hreflang=en-CA, <{{syncJobUrl}}/imagesOutput?f=application/yaml>; rel=\"output\"; type=\"application/yaml\"; title=\"Link to job imagesOutput result in application/yaml\"; hreflang=en-CA, <{{syncJobUrl}}/featureCollectionOutput?f=application/geo+json>; rel=\"output\"; type=\"application/geo+json\"; title=\"Link to job featureCollectionOutput result in application/geo+json\"; hreflang=en-CA, <{{syncJobUrl}}/logs>; rel=\"logs\"; type=\"application/json\"; title=\"List of collected job logs during process execution.\"; hreflang=en-CA, <{{syncJobUrl}}/logs>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/log\"; type=\"application/json\"; title=\"List of collected job logs during process execution.\"; hreflang=en-CA, <{{syncJobUrl}}/results>; rel=\"self\"; type=\"application/json\"; title=\"Job results of successful process execution (direct output values mapping).\"; hreflang=en-CA, <{{syncJobUrl}}>; rel=\"up\"; type=\"application/json\"; title=\"Job status details.\"; hreflang=en-CA, <https://www.opengis.net/def/profile/OGC/0/ogc-results>; rel=\"profile\"",
+    "Content-Profile": "https://www.opengis.net/def/profile/OGC/0/ogc-results",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "body": {
+    "stringOutput": "Value2",
+    "measureOutput": 9.81,
+    "dateOutput": "2026-08-31T14:00:00+00:00",
+    "doubleOutput": 3.1416,
+    "arrayOutput": [
+      1,
+      2,
+      3
+    ],
+    "complexObjectOutput": {
+      "href": "http://localhost:8000/{{syncJobId}}/complexObjectOutput/input",
+      "type": "application/json"
+    },
+    "geometryOutput": [
+      {
+        "href": "http://localhost:8000/{{syncJobId}}/geometryOutput/input__4hhnxkv",
+        "type": "application/geo+json"
+      },
+      {
+        "href": "http://localhost:8000/{{syncJobId}}/geometryOutput/input_6u__d28v",
+        "type": "application/json"
+      }
+    ],
+    "boundingBoxOutput": {
+      "bbox": [
+        51.9,
+        7.0,
+        52.0,
+        7.1
+      ],
+      "crs": "http://www.opengis.net/def/crs/EPSG/0/4326"
+    },
+    "imagesOutput": {
+      "href": "http://localhost:8000/{{syncJobId}}/imagesOutput/input_erssxu52",
+      "type": "image/tiff; application=geotiff"
+    },
+    "featureCollectionOutput": {
+      "href": "http://localhost:8000/{{syncJobId}}/featureCollectionOutput/input_ns3pa1rn",
+      "type": "application/geo+json"
+    }
+  }
+}

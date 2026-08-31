@@ -1,0 +1,106 @@
+{
+  "title": "Submit EchoProcess asynchronously with every required input type",
+  "process_id": "EchoProcess",
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Prefer": "respond-async"
+  },
+  "body": {
+    "inputs": {
+      "stringInput": "Value2",
+      "measureInput": {
+        "value": {
+          "measurement": 9.81,
+          "uom": "m/s²"
+        }
+      },
+      "dateInput": "2026-08-31T14:00:00Z",
+      "doubleInput": 3.1416,
+      "arrayInput": [
+        1,
+        2,
+        3
+      ],
+      "complexObjectInput": {
+        "value": {
+          "property1": "abc",
+          "property2": "https://example.com",
+          "property3": 1.234,
+          "property5": true
+        },
+        "mediaType": "application/json"
+      },
+      "geometryInput": [
+        {
+          "value": {
+            "type": "Point",
+            "coordinates": [
+              1,
+              2
+            ]
+          },
+          "mediaType": "application/geo+json"
+        },
+        {
+          "value": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [1, 2],
+                [3, 4],
+                [5, 6],
+                [7, 8],
+                [9, 1],
+                [1, 2]
+              ]
+            ]
+          },
+          "mediaType": "application/json"
+        }
+      ],
+      "boundingBoxInput": {
+        "bbox": [
+          7,
+          51.9,
+          7.1,
+          52
+        ],
+        "crs": "epsg:4326"
+      },
+      "imagesInput": [
+        {
+          "value": "cmFuZG9tLXRpZmY=",
+          "mediaType": "image/tiff; application=geotiff",
+          "encoding": "base64"
+        }
+      ],
+      "featureCollectionInput": {
+        "value": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "properties": {
+                "name": "test"
+              },
+              "geometry": {
+                "type": "Point",
+                "coordinates": [
+                  1.2,
+                  3.4,
+                  5.6
+                ]
+              }
+            }
+          ]
+        },
+        "mediaType": "application/geo+json"
+      }
+    },
+    "response": "document",
+    "mode": "async"
+  }
+}

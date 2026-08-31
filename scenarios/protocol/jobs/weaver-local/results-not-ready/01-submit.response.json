@@ -1,0 +1,24 @@
+{
+  "status": 201,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:11:04 GMT",
+    "Connection": "close",
+    "Location": "{{jobUrl}}",
+    "Preference-Applied": "respond-async",
+    "Content-Type": "application/json",
+    "Content-Length": "426",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/file2string_array/execution",
+  "body": {
+    "description": "Job successfully submitted to processing queue. Execution should begin when resources are available.",
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "processID": "file2string_array",
+    "processingEntityType": "ogc-api-processes",
+    "type": "process",
+    "status": "accepted",
+    "location": "{{jobUrl}}"
+  }
+}

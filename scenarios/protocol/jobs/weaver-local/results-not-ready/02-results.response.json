@@ -1,0 +1,115 @@
+{
+  "status": 404,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:11:04 GMT",
+    "Connection": "close",
+    "Transfer-Encoding": "chunked",
+    "Link": "<{{jobUrl}}>; rel=\"status\"; type=\"application/json\"; title=\"Job status.\"; hreflang=en-CA, <{{jobUrl}}>; rel=\"monitor\"; type=\"application/json\"; title=\"Job monitoring location.\"; hreflang=en-CA, <{{baseUrl}}/jobs/{{jobId}}?f=json>; rel=\"alternate\"; type=\"application/json\"; title=\"Job status generic endpoint.\"; hreflang=en-CA, <{{baseUrl}}/jobs>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/job-list\"; type=\"application/json\"; title=\"List of submitted jobs.\"; hreflang=en-CA, <{{baseUrl}}/processes/file2string_array/jobs/execution>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/execute\"; type=\"application/json\"; title=\"New job submission endpoint for the corresponding process.\"; hreflang=en-CA, <{{jobUrl}}/inputs>; rel=\"inputs\"; type=\"application/json\"; title=\"Submitted job inputs for process execution.\"; hreflang=en-CA, <{{baseUrl}}/jobs/{{jobId}}?f=html>; rel=\"alternate\"; type=\"text/html\"; title=\"HTML Job Status\"; hreflang=en-CA, <{{baseUrl}}/jobs>; rel=\"collection\"; type=\"application/json\"; title=\"List of submitted jobs.\"; hreflang=en-CA, <https://www.opengis.net/def/profile/OGC/0/job-description>; rel=\"profile\"; type=\"application/json\"; title=\"Job response profile.\"; hreflang=en-CA, <{{jobUrl}}/logs>; rel=\"logs\"; type=\"application/json\"; title=\"List of collected job logs during process execution.\"; hreflang=en-CA, <{{jobUrl}}/logs>; rel=\"https://www.opengis.net/def/rel/ogc/1.0/log\"; type=\"application/json\"; title=\"List of collected job logs during process execution.\"; hreflang=en-CA, <{{jobUrl}}>; rel=\"self\"; type=\"application/json\"; title=\"Job status.\"; hreflang=en-CA, <{{baseUrl}}/jobs>; rel=\"up\"; type=\"application/json\"; title=\"List of submitted jobs.\"; hreflang=en-CA",
+    "Content-Type": "application/json",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{jobUrl}}/results",
+  "body": {
+    "title": "JobResultsNotReady",
+    "type": "https://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/result-not-ready",
+    "detail": "Job is not ready to obtain results.",
+    "status": 404,
+    "cause": {
+      "status": "accepted"
+    },
+    "links": [
+      {
+        "href": "{{jobUrl}}",
+        "rel": "status",
+        "title": "Job status.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{jobUrl}}",
+        "rel": "monitor",
+        "title": "Job monitoring location.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/jobs/{{jobId}}?f=json",
+        "type": "application/json",
+        "rel": "alternate",
+        "title": "Job status generic endpoint.",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/jobs",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/job-list",
+        "title": "List of submitted jobs.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/processes/file2string_array/jobs/execution",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/execute",
+        "title": "New job submission endpoint for the corresponding process.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{jobUrl}}/inputs",
+        "rel": "inputs",
+        "title": "Submitted job inputs for process execution.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/jobs/{{jobId}}?f=html",
+        "rel": "alternate",
+        "title": "HTML Job Status",
+        "type": "text/html",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/jobs",
+        "rel": "collection",
+        "title": "List of submitted jobs.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "https://www.opengis.net/def/profile/OGC/0/job-description",
+        "rel": "profile",
+        "title": "Job response profile.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{jobUrl}}/logs",
+        "rel": "logs",
+        "title": "List of collected job logs during process execution.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{jobUrl}}/logs",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/log",
+        "title": "List of collected job logs during process execution.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{jobUrl}}",
+        "title": "Job status.",
+        "rel": "self",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      },
+      {
+        "href": "{{baseUrl}}/jobs",
+        "rel": "up",
+        "title": "List of submitted jobs.",
+        "type": "application/json",
+        "hreflang": "en-CA"
+      }
+    ]
+  }
+}

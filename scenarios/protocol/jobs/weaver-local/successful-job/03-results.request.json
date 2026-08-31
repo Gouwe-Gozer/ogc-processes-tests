@@ -1,0 +1,8 @@
+{
+  "title": "Retrieve successful EchoProcess job results",
+  "method": "GET",
+  "url": "{{resultsUrl}}",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

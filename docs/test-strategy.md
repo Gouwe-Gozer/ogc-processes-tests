@@ -71,11 +71,15 @@ can still be reused by tests for another concern.
 |---|---|
 | `protocol/discovery/weaver-redoak/core-discovery` | Landing page, conformance declaration, and process list from Weaver, captured without CORS response headers |
 | `protocol/discovery/weaver-redoak/process-description-forbidden` | An advertised versioned process-description link returns HTTP 403 with HTML |
+| `protocol/discovery/weaver-local/process-description` | Successful Weaver description with keyed and varied input and output definitions |
 | `protocol/execution/zoo-local/simple-sync` | Minimal synchronous HTTP 200 execution with one string input and one string result |
 | `protocol/execution/pygeoapi-demo/raw-versus-document-response` | A process description plus raw and document results from another implementation |
+| `protocol/execution/weaver-local/sync-with-job-links` | Immediate HTTP 200 result that also advertises job-related links and `Content-Location` |
 | `protocol/jobs/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
 | `protocol/jobs/zoo-local/failed-job` | Accepted submission followed by a failed terminal job state |
 | `protocol/jobs/zoo-local/dismiss-running-job` | Accepted submission followed by `DELETE` and a dismissed terminal state |
+| `protocol/jobs/weaver-local/successful-job` | Successful Weaver submission, polling, and results using `Location` when the accepted body has no links |
+| `protocol/jobs/weaver-local/results-not-ready` | HTTP 404 `JobResultsNotReady` while the submitted job is still accepted |
 | `protocol/errors/zoo-local/process-description-html-error` | One process description returns HTTP 500 with HTML instead of JSON |
 | `protocol/errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
 | `protocol/errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
@@ -97,7 +101,7 @@ require another protocol-core scenario:
 |---|---|
 | Similar GEOS and SAGA executions | They use request and result envelopes already represented by the selected synchronous scenarios |
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
-| Unknown jobs, premature results, and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
+| Unknown jobs and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
 | Bounding boxes, enums, repeated inputs, and nested schemas | Promote when form-generation tests begin |
 | Large CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin; the CLIMADA evidence records its 18.8 MB CSV without checking the full body into Git |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |
