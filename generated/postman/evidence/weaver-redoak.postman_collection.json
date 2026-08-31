@@ -231,6 +231,172 @@
           ]
         }
       ]
+    },
+    {
+      "name": "executions",
+      "item": [
+        {
+          "name": "execution-forbidden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Prefer",
+                "value": "respond-async"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/EchoProcess/execution",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "HTTP 403",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/EchoProcess/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "403",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.31.1"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 10:12:14 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "153"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx/1.31.1</center>\r\n</body>\r\n</html>\r\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "jobs",
+      "item": [
+        {
+          "name": "job-list-forbidden",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs"
+          },
+          "response": [
+            {
+              "name": "HTTP 403",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/jobs"
+              },
+              "status": "403",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "nginx/1.31.1"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 10:11:33 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "153"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx/1.31.1</center>\r\n</body>\r\n</html>\r\n"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

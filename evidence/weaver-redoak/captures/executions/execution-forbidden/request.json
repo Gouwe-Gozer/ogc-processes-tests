@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Origin": "http://localhost:5173",
+    "Prefer": "respond-async"
+  },
+  "body": {}
+}

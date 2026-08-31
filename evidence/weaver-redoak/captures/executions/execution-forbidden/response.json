@@ -1,0 +1,12 @@
+{
+  "status": 403,
+  "headers": {
+    "Server": "nginx/1.31.1",
+    "Date": "Mon, 31 Aug 2026 10:12:14 GMT",
+    "Content-Type": "text/html",
+    "Content-Length": "153",
+    "Connection": "keep-alive"
+  },
+  "final_url": "https://redoak.cs.toronto.edu/weaver/processes/EchoProcess/execution",
+  "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx/1.31.1</center>\r\n</body>\r\n</html>\r\n"
+}

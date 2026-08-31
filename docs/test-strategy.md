@@ -239,7 +239,7 @@ The evidence was checked for these behaviours on 31 August 2026:
 |---|---|
 | Relative links | None. All recorded `href` values are absolute URLs or placeholders for absolute URLs |
 | Redirected final URLs | None. Recorded request and final URLs match, and no HTTP 3xx exchange is stored |
-| One unavailable process description | ZOO returns HTTP 500 for `OTB.ReadImageInfo`; Weaver returns HTTP 403 for its advertised `EchoProcess:1.0.0` link. Both are selected scenarios |
+| Advertised endpoints unavailable | ZOO returns HTTP 500 for `OTB.ReadImageInfo`; Weaver's nginx gateway returns HTTP 403 for an advertised description, execution, and job-list endpoint. Only the process-description failures are selected scenarios |
 | Missing or unusable async location | Every recorded HTTP 201 response contains `Location`. The DIRECTED accepted-job body has no monitor link, so it confirms that the client must also read the header. No capture omits both locations |
 | Different `Location` capitalization | None. All captures use `Location` |
 | CORS differences | Weaver and ZOO discovery lack `Access-Control-Allow-Origin`. BGT and DIRECTED pass the captured execution preflight. The public demo allows discovery GETs but fails execution preflight because it does not allow `content-type` or `prefer` |
