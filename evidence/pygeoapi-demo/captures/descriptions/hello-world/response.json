@@ -1,11 +1,20 @@
 {
   "status": 200,
   "headers": {
-    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*",
     "Content-Language": "en-US",
-    "X-Powered-By": "pygeoapi 0.24.0"
+    "Content-Length": "3362",
+    "Content-Type": "application/json",
+    "Date": "Mon, 31 Aug 2026 09:27:17 GMT",
+    "Server": "gunicorn",
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+    "Vary": "Origin",
+    "X-Content-Type-Options": "nosniff",
+    "X-Powered-By": "pygeoapi 0.24.0",
+    "Connection": "close"
   },
-  "final_url": "{{baseUrl}}/processes/hello-world?f=json",
+  "final_url": "https://demo.pygeoapi.io/stable/processes/hello-world?f=json",
   "body": {
     "version": "0.2.0",
     "id": "hello-world",

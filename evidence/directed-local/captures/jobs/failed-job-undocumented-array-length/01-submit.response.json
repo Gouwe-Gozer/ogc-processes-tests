@@ -1,0 +1,23 @@
+{
+  "status": 201,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:22:18 GMT",
+    "Connection": "keep-alive",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Preference-Applied": "respond-async",
+    "Location": "{{baseUrl}}/jobs/{{jobId}}",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Expose-Headers": "*",
+    "Vary": "Origin",
+    "Content-Length": "101"
+  },
+  "final_url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+  "body": {
+    "jobID": "{{jobId}}",
+    "type": "process",
+    "status": "accepted"
+  }
+}

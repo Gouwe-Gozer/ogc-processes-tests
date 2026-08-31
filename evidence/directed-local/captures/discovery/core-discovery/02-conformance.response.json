@@ -1,0 +1,31 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:27:15 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Expose-Headers": "*",
+    "Vary": "Origin",
+    "Content-Length": "841"
+  },
+  "final_url": "http://localhost:5000/conformance",
+  "body": {
+    "conformsTo": [
+      "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core",
+      "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html",
+      "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json",
+      "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page",
+      "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30",
+      "http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/callback",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description"
+    ]
+  }
+}

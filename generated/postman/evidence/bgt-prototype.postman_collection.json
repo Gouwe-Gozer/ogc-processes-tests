@@ -14,6 +14,329 @@
   ],
   "item": [
     {
+      "name": "discovery",
+      "item": [
+        {
+          "name": "core-discovery",
+          "item": [
+            {
+              "name": "01-landing",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:14 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.23.4"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "2768"
+                    }
+                  ],
+                  "body": "{\n  \"links\": [\n    {\n      \"rel\": \"about\",\n      \"type\": \"text/html\",\n      \"title\": \"BGT Land-cover Summary API\",\n      \"href\": \"http://localhost:5001\"\n    },\n    {\n      \"rel\": \"self\",\n      \"type\": \"application/json\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"http://localhost:5001?f=json\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"application/ld+json\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"http://localhost:5001?f=jsonld\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"text/html\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"http://localhost:5001?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"service-desc\",\n      \"type\": \"application/vnd.oai.openapi+json;version=3.0\",\n      \"title\": \"The OpenAPI definition as JSON\",\n      \"href\": \"http://localhost:5001/openapi\"\n    },\n    {\n      \"rel\": \"service-doc\",\n      \"type\": \"text/html\",\n      \"title\": \"The OpenAPI definition as HTML\",\n      \"href\": \"http://localhost:5001/openapi?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"conformance\",\n      \"type\": \"application/json\",\n      \"title\": \"Conformance\",\n      \"href\": \"http://localhost:5001/conformance\"\n    },\n    {\n      \"rel\": \"data\",\n      \"type\": \"application/json\",\n      \"title\": \"Collections\",\n      \"href\": \"http://localhost:5001/collections\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/processes\",\n      \"type\": \"application/json\",\n      \"title\": \"Processes\",\n      \"href\": \"http://localhost:5001/processes\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"type\": \"application/json\",\n      \"title\": \"Jobs\",\n      \"href\": \"http://localhost:5001/jobs\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"application/json\",\n      \"title\": \"The list of supported tiling schemes as JSON\",\n      \"href\": \"http://localhost:5001/TileMatrixSets?f=json\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"text/html\",\n      \"title\": \"The list of supported tiling schemes as HTML\",\n      \"href\": \"http://localhost:5001/TileMatrixSets?f=html\"\n    }\n  ],\n  \"title\": \"BGT Land-cover Summary API\",\n  \"description\": \"Synchronous prototype for calculating BKN-oriented land-cover proxies from PDOK BGT data. Results are not an official Basiskwaliteit Natuur assessment.\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "02-conformance",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/conformance"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/conformance"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:14 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.23.4"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "765"
+                    }
+                  ],
+                  "body": "{\n  \"conformsTo\": [\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description\"\n  ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "03-processes",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:14 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.23.4"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "3579"
+                    }
+                  ],
+                  "body": "{\n  \"processes\": [\n    {\n      \"version\": \"0.2.0\",\n      \"id\": \"bgt-land-cover-summary\",\n      \"title\": \"BKN-oriented BGT land-cover summary\",\n      \"description\": \"Calculates BKN-oriented land-cover proxies within two circular radii around a WGS 84 coordinate using live PDOK BGT data. The results do not directly measure vegetation height or tree-canopy volume and are not an official BKN assessment.\",\n      \"keywords\": [\n        \"BKN\",\n        \"BGT\",\n        \"PDOK\",\n        \"land cover\",\n        \"Netherlands\"\n      ],\n      \"jobControlOptions\": [\n        \"sync-execute\"\n      ],\n      \"outputTransmission\": [\n        \"value\"\n      ],\n      \"links\": [\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"about\",\n          \"title\": \"PDOK BGT API\",\n          \"href\": \"https://api.pdok.nl/lv/bgt/ogc/v1\",\n          \"hreflang\": \"nl\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"about\",\n          \"title\": \"Basiskwaliteit Natuur toolbox\",\n          \"href\": \"https://www.samenvoorbiodiversiteit.nl/toolbox/basiskwaliteitnatuur\",\n          \"hreflang\": \"nl\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"self\",\n          \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary?f=json\",\n          \"title\": \"Process description as JSON\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"alternate\",\n          \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary?f=html\",\n          \"title\": \"Process description as HTML\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n          \"href\": \"http://localhost:5001/jobs?f=html\",\n          \"title\": \"Jobs list as HTML\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n          \"href\": \"http://localhost:5001/jobs?f=json\",\n          \"title\": \"Jobs list as JSON\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n          \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary/execution?f=json\",\n          \"title\": \"Execution for this process as JSON\",\n          \"hreflang\": \"en-US\"\n        }\n      ]\n    }\n  ],\n  \"links\": [\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"http://localhost:5001/processes?f=json\"\n    },\n    {\n      \"type\": \"application/ld+json\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"http://localhost:5001/processes?f=jsonld\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"http://localhost:5001/processes?f=html\"\n    }\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "descriptions",
+      "item": [
+        {
+          "name": "bgt-land-cover-summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/bgt-land-cover-summary?f=json"
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/bgt-land-cover-summary?f=json"
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "gunicorn"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 09:27:15 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "pygeoapi 0.23.4"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:5173"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "19349"
+                }
+              ],
+              "body": "{\n  \"version\": \"0.2.0\",\n  \"id\": \"bgt-land-cover-summary\",\n  \"title\": \"BKN-oriented BGT land-cover summary\",\n  \"description\": \"Calculates BKN-oriented land-cover proxies within two circular radii around a WGS 84 coordinate using live PDOK BGT data. The results do not directly measure vegetation height or tree-canopy volume and are not an official BKN assessment.\",\n  \"keywords\": [\n    \"BKN\",\n    \"BGT\",\n    \"PDOK\",\n    \"land cover\",\n    \"Netherlands\"\n  ],\n  \"jobControlOptions\": [\n    \"sync-execute\"\n  ],\n  \"outputTransmission\": [\n    \"value\"\n  ],\n  \"links\": [\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"PDOK BGT API\",\n      \"href\": \"https://api.pdok.nl/lv/bgt/ogc/v1\",\n      \"hreflang\": \"nl\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"Basiskwaliteit Natuur toolbox\",\n      \"href\": \"https://www.samenvoorbiodiversiteit.nl/toolbox/basiskwaliteitnatuur\",\n      \"hreflang\": \"nl\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary?f=json\",\n      \"title\": \"Process description as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary?f=html\",\n      \"title\": \"Process description as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5001/jobs?f=html\",\n      \"title\": \"Jobs list as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5001/jobs?f=json\",\n      \"title\": \"Jobs list as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n      \"href\": \"http://localhost:5001/processes/bgt-land-cover-summary/execution?f=json\",\n      \"title\": \"Execution for this process as JSON\",\n      \"hreflang\": \"en-US\"\n    }\n  ],\n  \"inputs\": {\n    \"latitude\": {\n      \"title\": \"Latitude\",\n      \"description\": \"WGS 84 latitude in decimal degrees.\",\n      \"schema\": {\n        \"type\": \"number\",\n        \"minimum\": -90,\n        \"maximum\": 90\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1\n    },\n    \"longitude\": {\n      \"title\": \"Longitude\",\n      \"description\": \"WGS 84 longitude in decimal degrees.\",\n      \"schema\": {\n        \"type\": \"number\",\n        \"minimum\": -180,\n        \"maximum\": 180\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1\n    },\n    \"inner_radius_m\": {\n      \"title\": \"Inner radius\",\n      \"description\": \"Radius in metres for the first complete circular area.\",\n      \"schema\": {\n        \"type\": \"integer\",\n        \"minimum\": 1,\n        \"maximum\": 5000,\n        \"default\": 300\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1\n    },\n    \"outer_radius_m\": {\n      \"title\": \"Outer radius\",\n      \"description\": \"Radius in metres for the second complete circular area.\",\n      \"schema\": {\n        \"type\": \"integer\",\n        \"minimum\": 1,\n        \"maximum\": 5000,\n        \"default\": 500\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1\n    }\n  },\n  \"outputs\": {\n    \"summary\": {\n      \"title\": \"BKN-oriented BGT land-cover summary\",\n      \"description\": \"Percentages, provenance, source diagnostics and execution timings.\",\n      \"schema\": {\n        \"contentMediaType\": \"application/json\",\n        \"type\": \"object\",\n        \"required\": [\n          \"process\",\n          \"source\",\n          \"input\",\n          \"is_partial\",\n          \"fetch_failures\",\n          \"classification\",\n          \"timing_seconds\",\n          \"completed_at\",\n          \"within_inner_radius\",\n          \"within_outer_radius\"\n        ],\n        \"properties\": {\n          \"process\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"name\",\n              \"algorithm_version\"\n            ],\n            \"properties\": {\n              \"name\": {\n                \"type\": \"string\"\n              },\n              \"algorithm_version\": {\n                \"type\": \"string\"\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"source\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"name\",\n              \"retrieved_at\",\n              \"collections\",\n              \"feature_counts\",\n              \"page_counts\"\n            ],\n            \"properties\": {\n              \"name\": {\n                \"type\": \"string\"\n              },\n              \"retrieved_at\": {\n                \"type\": \"string\",\n                \"format\": \"date-time\"\n              },\n              \"collections\": {\n                \"type\": \"object\",\n                \"additionalProperties\": {\n                  \"type\": \"string\",\n                  \"format\": \"uri\"\n                }\n              },\n              \"feature_counts\": {\n                \"type\": \"object\",\n                \"additionalProperties\": {\n                  \"type\": \"integer\",\n                  \"minimum\": 0\n                }\n              },\n              \"page_counts\": {\n                \"type\": \"object\",\n                \"additionalProperties\": {\n                  \"type\": \"integer\",\n                  \"minimum\": 1\n                }\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"input\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"latitude\",\n              \"longitude\",\n              \"inner_radius_m\",\n              \"outer_radius_m\"\n            ],\n            \"properties\": {\n              \"latitude\": {\n                \"type\": \"number\",\n                \"minimum\": -90,\n                \"maximum\": 90\n              },\n              \"longitude\": {\n                \"type\": \"number\",\n                \"minimum\": -180,\n                \"maximum\": 180\n              },\n              \"inner_radius_m\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 5000\n              },\n              \"outer_radius_m\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 5000\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"is_partial\": {\n            \"type\": \"boolean\"\n          },\n          \"fetch_failures\": {\n            \"type\": \"object\",\n            \"additionalProperties\": {\n              \"type\": \"string\"\n            }\n          },\n          \"classification\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"is_official_standard\",\n              \"method\",\n              \"unpaved_surface_definition\",\n              \"unknown_vegetation_types\",\n              \"overlap_priority\"\n            ],\n            \"properties\": {\n              \"is_official_standard\": {\n                \"type\": \"boolean\"\n              },\n              \"method\": {\n                \"type\": \"string\"\n              },\n              \"unpaved_surface_definition\": {\n                \"type\": \"string\"\n              },\n              \"unknown_vegetation_types\": {\n                \"type\": \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                },\n                \"uniqueItems\": true\n              },\n              \"overlap_priority\": {\n                \"type\": \"array\",\n                \"items\": {\n                  \"type\": \"string\"\n                },\n                \"uniqueItems\": true\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"timing_seconds\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"by_collection\",\n              \"total\"\n            ],\n            \"properties\": {\n              \"by_collection\": {\n                \"type\": \"object\",\n                \"additionalProperties\": {\n                  \"type\": \"number\",\n                  \"minimum\": 0\n                }\n              },\n              \"total\": {\n                \"type\": \"number\",\n                \"minimum\": 0\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"completed_at\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n          },\n          \"within_inner_radius\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"bkn_indicators\",\n              \"supporting_land_cover\"\n            ],\n            \"properties\": {\n              \"bkn_indicators\": {\n                \"type\": \"object\",\n                \"required\": [\n                  \"low_vegetation_proxy_pct\",\n                  \"medium_vegetation_proxy_pct\",\n                  \"high_vegetation_proxy_pct\",\n                  \"water_surface_pct\",\n                  \"unpaved_surface_proxy_pct\"\n                ],\n                \"properties\": {\n                  \"low_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"medium_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"high_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"water_surface_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"unpaved_surface_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  }\n                },\n                \"additionalProperties\": false\n              },\n              \"supporting_land_cover\": {\n                \"type\": \"object\",\n                \"required\": [\n                  \"unknown_vegetation_pct\",\n                  \"road_pct\",\n                  \"built_pct\",\n                  \"bgt_explicitly_unpaved_pct\"\n                ],\n                \"properties\": {\n                  \"unknown_vegetation_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"road_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"built_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"bgt_explicitly_unpaved_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  }\n                },\n                \"additionalProperties\": false\n              }\n            },\n            \"additionalProperties\": false\n          },\n          \"within_outer_radius\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"bkn_indicators\",\n              \"supporting_land_cover\"\n            ],\n            \"properties\": {\n              \"bkn_indicators\": {\n                \"type\": \"object\",\n                \"required\": [\n                  \"low_vegetation_proxy_pct\",\n                  \"medium_vegetation_proxy_pct\",\n                  \"high_vegetation_proxy_pct\",\n                  \"water_surface_pct\",\n                  \"unpaved_surface_proxy_pct\"\n                ],\n                \"properties\": {\n                  \"low_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"medium_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"high_vegetation_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"water_surface_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"unpaved_surface_proxy_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  }\n                },\n                \"additionalProperties\": false\n              },\n              \"supporting_land_cover\": {\n                \"type\": \"object\",\n                \"required\": [\n                  \"unknown_vegetation_pct\",\n                  \"road_pct\",\n                  \"built_pct\",\n                  \"bgt_explicitly_unpaved_pct\"\n                ],\n                \"properties\": {\n                  \"unknown_vegetation_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"road_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"built_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  },\n                  \"bgt_explicitly_unpaved_pct\": {\n                    \"type\": \"number\",\n                    \"minimum\": 0,\n                    \"maximum\": 100\n                  }\n                },\n                \"additionalProperties\": false\n              }\n            },\n            \"additionalProperties\": false\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"example\": {\n    \"inputs\": {\n      \"latitude\": 52.6324,\n      \"longitude\": 4.7534,\n      \"inner_radius_m\": 300,\n      \"outer_radius_m\": 500\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "executions",
       "item": [
         {

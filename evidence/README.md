@@ -24,6 +24,23 @@ The provider folders are:
   large CSV result;
 - [`weaver-redoak/`](weaver-redoak/): a public Weaver deployment.
 
+## Provider diagnostics
+
+`diagnostics/` contains provider checks that are useful to the client project
+but are not OGC API Processes operations. CORS preflight evidence is stored as:
+
+```text
+evidence/<provider>/diagnostics/cors/execution-preflight/
+├── request.json
+├── response.json
+└── notes.md
+```
+
+The OPTIONS request represents the check a browser performs automatically
+before a cross-origin JSON execution. The notes state whether a browser would
+allow the actual POST and why. These requests are not sent by the protocol core
+and are not included in the generated Postman evidence collections.
+
 ## What a capture contains
 
 A normal one-step capture keeps the request and its observed response together:

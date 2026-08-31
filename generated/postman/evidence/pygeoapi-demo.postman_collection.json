@@ -14,6 +14,283 @@
   ],
   "item": [
     {
+      "name": "discovery",
+      "item": [
+        {
+          "name": "core-discovery",
+          "item": [
+            {
+              "name": "01-landing",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "2704"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:16 GMT"
+                    },
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Strict-Transport-Security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.24.0"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "body": "{\n  \"links\": [\n    {\n      \"rel\": \"about\",\n      \"type\": \"text/html\",\n      \"title\": \"pygeoapi Demo instance - running latest stable 0.24.0 pygeoapi version\",\n      \"href\": \"https://github.com/geopython/demo.pygeoapi.io/tree/master/services/pygeoapi_stable\"\n    },\n    {\n      \"rel\": \"self\",\n      \"type\": \"application/json\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"https://demo.pygeoapi.io/stable?f=json\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"application/ld+json\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"https://demo.pygeoapi.io/stable?f=jsonld\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"text/html\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"https://demo.pygeoapi.io/stable?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"service-desc\",\n      \"type\": \"application/vnd.oai.openapi+json;version=3.0\",\n      \"title\": \"The OpenAPI definition as JSON\",\n      \"href\": \"https://demo.pygeoapi.io/stable/openapi\"\n    },\n    {\n      \"rel\": \"service-doc\",\n      \"type\": \"text/html\",\n      \"title\": \"The OpenAPI definition as HTML\",\n      \"href\": \"https://demo.pygeoapi.io/stable/openapi?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"conformance\",\n      \"type\": \"application/json\",\n      \"title\": \"Conformance\",\n      \"href\": \"https://demo.pygeoapi.io/stable/conformance\"\n    },\n    {\n      \"rel\": \"data\",\n      \"type\": \"application/json\",\n      \"title\": \"Collections\",\n      \"href\": \"https://demo.pygeoapi.io/stable/collections\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/processes\",\n      \"type\": \"application/json\",\n      \"title\": \"Processes\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"application/json\",\n      \"title\": \"The list of supported tiling schemes as JSON\",\n      \"href\": \"https://demo.pygeoapi.io/stable/TileMatrixSets?f=json\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"text/html\",\n      \"title\": \"The list of supported tiling schemes as HTML\",\n      \"href\": \"https://demo.pygeoapi.io/stable/TileMatrixSets?f=html\"\n    }\n  ],\n  \"title\": \"pygeoapi Demo instance - running latest stable 0.24.0 pygeoapi version\",\n  \"description\": \"pygeoapi provides an API to geospatial data\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "02-conformance",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/conformance"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/conformance"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "3307"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:16 GMT"
+                    },
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Strict-Transport-Security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.24.0"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "body": "{\n  \"conformsTo\": [\n    \"http://www.opengis.net/spec/cql2/1.0/conf/basic-cql2\",\n    \"http://www.opengis.net/spec/cql2/1.0/conf/cql2-text\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections\",\n    \"http://www.opengis.net/spec/ogcapi-common-3/1.0/conf/advanced-property-roles\",\n    \"http://www.opengis.net/spec/ogcapi-common-3/1.0/conf/schemas\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-bbox\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-datetime\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-rangesubset\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/coverage-subset\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/geodata-coverage\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-coverages-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson\",\n    \"http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-features-2/1.0/conf/crs\",\n    \"http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables\",\n    \"http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables-query-parameters\",\n    \"http://www.opengis.net/spec/ogcapi-features-4/1.0/conf/create-replace-delete\",\n    \"http://www.opengis.net/spec/ogcapi-maps-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/callback\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description\",\n    \"http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/opensearch\",\n    \"http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/sorting\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/geodata-tilesets\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/mvt\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tileset\",\n    \"http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tilesets-list\"\n  ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "03-processes",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "2534"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:16 GMT"
+                    },
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Strict-Transport-Security",
+                      "value": "max-age=63072000; includeSubDomains; preload"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "X-Content-Type-Options",
+                      "value": "nosniff"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.24.0"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    }
+                  ],
+                  "body": "{\n  \"processes\": [\n    {\n      \"version\": \"0.2.0\",\n      \"id\": \"hello-world\",\n      \"title\": \"Hello World\",\n      \"description\": \"An example process that takes a name as input, and echoes it back as output. Intended to demonstrate a simple process with a single literal input.\",\n      \"jobControlOptions\": [\n        \"sync-execute\",\n        \"async-execute\"\n      ],\n      \"keywords\": [\n        \"hello world\",\n        \"example\",\n        \"echo\"\n      ],\n      \"links\": [\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"about\",\n          \"title\": \"information\",\n          \"href\": \"https://example.org/process\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"self\",\n          \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=json\",\n          \"title\": \"Process description as JSON\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"alternate\",\n          \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=html\",\n          \"title\": \"Process description as HTML\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n          \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world/execution?f=json\",\n          \"title\": \"Execution for this process as JSON\",\n          \"hreflang\": \"en-US\"\n        }\n      ],\n      \"outputTransmission\": [\n        \"value\"\n      ]\n    }\n  ],\n  \"links\": [\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes?f=json\"\n    },\n    {\n      \"type\": \"application/ld+json\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes?f=jsonld\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes?f=html\"\n    }\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "descriptions",
       "item": [
         {
@@ -24,6 +301,10 @@
               {
                 "key": "Accept",
                 "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
               }
             ],
             "url": "{{baseUrl}}/processes/hello-world?f=json"
@@ -37,6 +318,10 @@
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
                   }
                 ],
                 "url": "{{baseUrl}}/processes/hello-world?f=json"
@@ -45,16 +330,52 @@
               "code": 200,
               "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Access-Control-Expose-Headers",
+                  "value": "*"
                 },
                 {
                   "key": "Content-Language",
                   "value": "en-US"
                 },
                 {
+                  "key": "Content-Length",
+                  "value": "3362"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 09:27:17 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "gunicorn"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
                   "key": "X-Powered-By",
                   "value": "pygeoapi 0.24.0"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
                 }
               ],
               "body": "{\n  \"version\": \"0.2.0\",\n  \"id\": \"hello-world\",\n  \"title\": \"Hello World\",\n  \"description\": \"An example process that takes a name as input, and echoes it back as output. Intended to demonstrate a simple process with a single literal input.\",\n  \"jobControlOptions\": [\n    \"sync-execute\",\n    \"async-execute\"\n  ],\n  \"keywords\": [\n    \"hello world\",\n    \"example\",\n    \"echo\"\n  ],\n  \"links\": [\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"information\",\n      \"href\": \"https://example.org/process\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=json\",\n      \"title\": \"Process description as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world?f=html\",\n      \"title\": \"Process description as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n      \"href\": \"https://demo.pygeoapi.io/stable/processes/hello-world/execution?f=json\",\n      \"title\": \"Execution for this process as JSON\",\n      \"hreflang\": \"en-US\"\n    }\n  ],\n  \"inputs\": {\n    \"name\": {\n      \"title\": \"Name\",\n      \"description\": \"The name of the person or entity that you wish tobe echoed back as an output\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"full name\",\n        \"personal\"\n      ]\n    },\n    \"message\": {\n      \"title\": \"Message\",\n      \"description\": \"An optional message to echo as well\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"message\"\n      ]\n    },\n    \"as_bytes\": {\n      \"title\": \"As bytes\",\n      \"description\": \"Whether to force return as bytes\",\n      \"schema\": {\n        \"type\": \"boolean\",\n        \"default\": false\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"as_bytes\"\n      ]\n    },\n    \"media_type\": {\n      \"title\": \"Media type\",\n      \"description\": \"Force a specific media type\",\n      \"schema\": {\n        \"type\": \"string\",\n        \"default\": \"application/json\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"keywords\": [\n        \"media_type\"\n      ]\n    }\n  },\n  \"outputs\": {\n    \"echo\": {\n      \"title\": \"Hello, world\",\n      \"description\": \"A \\\"hello world\\\" echo with the name and (optional) message submitted for processing\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"contentMediaType\": \"application/json\"\n      }\n    }\n  },\n  \"example\": {\n    \"inputs\": {\n      \"name\": \"World\",\n      \"message\": \"An optional message.\"\n    }\n  },\n  \"outputTransmission\": [\n    \"value\"\n  ]\n}"
@@ -202,6 +523,227 @@
                   "body": "{\n  \"outputs\": [\n    {\n      \"id\": \"echo\",\n      \"value\": \"Hello OGC API client! Hello from the interoperability fixture.\"\n    }\n  ]\n}"
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "jobs",
+      "item": [
+        {
+          "name": "async-request-completes-synchronously",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Prefer",
+                "value": "respond-async"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/hello-world/execution",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": {\n    \"name\": \"Geonovum\"\n  },\n  \"response\": \"document\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/hello-world/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"name\": \"Geonovum\"\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Access-Control-Expose-Headers",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "108"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 09:27:17 GMT"
+                },
+                {
+                  "key": "Preference-Applied",
+                  "value": "wait"
+                },
+                {
+                  "key": "Server",
+                  "value": "gunicorn"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "pygeoapi 0.24.0"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "body": "{\n  \"outputs\": [\n    {\n      \"id\": \"echo\",\n      \"value\": \"Hello Geonovum!\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "job-list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              }
+            ],
+            "url": "{{baseUrl}}/jobs"
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/jobs"
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Access-Control-Expose-Headers",
+                  "value": "*"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "419"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 09:27:17 GMT"
+                },
+                {
+                  "key": "Server",
+                  "value": "gunicorn"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=63072000; includeSubDomains; preload"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "pygeoapi 0.24.0"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                }
+              ],
+              "body": "{\n  \"jobs\": [],\n  \"links\": [\n    {\n      \"href\": \"https://demo.pygeoapi.io/stable/jobs?f=html\",\n      \"rel\": \"alternate\",\n      \"type\": \"text/html\",\n      \"title\": \"Jobs list as HTML\"\n    },\n    {\n      \"href\": \"https://demo.pygeoapi.io/stable/jobs?f=json\",\n      \"rel\": \"self\",\n      \"type\": \"application/json\",\n      \"title\": \"Jobs list as JSON\"\n    }\n  ]\n}"
             }
           ]
         }

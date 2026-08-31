@@ -1,0 +1,109 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:27:14 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.23.4",
+    "Content-Language": "en-US",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Vary": "Origin",
+    "Content-Length": "3579"
+  },
+  "final_url": "http://localhost:5001/processes",
+  "body": {
+    "processes": [
+      {
+        "version": "0.2.0",
+        "id": "bgt-land-cover-summary",
+        "title": "BKN-oriented BGT land-cover summary",
+        "description": "Calculates BKN-oriented land-cover proxies within two circular radii around a WGS 84 coordinate using live PDOK BGT data. The results do not directly measure vegetation height or tree-canopy volume and are not an official BKN assessment.",
+        "keywords": [
+          "BKN",
+          "BGT",
+          "PDOK",
+          "land cover",
+          "Netherlands"
+        ],
+        "jobControlOptions": [
+          "sync-execute"
+        ],
+        "outputTransmission": [
+          "value"
+        ],
+        "links": [
+          {
+            "type": "text/html",
+            "rel": "about",
+            "title": "PDOK BGT API",
+            "href": "https://api.pdok.nl/lv/bgt/ogc/v1",
+            "hreflang": "nl"
+          },
+          {
+            "type": "text/html",
+            "rel": "about",
+            "title": "Basiskwaliteit Natuur toolbox",
+            "href": "https://www.samenvoorbiodiversiteit.nl/toolbox/basiskwaliteitnatuur",
+            "hreflang": "nl"
+          },
+          {
+            "type": "application/json",
+            "rel": "self",
+            "href": "http://localhost:5001/processes/bgt-land-cover-summary?f=json",
+            "title": "Process description as JSON",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "text/html",
+            "rel": "alternate",
+            "href": "http://localhost:5001/processes/bgt-land-cover-summary?f=html",
+            "title": "Process description as HTML",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "text/html",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "href": "http://localhost:5001/jobs?f=html",
+            "title": "Jobs list as HTML",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "application/json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "href": "http://localhost:5001/jobs?f=json",
+            "title": "Jobs list as JSON",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "application/json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+            "href": "http://localhost:5001/processes/bgt-land-cover-summary/execution?f=json",
+            "title": "Execution for this process as JSON",
+            "hreflang": "en-US"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "type": "application/json",
+        "rel": "self",
+        "title": "This document as JSON",
+        "href": "http://localhost:5001/processes?f=json"
+      },
+      {
+        "type": "application/ld+json",
+        "rel": "alternate",
+        "title": "This document as RDF (JSON-LD)",
+        "href": "http://localhost:5001/processes?f=jsonld"
+      },
+      {
+        "type": "text/html",
+        "rel": "alternate",
+        "title": "This document as HTML",
+        "href": "http://localhost:5001/processes?f=html"
+      }
+    ]
+  }
+}

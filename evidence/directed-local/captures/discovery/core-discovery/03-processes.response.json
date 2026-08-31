@@ -1,0 +1,103 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:27:15 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Expose-Headers": "*",
+    "Vary": "Origin",
+    "Content-Length": "3234"
+  },
+  "final_url": "http://localhost:5000/processes",
+  "body": {
+    "processes": [
+      {
+        "version": "0.1.0",
+        "id": "climada-simple-example-denmark-process",
+        "title": "CLIMADA simple example for Denmark",
+        "description": "A simple example process on how to use CLIMADA in Denmark to calculate the impact of storm events.",
+        "jobControlOptions": [
+          "sync-execute",
+          "async-execute"
+        ],
+        "outputTransmission": [
+          "value",
+          "reference"
+        ],
+        "keywords": [
+          "directed",
+          "climada",
+          "simple example"
+        ],
+        "links": [
+          {
+            "type": "text/html",
+            "rel": "about",
+            "title": "information",
+            "href": "https://github.com/CLIMADA-project/climada_python",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "application/json",
+            "rel": "self",
+            "href": "http://localhost:5000/processes/climada-simple-example-denmark-process?f=json",
+            "title": "Process description as JSON",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "text/html",
+            "rel": "alternate",
+            "href": "http://localhost:5000/processes/climada-simple-example-denmark-process?f=html",
+            "title": "Process description as HTML",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "text/html",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "href": "http://localhost:5000/jobs?f=html",
+            "title": "Jobs list as HTML",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "application/json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "href": "http://localhost:5000/jobs?f=json",
+            "title": "Jobs list as JSON",
+            "hreflang": "en-US"
+          },
+          {
+            "type": "application/json",
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+            "href": "http://localhost:5000/processes/climada-simple-example-denmark-process/execution?f=json",
+            "title": "Execution for this process as JSON",
+            "hreflang": "en-US"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "type": "application/json",
+        "rel": "self",
+        "title": "This document as JSON",
+        "href": "http://localhost:5000/processes?f=json"
+      },
+      {
+        "type": "application/ld+json",
+        "rel": "alternate",
+        "title": "This document as RDF (JSON-LD)",
+        "href": "http://localhost:5000/processes?f=jsonld"
+      },
+      {
+        "type": "text/html",
+        "rel": "alternate",
+        "title": "This document as HTML",
+        "href": "http://localhost:5000/processes?f=html"
+      }
+    ]
+  }
+}

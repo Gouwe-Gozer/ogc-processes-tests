@@ -10,9 +10,353 @@
       "key": "baseUrl",
       "value": "http://localhost:5000",
       "type": "string"
+    },
+    {
+      "key": "jobUrl",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
+    {
+      "name": "discovery",
+      "item": [
+        {
+          "name": "core-discovery",
+          "item": [
+            {
+              "name": "01-landing",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:14 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.25.dev0"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "2863"
+                    }
+                  ],
+                  "body": "{\n  \"links\": [\n    {\n      \"rel\": \"about\",\n      \"type\": \"text/html\",\n      \"title\": \"pygeoapi directed\",\n      \"href\": \"https://github.com/geopython/pygeoapi\"\n    },\n    {\n      \"rel\": \"self\",\n      \"type\": \"application/json\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"http://localhost:5000?f=json\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"application/ld+json\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"http://localhost:5000?f=jsonld\"\n    },\n    {\n      \"rel\": \"alternate\",\n      \"type\": \"text/html\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"http://localhost:5000?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"service-desc\",\n      \"type\": \"application/vnd.oai.openapi+json;version=3.0\",\n      \"title\": \"The OpenAPI definition as JSON\",\n      \"href\": \"http://localhost:5000/openapi\"\n    },\n    {\n      \"rel\": \"service-doc\",\n      \"type\": \"text/html\",\n      \"title\": \"The OpenAPI definition as HTML\",\n      \"href\": \"http://localhost:5000/openapi?f=html\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"rel\": \"conformance\",\n      \"type\": \"application/json\",\n      \"title\": \"Conformance\",\n      \"href\": \"http://localhost:5000/conformance\"\n    },\n    {\n      \"rel\": \"data\",\n      \"type\": \"application/json\",\n      \"title\": \"Collections\",\n      \"href\": \"http://localhost:5000/collections\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/processes\",\n      \"type\": \"application/json\",\n      \"title\": \"Processes\",\n      \"href\": \"http://localhost:5000/processes\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"application/json\",\n      \"title\": \"The list of supported tiling schemes as JSON\",\n      \"href\": \"http://localhost:5000/TileMatrixSets?f=json\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes\",\n      \"type\": \"text/html\",\n      \"title\": \"The list of supported tiling schemes as HTML\",\n      \"href\": \"http://localhost:5000/TileMatrixSets?f=html\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"type\": \"application/json\",\n      \"title\": \"Jobs\",\n      \"href\": \"http://localhost:5000/jobs\"\n    },\n    {\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"type\": \"text/html\",\n      \"title\": \"Jobs\",\n      \"href\": \"http://localhost:5000/jobs?f=html\"\n    }\n  ],\n  \"title\": \"pygeoapi directed\",\n  \"description\": \"pygeoapi provides an API to geospatial data\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "02-conformance",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/conformance"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/conformance"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:15 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.25.dev0"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "841"
+                    }
+                  ],
+                  "body": "{\n  \"conformsTo\": [\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page\",\n    \"http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/callback\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30\",\n    \"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description\"\n  ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "03-processes",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:27:15 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "close"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.25.dev0"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "3234"
+                    }
+                  ],
+                  "body": "{\n  \"processes\": [\n    {\n      \"version\": \"0.1.0\",\n      \"id\": \"climada-simple-example-denmark-process\",\n      \"title\": \"CLIMADA simple example for Denmark\",\n      \"description\": \"A simple example process on how to use CLIMADA in Denmark to calculate the impact of storm events.\",\n      \"jobControlOptions\": [\n        \"sync-execute\",\n        \"async-execute\"\n      ],\n      \"outputTransmission\": [\n        \"value\",\n        \"reference\"\n      ],\n      \"keywords\": [\n        \"directed\",\n        \"climada\",\n        \"simple example\"\n      ],\n      \"links\": [\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"about\",\n          \"title\": \"information\",\n          \"href\": \"https://github.com/CLIMADA-project/climada_python\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"self\",\n          \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=json\",\n          \"title\": \"Process description as JSON\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"alternate\",\n          \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=html\",\n          \"title\": \"Process description as HTML\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"text/html\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n          \"href\": \"http://localhost:5000/jobs?f=html\",\n          \"title\": \"Jobs list as HTML\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n          \"href\": \"http://localhost:5000/jobs?f=json\",\n          \"title\": \"Jobs list as JSON\",\n          \"hreflang\": \"en-US\"\n        },\n        {\n          \"type\": \"application/json\",\n          \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n          \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process/execution?f=json\",\n          \"title\": \"Execution for this process as JSON\",\n          \"hreflang\": \"en-US\"\n        }\n      ]\n    }\n  ],\n  \"links\": [\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"title\": \"This document as JSON\",\n      \"href\": \"http://localhost:5000/processes?f=json\"\n    },\n    {\n      \"type\": \"application/ld+json\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as RDF (JSON-LD)\",\n      \"href\": \"http://localhost:5000/processes?f=jsonld\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"title\": \"This document as HTML\",\n      \"href\": \"http://localhost:5000/processes?f=html\"\n    }\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "descriptions",
+      "item": [
+        {
+          "name": "climada-simple-example-denmark-process",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              }
+            ],
+            "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process?f=json"
+          },
+          "response": [
+            {
+              "name": "HTTP 200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process?f=json"
+              },
+              "status": "200",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Server",
+                  "value": "gunicorn"
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 31 Aug 2026 09:27:15 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "pygeoapi 0.25.dev0"
+                },
+                {
+                  "key": "Content-Language",
+                  "value": "en-US"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "http://localhost:5173"
+                },
+                {
+                  "key": "Access-Control-Expose-Headers",
+                  "value": "*"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "5377"
+                }
+              ],
+              "body": "{\n  \"version\": \"0.1.0\",\n  \"id\": \"climada-simple-example-denmark-process\",\n  \"title\": \"CLIMADA simple example for Denmark\",\n  \"description\": \"A simple example process on how to use CLIMADA in Denmark to calculate the impact of storm events.\",\n  \"jobControlOptions\": [\n    \"sync-execute\",\n    \"async-execute\"\n  ],\n  \"outputTransmission\": [\n    \"value\",\n    \"reference\"\n  ],\n  \"keywords\": [\n    \"directed\",\n    \"climada\",\n    \"simple example\"\n  ],\n  \"links\": [\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"about\",\n      \"title\": \"information\",\n      \"href\": \"https://github.com/CLIMADA-project/climada_python\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"self\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=json\",\n      \"title\": \"Process description as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"alternate\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process?f=html\",\n      \"title\": \"Process description as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"text/html\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5000/jobs?f=html\",\n      \"title\": \"Jobs list as HTML\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/job-list\",\n      \"href\": \"http://localhost:5000/jobs?f=json\",\n      \"title\": \"Jobs list as JSON\",\n      \"hreflang\": \"en-US\"\n    },\n    {\n      \"type\": \"application/json\",\n      \"rel\": \"http://www.opengis.net/def/rel/ogc/1.0/execute\",\n      \"href\": \"http://localhost:5000/processes/climada-simple-example-denmark-process/execution?f=json\",\n      \"title\": \"Execution for this process as JSON\",\n      \"hreflang\": \"en-US\"\n    }\n  ],\n  \"inputs\": {\n    \"intensity\": {\n      \"title\": \"intensity\",\n      \"description\": \"mandatory; the intensity steps used for defining the impact function\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 1,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"intensity\"\n      ]\n    },\n    \"climate_scenario\": {\n      \"title\": \"climate_scenario\",\n      \"description\": \"optional; climate scenario\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"climate_scenario\"\n      ]\n    },\n    \"data_source\": {\n      \"title\": \"data_source\",\n      \"description\": \"optional; data source\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"data_source\"\n      ]\n    },\n    \"gcm\": {\n      \"title\": \"GCM\",\n      \"description\": \"optional; Global Climate Model (GCM) to use\",\n      \"schema\": {\n        \"type\": \"string\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"gcm\"\n      ]\n    },\n    \"mdd\": {\n      \"title\": \"mdd\",\n      \"description\": \"optional; mean damage (impact) degree\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"mdd\"\n      ]\n    },\n    \"paa\": {\n      \"title\": \"paa\",\n      \"description\": \"optional; percentage of affected assets (exposures)\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"paa\"\n      ]\n    },\n    \"nearest_neighbor_threshold\": {\n      \"title\": \"nearest_neighbor_threshold\",\n      \"description\": \"optional; nearest neighbor threshold\",\n      \"schema\": {\n        \"type\": \"number\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"nearest_neighbor_threshold\"\n      ]\n    },\n    \"return_periods\": {\n      \"title\": \"return_periods\",\n      \"description\": \"optional; return periods\",\n      \"schema\": {\n        \"type\": \"array\"\n      },\n      \"minOccurs\": 0,\n      \"maxOccurs\": 1,\n      \"metadata\": null,\n      \"keywords\": [\n        \"return_periods\"\n      ]\n    }\n  },\n  \"outputs\": {\n    \"impact\": {\n      \"title\": \"impact\",\n      \"description\": \"Calculated impact\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"contentMediaType\": \"text/csv\"\n      }\n    }\n  },\n  \"example\": {\n    \"inputs\": {\n      \"intensity\": [\n        0,\n        30,\n        80\n      ]\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "executions",
       "item": [
@@ -70,6 +414,220 @@
                   }
                 }
               }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "jobs",
+      "item": [
+        {
+          "name": "failed-job-undocumented-array-length",
+          "item": [
+            {
+              "name": "01-submit",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  },
+                  {
+                    "key": "Prefer",
+                    "value": "respond-async"
+                  }
+                ],
+                "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30\n    ]\n  },\n  \"response\": \"document\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "HTTP 201",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      },
+                      {
+                        "key": "Prefer",
+                        "value": "respond-async"
+                      }
+                    ],
+                    "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"inputs\": {\n    \"intensity\": [\n      0,\n      30\n    ]\n  },\n  \"response\": \"document\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "201",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:22:18 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.25.dev0"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Preference-Applied",
+                      "value": "respond-async"
+                    },
+                    {
+                      "key": "Location",
+                      "value": "{{baseUrl}}/jobs/{{jobId}}"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "101"
+                    }
+                  ],
+                  "body": "{\n  \"jobID\": \"{{jobId}}\",\n  \"type\": \"process\",\n  \"status\": \"accepted\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "02-poll",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Origin",
+                    "value": "http://localhost:5173"
+                  }
+                ],
+                "url": "{{jobUrl}}"
+              },
+              "response": [
+                {
+                  "name": "HTTP 200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Origin",
+                        "value": "http://localhost:5173"
+                      }
+                    ],
+                    "url": "{{jobUrl}}"
+                  },
+                  "status": "200",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Server",
+                      "value": "gunicorn"
+                    },
+                    {
+                      "key": "Date",
+                      "value": "Mon, 31 Aug 2026 09:22:52 GMT"
+                    },
+                    {
+                      "key": "Connection",
+                      "value": "keep-alive"
+                    },
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "key": "X-Powered-By",
+                      "value": "pygeoapi 0.25.dev0"
+                    },
+                    {
+                      "key": "Content-Language",
+                      "value": "en-US"
+                    },
+                    {
+                      "key": "Access-Control-Allow-Origin",
+                      "value": "http://localhost:5173"
+                    },
+                    {
+                      "key": "Access-Control-Expose-Headers",
+                      "value": "*"
+                    },
+                    {
+                      "key": "Vary",
+                      "value": "Origin"
+                    },
+                    {
+                      "key": "Content-Length",
+                      "value": "498"
+                    }
+                  ],
+                  "body": "{\n  \"type\": \"process\",\n  \"processID\": \"climada-simple-example-denmark-process\",\n  \"jobID\": \"{{jobId}}\",\n  \"status\": \"failed\",\n  \"message\": \"InvalidParameterValue: Error executing process: The intensity tuple must have three elements, 2 found\",\n  \"progress\": 5,\n  \"parameters\": null,\n  \"created\": \"2026-08-31T09:22:18.369302Z\",\n  \"started\": \"2026-08-31T09:22:18.369335Z\",\n  \"finished\": \"2026-08-31T09:22:18.377846Z\",\n  \"updated\": \"2026-08-31T09:22:18.377875Z\"\n}"
+                }
+              ]
             }
           ]
         }

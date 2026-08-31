@@ -1,0 +1,29 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:22:52 GMT",
+    "Connection": "keep-alive",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Expose-Headers": "*",
+    "Vary": "Origin",
+    "Content-Length": "498"
+  },
+  "final_url": "{{jobUrl}}",
+  "body": {
+    "type": "process",
+    "processID": "climada-simple-example-denmark-process",
+    "jobID": "{{jobId}}",
+    "status": "failed",
+    "message": "InvalidParameterValue: Error executing process: The intensity tuple must have three elements, 2 found",
+    "progress": 5,
+    "parameters": null,
+    "created": "2026-08-31T09:22:18.369302Z",
+    "started": "2026-08-31T09:22:18.369335Z",
+    "finished": "2026-08-31T09:22:18.377846Z",
+    "updated": "2026-08-31T09:22:18.377875Z"
+  }
+}

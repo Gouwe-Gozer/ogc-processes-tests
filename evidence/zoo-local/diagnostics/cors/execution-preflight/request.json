@@ -1,0 +1,9 @@
+{
+  "method": "OPTIONS",
+  "url": "{{baseUrl}}/processes/hellojs/execution",
+  "headers": {
+    "Origin": "http://localhost:5173",
+    "Access-Control-Request-Method": "POST",
+    "Access-Control-Request-Headers": "content-type, prefer"
+  }
+}

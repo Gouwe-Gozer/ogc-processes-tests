@@ -1,0 +1,92 @@
+{
+  "status": 200,
+  "headers": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "*",
+    "Content-Language": "en-US",
+    "Content-Length": "2704",
+    "Content-Type": "application/json",
+    "Date": "Mon, 31 Aug 2026 09:27:16 GMT",
+    "Server": "gunicorn",
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+    "Vary": "Origin",
+    "X-Content-Type-Options": "nosniff",
+    "X-Powered-By": "pygeoapi 0.24.0",
+    "Connection": "close"
+  },
+  "final_url": "https://demo.pygeoapi.io/stable/",
+  "body": {
+    "links": [
+      {
+        "rel": "about",
+        "type": "text/html",
+        "title": "pygeoapi Demo instance - running latest stable 0.24.0 pygeoapi version",
+        "href": "https://github.com/geopython/demo.pygeoapi.io/tree/master/services/pygeoapi_stable"
+      },
+      {
+        "rel": "self",
+        "type": "application/json",
+        "title": "This document as JSON",
+        "href": "https://demo.pygeoapi.io/stable?f=json"
+      },
+      {
+        "rel": "alternate",
+        "type": "application/ld+json",
+        "title": "This document as RDF (JSON-LD)",
+        "href": "https://demo.pygeoapi.io/stable?f=jsonld"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "This document as HTML",
+        "href": "https://demo.pygeoapi.io/stable?f=html",
+        "hreflang": "en-US"
+      },
+      {
+        "rel": "service-desc",
+        "type": "application/vnd.oai.openapi+json;version=3.0",
+        "title": "The OpenAPI definition as JSON",
+        "href": "https://demo.pygeoapi.io/stable/openapi"
+      },
+      {
+        "rel": "service-doc",
+        "type": "text/html",
+        "title": "The OpenAPI definition as HTML",
+        "href": "https://demo.pygeoapi.io/stable/openapi?f=html",
+        "hreflang": "en-US"
+      },
+      {
+        "rel": "conformance",
+        "type": "application/json",
+        "title": "Conformance",
+        "href": "https://demo.pygeoapi.io/stable/conformance"
+      },
+      {
+        "rel": "data",
+        "type": "application/json",
+        "title": "Collections",
+        "href": "https://demo.pygeoapi.io/stable/collections"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+        "type": "application/json",
+        "title": "Processes",
+        "href": "https://demo.pygeoapi.io/stable/processes"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+        "type": "application/json",
+        "title": "The list of supported tiling schemes as JSON",
+        "href": "https://demo.pygeoapi.io/stable/TileMatrixSets?f=json"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+        "type": "text/html",
+        "title": "The list of supported tiling schemes as HTML",
+        "href": "https://demo.pygeoapi.io/stable/TileMatrixSets?f=html"
+      }
+    ],
+    "title": "pygeoapi Demo instance - running latest stable 0.24.0 pygeoapi version",
+    "description": "pygeoapi provides an API to geospatial data"
+  }
+}

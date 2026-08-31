@@ -1,0 +1,13 @@
+{
+  "status": 200,
+  "headers": {
+    "Access-Control-Allow-Headers": "Authorization",
+    "Access-Control-Allow-Methods": "GET,POST,PUT",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Max-Age": "100",
+    "Content-Length": "0",
+    "Date": "Mon, 31 Aug 2026 09:44:30 GMT"
+  },
+  "final_url": "{{baseUrl}}/processes/hello-world/execution",
+  "body": ""
+}

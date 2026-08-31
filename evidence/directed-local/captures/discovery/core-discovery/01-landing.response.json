@@ -1,0 +1,102 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 09:27:14 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "X-Powered-By": "pygeoapi 0.25.dev0",
+    "Content-Language": "en-US",
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Expose-Headers": "*",
+    "Vary": "Origin",
+    "Content-Length": "2863"
+  },
+  "final_url": "http://localhost:5000/",
+  "body": {
+    "links": [
+      {
+        "rel": "about",
+        "type": "text/html",
+        "title": "pygeoapi directed",
+        "href": "https://github.com/geopython/pygeoapi"
+      },
+      {
+        "rel": "self",
+        "type": "application/json",
+        "title": "This document as JSON",
+        "href": "http://localhost:5000?f=json"
+      },
+      {
+        "rel": "alternate",
+        "type": "application/ld+json",
+        "title": "This document as RDF (JSON-LD)",
+        "href": "http://localhost:5000?f=jsonld"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "This document as HTML",
+        "href": "http://localhost:5000?f=html",
+        "hreflang": "en-US"
+      },
+      {
+        "rel": "service-desc",
+        "type": "application/vnd.oai.openapi+json;version=3.0",
+        "title": "The OpenAPI definition as JSON",
+        "href": "http://localhost:5000/openapi"
+      },
+      {
+        "rel": "service-doc",
+        "type": "text/html",
+        "title": "The OpenAPI definition as HTML",
+        "href": "http://localhost:5000/openapi?f=html",
+        "hreflang": "en-US"
+      },
+      {
+        "rel": "conformance",
+        "type": "application/json",
+        "title": "Conformance",
+        "href": "http://localhost:5000/conformance"
+      },
+      {
+        "rel": "data",
+        "type": "application/json",
+        "title": "Collections",
+        "href": "http://localhost:5000/collections"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+        "type": "application/json",
+        "title": "Processes",
+        "href": "http://localhost:5000/processes"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+        "type": "application/json",
+        "title": "The list of supported tiling schemes as JSON",
+        "href": "http://localhost:5000/TileMatrixSets?f=json"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+        "type": "text/html",
+        "title": "The list of supported tiling schemes as HTML",
+        "href": "http://localhost:5000/TileMatrixSets?f=html"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+        "type": "application/json",
+        "title": "Jobs",
+        "href": "http://localhost:5000/jobs"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+        "type": "text/html",
+        "title": "Jobs",
+        "href": "http://localhost:5000/jobs?f=html"
+      }
+    ],
+    "title": "pygeoapi directed",
+    "description": "pygeoapi provides an API to geospatial data"
+  }
+}

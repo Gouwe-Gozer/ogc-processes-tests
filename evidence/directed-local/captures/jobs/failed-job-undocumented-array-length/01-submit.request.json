@@ -1,0 +1,19 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/climada-simple-example-denmark-process/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Origin": "http://localhost:5173",
+    "Prefer": "respond-async"
+  },
+  "body": {
+    "inputs": {
+      "intensity": [
+        0,
+        30
+      ]
+    },
+    "response": "document"
+  }
+}
