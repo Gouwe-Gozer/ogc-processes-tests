@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "stringInput": "NotAllowed"
+    }
+  }
+}

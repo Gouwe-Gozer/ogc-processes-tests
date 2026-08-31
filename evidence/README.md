@@ -22,6 +22,9 @@ The provider folders are:
 - [`bgt-prototype/`](bgt-prototype/): a local pygeoapi-based prototype;
 - [`directed-local/`](directed-local/): a local pygeoapi deployment with a
   large CSV result;
+- [`weaver-local/`](weaver-local/): a local Weaver deployment with complete
+  discovery, descriptions, successful sync and async execution, and recorded
+  process and output-access failures;
 - [`weaver-redoak/`](weaver-redoak/): a public Weaver deployment.
 
 ## Provider diagnostics

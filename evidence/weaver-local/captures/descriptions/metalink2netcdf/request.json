@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/metalink2netcdf",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

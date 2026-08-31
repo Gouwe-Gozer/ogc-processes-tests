@@ -1,0 +1,154 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:57:45 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json; charset=UTF-8",
+    "Link": "<{{baseUrl}}/processes/jsonarray2netcdf?f=xml>; rel=\"alternate\"; type=\"application/xml; charset=UTF-8\", <{{baseUrl}}/processes/jsonarray2netcdf?f=yaml>; rel=\"alternate\"; type=\"application/yaml; charset=UTF-8\", <{{baseUrl}}/processes/jsonarray2netcdf?f=html>; rel=\"alternate\"; type=\"text/html; charset=UTF-8\", <https://www.opengis.net/def/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Profile": "https://www.opengis.net/def/profile/OGC/0/ogc-process-description",
+    "Content-Length": "3511",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/jsonarray2netcdf",
+  "body": {
+    "$schema": "https://schemas.opengis.net/ogcapi/processes/part1/1.0/openapi/schemas/process.yaml",
+    "id": "jsonarray2netcdf",
+    "title": "JSON array to NetCDF",
+    "version": "2.3.1",
+    "mutable": false,
+    "description": "Extracts and fetches NetCDF files from a JSON file containing an URL string array, and provides them on the output directory.",
+    "keywords": [
+      "builtin"
+    ],
+    "metadata": [],
+    "inputs": {
+      "input": {
+        "title": "input",
+        "description": "JSON file formed of an array of file URIs, each representing NetCDF contents.",
+        "minOccurs": 1,
+        "maxOccurs": 1,
+        "schema": {
+          "type": "string",
+          "contentMediaType": "application/json"
+        },
+        "formats": [
+          {
+            "default": true,
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "output": {
+        "title": "output",
+        "schema": {
+          "type": "string",
+          "format": "binary",
+          "contentMediaType": "application/netcdf",
+          "contentEncoding": "base64"
+        },
+        "formats": [
+          {
+            "default": true,
+            "mediaType": "application/netcdf",
+            "encoding": "base64"
+          }
+        ]
+      }
+    },
+    "visibility": "public",
+    "jobControlOptions": [
+      "async-execute",
+      "sync-execute"
+    ],
+    "outputTransmission": [
+      "reference",
+      "value"
+    ],
+    "processDescriptionURL": "{{baseUrl}}/processes/jsonarray2netcdf",
+    "processEndpointWPS1": "http://weaver.internal:4001/ows/wps",
+    "executeEndpoint": "{{baseUrl}}/processes/jsonarray2netcdf/jobs",
+    "deploymentProfile": "http://www.opengis.net/profiles/eoc/builtin",
+    "links": [
+      {
+        "title": "Current process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf:2.3.1",
+        "type": "application/json",
+        "rel": "self"
+      },
+      {
+        "title": "Process response profile.",
+        "hreflang": "en-CA",
+        "href": "https://www.opengis.net/def/profile/OGC/0/ogc-process-description",
+        "type": "application/json",
+        "rel": "profile"
+      },
+      {
+        "title": "Alternate process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf?f=xml",
+        "type": "application/xml",
+        "rel": "alternate"
+      },
+      {
+        "title": "Process definition.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf",
+        "type": "application/json",
+        "rel": "process-meta"
+      },
+      {
+        "title": "Process execution endpoint for job submission.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf/execution",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/execute"
+      },
+      {
+        "title": "List of registered processes.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/processes"
+      },
+      {
+        "title": "List of job executions corresponding to this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf/jobs",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/job-list"
+      },
+      {
+        "title": "List of processes registered under the service.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes",
+        "type": "application/json",
+        "rel": "up"
+      },
+      {
+        "title": "Tagged version of this process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf:2.3.1",
+        "type": "application/json",
+        "rel": "working-copy"
+      },
+      {
+        "title": "Most recent revision of this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/jsonarray2netcdf",
+        "type": "application/json",
+        "rel": "latest-version"
+      },
+      {
+        "title": "Listing of all revisions of this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes?detail=false&revisions=true&process=jsonarray2netcdf",
+        "type": "application/json",
+        "rel": "version-history"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": 400,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:05:57 GMT",
+    "Connection": "close",
+    "Content-Length": "211",
+    "Content-Type": "application/json",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "body": {
+    "code": "InvalidParameterValue",
+    "name": "inputs.stringInput",
+    "description": "Submitted 'inputs.stringInput' does not respect process description cardinality.",
+    "value": {
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "occurrences": 0
+    }
+  }
+}

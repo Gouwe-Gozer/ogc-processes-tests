@@ -1,0 +1,89 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:56:55 GMT",
+    "Connection": "close",
+    "Link": "<https://www.opengis.net/def/profile/OGC/0/jobs-list>; rel=\"profile\"; title=\"OGC API - Processes - Job List Profile reference.\", <{{baseUrl}}/jobs>; rel=\"collection\"; type=\"application/json\"; title=\"Complete job listing (no filtering queries applied).\", <{{baseUrl}}/jobs>; rel=\"search\"; type=\"application/json\"; title=\"Generic query endpoint to search for jobs.\", <{{baseUrl}}/jobs?detail=false>; rel=\"preview\"; type=\"application/json\"; title=\"Job listing summary (UUID and count only).\", <{{baseUrl}}/jobs>; rel=\"http://www.opengis.net/def/rel/ogc/1.0/job-list\"; type=\"application/json\"; title=\"List of registered jobs.\", <{{baseUrl}}/jobs?page=0>; rel=\"current\"; type=\"application/json\"; title=\"Current page of job query listing.\", <{{baseUrl}}/jobs?page=0>; rel=\"first\"; type=\"application/json\"; title=\"First page of job query listing.\", <{{baseUrl}}/jobs?page=1>; rel=\"last\"; type=\"application/json\"; title=\"Last page of job query listing.\", <{{baseUrl}}/jobs?page=1>; rel=\"next\"; type=\"application/json\"; title=\"Next page of job query listing.\"",
+    "Content-Type": "application/json",
+    "Content-Length": "1903",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/jobs",
+  "body": {
+    "$schema": "https://schemas.opengis.net/ogcapi/processes/part1/1.0/openapi/schemas/jobList.yaml",
+    "jobs": [
+      "2801074e-02c7-4f08-8b24-4cac8162a9fd",
+      "bc9fb56f-5a95-4dca-b497-db8d6dc67ee2",
+      "5336143c-4c56-4f6d-930d-b40dfa510c6c",
+      "11d91e56-0960-4b47-9782-77d3bd932f2d",
+      "81889e59-1184-4427-ba0d-53408b4f87c2",
+      "7dc7eb89-4990-4bdb-8b12-06ef6aac5e16",
+      "207a6683-7bd2-4498-98a3-8dbe33d29268",
+      "988507e2-6fe9-4c9d-9033-686cf59ae5aa",
+      "586c679c-08f1-4b05-8e28-52751f0450a5",
+      "b9d9cb4c-60ff-47eb-bcc7-a1bcbb081d1e"
+    ],
+    "page": 0,
+    "limit": 10,
+    "count": 10,
+    "total": 14,
+    "links": [
+      {
+        "title": "OGC API - Processes - Job List Profile reference.",
+        "href": "https://www.opengis.net/def/profile/OGC/0/jobs-list",
+        "rel": "profile"
+      },
+      {
+        "title": "Complete job listing (no filtering queries applied).",
+        "href": "{{baseUrl}}/jobs",
+        "type": "application/json",
+        "rel": "collection"
+      },
+      {
+        "title": "Generic query endpoint to search for jobs.",
+        "href": "{{baseUrl}}/jobs",
+        "type": "application/json",
+        "rel": "search"
+      },
+      {
+        "title": "Job listing summary (UUID and count only).",
+        "href": "{{baseUrl}}/jobs?detail=false",
+        "type": "application/json",
+        "rel": "preview"
+      },
+      {
+        "title": "List of registered jobs.",
+        "href": "{{baseUrl}}/jobs",
+        "type": "application/json",
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list"
+      },
+      {
+        "title": "Current page of job query listing.",
+        "href": "{{baseUrl}}/jobs?page=0",
+        "type": "application/json",
+        "rel": "current"
+      },
+      {
+        "title": "First page of job query listing.",
+        "href": "{{baseUrl}}/jobs?page=0",
+        "type": "application/json",
+        "rel": "first"
+      },
+      {
+        "title": "Last page of job query listing.",
+        "href": "{{baseUrl}}/jobs?page=1",
+        "type": "application/json",
+        "rel": "last"
+      },
+      {
+        "title": "Next page of job query listing.",
+        "href": "{{baseUrl}}/jobs?page=1",
+        "type": "application/json",
+        "rel": "next"
+      }
+    ],
+    "service": null,
+    "process": null
+  }
+}

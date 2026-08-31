@@ -1,0 +1,20 @@
+{
+  "status": 500,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:51:14 GMT",
+    "Connection": "close",
+    "X-Content-Type-Options": "nosniff",
+    "Content-Type": "application/json",
+    "Content-Length": "230"
+  },
+  "final_url": "{{jobUrl}}/inputs",
+  "body": {
+    "description": "The server has either erred or is incapable of performing the requested operation. Unhandled internal server error.",
+    "code": "Internal Server Error",
+    "error": {
+      "code": 500,
+      "status": "500 Internal Server Error"
+    }
+  }
+}

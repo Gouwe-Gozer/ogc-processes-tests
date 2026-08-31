@@ -1,0 +1,181 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:57:45 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json; charset=UTF-8",
+    "Link": "<{{baseUrl}}/processes/file2string_array?f=xml>; rel=\"alternate\"; type=\"application/xml; charset=UTF-8\", <{{baseUrl}}/processes/file2string_array?f=yaml>; rel=\"alternate\"; type=\"application/yaml; charset=UTF-8\", <{{baseUrl}}/processes/file2string_array?f=html>; rel=\"alternate\"; type=\"text/html; charset=UTF-8\", <https://www.opengis.net/def/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Profile": "https://www.opengis.net/def/profile/OGC/0/ogc-process-description",
+    "Content-Length": "3680",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/file2string_array",
+  "body": {
+    "$schema": "https://schemas.opengis.net/ogcapi/processes/part1/1.0/openapi/schemas/process.yaml",
+    "id": "file2string_array",
+    "title": "File to String-Array",
+    "version": "1.3.1",
+    "mutable": false,
+    "description": "Transforms a file input into JSON file containing an array of file references as value.",
+    "keywords": [
+      "builtin"
+    ],
+    "metadata": [],
+    "inputs": {
+      "input": {
+        "title": "input",
+        "minOccurs": 1,
+        "maxOccurs": 1,
+        "schema": {
+          "type": "string",
+          "contentMediaType": "text/plain"
+        },
+        "formats": [
+          {
+            "default": true,
+            "mediaType": "text/plain"
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "output": {
+        "title": "output",
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentMediaType": "application/json"
+            },
+            {
+              "type": "string",
+              "contentMediaType": "text/csv"
+            },
+            {
+              "type": "string",
+              "format": "binary",
+              "contentMediaType": "application/xml",
+              "contentEncoding": "base64"
+            },
+            {
+              "type": "string",
+              "contentMediaType": "application/yaml"
+            },
+            {
+              "type": "object",
+              "additionalProperties": true
+            }
+          ]
+        },
+        "formats": [
+          {
+            "default": true,
+            "mediaType": "application/json"
+          },
+          {
+            "mediaType": "text/csv"
+          },
+          {
+            "mediaType": "application/xml"
+          },
+          {
+            "mediaType": "application/yaml"
+          }
+        ]
+      }
+    },
+    "visibility": "public",
+    "jobControlOptions": [
+      "async-execute",
+      "sync-execute"
+    ],
+    "outputTransmission": [
+      "reference",
+      "value"
+    ],
+    "processDescriptionURL": "{{baseUrl}}/processes/file2string_array",
+    "processEndpointWPS1": "http://weaver.internal:4001/ows/wps",
+    "executeEndpoint": "{{baseUrl}}/processes/file2string_array/jobs",
+    "deploymentProfile": "http://www.opengis.net/profiles/eoc/builtin",
+    "links": [
+      {
+        "title": "Current process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array:1.3.1",
+        "type": "application/json",
+        "rel": "self"
+      },
+      {
+        "title": "Process response profile.",
+        "hreflang": "en-CA",
+        "href": "https://www.opengis.net/def/profile/OGC/0/ogc-process-description",
+        "type": "application/json",
+        "rel": "profile"
+      },
+      {
+        "title": "Alternate process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array?f=xml",
+        "type": "application/xml",
+        "rel": "alternate"
+      },
+      {
+        "title": "Process definition.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array",
+        "type": "application/json",
+        "rel": "process-meta"
+      },
+      {
+        "title": "Process execution endpoint for job submission.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array/execution",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/execute"
+      },
+      {
+        "title": "List of registered processes.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/processes"
+      },
+      {
+        "title": "List of job executions corresponding to this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array/jobs",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/job-list"
+      },
+      {
+        "title": "List of processes registered under the service.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes",
+        "type": "application/json",
+        "rel": "up"
+      },
+      {
+        "title": "Tagged version of this process description.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array:1.3.1",
+        "type": "application/json",
+        "rel": "working-copy"
+      },
+      {
+        "title": "Most recent revision of this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array",
+        "type": "application/json",
+        "rel": "latest-version"
+      },
+      {
+        "title": "Listing of all revisions of this process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes?detail=false&revisions=true&process=file2string_array",
+        "type": "application/json",
+        "rel": "version-history"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/file_index_selector",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

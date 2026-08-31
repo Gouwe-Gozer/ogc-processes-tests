@@ -1,0 +1,13 @@
+{
+  "status": 404,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:05:57 GMT",
+    "Connection": "close",
+    "X-Content-Type-Options": "nosniff",
+    "Content-Type": "text/html; charset=UTF-8",
+    "Content-Length": "184"
+  },
+  "final_url": "{{baseUrl}}/processes/not-a-process",
+  "body": "<html>\n <head>\n  <title>404 Not Found</title>\n </head>\n <body>\n  <h1>404 Not Found</h1>\n  The resource could not be found.<br/><br/>\nThe resource could not be found.\n\n\n </body>\n</html>"
+}

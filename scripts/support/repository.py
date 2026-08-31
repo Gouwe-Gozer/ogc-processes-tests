@@ -54,3 +54,14 @@ def resolve_url(target: str, base_url: str) -> str:
     if "{{" in target:
         raise RepositoryError(f"URL contains an unresolved variable: {target}")
     return f"{base_url}/{target.lstrip('/')}"
+
+
+def response_header_map(headers: Any) -> dict[str, str]:
+    """Return response headers without discarding repeated field values."""
+    names: dict[str, str] = {}
+    values: dict[str, list[str]] = {}
+    for name, value in headers.items():
+        key = name.lower()
+        names.setdefault(key, name)
+        values.setdefault(key, []).append(value)
+    return {names[key]: ", ".join(items) for key, items in values.items()}

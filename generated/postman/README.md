@@ -15,6 +15,7 @@ generated/postman/
     ├── bgt-prototype.postman_collection.json
     ├── directed-local.postman_collection.json
     ├── pygeoapi-demo.postman_collection.json
+    ├── weaver-local.postman_collection.json
     ├── weaver-redoak.postman_collection.json
     └── zoo-local.postman_collection.json
 ```

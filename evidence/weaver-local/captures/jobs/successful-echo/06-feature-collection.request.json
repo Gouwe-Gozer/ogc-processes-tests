@@ -1,0 +1,8 @@
+{
+  "title": "Retrieve the referenced EchoProcess GeoJSON feature collection",
+  "method": "GET",
+  "url": "{{featureCollectionUrl}}",
+  "headers": {
+    "Accept": "application/geo+json"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:55:18 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "Content-Length": "1129",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{jobUrl}}/logs",
+  "body": [
+    "[2026-08-31 14:54:55] INFO     [weaver.datatype.Job] 00:00:00   0% accepted   Job task submitted for execution.",
+    "[2026-08-31 14:54:55] INFO     [weaver.datatype.Job] 00:00:00   0% running    Job started.",
+    "[2026-08-31 14:54:55] INFO     [weaver.datatype.Job] 00:00:00   0% running    Job task setup initiated.",
+    "[2026-08-31 14:54:55] INFO     [weaver.datatype.Job] 00:00:00   1% running    Job task setup completed.",
+    "[2026-08-31 14:54:55] DEBUG    [weaver.datatype.Job] 00:00:00   2% running    Employed WPS URL: [http://weaver.internal:4001/ows/wps]",
+    "[2026-08-31 14:54:55] INFO     [weaver.datatype.Job] 00:00:00   2% running    Execute WPS request for process [file2string_array]",
+    "[2026-08-31 14:54:56] INFO     [weaver.datatype.Job] 00:00:00   3% running    Fetching job input definitions.",
+    "[2026-08-31 14:54:56] ERROR    [weaver.datatype.Job] 00:00:00   3% failed     Failed to run Job <{{jobId}}>.",
+    "[2026-08-31 14:54:56] INFO     [weaver.datatype.Job] 00:00:00   3% failed     Job failed.",
+    "[2026-08-31 14:54:56] INFO     [weaver.datatype.Job] 00:00:00   3% failed     Job task complete."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Retrieve the referenced EchoProcess TIFF output",
+  "method": "GET",
+  "url": "{{imageUrl}}",
+  "headers": {
+    "Accept": "image/tiff; application=geotiff"
+  }
+}

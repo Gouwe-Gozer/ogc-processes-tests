@@ -1,0 +1,14 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Mon, 31 Aug 2026 14:52:17 GMT",
+    "Server": "Apache/2.4.68 (Unix)",
+    "Last-Modified": "Mon, 31 Aug 2026 14:49:57 GMT",
+    "ETag": "\"5f-65a58ea78b03e\"",
+    "Accept-Ranges": "bytes",
+    "Content-Length": "95",
+    "Connection": "close"
+  },
+  "final_url": "{{complexObjectUrl}}",
+  "body_file": "04-complex-object.body.bin"
+}

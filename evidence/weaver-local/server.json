@@ -1,0 +1,14 @@
+{
+  "id": "weaver-local",
+  "title": "Local Weaver test deployment",
+  "implementation": {
+    "name": "Weaver",
+    "version_at_capture": "6.15.0",
+    "configuration": "HYBRID"
+  },
+  "base_url": {
+    "variable": "weaverLocalBaseUrl",
+    "default": "http://localhost:4001"
+  },
+  "captured_at": "2026-08-31"
+}

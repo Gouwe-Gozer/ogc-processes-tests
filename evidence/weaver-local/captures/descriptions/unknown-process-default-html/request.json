@@ -1,0 +1,5 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/not-a-process",
+  "headers": {}
+}

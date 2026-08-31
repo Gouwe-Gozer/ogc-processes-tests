@@ -1,0 +1,19 @@
+{
+  "status": 200,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:53:35 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "Content-Length": "101",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{jobUrl}}/exceptions",
+  "body": [
+    {
+      "Code": "NoApplicableCode",
+      "Locator": "None",
+      "Text": "Process failed, please check server error log"
+    }
+  ]
+}

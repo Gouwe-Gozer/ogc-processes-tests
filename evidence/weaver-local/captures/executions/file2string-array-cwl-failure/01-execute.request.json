@@ -1,0 +1,19 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/file2string_array/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Prefer": "wait=30"
+  },
+  "body": {
+    "inputs": {
+      "input": {
+        "value": "alpha\nbeta\ngamma\n",
+        "mediaType": "text/plain"
+      }
+    },
+    "response": "document",
+    "mode": "sync"
+  }
+}

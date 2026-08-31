@@ -239,18 +239,22 @@ The evidence was checked for these behaviours on 31 August 2026:
 |---|---|
 | Relative links | None. All recorded `href` values are absolute URLs or placeholders for absolute URLs |
 | Redirected final URLs | None. Recorded request and final URLs match, and no HTTP 3xx exchange is stored |
-| Advertised endpoints unavailable | ZOO returns HTTP 500 for `OTB.ReadImageInfo`; Weaver's nginx gateway returns HTTP 403 for an advertised description, execution, and job-list endpoint. Only the process-description failures are selected scenarios |
+| Advertised endpoints unavailable | ZOO returns HTTP 500 for `OTB.ReadImageInfo`; RedOak's nginx gateway returns HTTP 403 for an advertised description, execution, and job-list endpoint. Only the process-description failures are selected scenarios |
 | Missing or unusable async location | Every recorded HTTP 201 response contains `Location`. The DIRECTED accepted-job body has no monitor link, so it confirms that the client must also read the header. No capture omits both locations |
+| Results requested too early | Local Weaver returns HTTP 404 with a structured `JobResultsNotReady` body, `cause.status: accepted`, and monitoring links. This is a temporary job state, not an unknown resource |
 | Different `Location` capitalization | None. All captures use `Location` |
-| CORS differences | Weaver and ZOO discovery lack `Access-Control-Allow-Origin`. BGT and DIRECTED pass the captured execution preflight. The public demo allows discovery GETs but fails execution preflight because it does not allow `content-type` or `prefer` |
+| Error content negotiation | Local Weaver returns a structured JSON 404 for an unknown process when JSON is requested, and an HTML 404 for the same URL without that `Accept` header |
+| Input-validation errors | Local Weaver reports missing-input cardinality as structured JSON. An incomplete request with an invalid enum reports only the next missing input, while an invalid type produces a generic failed job without identifying the bad field |
+| Successful Weaver execution | `EchoProcess` is captured in sync and async mode with inline and referenced outputs. Some referenced output URLs return HTTP 403 even though the job is successful |
+| CORS differences | Both Weaver deployments and ZOO lack usable CORS permission for the tested execution request. BGT and DIRECTED pass the preflight. The public pygeoapi demo does not allow `content-type` or `prefer` |
 | Network failure and abort | Not recordable as provider responses because no HTTP response is produced |
-| Callbacks | Weaver advertises callback conformance, but there is no callback execution capture |
-| OGC API Processes parts | Weaver advertises conformance classes from Parts 1, 2, 3, and 4, but the evidence does not exercise client selection or the additional operations |
+| Callbacks | Both Weaver deployments advertise callback conformance, but there is no callback execution capture |
+| OGC API Processes parts | Both Weaver deployments advertise conformance classes from Parts 1, 2, 3, and 4, but the evidence does not exercise client selection or the additional operations |
 
-The Weaver conformance response therefore suggests two possible future evidence
-runs: callback execution and the additional Processes-part operations. Its
-public process descriptions returned HTTP 403 during this capture, so those
-claims are not yet backed by executable request and response evidence.
+The Weaver conformance responses therefore suggest two possible future
+evidence runs: callback execution and the additional Processes-part operations.
+RedOak blocks public process descriptions with HTTP 403. The local deployment
+now provides successful sync, async, polling, and result evidence.
 
 Form tests should load recorded process descriptions and check the client's
 form model. Result tests should load recorded output descriptions and values
@@ -274,14 +278,14 @@ only when an actual client test uses the material.
 
 | Topic 3 commitment | Coverage in this repository |
 |---|---|
-| Process discovery and descriptions | Discovery and process-description evidence exists for ZOO, Weaver, and all three pygeoapi deployments. The selected scenario set remains intentionally smaller |
+| Process discovery and descriptions | Discovery and process-description evidence exists for ZOO, both Weaver deployments, and all three pygeoapi deployments. The selected scenario set remains intentionally smaller |
 | Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, primitive types, and an array without item details that requires raw JSON fallback; generated UI behaviour must be tested in the client project |
 | Raw JSON fallback | The pygeoapi raw-versus-document scenario preserves a description/result mismatch for this path |
 | Synchronous execution | Inline document, raw, and referenced results are selected |
 | Async submission, polling, results, and dismiss | Successful, failed, and dismissed job flows are selected |
 | Result rendering | Result samples and measured large-CSV evidence exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
-| CORS and exposed `Location` | Provider diagnostics record execution preflights for all five deployments. BGT and DIRECTED pass; ZOO, Weaver, and the public demo require a relay for the tested execution request. Browser integration still belongs in the client project |
+| CORS and exposed `Location` | Provider diagnostics record execution preflights for all six deployments. BGT and DIRECTED pass; ZOO, both Weaver deployments, and the public demo require a relay for the tested execution request. Browser integration still belongs in the client project |
 | Subscriber callbacks and polling reconciliation | Weaver advertises callback conformance and ZOO polling flows are selected, but no callback request has been captured |
 | OGC API Processes v1 and v2 selection | Weaver advertises conformance classes from multiple OGC API Processes parts, but no client selection behaviour has been captured |
-| Different server implementations | Provider evidence covers ZOO, three pygeoapi deployments, and public Weaver. The smaller selected scenario set uses only cases with distinct client behaviour |
+| Different server implementations | Provider evidence covers ZOO, three pygeoapi deployments, and both public and local Weaver. The smaller selected scenario set uses only cases with distinct client behaviour |
 | Interoperability matrix | The evidence can supply observations, but the matrix has not been created yet |

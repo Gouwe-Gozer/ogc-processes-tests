@@ -1,0 +1,135 @@
+{
+  "status": 400,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:53:02 GMT",
+    "Connection": "close",
+    "Location": "{{jobUrl}}",
+    "Content-Type": "application/json",
+    "Content-Length": "3676",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/file2string_array/execution",
+  "body": {
+    "$schema": "https://schemas.opengis.net/ogcapi/processes/part1/1.0/openapi/schemas/statusInfo.yaml",
+    "id": "{{jobId}}",
+    "jobID": "{{jobId}}",
+    "processID": "file2string_array",
+    "providerID": null,
+    "processingEntityType": "ogc-api-processes",
+    "type": "process",
+    "status": "failed",
+    "message": "Job failed.",
+    "created": "2026-08-31T14:53:00.400000+00:00",
+    "started": "2026-08-31T14:53:01.101000+00:00",
+    "finished": "2026-08-31T14:53:02.013000+00:00",
+    "updated": "2026-08-31T14:53:02.013000+00:00",
+    "duration": "00:00:00",
+    "runningDuration": "PT01S",
+    "runningSeconds": 0.912,
+    "percentCompleted": 96,
+    "progress": 96,
+    "links": [
+      {
+        "title": "Job status.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}",
+        "type": "application/json",
+        "rel": "status"
+      },
+      {
+        "title": "Job monitoring location.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}",
+        "type": "application/json",
+        "rel": "monitor"
+      },
+      {
+        "title": "Job status generic endpoint.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/jobs/{{jobId}}?f=json",
+        "type": "application/json",
+        "rel": "alternate"
+      },
+      {
+        "title": "List of submitted jobs.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/jobs",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/job-list"
+      },
+      {
+        "title": "New job submission endpoint for the corresponding process.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/processes/file2string_array/jobs/execution",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/execute"
+      },
+      {
+        "title": "Submitted job inputs for process execution.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}/inputs",
+        "type": "application/json",
+        "rel": "inputs"
+      },
+      {
+        "title": "HTML Job Status",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/jobs/{{jobId}}?f=html",
+        "type": "text/html",
+        "rel": "alternate"
+      },
+      {
+        "title": "List of submitted jobs.",
+        "hreflang": "en-CA",
+        "href": "{{baseUrl}}/jobs",
+        "type": "application/json",
+        "rel": "collection"
+      },
+      {
+        "title": "Job response profile.",
+        "hreflang": "en-CA",
+        "href": "https://www.opengis.net/def/profile/OGC/0/job-description",
+        "type": "application/json",
+        "rel": "profile"
+      },
+      {
+        "title": "List of job exceptions if applicable in case of failing job.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}/exceptions",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/exceptions"
+      },
+      {
+        "title": "List of collected job logs during process execution.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}/logs",
+        "type": "application/json",
+        "rel": "logs"
+      },
+      {
+        "title": "List of collected job logs during process execution.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}/logs",
+        "type": "application/json",
+        "rel": "https://www.opengis.net/def/rel/ogc/1.0/log"
+      },
+      {
+        "title": "Job status.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}",
+        "type": "application/json",
+        "rel": "self"
+      },
+      {
+        "title": "Job status details.",
+        "hreflang": "en-CA",
+        "href": "{{jobUrl}}",
+        "type": "application/json",
+        "rel": "up"
+      }
+    ],
+    "location": "{{jobUrl}}",
+    "description": "Job submitted and failed synchronous execution. See server logs for more details."
+  }
+}

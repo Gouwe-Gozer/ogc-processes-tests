@@ -1,0 +1,8 @@
+{
+  "title": "Read the file_index_selector job logs",
+  "method": "GET",
+  "url": "{{jobUrl}}/logs",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

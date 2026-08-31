@@ -1,0 +1,8 @@
+{
+  "title": "Read the file2string_array failure details",
+  "method": "GET",
+  "url": "{{jobUrl}}/exceptions",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

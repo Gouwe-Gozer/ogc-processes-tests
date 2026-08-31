@@ -1,0 +1,8 @@
+{
+  "title": "Read the file2string_array job logs",
+  "method": "GET",
+  "url": "{{jobUrl}}/logs",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

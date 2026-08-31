@@ -17,6 +17,7 @@ from support.repository import (
     load_server,
     read_json,
     resolve_url,
+    response_header_map,
     server_base_url,
 )
 
@@ -155,7 +156,7 @@ def execute(
     raw = response.read()
     status = response.status
     final_url = response.geturl()
-    response_headers = dict(response.headers.items())
+    response_headers = response_header_map(response.headers)
     content_type = response.headers.get("Content-Type", "")
     charset = response.headers.get_content_charset() or "utf-8"
     response.close()

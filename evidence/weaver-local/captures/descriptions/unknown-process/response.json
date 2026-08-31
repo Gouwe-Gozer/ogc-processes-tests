@@ -1,0 +1,19 @@
+{
+  "status": 404,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 14:05:56 GMT",
+    "Connection": "close",
+    "Content-Type": "application/json",
+    "Content-Length": "220",
+    "X-Content-Type-Options": "nosniff"
+  },
+  "final_url": "{{baseUrl}}/processes/not-a-process",
+  "body": {
+    "title": "NoSuchProcess",
+    "type": "https://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-process",
+    "detail": "Process with specified reference identifier does not exist.",
+    "status": 404,
+    "cause": "not-a-process"
+  }
+}

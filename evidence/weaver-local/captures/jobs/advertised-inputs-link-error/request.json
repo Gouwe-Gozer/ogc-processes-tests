@@ -1,0 +1,8 @@
+{
+  "title": "Follow the inputs link advertised by a successful EchoProcess job",
+  "method": "GET",
+  "url": "{{jobUrl}}/inputs",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

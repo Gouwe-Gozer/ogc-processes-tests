@@ -1,0 +1,28 @@
+{
+  "title": "Execute file_index_selector with valid inline text files",
+  "process_id": "file_index_selector",
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/file_index_selector/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "Prefer": "wait=30"
+  },
+  "body": {
+    "inputs": {
+      "files": [
+        {
+          "value": "first file\n",
+          "mediaType": "text/plain"
+        },
+        {
+          "value": "second file\n",
+          "mediaType": "text/plain"
+        }
+      ],
+      "index": 1
+    },
+    "response": "document",
+    "mode": "sync"
+  }
+}

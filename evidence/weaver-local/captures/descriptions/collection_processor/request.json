@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/collection_processor",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

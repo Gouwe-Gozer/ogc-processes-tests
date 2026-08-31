@@ -14,6 +14,7 @@ from pathlib import Path
 from support.repository import (
     RepositoryError,
     load_server,
+    response_header_map,
     server_base_url,
 )
 
@@ -52,7 +53,7 @@ def capture_one(process_id: str, base_url: str, output_dir: Path, timeout: float
 
     raw = response.read()
     status = response.status
-    headers = dict(response.headers.items())
+    headers = response_header_map(response.headers)
     final_url = response.geturl()
     content_type = response.headers.get_content_type()
     charset = response.headers.get_content_charset() or "utf-8"

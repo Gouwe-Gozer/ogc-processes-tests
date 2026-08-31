@@ -4,12 +4,14 @@ A deployment is one running OGC API - Processes server with a specific set of
 software, process plugins, and configuration. Two deployments using the same
 server product can expose different processes and responses.
 
-This repository keeps evidence from five deployments under `evidence/`:
+This repository keeps evidence from six deployments under `evidence/`:
 
 - `zoo-local`: the local ZOO server used for most live tests;
 - `pygeoapi-demo`: the public pygeoapi demo used for `hello-world`;
 - `bgt-prototype`: a local pygeoapi-based BGT process;
 - `directed-local`: a local pygeoapi-based CLIMADA process;
+- `weaver-local`: a local Weaver deployment with discovery, descriptions,
+  successful execution, and job evidence;
 - `weaver-redoak`: a public Weaver deployment used for discovery and relay
   evidence.
 
@@ -22,6 +24,12 @@ The RedOak deployment provides public landing, conformance, and process-list
 responses without CORS headers. Its advertised process descriptions returned
 HTTP 403 at capture time, so it is not currently used for execution scenarios.
 These are properties of that deployment, not defaults for Weaver.
+
+The local Weaver deployment exposes six built-in processes. `EchoProcess`
+completes in sync and async mode. Two other built-ins fail because of defects in
+their published CWL definitions. The successful Echo job also returned several
+result links that the separate file proxy rejected with HTTP 403. These are
+provider and process-package behaviours, not invalid end-user input.
 
 ## Why software versions matter
 

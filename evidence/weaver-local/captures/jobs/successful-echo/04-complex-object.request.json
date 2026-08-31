@@ -1,0 +1,8 @@
+{
+  "title": "Retrieve the referenced EchoProcess JSON object",
+  "method": "GET",
+  "url": "{{complexObjectUrl}}",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

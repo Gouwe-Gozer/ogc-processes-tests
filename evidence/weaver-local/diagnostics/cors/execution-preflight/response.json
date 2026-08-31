@@ -1,0 +1,14 @@
+{
+  "status": 405,
+  "headers": {
+    "Server": "gunicorn",
+    "Date": "Mon, 31 Aug 2026 13:49:09 GMT",
+    "Connection": "close",
+    "Allow": "GET, POST",
+    "X-Content-Type-Options": "nosniff",
+    "Content-Type": "text/html; charset=UTF-8",
+    "Content-Length": "189"
+  },
+  "final_url": "{{baseUrl}}/processes/EchoProcess/execution",
+  "body": "<html>\n <head>\n  <title>405 Method Not Allowed</title>\n </head>\n <body>\n  <h1>405 Method Not Allowed</h1>\n  The method OPTIONS is not allowed for this resource. <br/><br/>\n\n </body>\n</html>"
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Retrieve a referenced EchoProcess GeoJSON geometry",
+  "method": "GET",
+  "url": "{{geometryUrl}}",
+  "headers": {
+    "Accept": "application/geo+json"
+  }
+}
