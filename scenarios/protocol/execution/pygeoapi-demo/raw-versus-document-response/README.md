@@ -3,6 +3,11 @@
 Process: `hello-world`
 Source server: `pygeoapi-demo`
 
+Original evidence:
+
+- [process description](../../../../../evidence/pygeoapi-demo/captures/descriptions/hello-world/)
+- [raw and document executions](../../../../../evidence/pygeoapi-demo/captures/executions/raw-versus-document-response/)
+
 This scenario contains a process description followed by two synchronous
 executions:
 

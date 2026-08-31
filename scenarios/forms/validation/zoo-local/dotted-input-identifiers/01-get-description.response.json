@@ -1,0 +1,589 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:08 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "13295",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/OTB.Segmentation",
+  "body": {
+    "id": "OTB.Segmentation",
+    "title": "Performs segmentation of an image, and output either a raster or a vector file. In vector mode, large input datasets are supported.",
+    "description": "This application allows one to perform various segmentation algorithms on a multispectral image. Available segmentation algorithms are two different versions of Mean-Shift segmentation algorithm (one being multi-threaded), simple pixel based connected components according to a user-defined criterion, and watershed from the gradient of the intensity (norm of spectral bands vector). The application has two different modes that affects the nature of its output.In raster mode, the output of the application is a classical image of unique labels identifying the segmented regions. The labeled output can be passed to the ColorMapping application to render regions with contrasted colours. Please note that this mode loads the whole input image into memory, and as such can not handle large images.To segment large data, one can use the vector mode. In this case, the output of the application is a vector file or database. The input image is split into tiles (whose size can be set using the tilesize parameter), and each tile is loaded, segmented with the chosen algorithm, vectorized, and written into the output file or database. This piece-wise behavior ensure that memory will never get overloaded, and that images of any size can be processed. There are few more options in the vector mode. The simplify option allows simplifying the geometry (i.e. remove nodes in polygons) according to a user-defined tolerance. The stitch option tries to stitch together the polygons corresponding to segmented region that may have been split by the tiling scheme. ",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/OTB.Segmentation/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/OTB.Segmentation/execution.html"
+      }
+    ],
+    "inputs": {
+      "in": {
+        "title": "The input image to segment",
+        "description": "The input image to segment",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "image/jpeg",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/jpeg"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/jpeg"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "filter": {
+        "title": "Choice of segmentation algorithm (mean-shift by default)",
+        "description": "Choice of segmentation algorithm (mean-shift by default)",
+        "schema": {
+          "type": "string",
+          "default": "meanshift",
+          "enum": [
+            "meanshift",
+            "cc",
+            "watershed",
+            "mprofiles"
+          ]
+        }
+      },
+      "filter.meanshift.spatialr": {
+        "title": "Spatial radius of the neighborhood.",
+        "description": "Spatial radius of the neighborhood.",
+        "schema": {
+          "type": "integer",
+          "default": 5
+        }
+      },
+      "filter.meanshift.ranger": {
+        "title": "Range radius defining the radius (expressed in radiometry unit) in the multispectral space.",
+        "description": "Range radius defining the radius (expressed in radiometry unit) in the multispectral space.",
+        "schema": {
+          "type": "number",
+          "default": 15,
+          "format": "float"
+        }
+      },
+      "filter.meanshift.thres": {
+        "title": "Algorithm iterative scheme will stop if mean-shift vector is below this threshold or if iteration number reached maximum number of iterations.",
+        "description": "Algorithm iterative scheme will stop if mean-shift vector is below this threshold or if iteration number reached maximum number of iterations.",
+        "schema": {
+          "type": "number",
+          "default": 0.1,
+          "format": "float"
+        }
+      },
+      "filter.meanshift.maxiter": {
+        "title": "Algorithm iterative scheme will stop if convergence hasn't been reached after the maximum number of iterations.",
+        "description": "Algorithm iterative scheme will stop if convergence hasn't been reached after the maximum number of iterations.",
+        "schema": {
+          "type": "integer",
+          "default": 100
+        }
+      },
+      "filter.meanshift.minsize": {
+        "title": "Minimum size of a region (in pixel unit) in segmentation. Smaller clusters will be merged to the neighboring cluster with the closest radiometry. If set to 0 no pruning is done.",
+        "description": "Minimum size of a region (in pixel unit) in segmentation. Smaller clusters will be merged to the neighboring cluster with the closest radiometry. If set to 0 no pruning is done.",
+        "schema": {
+          "type": "integer",
+          "default": 100
+        }
+      },
+      "filter.cc.expr": {
+        "title": "User defined connection condition, written as a mathematical expression. Available variables are p(i)b(i), intensity_p(i) and distance (example of expression: distance &lt; 10 )",
+        "description": "User defined connection condition, written as a mathematical expression. Available variables are p(i)b(i), intensity_p(i) and distance (example of expression: distance &lt; 10 )",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "filter.watershed.threshold": {
+        "title": "Depth threshold Units in percentage of the maximum depth in the image.",
+        "description": "Depth threshold Units in percentage of the maximum depth in the image.",
+        "schema": {
+          "type": "number",
+          "default": 0.01,
+          "format": "float"
+        }
+      },
+      "filter.watershed.level": {
+        "title": "flood level for generating the merge tree from the initial segmentation (between 0 and 1)",
+        "description": "flood level for generating the merge tree from the initial segmentation (between 0 and 1)",
+        "schema": {
+          "type": "number",
+          "default": 0.1,
+          "format": "float"
+        }
+      },
+      "filter.mprofiles.size": {
+        "title": "Size of the profiles",
+        "description": "Size of the profiles",
+        "schema": {
+          "type": "integer",
+          "default": 5
+        }
+      },
+      "filter.mprofiles.start": {
+        "title": "Initial radius of the structuring element (in pixels)",
+        "description": "Initial radius of the structuring element (in pixels)",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "filter.mprofiles.step": {
+        "title": "Radius step along the profile (in pixels)",
+        "description": "Radius step along the profile (in pixels)",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "filter.mprofiles.sigma": {
+        "title": "Profiles values under the threshold will be ignored.",
+        "description": "Profiles values under the threshold will be ignored.",
+        "schema": {
+          "type": "number",
+          "default": 1,
+          "format": "float"
+        }
+      },
+      "mode": {
+        "title": "Choice of processing mode, either raster or large-scale.",
+        "description": "Choice of processing mode, either raster or large-scale.",
+        "schema": {
+          "type": "string",
+          "default": "vector",
+          "enum": [
+            "vector",
+            "raster"
+          ]
+        }
+      },
+      "mode.vector.outmode": {
+        "title": "This allows one to set the writing behaviour for the output vector file. Please note that the actual behaviour depends on the file format.",
+        "description": "This allows one to set the writing behaviour for the output vector file. Please note that the actual behaviour depends on the file format.",
+        "schema": {
+          "type": "string",
+          "default": "ulco",
+          "enum": [
+            "ulco",
+            "ovw",
+            "ulovw",
+            "ulu"
+          ]
+        }
+      },
+      "mode.vector.inmask": {
+        "title": "Only pixels whose mask value is strictly positive will be segmented.",
+        "description": "Only pixels whose mask value is strictly positive will be segmented.",
+        "minOccurs": 0,
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "image/jpeg",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/jpeg"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "nullable": true
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/jpeg"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "mode.vector.neighbor": {
+        "title": "Activate 8-Neighborhood connectivity (default is 4).",
+        "description": "Activate 8-Neighborhood connectivity (default is 4).",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "mode.vector.stitch": {
+        "title": "Scan polygons on each side of tiles and stitch polygons which connect by more than one pixel.",
+        "description": "Scan polygons on each side of tiles and stitch polygons which connect by more than one pixel.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "mode.vector.minsize": {
+        "title": "Objects whose size is below the minimum object size (area in pixels) will be ignored during vectorization.",
+        "description": "Objects whose size is below the minimum object size (area in pixels) will be ignored during vectorization.",
+        "minOccurs": 0,
+        "schema": {
+          "type": "integer",
+          "default": 1,
+          "nullable": true
+        }
+      },
+      "mode.vector.simplify": {
+        "title": "Simplify polygons according to a given tolerance (in pixel). This option allows reducing the size of the output file or database.",
+        "description": "Simplify polygons according to a given tolerance (in pixel). This option allows reducing the size of the output file or database.",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 0.1,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "mode.vector.layername": {
+        "title": "Name of the layer in the vector file or database (default is Layer).",
+        "description": "Name of the layer in the vector file or database (default is Layer).",
+        "schema": {
+          "type": "string",
+          "default": "layer"
+        }
+      },
+      "mode.vector.fieldname": {
+        "title": "Name of the field holding the geometry index in the output vector file or database.",
+        "description": "Name of the field holding the geometry index in the output vector file or database.",
+        "schema": {
+          "type": "string",
+          "default": "DN"
+        }
+      },
+      "mode.vector.tilesize": {
+        "title": "User defined tiles size for tile-based segmentation. Optimal tile size is selected according to available RAM if null.",
+        "description": "User defined tiles size for tile-based segmentation. Optimal tile size is selected according to available RAM if null.",
+        "schema": {
+          "type": "integer",
+          "default": 1024
+        }
+      },
+      "mode.vector.startlabel": {
+        "title": "Starting value of the geometry index field",
+        "description": "Starting value of the geometry index field",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "mode.vector.ogroptions": {
+        "title": "A list of layer creation options in the form KEY=VALUE that will be passed directly to OGR without any validity checking. Options may depend on the file format, and can be found in OGR documentation.",
+        "description": "A list of layer creation options in the form KEY=VALUE that will be passed directly to OGR without any validity checking. Options may depend on the file format, and can be found in OGR documentation.",
+        "minOccurs": 0,
+        "maxOccurs": 1024,
+        "schema": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "mode.raster.out": {
+        "title": "The output labeled image.",
+        "description": "The output labeled image.",
+        "schema": {
+          "type": "string",
+          "default": "uint8",
+          "enum": [
+            "uint8",
+            "uint16",
+            "int16",
+            "int32",
+            "int32",
+            "float",
+            "double"
+          ]
+        }
+      }
+    },
+    "outputs": {
+      "mode.vector.out": {
+        "title": "The output vector file or database (name can be anything understood by OGR)",
+        "description": "The output vector file or database (name can be anything understood by OGR)",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/xml",
+                        "application/vnd.google-earth.kml+xml",
+                        "application/json",
+                        "application/zip"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/xml"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "application/vnd.google-earth.kml+xml"
+                    },
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/zip"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/xml"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "application/vnd.google-earth.kml+xml"
+            },
+            {
+              "type": "object"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/zip"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "mode.raster.out": {
+        "title": "The output labeled image.",
+        "description": "The output labeled image.",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "image/jpeg",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/jpeg"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/jpeg"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    }
+  }
+}

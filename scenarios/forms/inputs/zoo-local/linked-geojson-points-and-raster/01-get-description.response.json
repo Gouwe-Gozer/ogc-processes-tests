@@ -1,0 +1,295 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:08 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "3715",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/SAGA.shapes_grid.0",
+  "body": {
+    "id": "SAGA.shapes_grid.0",
+    "title": "Add Grid Values to Points",
+    "description": "Spatial Join: Retrieves information from the selected grids at the positions of the points of the selected points layer and adds it to the resulting layer.",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/SAGA.shapes_grid.0/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/SAGA.shapes_grid.0/execution.html"
+      }
+    ],
+    "inputs": {
+      "SHAPES": {
+        "title": "Points",
+        "description": "Points",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/xml",
+                        "application/vnd.google-earth.kml+xml",
+                        "application/json"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/xml"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/vnd.google-earth.kml+xml"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/xml"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/vnd.google-earth.kml+xml"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "GRIDS": {
+        "title": "Grids",
+        "description": "Grids",
+        "maxOccurs": 1024,
+        "extended-schema": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1024,
+          "items": {
+            "oneOf": [
+              {
+                "allOf": [
+                  {
+                    "$ref": "http://zoo-project.org/dl/link.json"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "image/tiff",
+                          "application/x-ogc-envi",
+                          "application/x-ogc-aaigrid",
+                          "image/png"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/tiff"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-envi"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "application/x-ogc-aaigrid"
+                      },
+                      {
+                        "type": "string",
+                        "contentEncoding": "base64",
+                        "contentMediaType": "image/png"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "RESAMPLING": {
+        "title": "Resampling",
+        "description": "Resampling",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "B-Spline Interpolation",
+          "enum": [
+            "Nearest Neighbour",
+            "Bilinear Interpolation",
+            "Bicubic Spline Interpolation",
+            "B-Spline Interpolation"
+          ],
+          "nullable": true
+        }
+      }
+    },
+    "outputs": {
+      "RESULT": {
+        "title": "Result",
+        "description": "Result",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/xml",
+                        "application/vnd.google-earth.kml+xml",
+                        "application/json"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/xml"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/vnd.google-earth.kml+xml"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/xml"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/vnd.google-earth.kml+xml"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    }
+  }
+}

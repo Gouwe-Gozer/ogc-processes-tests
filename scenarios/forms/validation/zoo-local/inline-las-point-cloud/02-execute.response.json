@@ -1,0 +1,12 @@
+{
+  "status": 500,
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/SAGA.pointcloud_tools.4/execution",
+  "body": {
+    "title": "NoApplicableCode",
+    "type": "NoApplicableCode",
+    "detail": "ZOO Kernel failed to process your request, receiving signal 11 = SIGSEGV "
+  }
+}

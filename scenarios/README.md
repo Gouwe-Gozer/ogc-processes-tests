@@ -17,6 +17,7 @@ scenarios/
 │   ├── jobs/<provider>/<scenario>/
 │   └── errors/<provider>/<scenario>/
 ├── forms/
+│   ├── inputs/<provider>/<scenario>/
 │   └── validation/<provider>/<scenario>/
 └── results/
     ├── maps/<provider>/<scenario>/
@@ -81,3 +82,5 @@ A request can have several recorded response variants, such as
 
 The current scenarios and the reason each was selected are listed in the
 [test strategy](../docs/test-strategy.md#current-representative-scenarios).
+The form-specific structure, input encodings, selection, and remaining gaps
+are documented in [`forms/README.md`](forms/README.md).

@@ -26,6 +26,8 @@ FOLDER_ORDER = {
     "executions": 12,
     "jobs": 13,
     "errors": 14,
+    "inputs": 15,
+    "validation": 16,
     "maps": 20,
     "downloads": 21,
 }

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/OTB.Segmentation",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

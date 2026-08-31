@@ -1,0 +1,362 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Fri, 28 Aug 2026 13:37:08 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Link": "<https://www.opengis.net/dev/profile/OGC/0/ogc-process-description>; rel=\"profile\"",
+    "Content-Length": "4469",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "{{baseUrl}}/processes/SAGA.shapes_grid.5",
+  "body": {
+    "id": "SAGA.shapes_grid.5",
+    "title": "Contour Lines from Grid",
+    "description": "Derive contour lines (isolines) from grid. ",
+    "mutable": false,
+    "version": "1.0.0",
+    "jobControlOptions": [
+      "sync-execute",
+      "async-execute",
+      "dismiss"
+    ],
+    "outputTransmission": [
+      "value",
+      "reference"
+    ],
+    "links": [
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+        "type": "application/json",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/SAGA.shapes_grid.5/execution"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Execute End Point",
+        "href": "{{baseUrl}}/processes/SAGA.shapes_grid.5/execution.html"
+      }
+    ],
+    "inputs": {
+      "GRID": {
+        "title": "Grid",
+        "description": "Grid",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "image/tiff",
+                        "application/x-ogc-envi",
+                        "application/x-ogc-aaigrid",
+                        "image/png"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/tiff"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-envi"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/x-ogc-aaigrid"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "image/png"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/tiff"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-envi"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/x-ogc-aaigrid"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "image/png"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "VERTEX": {
+        "title": "Vertex Type",
+        "description": "choose vertex type for resulting contours",
+        "minOccurs": 0,
+        "schema": {
+          "type": "string",
+          "default": "x, y",
+          "enum": [
+            "x",
+            " y",
+            "x",
+            " y",
+            " z"
+          ],
+          "nullable": true
+        }
+      },
+      "SCALE": {
+        "title": "Interpolation Scale",
+        "description": "set greater one for line smoothing",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 1,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "LINE_PARTS": {
+        "title": "Split Parts",
+        "description": "Split Parts",
+        "minOccurs": 0,
+        "schema": {
+          "type": "boolean",
+          "default": true,
+          "enum": [
+            "true",
+            "false"
+          ],
+          "nullable": true
+        }
+      },
+      "POLY_PARTS": {
+        "title": "Split Polygon Parts",
+        "description": "Split Polygon Parts",
+        "minOccurs": 0,
+        "schema": {
+          "type": "boolean",
+          "default": false,
+          "enum": [
+            "true",
+            "false"
+          ],
+          "nullable": true
+        }
+      },
+      "ZMIN": {
+        "title": "Minimum Contour Value",
+        "description": "Minimum Contour Value",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 0,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "ZMAX": {
+        "title": "Maximum Contour Value",
+        "description": "Maximum Contour Value",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 10000,
+          "format": "float",
+          "nullable": true
+        }
+      },
+      "ZSTEP": {
+        "title": "Equidistance",
+        "description": "Equidistance",
+        "minOccurs": 0,
+        "schema": {
+          "type": "number",
+          "default": 10,
+          "format": "float",
+          "nullable": true
+        }
+      }
+    },
+    "outputs": {
+      "CONTOUR": {
+        "title": "Contour",
+        "description": "Contour",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/xml",
+                        "application/vnd.google-earth.kml+xml",
+                        "application/json"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/xml"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/vnd.google-earth.kml+xml"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/xml"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/vnd.google-earth.kml+xml"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      },
+      "POLYGONS": {
+        "title": "Polygons",
+        "description": "Polygons",
+        "extended-schema": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "$ref": "http://zoo-project.org/dl/link.json"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "enum": [
+                        "text/xml",
+                        "application/vnd.google-earth.kml+xml",
+                        "application/json"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "required": [
+                "value"
+              ],
+              "properties": {
+                "value": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "contentEncoding": "utf-8",
+                      "contentMediaType": "text/xml"
+                    },
+                    {
+                      "type": "string",
+                      "contentEncoding": "base64",
+                      "contentMediaType": "application/vnd.google-earth.kml+xml"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "string",
+              "contentEncoding": "utf-8",
+              "contentMediaType": "text/xml"
+            },
+            {
+              "type": "string",
+              "contentEncoding": "base64",
+              "contentMediaType": "application/vnd.google-earth.kml+xml"
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "raw_schema1": "true"
+      }
+    }
+  }
+}

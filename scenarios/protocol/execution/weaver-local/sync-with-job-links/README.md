@@ -3,13 +3,19 @@
 Process: `EchoProcess`
 Source server: `weaver-local`
 
+Original evidence:
+
+- [successful synchronous execution](../../../../../evidence/weaver-local/captures/executions/echo-success-sync/)
+
 Weaver returns the requested document result immediately with HTTP 200. It also
 records the synchronous execution as a job and includes `Content-Location` and
 `Link` headers for status, results, outputs, logs, and provenance.
 
-The protocol core should treat the HTTP 200 body as the synchronous result. It
-may preserve the additional links, but it must not mistake this response for an
-asynchronous HTTP 201 submission that requires polling.
+The protocol core should return the synchronous body immediately. The
+additional links may be preserved as response metadata, but they do not turn
+the response into an asynchronous submission or start polling.
 
-The rich request and result can later be reused by form and result tests. Their
-data complexity is not the main protocol assertion here.
+Form generation and the meaning of the individual inputs are covered by the
+separate
+[`forms/inputs/weaver-local/mixed-values-map-and-files`](../../../../forms/inputs/weaver-local/mixed-values-map-and-files/)
+scenario.

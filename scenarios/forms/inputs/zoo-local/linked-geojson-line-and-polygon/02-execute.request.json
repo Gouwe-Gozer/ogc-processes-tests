@@ -1,0 +1,36 @@
+{
+  "method": "POST",
+  "url": "{{baseUrl}}/processes/SAGA.shapes_lines.3/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "LINES": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/lines/simple_line.geojson",
+        "type": "application/json"
+      },
+      "POLYGONS": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/2f18a402e520ddc90e63c8cee7ccf2296c70f0b8/fixtures/polygons/simple_polygon.geojson",
+        "type": "application/json"
+      },
+      "ATTRIBUTES": "line and polygon"
+    },
+    "outputs": {
+      "INTERSECT": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      },
+      "DIFFERENCE": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  }
+}

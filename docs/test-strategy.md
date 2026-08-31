@@ -84,7 +84,18 @@ can still be reused by tests for another concern.
 | `protocol/errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
 | `protocol/errors/zoo-local/missing-required-input` | Invalid raw request returns a structured HTTP 400 problem |
 | `protocol/errors/zoo-local/missing-requested-output` | HTTP 200 response omits an explicitly requested output |
+| `forms/inputs/bgt-prototype/numeric-ranges` | Required and optional numbers with ranges, integer types, and defaults |
+| `forms/inputs/weaver-local/mixed-values-map-and-files` | Primitive controls, JSON, bbox, GeoJSON geometries, FeatureCollection, and an inline image |
+| `forms/inputs/zoo-local/linked-gml-polygon-and-point` | Linked GML Polygon and Point inputs |
+| `forms/inputs/zoo-local/linked-geojson-points-and-raster` | Linked GeoJSON point features and an AAIGrid raster in one form |
+| `forms/inputs/zoo-local/linked-geojson-line-and-polygon` | Linked LineString and Polygon FeatureCollections |
+| `forms/inputs/zoo-local/inline-geojson-polygons` | Inline Polygon FeatureCollection with retained properties |
+| `forms/inputs/zoo-local/linked-raster` | Linked AAIGrid input with numeric and Boolean controls |
+| `forms/inputs/zoo-local/inline-csv` | Inline UTF-8 CSV values using ZOO's nested format wrapper |
 | `forms/validation/directed-local/undocumented-array-length` | An array accepted by the published schema is rejected because the provider requires an undocumented length |
+| `forms/validation/zoo-local/advertised-repeated-raster` | A mixed link/inline raster array is allowed by the description but crashes the provider |
+| `forms/validation/zoo-local/dotted-input-identifiers` | Flat input IDs containing dots must not become nested objects; the OTB runtime is unavailable |
+| `forms/validation/zoo-local/inline-las-point-cloud` | Advertised inline LAS input is serialized correctly but crashes the provider |
 | `results/maps/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
 | `results/downloads/zoo-local/result-by-reference` | Synchronous result returned as an `href` with a media type |
 
@@ -95,14 +106,14 @@ the exchange matters.
 ## Evidence not promoted yet
 
 The remaining recorded exchanges are still useful, but they do not currently
-require another protocol-core scenario:
+require another representative scenario:
 
 | Evidence group | Why it remains evidence |
 |---|---|
 | Similar GEOS and SAGA executions | They use request and result envelopes already represented by the selected synchronous scenarios |
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
 | Unknown jobs and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
-| Bounding boxes, enums, repeated inputs, and nested schemas | Promote when form-generation tests begin |
+| Additional bounding boxes, enums, repeated inputs, and schema variations | The selected form scenarios now cover the main shapes; add another only when it changes form or serialization behaviour |
 | Large CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin; the CLIMADA evidence records its 18.8 MB CSV without checking the full body into Git |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |
 
@@ -283,8 +294,8 @@ only when an actual client test uses the material.
 | Topic 3 commitment | Coverage in this repository |
 |---|---|
 | Process discovery and descriptions | Discovery and process-description evidence exists for ZOO, both Weaver deployments, and all three pygeoapi deployments. The selected scenario set remains intentionally smaller |
-| Generated forms | Partial: descriptions contain required inputs, enums, bounding boxes, primitive types, and an array without item details that requires raw JSON fallback; generated UI behaviour must be tested in the client project |
-| Raw JSON fallback | The pygeoapi raw-versus-document scenario preserves a description/result mismatch for this path |
+| Generated forms | Selected descriptions cover required and optional values, constraints, enums, bounding boxes, arrays, nested objects, complex links, inline files, repeated inputs, and unusual input IDs. Generated UI behaviour must still be tested in the client project |
+| Raw JSON fallback | The DIRECTED form scenario has arrays without item schemas; the pygeoapi raw-versus-document scenario also preserves a description/result mismatch |
 | Synchronous execution | Inline document, raw, and referenced results are selected |
 | Async submission, polling, results, and dismiss | Successful, failed, and dismissed job flows are selected |
 | Result rendering | Result samples and measured large-CSV evidence exist, but choosing a map, inline view, JSON view, or download must be tested in the application |
