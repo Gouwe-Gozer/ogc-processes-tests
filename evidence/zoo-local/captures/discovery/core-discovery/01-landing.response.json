@@ -1,0 +1,79 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Mon, 31 Aug 2026 09:05:57 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "1640",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/",
+  "body": {
+    "title": "The ZOO-Project OGC WPS Developement Server",
+    "description": "Developement version of ZOO-Project OGC WPS. See http://www.zoo-project.org",
+    "links": [
+      {
+        "rel": "self",
+        "type": "application/json",
+        "title": "this document",
+        "href": "http://localhost/ogc-api/"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "this document",
+        "href": "http://localhost/ogc-api/index.html"
+      },
+      {
+        "rel": "service-desc",
+        "type": "application/vnd.oai.openapi+json;version=3.0",
+        "title": "the API definition",
+        "href": "http://localhost/ogc-api/api"
+      },
+      {
+        "rel": "service-doc",
+        "type": "text/html",
+        "title": "the API definition",
+        "href": "http://localhost/ogc-api/api.html"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
+        "type": "application/json",
+        "title": "OGC API - Processes conformance classes implemented by this server",
+        "href": "http://localhost/ogc-api/conformance"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "OGC API - Processes conformance classes implemented by this server",
+        "href": "http://localhost/ogc-api/conformance.html"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+        "type": "application/json",
+        "title": "The processes offered by this server",
+        "href": "http://localhost/ogc-api/processes"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "The processes offered by this server",
+        "href": "http://localhost/ogc-api/processes.html"
+      },
+      {
+        "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+        "type": "application/json",
+        "title": "Job Management",
+        "href": "http://localhost/ogc-api/jobs"
+      },
+      {
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "Job Management",
+        "href": "http://localhost/ogc-api/jobs.html"
+      }
+    ]
+  }
+}

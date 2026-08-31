@@ -1,0 +1,25 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Mon, 31 Aug 2026 09:05:58 GMT",
+    "Server": "Apache/2.4.29 (Ubuntu)",
+    "X-Powered-By": "ZOO-Project",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self';",
+    "Content-Length": "608",
+    "Connection": "close",
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "final_url": "http://localhost/ogc-api/conformance",
+  "body": {
+    "conformsTo": [
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/job-list",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/dismiss",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/callback",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description",
+      "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/html"
+    ]
+  }
+}

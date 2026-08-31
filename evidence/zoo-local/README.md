@@ -4,9 +4,9 @@ Most ZOO captures use the local server at `http://localhost/ogc-api`. Follow
 the setup in the [main README](../../README.md#before-running-zoo-requests)
 before running a request.
 
-The process list checked on 24 August 2026 contained 703 processes. The
-repository selected 53 requests from that deployment and also records several
-validation and job interactions.
+The process list captured on 31 August 2026 contains 703 processes. The
+repository keeps a smaller selection of execution, validation, and job
+interactions from that deployment.
 
 Software versions recorded with the original captures:
 
@@ -21,6 +21,8 @@ responses captured on 25 August 2026
 ## Contents
 
 - [`server.json`](server.json): base URL, container name, and fixture path.
+- [`captures/discovery/`](captures/discovery/): landing page, conformance
+  declaration, and complete process list.
 - [`captures/descriptions/`](captures/descriptions/): one folder per process
   description.
 - [`captures/executions/`](captures/executions/): successful, failed, and
@@ -30,8 +32,7 @@ responses captured on 25 August 2026
 - [`diagnostics/`](diagnostics/): error summary, process-selection records, and
   direct OTB checks that are not normal HTTP exchanges.
 
-See the [evidence README](../README.md) for the request and response formats and
-the meaning of incomplete historical captures.
+See the [evidence README](../README.md) for the request and response formats.
 
 ## Run a request
 
