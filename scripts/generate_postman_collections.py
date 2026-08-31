@@ -29,7 +29,9 @@ FOLDER_ORDER = {
     "inputs": 15,
     "validation": 16,
     "maps": 20,
-    "downloads": 21,
+    "tables": 21,
+    "values": 22,
+    "downloads": 23,
 }
 
 

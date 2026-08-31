@@ -1,4 +1,4 @@
-# Synchronous GeoJSON value
+# Inline Polygon FeatureCollection
 
 This scenario was captured from the ZOO `Buffer` process on 25 August 2026.
 
@@ -6,10 +6,14 @@ Original evidence:
 
 - [successful execution](../../../../../evidence/zoo-local/captures/executions/buffer_polygon/)
 
-It combines a GeoJSON input supplied by URL with a numeric literal. The server
-returns HTTP 200 and a document response containing `Result.value`, whose value
-is a GeoJSON FeatureCollection.
+The result document contains one output called `Result`. Its semantic payload
+is the GeoJSON FeatureCollection at:
 
-This scenario is useful for checking that a client keeps the output ID, the
-`value` wrapper, the requested media type, and the complete GeoJSON value.
-Geometry validation belongs outside the protocol core.
+```text
+body.Result.value
+```
+
+The collection contains a Polygon feature and ordinary feature properties.
+The UI can show the geometry with a MapLibre fill and outline layer and expose
+the properties in a popup or table. The `Result` output ID and the `value`
+wrapper are not part of the GeoJSON payload passed to MapLibre.

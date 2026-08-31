@@ -1,0 +1,32 @@
+{
+  "id": "delaunay_five_points",
+  "title": "Create a Delaunay triangulation from five Alkmaar points",
+  "process_id": "Delaunay",
+  "execution_mode": "sync",
+  "method": "POST",
+  "path": "/processes/Delaunay/execution",
+  "headers": {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "inputs": {
+      "InputPoints": {
+        "href": "https://raw.githubusercontent.com/Gouwe-Gozer/ogc-processes-tests/6337cf43f22f780b883b7b0f43650585e4bf0d92/fixtures/gml/five_points.gml",
+        "type": "text/xml"
+      }
+    },
+    "outputs": {
+      "Result": {
+        "format": {
+          "mediaType": "application/json"
+        },
+        "transmissionMode": "value"
+      }
+    },
+    "response": "document"
+  },
+  "fixture": "../../../../fixtures/gml/five_points.gml",
+  "expected_status": 200,
+  "notes": "Reference-input case pinned to the published five-point GML 3.1 fixture."
+}

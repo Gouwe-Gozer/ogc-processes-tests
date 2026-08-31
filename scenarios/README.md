@@ -21,6 +21,8 @@ scenarios/
 │   └── validation/<provider>/<scenario>/
 └── results/
     ├── maps/<provider>/<scenario>/
+    ├── tables/<provider>/<scenario>/
+    ├── values/<provider>/<scenario>/
     └── downloads/<provider>/<scenario>/
 ```
 
@@ -84,3 +86,5 @@ The current scenarios and the reason each was selected are listed in the
 [test strategy](../docs/test-strategy.md#current-representative-scenarios).
 The form-specific structure, input encodings, selection, and remaining gaps
 are documented in [`forms/README.md`](forms/README.md).
+The result wrappers, semantic output types, presentation choices, and
+remaining gaps are documented in [`results/README.md`](results/README.md).

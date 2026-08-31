@@ -96,8 +96,17 @@ can still be reused by tests for another concern.
 | `forms/validation/zoo-local/advertised-repeated-raster` | A mixed link/inline raster array is allowed by the description but crashes the provider |
 | `forms/validation/zoo-local/dotted-input-identifiers` | Flat input IDs containing dots must not become nested objects; the OTB runtime is unavailable |
 | `forms/validation/zoo-local/inline-las-point-cloud` | Advertised inline LAS input is serialized correctly but crashes the provider |
-| `results/maps/zoo-local/geojson-value` | Synchronous execution with referenced GeoJSON input, a numeric literal, and wrapped GeoJSON output |
+| `results/maps/zoo-local/geojson-value` | Qualified Polygon FeatureCollection result |
+| `results/maps/zoo-local/geojson-geometry-value` | Bare LineString Geometry with three-coordinate positions |
+| `results/maps/zoo-local/multiple-featurecollections` | Five named Point, LineString, and Polygon FeatureCollection outputs |
+| `results/maps/zoo-local/line-and-multiline` | LineString and MultiLineString features in one collection |
+| `results/maps/zoo-local/multipolygon` | MultiPolygon FeatureCollection result |
+| `results/maps/zoo-local/geometry-collection` | FeatureCollection containing GeometryCollection values |
+| `results/tables/zoo-local/inline-csv` | Qualified inline CSV result suitable for a table and download |
+| `results/values/bgt-prototype/deeply-nested-json` | Deeply nested ordinary JSON that must not be mistaken for GeoJSON |
+| `results/values/zoo-local/scalar-object-and-bbox` | Direct string, qualified JSON object, and bounding box in one result document |
 | `results/downloads/zoo-local/result-by-reference` | Synchronous result returned as an `href` with a media type |
+| `results/downloads/directed-local/large-raw-csv` | Raw 18.8 MB CSV body requiring a download and limited preview |
 
 Each request file contains its method, URL, headers, and body. Each response
 file contains its status, headers, final URL, and body. The README explains why
@@ -114,7 +123,7 @@ require another representative scenario:
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
 | Unknown jobs and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
 | Additional bounding boxes, enums, repeated inputs, and schema variations | The selected form scenarios now cover the main shapes; add another only when it changes form or serialization behaviour |
-| Large CSV, deeply nested JSON, raster, and multiple-output results | Promote when result-handling tests begin; the CLIMADA evidence records its 18.8 MB CSV without checking the full body into Git |
+| Additional GeoJSON, CSV, raster, scalar, and nested JSON results | Their result wrappers and presentation families are represented by the selected result scenarios |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |
 
 ## Choosing the rest of the main set

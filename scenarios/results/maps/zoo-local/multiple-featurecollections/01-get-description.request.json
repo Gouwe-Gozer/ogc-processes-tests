@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/processes/SAGA.tin_tools.2",
+  "headers": {
+    "Accept": "application/json"
+  }
+}
