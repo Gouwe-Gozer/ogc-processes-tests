@@ -1,9 +1,9 @@
-# Repository scope and future test strategy
+# Repository scope and client test strategy
 
 ## End goal
 
-This repository prepares representative OGC API Processes material that will
-eventually be used by the client's automated test suite. It should cover:
+This repository prepares representative OGC API Processes material for use by
+the client's automated test suite. It should cover:
 
 - different OGC API Processes implementations;
 - discovery, descriptions, synchronous execution, asynchronous jobs, and
@@ -12,7 +12,7 @@ eventually be used by the client's automated test suite. It should cover:
 - results that need different presentation, such as maps, JSON views, text,
   and downloads.
 
-The future client tests should be separated by concern:
+Client tests should be separated by concern:
 
 | Test area | What it should verify |
 |---|---|
@@ -38,29 +38,50 @@ For now, this repository should:
 - record enough provider information to understand where an exchange came
   from.
 
-The contents of `scenarios/` are future test material, but they are not
-executable client tests yet.
+The contents of `scenarios/` are fixture material, not an executable client
+test suite. Assertions and mocking machinery belong in the client repository.
 
 This repository does not need a provider scenario for every defensive branch
 in the client. Its main job is to preserve useful differences observed in real
 OGC API Processes services. Controlled conditions that do not depend on a real
-provider belong in the future client repository.
+provider belong in the client repository.
+
+## Current client readiness
+
+The client was inspected on 17 September 2026 at `oap-client` commit `48ee066`
+(package version `0.2.0`). The earlier prerequisites for integration are now
+satisfied: it has an exported public API, module boundaries, an injectable
+`fetch`, response-envelope and error types, and a Vitest test runner.
+
+Existing scenarios can support tests of discovery, description/schema
+preservation, request serialization, response preservation, HTTP errors, and
+immediate-versus-job execution classification. Accepted submission records
+are usable now even when the later polling steps in their scenario are not.
+The [client fixture handoff](client-fixture-handoff.md) documents the actual
+interfaces, capture conversion rules, and a two-response Weaver example.
+
+This is a versioned integration target, not a promise that every interface is
+fixed across releases. Pin reviewed client and fixture commits when consuming
+the recordings. Use the client's existing runner and public exports; keep this
+repository focused on evidence and its handoff.
 
 ## Decisions that wait for the client
 
-Do not build a test framework in this repository before the client has a
-public API, module boundaries, and a TypeScript test runner. In particular,
-wait before deciding:
+Job polling, status methods, dismissal, callbacks, and result-retrieval helpers
+are not implemented in the inspected version. Form generation and semantic
+result classification are also pending. Their tests should follow the real
+client interfaces when those features arrive, using the descriptions,
+requests, and responses already recorded here.
 
-- whether `scenarios/` eventually moves into the client repository or remains
-  an external fixture set;
-- the fake transport implementation and its response queue;
-- assertion helpers or a machine-readable testcase manifest;
-- the final folder layout of protocol, form, result, and live tests;
-- the interfaces used by form generation and result rendering.
+Fixture placement and any shared assertion or mocking helpers remain client
+integration decisions. A small test can read selected files from a pinned
+checkout without first deciding the final home of every scenario or building
+a general response queue.
 
-Those decisions should follow the actual client design. Until then, plain JSON
-records and short README files are sufficient.
+Do not introduce a separate test framework, fake client, provider adapters,
+replacement client models, repository-validation framework, or machine-readable
+expectation manifests here. Plain recorded exchanges and explanatory documents
+remain the source material; executable assertions belong in the client suite.
 
 ## Current representative scenarios
 
@@ -178,9 +199,9 @@ scenarios are grouped by client concern, specific behaviour, provider, and
 scenario. This keeps provider differences visible while allowing pygeoapi,
 Weaver, ZOO, and future services to appear under the same behaviour.
 
-This folder structure does not prescribe a fake transport interface. A future
-fake transport can load the request and response sequence from any selected
-scenario after the client's real transport contract has been defined.
+This folder structure does not prescribe a replay mechanism. Client tests can
+load selected response bodies into exported parsers or return native responses
+through the existing injected `fetch`. Any mocking code belongs in that suite.
 
 ## Process families found in the ZOO evidence
 
@@ -226,10 +247,13 @@ provider-specific client code for them.
 
 ## Using the files in client tests
 
-After the client exists, deterministic protocol tests can call its public API
-with a small fake transport. The fake transport will return the recorded
-responses while the test checks the requests made and values returned. The
-fake belongs in the client test suite, not in this repository today.
+Deterministic protocol tests can now call the implemented public API with an
+injected `fetch` that returns native `Response` objects built from selected
+captures. The real client constructs its response envelopes; tests check the
+requests made and values returned. Mocking code belongs in the client suite.
+The [first handoff example](client-fixture-handoff.md#first-handoff-two-weaver-responses)
+starts more narrowly with exported response classifiers and requires no fetch
+mock. It tests recorded-response handling, not live-provider compatibility.
 
 Test the real HTTP adapter separately with an injected `fetch`. Those tests
 should cover request-option forwarding, HTTP responses including 4xx and 5xx,
@@ -239,8 +263,8 @@ OGC provider or a scenario folder here.
 ### Provider evidence and controlled client tests
 
 Some important client behaviours may never appear in the selected live
-services. Do not invent provider evidence for them. Test them later with
-controlled responses in the client project.
+services. Do not invent provider evidence for them. Test them with controlled
+responses in the client project as the relevant operations are implemented.
 
 | Behaviour | Where it should be tested | When it belongs here |
 |---|---|---|

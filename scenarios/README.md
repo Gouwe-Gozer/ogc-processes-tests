@@ -4,7 +4,10 @@ This folder contains a small, curated selection of OGC API Processes HTTP
 scenarios intended for future client tests. It is not an executable test suite.
 See the
 [repository scope and test strategy](../docs/test-strategy.md) before changing
-its structure or adding test machinery.
+its structure or adding test machinery. The
+[client fixture handoff](../docs/client-fixture-handoff.md) identifies the
+implemented client interfaces and gives a small Vitest example using two
+existing Weaver responses.
 
 Scenarios are grouped first by the part of the client they are mainly intended
 to test:
@@ -62,7 +65,7 @@ separate sync and async copies of the same form or result scenario.
 
 There is no `transport/` section here. Transport tests need controlled cases
 such as a rejected `fetch`, an aborted request, a redirect, and differently
-capitalized headers. Those should be small unit tests beside the future
+capitalized headers. Those should be small unit tests beside the
 client's HTTP code. The scenarios in this repository record exchanges with
 real API services and mainly support protocol, form, result, and live tests.
 
