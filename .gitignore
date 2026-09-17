@@ -5,3 +5,6 @@ __pycache__/
 *:Zone.Identifier
 .agents/
 .codex/
+
+node_modules/
+coverage/

@@ -2,8 +2,8 @@
 
 ## End goal
 
-This repository prepares representative OGC API Processes material for use by
-the client's automated test suite. It should cover:
+This repository records representative OGC API Processes exchanges and tests
+the real client against them through its public API. It should cover:
 
 - different OGC API Processes implementations;
 - discovery, descriptions, synchronous execution, asynchronous jobs, and
@@ -36,10 +36,13 @@ For now, this repository should:
   [`../evidence/`](../evidence/);
 - provide fixtures and Postman collections for inspecting live APIs;
 - record enough provider information to understand where an exchange came
-  from.
+  from;
+- run a small deterministic client suite against selected recordings locally
+  and in GitHub Actions.
 
-The contents of `scenarios/` are fixture material, not an executable client
-test suite. Assertions and mocking machinery belong in the client repository.
+The contents of `scenarios/` remain fixture material. Executable assertions and
+a small fixture-backed `fetch` live under `tests/` in this repository. They run
+the real client package; the client repository retains its internal unit tests.
 
 This repository does not need a provider scenario for every defensive branch
 in the client. Its main job is to preserve useful differences observed in real
@@ -57,13 +60,15 @@ Existing scenarios can support tests of discovery, description/schema
 preservation, request serialization, response preservation, HTTP errors, and
 immediate-versus-job execution classification. Accepted submission records
 are usable now even when the later polling steps in their scenario are not.
-The [client fixture handoff](client-fixture-handoff.md) documents the actual
-interfaces, capture conversion rules, and a two-response Weaver example.
+The [test suite guide](client-fixture-handoff.md) documents the actual
+interfaces, capture conversion rules, and the implemented cross-provider tests.
 
 This is a versioned integration target, not a promise that every interface is
-fixed across releases. Pin reviewed client and fixture commits when consuming
-the recordings. Use the client's existing runner and public exports; keep this
-repository focused on evidence and its handoff.
+fixed across releases. The suite pins the published client to `0.2.0` and
+commits its npm lockfile. Fixtures are versioned with the tests. It uses Vitest,
+the runner already used by the client, and imports the package's public exports.
+GitHub Actions runs the same `npm ci` and `npm run check` commands as a local
+checkout, without live providers or a separate client checkout.
 
 ## Decisions that wait for the client
 
@@ -73,15 +78,14 @@ result classification are also pending. Their tests should follow the real
 client interfaces when those features arrive, using the descriptions,
 requests, and responses already recorded here.
 
-Fixture placement and any shared assertion or mocking helpers remain client
-integration decisions. A small test can read selected files from a pinned
-checkout without first deciding the final home of every scenario or building
-a general response queue.
+The implemented fetch double follows the client's existing `FetchLike`
+contract and consumes only explicitly selected exchanges. This does not require
+inventing future lifecycle, form, or result APIs.
 
-Do not introduce a separate test framework, fake client, provider adapters,
+Do not introduce a custom test framework, fake client, provider adapters,
 replacement client models, repository-validation framework, or machine-readable
 expectation manifests here. Plain recorded exchanges and explanatory documents
-remain the source material; executable assertions belong in the client suite.
+remain the source material; expected behaviour lives in ordinary test assertions.
 
 ## Current representative scenarios
 
@@ -201,7 +205,8 @@ Weaver, ZOO, and future services to appear under the same behaviour.
 
 This folder structure does not prescribe a replay mechanism. Client tests can
 load selected response bodies into exported parsers or return native responses
-through the existing injected `fetch`. Any mocking code belongs in that suite.
+through the existing injected `fetch`. The small helper under `tests/support/`
+uses that boundary without adding provider-specific behaviour.
 
 ## Process families found in the ZOO evidence
 
@@ -250,10 +255,10 @@ provider-specific client code for them.
 Deterministic protocol tests can now call the implemented public API with an
 injected `fetch` that returns native `Response` objects built from selected
 captures. The real client constructs its response envelopes; tests check the
-requests made and values returned. Mocking code belongs in the client suite.
-The [first handoff example](client-fixture-handoff.md#first-handoff-two-weaver-responses)
-starts more narrowly with exported response classifiers and requires no fetch
-mock. It tests recorded-response handling, not live-provider compatibility.
+requests made and values returned. The helper and assertions live under
+`tests/` here. The [suite guide](client-fixture-handoff.md#initial-coverage)
+links the initial tests to their scenarios. Passing recorded tests verifies
+client handling of those responses, not live-provider compatibility.
 
 Test the real HTTP adapter separately with an injected `fetch`. Those tests
 should cover request-option forwarding, HTTP responses including 4xx and 5xx,

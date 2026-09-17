@@ -1,8 +1,9 @@
 # What the client can learn from a process description
 
-This document records behaviour for the future client and its tests. This
-repository supplies the descriptions and exchanges but does not enforce the
-behaviour itself.
+This document records intended client behaviour. The repository supplies the
+descriptions and exchanges, and its [test suite](client-fixture-handoff.md)
+checks the subset supported by implemented client interfaces. Form generation
+and result presentation described below still await those client features.
 
 A process description tells the client how to build a request for that process.
 It can provide:

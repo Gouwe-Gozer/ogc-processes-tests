@@ -4,15 +4,32 @@ This repository collects representative OGC API Processes requests and
 responses that our client should be able to handle.
 
 Start with [`scenarios/`](scenarios/). It contains a small, readable set intended
-for future client implementation and tests. [`evidence/`](evidence/) contains
+for client implementation and tests. [`evidence/`](evidence/) contains
 the larger collection of provider-specific requests, responses, and process
 descriptions that led to those choices.
 
-The files are test data. They do not test a client by themselves. Actual
-assertions belong in the client project's normal TypeScript test suite.
+The recordings are test data. [`tests/`](tests/) uses a pinned release of the
+real client with a fixture-backed fetch to exercise supported protocol behaviour.
+Assertions live in ordinary TypeScript tests in this repository; internal client
+unit tests remain in the client project.
 
 The end goal, current limits, and decisions that wait for the client are
 documented in [`docs/test-strategy.md`](docs/test-strategy.md).
+
+## Run the client tests
+
+With Node 24 or later:
+
+```bash
+npm ci
+npm run check
+```
+
+This runs TypeScript checking and the deterministic Vitest suite. No live
+provider or sibling client checkout is needed. GitHub Actions runs the same
+commands on pushes and pull requests. See the
+[test suite guide](docs/client-fixture-handoff.md) for coverage, fixture
+conversion, and the distinction between recorded tests and live compatibility.
 
 ## Folder guide
 
@@ -20,12 +37,13 @@ documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 |---|---|
 | `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
+| `tests/` | Executable cross-provider tests of the real client and a small recorded fetch |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |
 | `docs/` | Client scope, lessons learned, and scenario-selection notes |
 
-A scenario contains representative material for future client tests. Evidence
+A scenario contains representative material reusable across client tests. Evidence
 keeps each provider request beside the response that was actually observed.
 Complete evidence records the response status, headers, final URL, and body.
 
@@ -115,7 +133,9 @@ results URL for the last request.
 - [`docs/client-behaviour.md`](docs/client-behaviour.md): information from
   process descriptions and handling of bad input or responses.
 - [`docs/test-strategy.md`](docs/test-strategy.md): repository scope, scenario
-  selection, and the future client test suites.
+  selection, and implemented versus pending client tests.
+- [`docs/client-fixture-handoff.md`](docs/client-fixture-handoff.md): running
+  the suite locally and in CI, fixture conversion, and adding tests.
 - [`docs/deployment-compatibility.md`](docs/deployment-compatibility.md): why
   results differ between servers and software versions.
 - [`evidence/zoo-local/README.md`](evidence/zoo-local/README.md): details about

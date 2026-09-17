@@ -1,13 +1,14 @@
 # Representative scenarios
 
 This folder contains a small, curated selection of OGC API Processes HTTP
-scenarios intended for future client tests. It is not an executable test suite.
+scenarios reused by the executable client tests under [`../tests/`](../tests/).
+This directory contains recordings and explanatory notes, not test code.
 See the
 [repository scope and test strategy](../docs/test-strategy.md) before changing
 its structure or adding test machinery. The
-[client fixture handoff](../docs/client-fixture-handoff.md) identifies the
-implemented client interfaces and gives a small Vitest example using two
-existing Weaver responses.
+[test suite guide](../docs/client-fixture-handoff.md) identifies the implemented
+client interfaces, selected cross-provider coverage, and commands for local
+and CI runs.
 
 Scenarios are grouped first by the part of the client they are mainly intended
 to test:
