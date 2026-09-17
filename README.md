@@ -16,6 +16,9 @@ unit tests remain in the client project.
 The end goal, current limits, and decisions that wait for the client are
 documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 
+New to automated testing? Start with [Understanding the recorded client tests](docs/understanding-the-tests.md)
+for a plain-language explanation of the real client, fake transporter and test files.
+
 ## Run the client tests
 
 With Node 24 or later:
