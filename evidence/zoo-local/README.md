@@ -18,6 +18,9 @@ OTB 7.x, with the ZOO adapter configured for 7.0
 responses captured on 25 August 2026
 ```
 
+See [possible issues for ZOO maintainers](possible-issues.md) for a short report
+with evidence links and reproduction instructions.
+
 ## Contents
 
 - [`server.json`](server.json): base URL, container name, and fixture path.
