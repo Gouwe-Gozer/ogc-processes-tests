@@ -37,15 +37,18 @@ with a clean working tree at commit
   and selected providers into the runtime image. Compose configures both
   `zookernel` and `zoofpm` to use `zoo-project:local`.
 
-**Historical provenance remains incomplete:** the base-image digest is not the
-identity of the final locally built image. Docker was unavailable in the
-inspection environment, so the running image ID, build overrides and binary
-version could not be checked. The inspected checkout also postdates the
-25 August execution captures. Neither those captures nor
-[server.json](server.json) bind the responses to a source commit or final image
-ID. The details above establish the current source/build setup, not the exact
-binaries that produced every saved response. These observations have not been
-rechecked against current upstream ZOO.
+**Deployment provenance (confirmed by the deployment owner):** the image used
+for these captures was not updated, and matches the fork's source/build setup
+identified above. The owner also confirmed that the checkout changes after the
+25 August captures did not affect the image. The findings therefore concern
+this locally built ZOO Kernel 2.1.0-based fork, including its local patches.
+The checkout revision above identifies the inspected source context; it is not
+claimed as a recorded image build revision.
+
+This deployment history is owner-confirmed. Docker was unavailable during
+inspection, so the final local image ID was not independently read. The pinned
+base-image digest above identifies the base, not the final locally built image.
+These observations have not been rechecked against current upstream ZOO.
 
 ## 1. Repeated raster input returns SIGSEGV
 
