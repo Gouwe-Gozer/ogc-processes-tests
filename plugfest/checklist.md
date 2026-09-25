@@ -1,93 +1,35 @@
-# Six plugfest checks
+# Things to try on a visiting service
 
-Use with the [guide](README.md) and [results sheet](results-template.md).
-Start with discovery and a small execution; add the other checks where the
-client and server support them. A recorded reply is an example, not a promise
-that a different deployment returns identical bytes, timings or job IDs.
+Use **our OAP client against the visiting company's service**. Ask its owner
+for valid inputs and use its current process descriptions. Try what the service
+supports; this is a conversation guide, not a mandatory conformance test.
 
-For a visiting server, use its own descriptions and example inputs. The process
-names below apply only to the corresponding known deployments.
+| Try | What to look for | What is useful to save |
+|---|---|---|
+| Discover and open a process | Can our client connect, list processes and explain the selected inputs/outputs? | Process description and any discovery problem |
+| Execute a small example | Do entered values reach the request correctly, and is the result usable? | Actual request and response |
+| Vary the inputs | Do arrays, zero/false values, geometry, JSON, files and references survive the form/encoding? Is JSON fallback clear? | A distinct description/request pair |
+| Inspect different outputs | Can the UI make sense of scalar, JSON, GeoJSON, CSV, large data or download links? Are linked files reachable? | Output description, response and any body file |
+| Follow a background job, if supported | Can the client find the job, report status and retrieve results? If it finishes immediately, does the client handle that? | Submission, observed status replies and results |
+| Try a refusal or dismissal with the owner | Is the explanation useful? Does the client distinguish a failed job from a failed HTTP request, and stopping a wait from dismissing a job? | The request and complete error/dismissal response |
 
-## 1. Connect and discover
+For a useful or unexpected result, write a few lines using the
+[results template](results-template.md). Note the client version and service
+address. Use Postman/curl for comparison when needed; browser access failures
+and unsupported UI features should not automatically be called server defects.
 
-- Open the confirmed service in the client and list its processes.
-- Open one current description. Can the user identify required inputs, formats
-  and outputs? Is a failed description reported without misleading the user?
-- Reference: [Weaver discovery](../scenarios/protocol/discovery/weaver-redoak/core-discovery/).
-  This is historical public-service evidence, not a guaranteed event endpoint.
-- Save the actual landing, listing and description used for subsequent checks.
+## Our recordings are examples of what to look for
 
-## 2. Run a small process
+They are not requests to send unchanged to a visiting service:
 
-- Known ZOO example: `hellojs`, with input `S` set to `Codex`.
-  See the [exact request](../scenarios/protocol/execution/zoo-local/simple-sync/01-execute.request.json).
-- Alternative pygeoapi example: `hello-world`, with `name` set to
-  `OGC API client` and `message` to `Raw response check.`; use its
-  [request and response](../scenarios/protocol/execution/pygeoapi-demo/raw-versus-document-response/).
-- Check that entered values survive in the outgoing request and the returned
-  result is accessible. Keep the actual response rather than assuming a fixed
-  greeting across providers.
+- [Weaver mixed inputs](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/)
+  shows why an ordinary JSON object, a geometry and a file need different controls.
+- [DIRECTED's undocumented array constraint](../scenarios/forms/validation/directed-local/undocumented-array-length/)
+  shows that schema-valid input can still be refused by the provider.
+- [DIRECTED's large CSV](../scenarios/results/downloads/directed-local/large-raw-csv/)
+  shows why a complete download may be more useful than rendering every row.
+- [Weaver sync with job links](../scenarios/protocol/execution/weaver-local/sync-with-job-links/)
+  shows that job-related headers do not always mean the client should start polling.
 
-## 3. Follow a background job
-
-- Known ZOO example: `longProcess`, input `sid: 1`, with async preference.
-  Use [successful-job](../scenarios/protocol/jobs/zoo-local/successful-job/).
-- Weaver alternative: [EchoProcess successful-job](../scenarios/protocol/jobs/weaver-local/successful-job/).
-  Use its full supplied input body; several inputs are required.
-- Check that the client finds the returned job address, shows the observed
-  status and makes successful results available. Don't expect a new run to
-  show every intermediate state seen in a recording.
-- If the service immediately returns a result, record that outcome rather than
-  declaring that async necessarily happened because it was requested.
-- Optional, on a separate running job: request dismissal using
-  [the ZOO example](../scenarios/protocol/jobs/zoo-local/dismiss-running-job/).
-  Distinguish stopping the local wait from sending DELETE to the server.
-
-## 4. Enter varied input payloads
-
-- Primary example: [Weaver mixed inputs](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/).
-  Its [complete request](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/02-execute.request.json)
-  contains enum/date/number values, arrays, ordinary JSON, GeoJSON, bbox and
-  inline file data. Enter values through the available controls or documented
-  JSON fallback; record which interface was used.
-- Smaller alternative: [ZOO inline CSV](../scenarios/forms/inputs/zoo-local/inline-csv/),
-  with two text tables and Boolean options in the supplied request.
-- Compare the actual request with the intended values. Look for lost zeros or
-  false values, changed array structure, lost geometry coordinates, and missing
-  media types or encoding. A raw-JSON fallback is distinct from a generated
-  form control; record both honestly.
-
-## 5. Inspect varied outputs
-
-- Small spatial example: [ZOO GeoJSON result](../scenarios/results/maps/zoo-local/geojson-value/).
-  Confirm any linked input is reachable by the server before using the example.
-- Large tabular example: DIRECTED `climada-simple-example-denmark-process`,
-  input `intensity: [0, 30, 80]`. See the
-  [exact request](../scenarios/results/downloads/directed-local/large-raw-csv/02-execute.request.json)
-  and [18.8 MB historical CSV](../scenarios/results/downloads/directed-local/large-raw-csv/).
-  A new run may return different contents or size.
-- Check what the UI offers: map, text/JSON, table preview, file link or download.
-  Record unsupported presentations without treating a valid fallback as a
-  protocol error. Large data should remain obtainable without an unusable UI.
-- For referenced outputs, try the link from the actual client environment.
-  A successful process does not establish that the file is accessible.
-
-## 6. Explain a failure
-
-- With the provider's agreement, use a known failing example such as
-  [ZOO failR](../scenarios/protocol/errors/zoo-local/structured-execution-error/).
-- A useful validation distinction is
-  [DIRECTED's undocumented array length](../scenarios/forms/validation/directed-local/undocumented-array-length/):
-  the recorded description allows an array but the recorded provider refuses
-  two elements because it needs three. Check the current description first.
-- Can the client distinguish local validation, a server refusal and a browser
-  access problem? Does it retain the server's useful explanation?
-- For a failed background job, a successful status HTTP request does not mean
-  the job succeeded: inspect the returned job state.
-
-## Record an outcome for every attempted check
-
-Use: **worked**, **unexpected behaviour**, **unsupported**, **service unavailable**,
-**browser/access blocked**, or **not attempted**. “Worked” for the failure check
-means that the client handled the expected refusal clearly, not that processing
-succeeded. Record the evidence and any uncertainty before attributing a defect.
+Look for similarly useful differences in the visiting services. A working
+example with a new payload shape is worth keeping even when nothing fails.

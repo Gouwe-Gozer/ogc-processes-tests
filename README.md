@@ -30,9 +30,10 @@ for a plain-language explanation of the real client, fake transporter and test f
 
 ## Attending the plugfest
 
-Start with [`plugfest/`](plugfest/): a guide for testing visiting clients and
-servers, six manual checks, and a copyable results sheet. Confirm event service
-addresses first; the repository's localhost defaults are not shared endpoints.
+Start with [`plugfest/`](plugfest/): our main focus is trying other companies'
+services with our OAP client and collecting useful input/output examples. It
+includes a short checklist and notes template. Visitors can also optionally
+test their own clients against our containerised local APIs.
 
 ## Run the client tests
 

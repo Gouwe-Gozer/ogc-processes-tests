@@ -1,142 +1,79 @@
-# Plugfest: getting started
+# Plugfest: try other companies' services
 
-Use this folder to test both visiting clients and visiting OGC API Processes
-servers. It is a manual walkthrough using our existing evidence, not a new
-automated test framework or a compliance certification.
+**Our main goal is to connect our OAP client to other companies' OGC API
+Processes services.** Find out what works, where our client struggles, and
+collect new request/output examples for the core and UI.
 
-Start with this guide, follow the [six checks](checklist.md), and copy the
-[results template](results-template.md) for each client/server combination.
-Keep input and output examples: they help improve forms and result presentation
-as well as diagnose protocol problems.
+Testing another company's client against our local APIs is an optional extra.
+It does not need to be organised before we can start testing services.
 
-## Two routes
+## Get started with a visiting service
 
-| Route | Use | What it establishes |
-|---|---|---|
-| Another company's client → known service | The visiting UI and our selected requests as examples | What that client can discover, submit, monitor and display on that deployment |
-| Our client → another company's service | The OAP web application and the visiting server's current descriptions | Whether our client works with that server's actual processes and payloads |
+1. **Ask for the service URL and one working example.** Get a process ID and
+   valid inputs from its owner, plus access details if needed.
+2. **Open the service in our OAP client.** Browse its processes, open the chosen
+   description, enter the example inputs and execute it.
+3. **Look at the request and result.** Did the form make sense? Did the request
+   contain the intended values? Can the user understand or use the output?
+4. **Save anything interesting.** Keep the process description, actual request
+   and response, and a short note. Use the [small results template](results-template.md)
+   if helpful. Follow the [checklist](checklist.md) for further things to try.
 
-A third useful comparison is sending the same request directly with Postman.
-It helps distinguish a provider response from client behaviour. Postman success
-does not establish browser access: CORS can prevent a web client from sending
-a request, reading a reply or seeing headers such as `Location`.
+There is no endpoint inventory to complete first. Use the service and examples
+available at the event. Start with one successful execution, then explore
+interesting inputs, outputs, jobs and errors with the service owner.
 
-## Prepare before the event
+## If something does not work
 
-- Obtain working client application URLs or launch instructions from their
-  owners, including our OAP web application. This repository does not launch a UI.
-- Confirm the service addresses, access requirements and available processes.
-  Verify them from a colleague's event machine, including referenced input files.
-- Agree which process is a small example, which supports background jobs, and
-  which supplies interesting inputs and results. Start with the small example.
-- Import the Postman collection below and try the selected requests before the
-  session. Keep the repository available locally for the example bodies/files.
-- Choose a place to save observations using the results template. Record
-  versions and exact addresses so another colleague can reproduce the session.
+Try the same request directly in Postman or curl. Keep the actual method, URL,
+headers and body so the comparison is meaningful. If direct HTTP succeeds but
+the browser fails, inspect the browser's network/console output: access or CORS
+may be the difference. Direct HTTP success alone does not prove UI compatibility.
 
-Fill in this table with event information. **No endpoint is confirmed by this
-guide.** The `*-local` defaults in our evidence refer to services on the original
-capture machine; cloning this repository does not start or deploy them.
+For a new service, build the request from its current description and the
+owner's example. Our existing Postman requests are useful references, but
+changing a ZOO or Weaver base URL does not make their process IDs and inputs
+valid for another provider.
 
-| Service/deployment | Event base URL | Access instructions (no passwords) | Confirmed process IDs | Checked by/date |
-|---|---|---|---|---|
-| ZOO | To confirm | | | |
-| Weaver | To confirm | | | |
-| DIRECTED | To confirm | | | |
-| Visiting service: … | To confirm | | | |
+## What we want to bring home
 
-For each browser client, record its page URL too. Different ports count as
-different origins. Record whether a proxy/relay is used; do not silently change
-the connection route halfway through a comparison.
+New, useful examples matter as much as a pass/fail result:
 
-## Use the existing Postman collection
+- Input descriptions and request bodies that exercise forms: arrays, enums,
+  GeoJSON, nested JSON, CSV, inline files or references.
+- Output descriptions and responses with different values, wrappers, media
+  types, sizes and download links.
+- Errors or job responses that our client does not explain or handle well.
 
-Import [representative-scenarios.postman_collection.json](../generated/postman/representative-scenarios.postman_collection.json)
-into Postman. It is already generated; no Node installation is required to
-read the examples or use the manual checklist. The collection follows the
-`scenarios/` folder structure.
+Save new captures in a separate dated folder, with a short service/process note.
+Retain request method/URL/headers/body and response status/headers/final URL/body;
+keep large bodies as separate files. Remove credentials from shared copies.
+Do not overwrite the old recordings with an event run. Afterwards we can curate
+useful examples into `evidence/` and `scenarios/`, and add focused tests.
 
-In your imported copy, set the applicable collection variables to the confirmed
-event addresses, without trailing slashes:
+## Optional extra: another company's client against our local APIs
 
-| Provider | Collection variable |
-|---|---|
-| ZOO | `zooLocalBaseUrl` |
-| Local Weaver | `weaverLocalBaseUrl` |
-| DIRECTED | `directedLocalBaseUrl` |
-| Public pygeoapi example | `pygeoapiDemoBaseUrl` |
+Visitors can run the local APIs themselves using the container instructions
+in the repositories on [Minert's GitHub page](https://github.com/Gouwe-Gozer).
+Those setups are intended to match the addresses used by this test repository.
+Use each API repository's README to start it; no shared event deployment is
+required. This test repository itself does not start the containers.
 
-Check for environment variables overriding those values. Recorded absolute
-URLs, linked files, output links and process IDs are not automatically made
-portable by changing a base URL. Inspect them before sending a request.
+Once an API is running, connect the visiting client and use our
+[existing scenarios](../scenarios/) as examples. Import the
+[representative Postman collection](../generated/postman/representative-scenarios.postman_collection.json)
+for the corresponding requests and recorded responses. If a local port/address
+was changed, adjust the provider's collection variable in the imported copy.
 
-Run individual requests first. For the known ZOO or Weaver successful-job
-scenario, run that specific folder in Collection Runner: its scripts save the
-new job address/ID and follow the polling sequence. Reset job variables between
-runs; never reuse the IDs from a recorded example. The scripts have a polling
-limit; reaching it does not prove the server job failed.
+Useful starting points are [ZOO hellojs](../scenarios/protocol/execution/zoo-local/simple-sync/),
+[Weaver's mixed inputs](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/)
+and [DIRECTED's large CSV](../scenarios/results/downloads/directed-local/large-raw-csv/).
+For job sequences, run the specific successful-job folder rather than the whole
+collection. See the [Postman notes](../generated/postman/README.md) for details.
 
-Do not run the entire collection blindly: it mixes deployments, deliberately
-failing requests and different processing workloads. The per-provider
-[evidence collections](../generated/postman/README.md#provider-evidence) are
-additional manual references; they do not include the job automation scripts.
+## The automated suite is a separate tool
 
-Saved Postman response examples are historical evidence, not freshly obtained
-results. Large/binary `body_file` contents remain in this repository and are
-not embedded in Postman. To update generated collections after changing source
-captures, run `python3 scripts/generate_postman_collections.py`; do not edit the
-tracked generated JSON by hand.
-
-## Route A: visiting client, known service
-
-1. Record the visiting client name/version, browser/page URL and service address.
-2. Connect through the visiting client's normal UI and read the current process
-   description. Confirm that the selected process and inputs actually exist.
-3. Follow the checklist. Use its linked request bodies as example values. Let
-   the visiting client construct its own request; don't silently replace it
-   with a Postman request and call that a client success.
-4. When a result is unexpected, compare the actual outgoing request and server
-   reply with a direct Postman request. Save differences rather than guessing
-   whether the client or server is at fault.
-5. Record UI observations: usable controls, preserved values, readable errors,
-   useful result display and accessible download links.
-
-## Route B: our client, visiting service
-
-1. Record the visiting service's address, version and access requirements.
-2. Inspect its landing page, advertised links, process list and descriptions.
-   Ask the owner for a minimal valid input and supported execution modes.
-3. Connect our OAP UI to that address using its normal configuration. Follow
-   the checklist with the visiting provider's own processes and inputs.
-4. Our ZOO/Weaver/DIRECTED cases are patterns, not universal requests. Do not
-   merely replace their host and assume the process IDs or schemas will match.
-5. Keep new descriptions, requests and outputs as new evidence. New geometry,
-   CSV, JSON, file and validation examples are useful even if no automated test
-   consumes them yet.
-
-## Record findings without losing existing evidence
-
-Copy [results-template.md](results-template.md), for example to a dated session
-folder under `plugfest/`. Give attached requests, responses and screenshots
-relative filenames and keep each observation tied to its client/server pair.
-For a useful exchange retain method, URL, request headers/body, response status,
-headers, final URL and body (or a separate body file). Remove credentials and
-session tokens from shared files while retaining the relevant diagnostic data.
-
-Keep new live captures separate from the existing historical scenarios.
-In particular, `scripts/run_evidence_request.py --save-response` writes beside
-the supplied request and can replace an existing response. Do not use it on an
-old scenario as a way to record a new company's server. Afterwards, promote
-useful captures into `evidence/<provider>/` with provider metadata and select
-only distinct examples for `scenarios/`.
-
-## Where the automated suite fits
-
-`npm run check` runs our recorded tests against the installed OAP core package.
-`npm run check:local` runs the same tests against an isolated compilation of
-`../oap-client` source. Neither contacts event services, launches the UI, tests
-another company's client, or runs the OAP repository's own tests.
-
-These commands are a separate regression check. See the
-[current automated coverage](../docs/client-fixture-handoff.md#current-coverage)
-and [testing responsibilities](../docs/test-strategy.md#which-repository-tests-what).
+`npm run check` and `npm run check:local` replay saved responses against our
+core client. They do not contact the visiting service, launch a UI or run another
+company's client. New event captures can become future regression tests; see
+[current automated coverage](../docs/client-fixture-handoff.md#current-coverage).
