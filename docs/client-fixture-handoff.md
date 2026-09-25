@@ -36,8 +36,9 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-The original 16 tests pass against this release; lifecycle coverage is the next
-addition. The source links below document the original integration baseline.
+All 21 tests pass against this release, including five recorded lifecycle
+tests using `execute`, `pollJob`, `waitForJob`, `getResults` and `dismissJob`.
+The source links below document the original integration baseline.
 
 ## Implemented client boundary
 
@@ -58,8 +59,10 @@ is already implemented; the test double does not introduce a new transport API.
 
 [`recorded-fetch.ts`](../tests/support/recorded-fetch.ts) has two small operations:
 
-- `readExchange(scenario, step, variables)` loads an existing request/response
-  pair. Tests explicitly name the files they need.
+- `readExchange(scenario, step, variables, responseStep = step)` loads an existing
+  request/response pair. The optional last argument selects variants such as
+  `02-poll.running.response.json` alongside `02-poll.request.json`. Tests
+  explicitly name the files they need; the helper does not invent job states.
 - `recordedFetch(...exchanges)` returns an injected fetch, captured calls, and
   `assertDone()`. It checks the next recorded method and URL, then returns a
   fresh native `Response`. Unexpected requests fail; there is no live fallback.
@@ -72,7 +75,7 @@ The helper does not poll, select renderers, normalize provider payloads, or
 implement client behaviour. Its local capture types describe existing on-disk
 metadata, not a new scenario specification or replacement client models.
 
-## Initial coverage
+## Current coverage
 
 | Client concern | Existing scenarios | Executable tests |
 |---|---|---|
@@ -81,6 +84,8 @@ metadata, not a new scenario specification or replacement client models.
 | Synchronous execution and body preservation | ZOO `simple-sync`; pygeoapi `raw-versus-document-response`; Weaver `sync-with-job-links` | [execution.test.ts](../tests/protocol/execution.test.ts) |
 | Structured and HTML HTTP errors | ZOO `structured-execution-error` and `process-description-html-error` | [errors.test.ts](../tests/protocol/errors.test.ts) |
 | Accepted submission and job location | First exchange of ZOO and Weaver `successful-job` | [submission.test.ts](../tests/protocol/submission.test.ts) |
+| Submission through polling and results | ZOO and Weaver `successful-job`, including ZOO running and successful status variants | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
+| Failed job status, early results refusal and dismissal | ZOO `failed-job` status and `dismiss-running-job`; Weaver `results-not-ready` response | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 
 The scenario READMEs retain their links to provider evidence. Selection follows
 implemented client behaviour, not a provider-specific test framework. A scenario
@@ -91,6 +96,14 @@ request cannot silently pass, responses have independent readable bodies, URLs
 are preserved, and `body_file` can supply original bytes. Their controlled
 variations are loader checks, not additional provider evidence. Reading the
 large CSV verifies byte loading, not table rendering or download UI behaviour.
+
+The job tests use the client's real polling loop with a 500 ms initial interval
+and bounded poll count. They check state transitions and stopping at terminal
+states, not backoff timing. Weaver has no recorded running reply, so its success
+flow polls once. Results remain unparsed documents; output file links are
+preserved without fetching those files. Failed status and early-results tests
+start at their selected GET response rather than repeating submission. Dismissal
+checks the returned status, not cancellation of a concurrent polling loop.
 
 ## Capture conversion and limits
 
@@ -139,7 +152,8 @@ only for distinct behaviour or a demonstrated evidence gap, preserving provider
 provenance.
 
 Job status, polling, dismissal and result retrieval now have public interfaces
-in 0.3.2; recorded lifecycle tests can use them. Execution callbacks still wait
+in 0.3.2 and are exercised by the recorded lifecycle tests. Job listing has a
+public interface but is not yet covered here. Execution callbacks still wait
 for client support. Form generation and semantic
 map/table/value/download selection also remain pending. Submission tests stop
 at the returned job handle, and schema-preservation tests do not imply that

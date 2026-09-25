@@ -30,14 +30,15 @@ async function readCapture(file: URL, variables: Readonly<Record<string, string>
   return JSON.parse(expanded) as unknown;
 }
 
-/** Load one existing pair; step is explicit, never discovered by directory order. */
+/** Load an explicit pair; responseStep selects a saved variant of the same request. */
 export async function readExchange(
   scenario: string,
   step: string,
   variables: Readonly<Record<string, string>> = {},
+  responseStep: string = step,
 ) {
   const requestFile = new URL(`${scenario}/${step}.request.json`, scenarios);
-  const responseFile = new URL(`${scenario}/${step}.response.json`, scenarios);
+  const responseFile = new URL(`${scenario}/${responseStep}.response.json`, scenarios);
   const [request, response] = await Promise.all([
     readCapture(requestFile, variables),
     readCapture(responseFile, variables),

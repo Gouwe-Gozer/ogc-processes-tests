@@ -61,7 +61,9 @@ preservation, request serialization, response preservation, HTTP errors, and
 immediate-versus-job execution classification. Accepted submission records
 were the initial job coverage. The installed 0.3.2 package, inspected on
 25 September 2026, also exposes job status, polling, results retrieval, dismissal
-and job listing; the later recorded steps can now be used.
+and job listing. The suite now tests successful submission/polling/results
+flows for ZOO and Weaver, ZOO failed status and dismissal, and Weaver
+results-not-ready errors. Job listing is available but not yet covered.
 The [test suite guide](client-fixture-handoff.md) documents the actual
 interfaces, capture conversion rules, and the implemented cross-provider tests.
 
