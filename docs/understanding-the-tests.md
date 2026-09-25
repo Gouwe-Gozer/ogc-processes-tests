@@ -13,9 +13,14 @@ The question is: **does the client send the expected request and correctly
 understand a response like the ones we have observed in practice?**
 
 The suite currently installs `@breinstein/oap-client` version `0.3.2` from npm,
-the package registry. It does not use the latest code in the neighbouring
-`oap-client` folder. Editing that folder will therefore not change these test
-results. Testing a newer release requires updating the dependency and lockfile.
+the package registry. By default it does not use the neighbouring `oap-client` folder. Editing that
+folder will not change the default test results. Testing a newer published
+release requires updating the dependency and lockfile.
+
+There is also an explicit `npm run check:local` command to test a build from
+that neighbouring folder. It prints which client it uses and leaves the
+published package installed. You must build the client first, and rebuild
+after source changes; see the [local build instructions](client-fixture-handoff.md#test-a-local-client-build).
 
 ## What is the fake transporter?
 
@@ -105,6 +110,7 @@ The other new configuration files have supporting roles:
 
 | File | Purpose |
 |---|---|
+| [check_local_client.py](../scripts/check_local_client.py) | Optional Python launcher that selects a built local client for both type checking and tests, without installing it. |
 | [package.json](../package.json) | Lists the client and tools to install, plus commands such as `npm test`. |
 | [package-lock.json](../package-lock.json) | Records exact dependency versions so colleagues and CI install the same packages. Its size does not represent custom test code. |
 | [tsconfig.json](../tsconfig.json) | Configures TypeScript's checks for mistakes such as passing the wrong kind of value to a function. |

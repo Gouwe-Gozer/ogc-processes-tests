@@ -40,6 +40,70 @@ All 24 tests pass against this release, including eight recorded lifecycle
 tests using `execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`.
 The source links below document the original integration baseline.
 
+## Test a local client build
+
+The default `npm run check` tests the installed npm package. To check changes
+before a client release is published, use:
+
+```bash
+npm run check:local
+```
+
+The expected layout is:
+
+```text
+parent-folder/
+├── oap-client/
+│   └── packages/core/dist/
+└── ogc-processes-tests/
+```
+
+First build the client using its own tools. In the `oap-client` checkout, with
+its required pnpm version installed, run:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm --filter @breinstein/oap-client build
+```
+
+Then run `npm run check:local` from this test repository (after `npm ci` here
+on first setup). The command requires Python 3. It prints the selected package
+version and absolute build paths, checks the test code against the local
+TypeScript declarations, and runs the same recorded tests against the local
+JavaScript. Both steps must pass. A missing checkout or build is an error;
+there is no fallback to the published client.
+
+For a different folder layout, or to run selected tests:
+
+```bash
+npm run check:local -- --client /path/to/oap-client
+npm run check:local -- tests/protocol/jobs.test.ts --reporter=verbose
+```
+
+The path identifies the client repository, not `packages/core` itself.
+The default sibling path is resolved relative to this test repository, not
+relative to whichever directory happens to launch the Python script.
+
+**Rebuild after changing or pulling client source.** This command tests the
+existing build; it does not install dependencies or rebuild the client for you.
+The displayed version comes from its package metadata, so two different builds
+can display the same version. It is not a freshness check or a Git commit ID.
+
+The [Python launcher](../scripts/check_local_client.py) creates a temporary
+TypeScript configuration and gives [Vitest](../vitest.config.ts) a matching
+local import alias for that run. It removes the temporary configuration on
+exit. It does not change either repository's source, `package.json`, lockfile,
+or installed client, and it does not create an npm link.
+
+Return to the published release simply by running:
+
+```bash
+npm run check
+```
+
+GitHub Actions continues to use `npm ci` and `npm run check`. It does not need
+a sibling checkout and does not run the optional local command.
+
 ## Implemented client boundary
 
 The initial integration is based on client source commit `48ee066`, package

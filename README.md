@@ -34,6 +34,16 @@ commands on pushes and pull requests. See the
 [test suite guide](docs/client-fixture-handoff.md) for coverage, fixture
 conversion, and the distinction between recorded tests and live compatibility.
 
+To test a built client in the sibling `../oap-client` checkout instead:
+
+```bash
+npm run check:local
+```
+
+This requires Python 3 and a client build. It checks both types and behaviour
+against that build without changing installed dependencies. See the
+[local client instructions](docs/client-fixture-handoff.md#test-a-local-client-build).
+
 ## Folder guide
 
 | Folder | Contents |

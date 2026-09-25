@@ -8,7 +8,8 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm test"
+    "check": "npm run typecheck && npm test",
+    "check:local": "python3 scripts/check_local_client.py"
   },
   "devDependencies": {
     "@breinstein/oap-client": "0.3.2",
