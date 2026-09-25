@@ -23,7 +23,9 @@ generated/postman/
 ## Representative scenarios
 
 The representative collection follows the structure under `scenarios/`. It
-contains the small cross-provider set intended for future client tests.
+contains the small cross-provider set used for evidence review and selected
+client tests. For event setup and manual client/server comparisons, see the
+[plugfest guide](../../plugfest/README.md).
 
 Its recorded `response.json` files become Postman response examples. Matching
 `.post-response.js` files are also included. The current asynchronous scripts

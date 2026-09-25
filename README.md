@@ -28,6 +28,12 @@ documented in [`docs/test-strategy.md`](docs/test-strategy.md).
 New to automated testing? Start with [Understanding the recorded client tests](docs/understanding-the-tests.md)
 for a plain-language explanation of the real client, fake transporter and test files.
 
+## Attending the plugfest
+
+Start with [`plugfest/`](plugfest/): a guide for testing visiting clients and
+servers, six manual checks, and a copyable results sheet. Confirm event service
+addresses first; the repository's localhost defaults are not shared endpoints.
+
 ## Run the client tests
 
 With Node 24 or later:
@@ -64,6 +70,7 @@ dependencies untouched. See the
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |
+| `plugfest/` | Event preparation, manual client/server checklist and results template |
 | `docs/` | Client scope, lessons learned, and scenario-selection notes |
 
 A scenario contains representative material reusable across client tests. Evidence
