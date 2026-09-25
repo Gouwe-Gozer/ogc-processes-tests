@@ -5,9 +5,17 @@ recordings it uses. Tests import the real `@breinstein/oap-client` package and
 supply recorded responses through its existing `FetchLike` interface. ZOO,
 pygeoapi, and Weaver are fixture sources for shared client concerns.
 
-The client repository continues to own its implementation and internal unit
-tests. This suite can run independently, locally or in GitHub Actions, without
-a sibling checkout or a live provider.
+The client repository owns its implementation, core unit tests, UI tests,
+relay tests, and browser/live-provider checks. This suite can run independently
+against npm, locally or in GitHub Actions, without a sibling checkout or live
+provider. The optional local command changes the tested core source only; it
+does not run the client's own tests or UI.
+
+Collecting varied request and output payloads for that UI is also a main aim
+of this repository. `scenarios/forms/` and `scenarios/results/` supply examples
+beyond the protocol cases executed here. See the
+[responsibility map](test-strategy.md#which-repository-tests-what) and
+[UI evidence handoff](test-strategy.md#collecting-useful-ui-payloads).
 
 ## Run locally and in CI
 
@@ -191,11 +199,12 @@ public outcomes. No provider was contacted and no responses were invented.
 | Job disappears during an active poll loop | Not captured. Do not splice an unknown-job reply onto an unrelated running job and call it provider evidence |
 | Browser cannot access status or headers | Requires real browser networking; the recorded fetch cannot establish CORS compatibility |
 
-The sibling client checkout inspected for this review remains at `48ee066`
-(version 0.2.0), without the new job tests. It was not updated or modified.
-Consequently this review cannot establish which controlled polling cases the
-colleagues already cover in their newer source. The installed 0.3.2 package's
-public types and implementation are the integration target here.
+The updated checkout at `fb9d5f2` was subsequently inspected. Its own tests
+cover cancellation, deadlines, polling delays, a 404 during polling and server
+errors. Its web app also has form and result tests, and its browser tests cover
+CORS. See the [source references](test-strategy.md#which-repository-tests-what).
+These are not additional tests run by this repository, and their presence
+alone does not establish a passing run.
 
 ## Capture conversion and limits
 
@@ -237,18 +246,20 @@ request live. Replayed headers also do not reproduce browser CORS filtering.
 ## Extending the suite
 
 Add ordinary tests under `tests/` using an existing representative scenario
-where possible. Import only the published client's public API. Keep expected
+where possible. Import only the client core's public API. Keep expected
 behaviour in the test assertions, with explanatory context in the scenario
 README; do not introduce `testcase.json` or expectation manifests. Add captures
 only for distinct behaviour or a demonstrated evidence gap, preserving provider
 provenance.
 
-Job status, polling, dismissal and result retrieval now have public interfaces
-in 0.3.2 and are exercised by the recorded lifecycle tests. Job listing has a
-public interface but is not yet covered here. Execution callbacks still wait
-for client support. Form generation and semantic
-map/table/value/download selection also remain pending. Submission tests stop
-at the returned job handle, and schema-preservation tests do not imply that
-forms or result renderers exist. Broader controlled HTTP tests belong beside
-the client's HTTP implementation; only the fixture loader needs its own small
-support checks here.
+Job status, polling, dismissal and result retrieval are exercised here. Job
+listing is available but not yet covered by our suite; the client repository
+has its own job-list tests. Forms, result presentation and relay/callback
+code also have tests there, but are outside our core-package integration.
+Schema-preservation tests here do not exercise form controls, and reading a
+result body does not test rendering a map or table.
+
+Continue adding distinct UI input/output examples even when no test here uses
+them yet. Colleagues can consume them in tests beside the actual UI code.
+Broader controlled HTTP and timing checks remain with the client implementation;
+the recording helper needs only its own small support checks here.

@@ -1,8 +1,12 @@
 # Representative scenarios
 
 This folder contains a small, curated selection of OGC API Processes HTTP
-scenarios reused by the executable client tests under [`../tests/`](../tests/).
+scenarios for client and UI development. A selected subset is reused by the
+executable core tests under [`../tests/`](../tests/); the broader collection
+preserves varied input and output payloads for forms and result presentation.
 This directory contains recordings and explanatory notes, not test code.
+Having a scenario here does not mean it has an automated test. UI assertions
+belong beside the actual UI implementation in `oap-client`.
 See the
 [repository scope and test strategy](../docs/test-strategy.md) before changing
 its structure or adding test machinery. The

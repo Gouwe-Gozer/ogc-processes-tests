@@ -2,8 +2,11 @@
 
 This document records intended client behaviour. The repository supplies the
 descriptions and exchanges, and its [test suite](client-fixture-handoff.md)
-checks the subset supported by implemented client interfaces. Form generation
-and result presentation described below still await those client features.
+checks selected core protocol behaviour. Form generation and initial result
+presentation now exist in the client web app and have tests in that repository.
+The guidance below also describes desired handling beyond current coverage;
+our core suite does not verify those UI features. See the
+[responsibility map](test-strategy.md#which-repository-tests-what).
 
 A process description tells the client how to build a request for that process.
 It can provide:

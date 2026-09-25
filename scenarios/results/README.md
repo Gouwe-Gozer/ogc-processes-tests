@@ -3,6 +3,20 @@
 This section contains output descriptions and recorded results for testing how
 the client finds a semantic payload and chooses a useful presentation.
 
+## Evidence here, presentation tests in the client repository
+
+Collecting varied output payloads is a main purpose of this repository. Keep
+output descriptions with the real returned values, wrappers, media types,
+headers, references and body files. These examples help colleagues design and
+test map, table, ordinary-value/JSON and download behaviour.
+
+The client's web app now has initial result interpretation and presentation
+code with its own tests. Our core suite preserves selected response bodies;
+it does not render these outputs. The categories below describe useful UI
+presentations, not a claim that every renderer is implemented or tested.
+A scenario remains valuable evidence before any automated test consumes it.
+See the [responsibility map](../../docs/test-strategy.md#which-repository-tests-what).
+
 ```text
 results/
 ├── maps/<provider>/<scenario>/

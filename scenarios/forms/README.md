@@ -8,6 +8,20 @@ show which controls are justified by the process description, which values can
 be previewed with MapLibre, and when the UI needs a generic file, URL, or raw
 JSON control instead.
 
+## Evidence here, UI tests in the client repository
+
+Collecting varied form payloads is a main purpose of this repository. Keep the
+process description, the actual execution request and the response together,
+including examples the server rejected. They connect the proposed controls to
+real serialization and provider limitations.
+
+The client's web app now has form planning, validation and encoding tests,
+including tests based on captured requests. Our own core suite checks selected
+schemas and protocol requests, not the generated controls. Colleagues can use
+these examples as fixtures beside the actual form code without copying that
+implementation here. See the
+[responsibility map](../../docs/test-strategy.md#which-repository-tests-what).
+
 ## Folder structure
 
 ```text

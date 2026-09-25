@@ -4,6 +4,30 @@ This guide explains the test suite without assuming experience with automated
 testing. For the technical details and rules for adding tests, see the
 [test suite guide](client-fixture-handoff.md).
 
+## Why we have both repositories
+
+Our repository does two jobs. It collects varied real requests and outputs
+for colleagues building the UI, and it tests the client core against a selected
+set of those recordings. The collection is broader than the automated suite.
+
+| Here, in `ogc-processes-tests` | In `oap-client` |
+|---|---|
+| Keep descriptions, requests, replies, files and notes from real providers | Build the core library, web UI and relay |
+| Check that the real core handles selected recorded conversations | Test detailed core behaviour, including timeouts and cancellation |
+| Supply varied inputs and outputs for UI development and testing | Test forms, validation, request encoding, result presentation and user workflows |
+| Preserve response headers as evidence | Test actual browser access, including CORS, and live services |
+
+For example, a recorded CSV request helps a developer check what a form should
+send. Its response helps them decide how to offer a table preview or download.
+GeoJSON, nested JSON and file links provide different UI examples. Keeping
+these examples is useful even before an automated test consumes them.
+
+Both `npm run check` and `npm run check:local` run **our core tests only**.
+Neither launches the UI or runs the tests in the other repository. “Not tested
+here” therefore does not mean “not tested anywhere.” The
+[responsibility map](test-strategy.md#which-repository-tests-what) links to the
+client tests that were inspected.
+
 ## What are we testing?
 
 We test the **real OAP client library** against saved conversations with OGC API
@@ -207,9 +231,11 @@ To run just these eight job tests:
 npm test -- tests/protocol/jobs.test.ts --reporter=verbose
 ```
 
-The suite does not yet test cancelling a local wait, job listing, generated
+This suite does not test cancelling a local wait, job listing, generated
 forms, map/table rendering, browser network permissions (CORS), or the current
-availability of providers. The large CSV helper test checks loading recorded
+availability of providers. The client repository has tests for cancellation,
+job listing, forms, initial result presentation and browser access; it does not
+follow that every desired UI presentation is already covered. The large CSV helper test checks loading recorded
 bytes, not displaying a table.
 
 GitHub Actions automates these same checks once the workflow is pushed to

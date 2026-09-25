@@ -2,25 +2,55 @@
 
 ## End goal
 
-This repository records representative OGC API Processes exchanges and tests
-the real client against them through its public API. It should cover:
+This repository has two main aims: collect varied real-world input and output
+payloads for the OAP client's UI, and run a focused regression suite against the
+real client core. Evidence collection is a deliverable in its own right, not
+just preparation for the tests currently implemented here.
 
-- different OGC API Processes implementations;
-- discovery, descriptions, synchronous execution, asynchronous jobs, and
-  errors;
-- process descriptions with different input schemas for generated forms;
-- results that need different presentation, such as maps, JSON views, text,
-  and downloads.
+The UI needs complete examples: a description explaining what can be entered,
+a request showing how it was encoded, and a response showing what to display
+or what error to explain. Preserve useful differences across providers, input
+schemas, output types and payload wrappers. A new CSV, geometry or file example
+may help UI development even if it adds no new protocol behaviour.
 
-Client tests should be separated by concern:
+## Which repository tests what
 
-| Test area | What it should verify |
-|---|---|
-| HTTP transport | Injected `fetch`, request forwarding, response envelopes, redirects, aborts, and failures that produced no HTTP response |
-| Protocol core | HTTP requests, discovery, execution, job transitions, links, and errors |
-| Form generation | How process-description schemas become form fields and when raw JSON fallback is needed |
-| Result handling | How output descriptions and returned media types select maps, JSON views, text, or downloads |
-| Live provider compatibility | A small smoke set against each real implementation |
+| Concern | `ogc-processes-tests` (this repository) | `oap-client` (client development repository) |
+|---|---|---|
+| Real provider evidence | Collect complete requests, responses, descriptions, body files and provenance; curate scenarios | Consume selected examples in implementation and tests |
+| Core protocol behaviour | Exercise public client functions against selected recordings; check requests and interpreted results | Own implementation, detailed unit tests, controlled edge cases and integration tests |
+| Poll timing, cancellation, transport failures | Keep relevant observed evidence; do not fabricate provider captures | Test deadlines, aborts, backoff and network failures with controlled conditions |
+| Forms and request encoding | Supply descriptions and accepted/rejected requests with varied input shapes | Test form planning, validation, encoding and interaction against the actual UI code |
+| Results and presentation | Supply output descriptions, values, media types, wrappers, links and files | Test result interpretation, presentation components and application workflows |
+| CORS and live operation | Record headers and deployment context; recordings cannot reproduce browser enforcement | Run browser/network and live-provider checks with the required services |
+
+Our `npm run check` and `npm run check:local` execute **our tests only**. The
+latter changes the core implementation being tested to an isolated compilation
+of local source. It does not run the client's tests, compile its web app or
+exercise its relay. The current 24 tests are 19 client-core checks and five
+recording-helper checks; they do not cover every scenario in the collection.
+
+The inspected client source at `fb9d5f2` already contains:
+
+- [polling tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/packages/core/test/jobs/poll-job.test.ts#L294)
+  for cancellation, deadlines, pacing and a job disappearing during polling;
+- [job status tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/packages/core/test/jobs/get-job.test.ts#L296)
+  distinguishing missing jobs from server errors;
+- [form tests using captured requests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/apps/web/test/forms/captured-requests.test.ts#L111)
+  and [result interpretation tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/apps/web/test/results/renderable.test.ts#L19);
+- [application workflow tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/apps/web/test/app/workflow.test.ts#L57)
+  and [relay callback tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/apps/relay/test/contract/callbacks.test.ts#L214);
+- [job CORS tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/e2e/jobs-cors.spec.ts#L95)
+  and [ZOO browser tests](https://github.com/ITBreinstein/oap-client/blob/fb9d5f2/e2e/zoo-browser.spec.ts#L33).
+
+These links establish that tests exist, not that they passed in this review.
+Browser/provider tests may skip when their services are unavailable. Some
+browser tests deliberately expect a CORS block on a particular deployment;
+a passing result there does not mean browser access succeeded.
+
+Our recorded tests answer: “Can the client handle this reply once it can read
+it?” Browser tests also ask: “Can the browser send the request and expose the
+reply and required headers to the client?” Both matter.
 
 One recorded exchange may support several test areas. Do not duplicate it just
 to place it under several headings.
@@ -42,7 +72,7 @@ For now, this repository should:
 
 The contents of `scenarios/` remain fixture material. Executable assertions and
 a small fixture-backed `fetch` live under `tests/` in this repository. They run
-the real client package; the client repository retains its internal unit tests.
+the real client core; the broader client-owned tests are listed above.
 
 This repository does not need a provider scenario for every defensive branch
 in the client. Its main job is to preserve useful differences observed in real
@@ -51,10 +81,13 @@ provider belong in the client repository.
 
 ## Current client readiness
 
-The client was inspected on 17 September 2026 at `oap-client` commit `48ee066`
-(package version `0.2.0`). The earlier prerequisites for integration are now
-satisfied: it has an exported public API, module boundaries, an injectable
-`fetch`, response-envelope and error types, and a Vitest test runner.
+The source was reviewed on 25 September 2026 at `oap-client` commit `fb9d5f2`.
+It has a public core API, injectable `fetch`, response and error types, job
+operations, and a Vitest runner. Forms, request encoding and initial result
+presentation also exist under `apps/web`; relay code and tests exist under
+`apps/relay`. These application modules are not exports of the core npm package
+used here. Their existence does not imply every presentation described by our
+scenarios has been implemented.
 
 Existing scenarios can support tests of discovery, description/schema
 preservation, request serialization, response preservation, HTTP errors, and
@@ -76,13 +109,19 @@ the runner already used by the client, and imports the package's public exports.
 GitHub Actions runs the same `npm ci` and `npm run check` commands as a local
 checkout, without live providers or a separate client checkout.
 
-## Decisions that wait for the client
+## Integration boundaries and remaining work
 
-Execution callbacks, form generation and semantic result classification remain
-pending. Job status, polling, dismissal and result retrieval are available in
-0.3.2 and no longer belong in this waiting category. Their tests should follow the real
-client interfaces when those features arrive, using the descriptions,
-requests, and responses already recorded here.
+Form generation and result presentation are no longer absent from the client
+repository. What is not implemented here is an executable connection to that
+web UI. Keep its assertions next to its actual code rather than importing
+private application modules into our core suite or duplicating its models.
+The same boundary applies to relay/callback integration.
+
+Continue collecting varied UI payloads now. A fixture handoff to the client
+repository can reuse those examples without a new test framework here. If a
+separately supported UI testing interface is agreed later, build against that
+interface rather than guess one. Scenario guidance describes intended handling;
+it is not a claim that every map, table or download feature exists.
 
 The implemented fetch double follows the client's existing `FetchLike`
 contract and consumes only explicitly selected exchanges. This does not require
@@ -193,6 +232,37 @@ the process description. A result-handling scenario needs the output
 description and an actual returned value or reference, including its media
 type when available.
 
+## Collecting useful UI payloads
+
+Use `scenarios/forms/` and `scenarios/results/` as a readable collection for
+colleagues designing and testing the UI. Keep each example's original capture
+and provenance under `evidence/`.
+
+| UI question | Material to retain |
+|---|---|
+| Which controls and constraints can the description justify? | Input IDs, schemas, required/optional values, ranges, enums, arrays, nested objects and supported formats |
+| What should the form send? | The execution request, including inline values, references, media types, encodings, zeros and false values |
+| What should the result screen offer? | Output descriptions plus actual scalar, JSON, GeoJSON, CSV, binary or linked results and their response headers |
+| Is a failure caused by the form or by the provider? | Description, submitted values and full error response, including schema-valid inputs the provider rejects |
+| What happens with large or unsupported data? | Original body files or links, size and media type, and notes on preview/download limitations |
+
+For example, an inline CSV exchange helps with both multiline input encoding
+and table/download presentation. GeoJSON examples should retain geometry
+variety and properties; nested JSON must not automatically be treated as map
+data. A linked raster can justify a file/link control without implying that
+the UI can render that raster on a map.
+
+A colleague can select a scenario, use its description and response as test
+fixtures in `apps/web`, write explicit example form values there, and compare
+the generated request with the recorded one. Keep assertions in the consuming
+test and link back to the evidence. If an encoding needs adaptation, explain
+it in that test instead of rewriting the original capture. No `testcase.json`,
+second machine-readable behaviour specification or new UI model is needed.
+
+The form and result READMEs catalogue the variations already collected and the
+evidence gaps. A scenario's presence means the example is available; only an
+explicit test consuming it means automated coverage exists.
+
 ## Adding server implementations
 
 Evidence remains grouped by provider because it records what one deployment
@@ -262,8 +332,8 @@ Deterministic protocol tests can now call the implemented public API with an
 injected `fetch` that returns native `Response` objects built from selected
 captures. The real client constructs its response envelopes; tests check the
 requests made and values returned. The helper and assertions live under
-`tests/` here. The [suite guide](client-fixture-handoff.md#initial-coverage)
-links the initial tests to their scenarios. Passing recorded tests verifies
+`tests/` here. The [suite guide](client-fixture-handoff.md#current-coverage)
+links the implemented tests to their scenarios. Passing recorded tests verifies
 client handling of those responses, not live-provider compatibility.
 
 Test the real HTTP adapter separately with an injected `fetch`. Those tests

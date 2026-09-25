@@ -1,17 +1,26 @@
 # OGC API Processes scenarios
 
-This repository collects representative OGC API Processes requests and
-responses that our client should be able to handle.
+This repository has two connected purposes:
 
-Start with [`scenarios/`](scenarios/). It contains a small, readable set intended
-for client implementation and tests. [`evidence/`](evidence/) contains
-the larger collection of provider-specific requests, responses, and process
-descriptions that led to those choices.
+- **Collect real input and output examples for the client and its UI.** Preserve
+  process descriptions, execution requests and responses with varied payloads:
+  numbers, arrays, GeoJSON, CSV, nested JSON, files and download links. These
+  examples help colleagues build forms, encode requests and present results.
+- **Test the real client core against selected recorded conversations.** The
+  suite under [`tests/`](tests/) checks the requests the client builds and how
+  it interprets discovery, execution, job and error responses.
 
-The recordings are test data. [`tests/`](tests/) uses a pinned release of the
-real client with a fixture-backed fetch to exercise supported protocol behaviour.
-Assertions live in ordinary TypeScript tests in this repository; internal client
-unit tests remain in the client project.
+Start with [`scenarios/`](scenarios/): [`forms/`](scenarios/forms/) connects input
+schemas to request bodies; [`results/`](scenarios/results/) connects output
+schemas to returned values; `protocol/` covers the HTTP conversations.
+[`evidence/`](evidence/) keeps the fuller captures and their provenance.
+A useful UI example does not need an executable test here to belong in the repo.
+
+The `oap-client` repository owns the implementation and its own core unit,
+web UI, relay, browser and live-provider tests. Our suite complements those
+with real provider recordings. Neither of our test commands runs that other
+repository's tests or proves that its UI works in a browser. See the
+[division of responsibilities](docs/test-strategy.md#which-repository-tests-what).
 
 The end goal, current limits, and decisions that wait for the client are
 documented in [`docs/test-strategy.md`](docs/test-strategy.md).
