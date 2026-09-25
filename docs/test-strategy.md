@@ -59,12 +59,14 @@ satisfied: it has an exported public API, module boundaries, an injectable
 Existing scenarios can support tests of discovery, description/schema
 preservation, request serialization, response preservation, HTTP errors, and
 immediate-versus-job execution classification. Accepted submission records
-are usable now even when the later polling steps in their scenario are not.
+were the initial job coverage. The installed 0.3.2 package, inspected on
+25 September 2026, also exposes job status, polling, results retrieval, dismissal
+and job listing; the later recorded steps can now be used.
 The [test suite guide](client-fixture-handoff.md) documents the actual
 interfaces, capture conversion rules, and the implemented cross-provider tests.
 
 This is a versioned integration target, not a promise that every interface is
-fixed across releases. The suite pins the published client to `0.2.0` and
+fixed across releases. The suite pins the published client to `0.3.2` and
 commits its npm lockfile. Fixtures are versioned with the tests. It uses Vitest,
 the runner already used by the client, and imports the package's public exports.
 GitHub Actions runs the same `npm ci` and `npm run check` commands as a local
@@ -72,9 +74,9 @@ checkout, without live providers or a separate client checkout.
 
 ## Decisions that wait for the client
 
-Job polling, status methods, dismissal, callbacks, and result-retrieval helpers
-are not implemented in the inspected version. Form generation and semantic
-result classification are also pending. Their tests should follow the real
+Execution callbacks, form generation and semantic result classification remain
+pending. Job status, polling, dismissal and result retrieval are available in
+0.3.2 and no longer belong in this waiting category. Their tests should follow the real
 client interfaces when those features arrive, using the descriptions,
 requests, and responses already recorded here.
 

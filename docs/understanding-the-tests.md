@@ -12,7 +12,7 @@ Processes servers, including ZOO, pygeoapi and Weaver.
 The question is: **does the client send the expected request and correctly
 understand a response like the ones we have observed in practice?**
 
-The suite currently installs `@breinstein/oap-client` version `0.2.0` from npm,
+The suite currently installs `@breinstein/oap-client` version `0.3.2` from npm,
 the package registry. It does not use the latest code in the neighbouring
 `oap-client` folder. Editing that folder will therefore not change these test
 results. Testing a newer release requires updating the dependency and lockfile.

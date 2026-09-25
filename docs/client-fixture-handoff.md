@@ -19,7 +19,7 @@ npm run check
 ```
 
 `check` runs TypeScript checking and Vitest. `npm test` runs just the tests.
-Dependencies, including client version `0.2.0`, are pinned in
+Dependencies, including client version `0.3.2`, are pinned in
 [`package.json`](../package.json) and [`package-lock.json`](../package-lock.json).
 Installation requires access to npm; the tests do not require network access.
 [`tests/setup.ts`](../tests/setup.ts) blocks ambient `fetch` and fails even when
@@ -33,6 +33,11 @@ browser CORS checks remain a separate future concern.
 To test a reviewed client release, update the exact dependency and lockfile,
 then run the suite and inspect changed behaviour before committing the update.
 The default CI job tests the pinned release, not the latest client source.
+
+The installed 0.3.2 package was inspected on 25 September 2026. It also exports
+job status, polling, results retrieval, dismissal and job listing functions.
+The original 16 tests pass against this release; lifecycle coverage is the next
+addition. The source links below document the original integration baseline.
 
 ## Implemented client boundary
 
@@ -133,8 +138,9 @@ README; do not introduce `testcase.json` or expectation manifests. Add captures
 only for distinct behaviour or a demonstrated evidence gap, preserving provider
 provenance.
 
-Job polling, status methods, dismissal, callbacks, and result retrieval still
-wait for the corresponding client interfaces. Form generation and semantic
+Job status, polling, dismissal and result retrieval now have public interfaces
+in 0.3.2; recorded lifecycle tests can use them. Execution callbacks still wait
+for client support. Form generation and semantic
 map/table/value/download selection also remain pending. Submission tests stop
 at the returned job handle, and schema-preservation tests do not imply that
 forms or result renderers exist. Broader controlled HTTP tests belong beside
