@@ -10,9 +10,42 @@ binding, or our deployment configuration.
 The [capture notes](README.md) record Ubuntu 18.04.6, GDAL 3.0.4,
 SAGA 7.3.0 and OTB 7.x (ZOO adapter configured for 7.0). Execution captures
 are documented as 25 August 2026; the CORS capture is dated 31 August 2026.
-The [deployment metadata](server.json) gives the local URL and container name,
-but does not identify an exact ZOO revision or container image digest.
-These observations have not been rechecked against current upstream ZOO.
+The source checkout was inspected on 25 September 2026. It is the
+[Gouwe-Gozer/ZOO-Project fork](https://github.com/Gouwe-Gozer/ZOO-Project),
+with a clean working tree at commit
+[`79014a595f22fbcfafa0f259884b9037e56269a3`](https://github.com/Gouwe-Gozer/ZOO-Project/commit/79014a595f22fbcfafa0f259884b9037e56269a3)
+(28 August 2026).
+
+- **Declared kernel version: 2.1.0**, from
+  [`configure.ac`](https://github.com/Gouwe-Gozer/ZOO-Project/blob/79014a595f22fbcfafa0f259884b9037e56269a3/zoo-project/zoo-kernel/configure.ac#L1).
+  `git describe --tags --always` reports `rel-2.1.0-55-g79014a5`.
+  This is a modified post-tag checkout, not an unmodified 2.1.0 release.
+- **Upstream ancestry:** the merge base with the locally available
+  `upstream/main` reference is
+  [`19f3c4eed7c9ec9d1f0375bbe59f9d204a42bd3a`](https://github.com/ZOO-Project/ZOO-project/commit/19f3c4eed7c9ec9d1f0375bbe59f9d204a42bd3a).
+  The checkout contains seven subsequent fork commits. No remote fetch was
+  performed, so this does not identify today's upstream HEAD.
+- **Local changes:** these include a kernel response-printing fix
+  ([`1d0ff4c`](https://github.com/Gouwe-Gozer/ZOO-Project/commit/1d0ff4cc9e8421aea52ec4ddb422334a9cbed5f9)),
+  building patched executables, correcting asynchronous worker startup, and
+  bundling local providers. These differences matter when comparing with upstream.
+- **Build configuration:**
+  [`docker/zookernel-local.Dockerfile`](https://github.com/Gouwe-Gozer/ZOO-Project/blob/79014a595f22fbcfafa0f259884b9037e56269a3/docker/zookernel-local.Dockerfile)
+  defaults to base image
+  `zooproject/zoo-project@sha256:4a50c0b9801677a43a8483abf9e84a1c906dec698c07914852003d357b79b417`.
+  It builds the kernel from checkout source and copies the resulting executables
+  and selected providers into the runtime image. Compose configures both
+  `zookernel` and `zoofpm` to use `zoo-project:local`.
+
+**Historical provenance remains incomplete:** the base-image digest is not the
+identity of the final locally built image. Docker was unavailable in the
+inspection environment, so the running image ID, build overrides and binary
+version could not be checked. The inspected checkout also postdates the
+25 August execution captures. Neither those captures nor
+[server.json](server.json) bind the responses to a source commit or final image
+ID. The details above establish the current source/build setup, not the exact
+binaries that produced every saved response. These observations have not been
+rechecked against current upstream ZOO.
 
 ## 1. Repeated raster input returns SIGSEGV
 
