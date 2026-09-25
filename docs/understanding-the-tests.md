@@ -115,7 +115,7 @@ and checks, or provide the small amount of support needed to run them.
 `*.test.ts` means a file contains tests. Vitest is the program that finds those
 tests, runs them and reports which passed or failed.
 
-There are currently **24 tests: 19 exercise the real client and five check the
+There are currently **25 tests: 20 exercise the real client and five check the
 recording helper**. Some files run the same check against multiple recordings,
 so the number of files is smaller than the number of tests.
 
@@ -124,6 +124,7 @@ so the number of files is smaller than the number of tests.
 | [discovery.test.ts](../tests/protocol/discovery.test.ts) | Checks that the real client follows saved discovery replies and returns the process list. |
 | [descriptions.test.ts](../tests/protocol/descriptions.test.ts) | Passes saved descriptions directly to the real client's parser and checks that input and output definitions survive. These two tests do not need a transporter. |
 | [execution.test.ts](../tests/protocol/execution.test.ts) | Checks execution requests and immediate results using ZOO, pygeoapi and Weaver recordings. |
+| [large-result.test.ts](../tests/protocol/large-result.test.ts) | Checks that the real client handles DIRECTED’s large CSV as an immediate result, refuses an oversized text read, and still provides the entire file as a blob (a binary object the UI can use for downloading). |
 | [errors.test.ts](../tests/protocol/errors.test.ts) | Checks that the client reports both a structured error and an HTML error page while keeping the server's error information available. An expected error means the test passes. |
 | [submission.test.ts](../tests/protocol/submission.test.ts) | Checks that an accepted background job returns its ID and status address. These tests stop there; they do not wait for completion. |
 | [jobs.test.ts](../tests/protocol/jobs.test.ts) | Runs recorded successful jobs through the real client, from submission to status checks and results. Also checks failed jobs, results requested too early, dismissal, missing jobs and repeated dismissal. |
@@ -235,8 +236,10 @@ This suite does not test cancelling a local wait, job listing, generated
 forms, map/table rendering, browser network permissions (CORS), or the current
 availability of providers. The client repository has tests for cancellation,
 job listing, forms, initial result presentation and browser access; it does not
-follow that every desired UI presentation is already covered. The large CSV helper test checks loading recorded
-bytes, not displaying a table.
+follow that every desired UI presentation is already covered. The large CSV helper test checks loading the recording. A separate DIRECTED
+core test checks that the client makes the complete file available for download
+and applies its size limit to text reads. Neither displays a table or clicks
+a browser download button.
 
 GitHub Actions automates these same checks once the workflow is pushed to
 GitHub. It tests the pinned client release; changes in the separate client

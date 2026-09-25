@@ -27,7 +27,7 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. The current 24 tests are 19 client-core checks and five
+exercise its relay. The current 25 tests are 20 client-core checks and five
 recording-helper checks; they do not cover every scenario in the collection.
 
 The inspected client source at `fb9d5f2` already contains:

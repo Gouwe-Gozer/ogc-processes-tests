@@ -44,7 +44,7 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-All 24 tests pass against this release, including eight recorded lifecycle
+All 25 tests pass against this release, including eight recorded lifecycle
 tests using `execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`.
 The source links below document the original integration baseline.
 
@@ -157,6 +157,7 @@ metadata, not a new scenario specification or replacement client models.
 | Discovery and listing | `protocol/discovery/weaver-redoak/core-discovery` | [discovery.test.ts](../tests/protocol/discovery.test.ts) |
 | Description/schema preservation | pygeoapi raw-versus-document description; `protocol/discovery/weaver-local/process-description` | [descriptions.test.ts](../tests/protocol/descriptions.test.ts) |
 | Synchronous execution and body preservation | ZOO `simple-sync`; pygeoapi `raw-versus-document-response`; Weaver `sync-with-job-links` | [execution.test.ts](../tests/protocol/execution.test.ts) |
+| Large raw CSV through the real core | DIRECTED `results/downloads/directed-local/large-raw-csv`: request encoding, immediate classification despite Location, default buffer limit and complete blob bytes | [large-result.test.ts](../tests/protocol/large-result.test.ts) |
 | Structured and HTML HTTP errors | ZOO `structured-execution-error` and `process-description-html-error` | [errors.test.ts](../tests/protocol/errors.test.ts) |
 | Accepted submission and job location | First exchange of ZOO and Weaver `successful-job` | [submission.test.ts](../tests/protocol/submission.test.ts) |
 | Submission through polling and results | ZOO and Weaver `successful-job`, including ZOO running and successful status variants | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
@@ -170,8 +171,22 @@ can serve another concern later without being copied.
 The [helper tests](../tests/support/recorded-fetch.test.ts) check that a bad
 request cannot silently pass, responses have independent readable bodies, URLs
 are preserved, and `body_file` can supply original bytes. Their controlled
-variations are loader checks, not additional provider evidence. Reading the
-large CSV verifies byte loading, not table rendering or download UI behaviour.
+variations are loader checks, not additional provider evidence. The helper's
+large CSV test checks byte loading only.
+
+The separate DIRECTED core test calls the real `execute` function with the
+recorded inputs. It checks that the CSV is an immediate result despite its
+`Location` header, preserves its media type and length, and exceeds the default
+buffer limit. Reading it as text rejects with `BodyTooLargeError`; reading it
+as a blob still returns all 18,849,968 original bytes. This tests the core's
+handling of a download payload, not a browser save action, table preview or UI
+performance. It contacts no live DIRECTED service and changes no recordings.
+
+Run just that client test with:
+
+```bash
+npm test -- tests/protocol/large-result.test.ts --reporter=verbose
+```
 
 The job tests use the client's real polling loop with a 500 ms initial interval
 and bounded poll count. They check state transitions and stopping at terminal
