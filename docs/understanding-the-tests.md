@@ -17,10 +17,12 @@ the package registry. By default it does not use the neighbouring `oap-client` f
 folder will not change the default test results. Testing a newer published
 release requires updating the dependency and lockfile.
 
-There is also an explicit `npm run check:local` command to test a build from
-that neighbouring folder. It prints which client it uses and leaves the
-published package installed. You must build the client first, and rebuild
-after source changes; see the [local build instructions](client-fixture-handoff.md#test-a-local-client-build).
+There is also an explicit `npm run check:local` command to test source from
+that neighbouring folder. It automatically copies and compiles the source in
+a temporary folder, prints which client it uses, and removes its temporary
+files afterwards. You do not have to install, build or edit anything in the
+client repository. The published package stays installed; see the
+[local client instructions](client-fixture-handoff.md#test-a-local-client-build).
 
 ## What is the fake transporter?
 
@@ -110,7 +112,7 @@ The other new configuration files have supporting roles:
 
 | File | Purpose |
 |---|---|
-| [check_local_client.py](../scripts/check_local_client.py) | Optional Python launcher that selects a built local client for both type checking and tests, without installing it. |
+| [check_local_client.py](../scripts/check_local_client.py) | Optional Python launcher that copies and compiles local client source in a temporary folder, then checks types and runs tests without changing the client checkout. |
 | [package.json](../package.json) | Lists the client and tools to install, plus commands such as `npm test`. |
 | [package-lock.json](../package-lock.json) | Records exact dependency versions so colleagues and CI install the same packages. Its size does not represent custom test code. |
 | [tsconfig.json](../tsconfig.json) | Configures TypeScript's checks for mistakes such as passing the wrong kind of value to a function. |
