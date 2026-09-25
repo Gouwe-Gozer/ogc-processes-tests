@@ -30,10 +30,9 @@ for a plain-language explanation of the real client, fake transporter and test f
 
 ## Attending the plugfest
 
-Start with [`plugfest/`](plugfest/): our main focus is trying other companies'
-services with our OAP client and collecting useful input/output examples. It
-includes a short checklist and notes template. Visitors can also optionally
-test their own clients against our containerised local APIs.
+See [`plugfest/`](plugfest/) for practical instructions to collect new evidence,
+probe visiting services and report reproducible problems, or reuse our local
+APIs and recordings with another company's client.
 
 ## Run the client tests
 

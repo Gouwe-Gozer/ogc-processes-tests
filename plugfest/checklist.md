@@ -1,35 +1,29 @@
-# Things to try on a visiting service
+# Service probes
 
-Use **our OAP client against the visiting company's service**. Ask its owner
-for valid inputs and use its current process descriptions. Try what the service
-supports; this is a conversation guide, not a mandatory conformance test.
+First capture a small request that works. Use the service's own process
+identifiers and description. Save each variation separately so the provider
+can reproduce it without our UI. Start with small workloads; agree potentially
+expensive or deliberate failure cases with the owner.
 
-| Try | What to look for | What is useful to save |
+| Probe | How to try it | What to inspect |
 |---|---|---|
-| Discover and open a process | Can our client connect, list processes and explain the selected inputs/outputs? | Process description and any discovery problem |
-| Execute a small example | Do entered values reach the request correctly, and is the result usable? | Actual request and response |
-| Vary the inputs | Do arrays, zero/false values, geometry, JSON, files and references survive the form/encoding? Is JSON fallback clear? | A distinct description/request pair |
-| Inspect different outputs | Can the UI make sense of scalar, JSON, GeoJSON, CSV, large data or download links? Are linked files reachable? | Output description, response and any body file |
-| Follow a background job, if supported | Can the client find the job, report status and retrieve results? If it finishes immediately, does the client handle that? | Submission, observed status replies and results |
-| Try a refusal or dismissal with the owner | Is the explanation useful? Does the client distinguish a failed job from a failed HTTP request, and stopping a wait from dismissing a job? | The request and complete error/dismissal response |
+| Discovery and descriptions | Follow advertised process and description links | Are links reachable? Do the listed IDs match the descriptions? |
+| Required and optional inputs | Omit one required input; separately omit one optional input | Does behaviour match the description? Is a refusal understandable? |
+| Types and constraints | Vary one declared number range, enum, item count or value type | Distinguish expected validation errors from crashes or undocumented restrictions |
+| Values easy to lose | Submit valid `0`, `false`, arrays, or an empty string where allowed | Compare the actual request with what the user entered, then inspect the response |
+| Formats and output selection | Request one of the process's advertised formats or output modes | Does the returned media type/body match? Is the requested output present? |
+| Background execution | Request async if supported; follow the returned job address | Does status remain accessible and lead to a result or explained failure? An immediate result is an observation, not automatically a defect |
+| Result links | Follow the actual output references returned | Are files reachable, and do their types/content match the advertised output? |
+| Dismissal | Dismiss a running test job if supported, then read status | Record the actual terminal response or missing-resource reply; do not assume one shape across providers |
+| Browser access | Compare the browser request with the same direct HTTP request | Record preflight failure or inaccessible response headers separately from process failure |
 
-For a useful or unexpected result, write a few lines using the
-[results template](results-template.md). Note the client version and service
-address. Use Postman/curl for comparison when needed; browser access failures
-and unsupported UI features should not automatically be called server defects.
+For a suspected problem, keep: valid baseline, changed request, actual reply,
+expected behaviour and its basis. Use the [report template](results-template.md).
+A non-2xx response to invalid input is not by itself a failure of the service.
 
-## Our recordings are examples of what to look for
-
-They are not requests to send unchanged to a visiting service:
-
-- [Weaver mixed inputs](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/)
-  shows why an ordinary JSON object, a geometry and a file need different controls.
-- [DIRECTED's undocumented array constraint](../scenarios/forms/validation/directed-local/undocumented-array-length/)
-  shows that schema-valid input can still be refused by the provider.
-- [DIRECTED's large CSV](../scenarios/results/downloads/directed-local/large-raw-csv/)
-  shows why a complete download may be more useful than rendering every row.
-- [Weaver sync with job links](../scenarios/protocol/execution/weaver-local/sync-with-job-links/)
-  shows that job-related headers do not always mean the client should start polling.
-
-Look for similarly useful differences in the visiting services. A working
-example with a new payload shape is worth keeping even when nothing fails.
+Also retain successful input/output variations for UI work. Our
+[Weaver mixed values](../scenarios/forms/inputs/weaver-local/mixed-values-map-and-files/),
+[DIRECTED array constraint](../scenarios/forms/validation/directed-local/undocumented-array-length/)
+and [large CSV](../scenarios/results/downloads/directed-local/large-raw-csv/)
+illustrate useful shapes and differences; their requests are not portable to
+an unrelated provider just by replacing the host.

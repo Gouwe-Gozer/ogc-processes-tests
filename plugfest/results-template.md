@@ -1,22 +1,17 @@
-# Service observation: SERVICE / PROCESS
+# Observation: SERVICE / PROCESS
 
-Copy this for something worth keeping. A few lines and the actual exchange are
-enough; leave out sections that do not apply.
+- **Service URL, process ID, date and version if known:**
+- **Client/tool and version used:**
+- **Working baseline:** request/response files or provider example.
+- **What we changed or tried:**
+- **Expected behaviour and why:** description, advertised capability/link, or agreed behaviour.
+- **Actual behaviour:**
+- **Reproduce:** minimal steps or curl command; actual request/response file links.
+- **Useful UI evidence or suspected issue:** new payload shape, form/output problem, service response or browser access.
+- **Follow-up:** provider/developer response or issue link, if any.
 
-- **Service URL and process ID:**
-- **Our client version; date/tester:**
-- **What we tried:** example inputs, chosen mode, short reproduction steps.
-- **What happened:** worked / unexpected behaviour / unsupported / access blocked.
-- **Why keep it:** useful input/output variation, client issue or question for the provider.
-- **Evidence files:** description, request, response, output file or screenshot.
-- **Follow-up, if any:**
-
-For request/response files, preserve the method, URL, headers, request body,
-response status, final URL and response body. Remove credentials before sharing.
-Keep captures separate from the existing historical recordings.
-
-If relevant, add the browser/page URL, proxy/relay used, job address and states,
-or what the same request did in Postman/curl. If the browser could not read the
-response, say so rather than substituting the Postman result.
-
-For the optional visiting-client activity, also name that client and its version.
+Retain request method, URL, headers and body, and response status, headers,
+final URL and body/body-file. Include the description relevant to the finding.
+For jobs, include the returned job URL and observed status sequence. For
+browser-only problems, add the page URL and network/console details.
+Remove credentials before sharing. Keep new captures separate from old ones.
