@@ -36,8 +36,8 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-All 21 tests pass against this release, including five recorded lifecycle
-tests using `execute`, `pollJob`, `waitForJob`, `getResults` and `dismissJob`.
+All 24 tests pass against this release, including eight recorded lifecycle
+tests using `execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`.
 The source links below document the original integration baseline.
 
 ## Implemented client boundary
@@ -85,7 +85,8 @@ metadata, not a new scenario specification or replacement client models.
 | Structured and HTML HTTP errors | ZOO `structured-execution-error` and `process-description-html-error` | [errors.test.ts](../tests/protocol/errors.test.ts) |
 | Accepted submission and job location | First exchange of ZOO and Weaver `successful-job` | [submission.test.ts](../tests/protocol/submission.test.ts) |
 | Submission through polling and results | ZOO and Weaver `successful-job`, including ZOO running and successful status variants | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
-| Failed job status, early results refusal and dismissal | ZOO `failed-job` status and `dismiss-running-job`; Weaver `results-not-ready` response | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
+| Failed job status, early results refusal and dismissal | ZOO `failed-job` and `dismiss-running-job`; Weaver `results-not-ready`, starting from submission | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
+| Missing job and repeated dismissal | Weaver `unknown-job`; ZOO `dismiss-running-job` post-dismissal exchanges | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 
 The scenario READMEs retain their links to provider evidence. Selection follows
 implemented client behaviour, not a provider-specific test framework. A scenario
@@ -101,9 +102,33 @@ The job tests use the client's real polling loop with a 500 ms initial interval
 and bounded poll count. They check state transitions and stopping at terminal
 states, not backoff timing. Weaver has no recorded running reply, so its success
 flow polls once. Results remain unparsed documents; output file links are
-preserved without fetching those files. Failed status and early-results tests
-start at their selected GET response rather than repeating submission. Dismissal
-checks the returned status, not cancellation of a concurrent polling loop.
+preserved without fetching those files. Failed-job and early-results tests now
+start with the recorded submission and follow the job address returned by the
+client. Dismissal checks the returned status, not cancellation of a concurrent
+polling loop. Additional checks use the recorded ZOO post-dismissal GET and
+repeated DELETE, and Weaver's unknown-job GET.
+
+## Review of remaining job scenarios
+
+The September 2026 review selected existing evidence that exercises distinct
+public outcomes. No provider was contacted and no responses were invented.
+
+| Situation | Current check or reason to wait |
+|---|---|
+| Accepted job later fails | Submission followed by the recorded ZOO failed status; no results request or resubmission |
+| Results requested too early | Weaver submission followed by its recorded result-not-ready refusal |
+| Reading an unknown job | Weaver `unknown-job`: `getJob` rejects with `JobNotFoundError`; standard problem fields and provider-specific `extensions` remain available in its cause |
+| Polling after a confirmed dismissal | ZOO DELETE followed by recorded GET 404; `pollJob` stops with `dismissed-remotely` without changing the earlier dismissal object |
+| Repeating dismissal | ZOO's recorded DELETE, GET, DELETE sequence; the second DELETE rejects with the preserved 404 problem and is not retried |
+| Job remains running, local cancellation, generic status/network failures | Still outside this recorded coverage. Controlled timing and transport tests belong with the client; a future regression test here must label any constructed sequence as simulated |
+| Job disappears during an active poll loop | Not captured. Do not splice an unknown-job reply onto an unrelated running job and call it provider evidence |
+| Browser cannot access status or headers | Requires real browser networking; the recorded fetch cannot establish CORS compatibility |
+
+The sibling client checkout inspected for this review remains at `48ee066`
+(version 0.2.0), without the new job tests. It was not updated or modified.
+Consequently this review cannot establish which controlled polling cases the
+colleagues already cover in their newer source. The installed 0.3.2 package's
+public types and implementation are the integration target here.
 
 ## Capture conversion and limits
 

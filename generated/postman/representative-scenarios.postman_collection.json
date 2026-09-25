@@ -1442,6 +1442,68 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "name": "unknown-job",
+                  "item": [
+                    {
+                      "name": "01-get-unknown-job",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{weaverLocalBaseUrl}}/jobs/00000000-0000-0000-0000-000000000000"
+                      },
+                      "response": [
+                        {
+                          "name": "HTTP 404",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": "{{weaverLocalBaseUrl}}/jobs/00000000-0000-0000-0000-000000000000"
+                          },
+                          "status": "404",
+                          "code": 404,
+                          "header": [
+                            {
+                              "key": "Server",
+                              "value": "gunicorn"
+                            },
+                            {
+                              "key": "Date",
+                              "value": "Mon, 31 Aug 2026 14:05:58 GMT"
+                            },
+                            {
+                              "key": "Connection",
+                              "value": "close"
+                            },
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            },
+                            {
+                              "key": "Content-Length",
+                              "value": "220"
+                            },
+                            {
+                              "key": "X-Content-Type-Options",
+                              "value": "nosniff"
+                            }
+                          ],
+                          "body": "{\n  \"title\": \"NoSuchJob\",\n  \"type\": \"https://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-job\",\n  \"detail\": \"Could not find job with specified reference.\",\n  \"status\": 404,\n  \"cause\": \"00000000-0000-0000-0000-000000000000\"\n}"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -1650,6 +1712,80 @@
                             }
                           ],
                           "body": "{\n  \"id\": \"{{jobId}}\",\n  \"jobID\": \"{{jobId}}\",\n  \"status\": \"dismissed\",\n  \"message\": \"ZOO-Kernel successfully dismissed your service!\",\n  \"links\": [\n    {\n      \"title\": \"The job list for the current process\",\n      \"rel\": \"parent\",\n      \"type\": \"application/json\",\n      \"href\": \"{{baseUrl}}/jobs\"\n    }\n  ],\n  \"type\": \"process\",\n  \"processID\": \"longProcess\",\n  \"created\": \"2026-08-25T12:21:27.379Z\",\n  \"started\": \"2026-08-25T12:21:27.379Z\",\n  \"updated\": \"2026-08-25T12:21:42.683Z\"\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "03-get-after-dismiss",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{jobUrl}}"
+                      },
+                      "response": [
+                        {
+                          "name": "HTTP 404",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": "{{jobUrl}}"
+                          },
+                          "status": "404",
+                          "code": 404,
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json;charset=UTF-8"
+                            }
+                          ],
+                          "body": "{\n  \"title\": \"NoSuchJob\",\n  \"type\": \"http://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-job\",\n  \"detail\": \"The JobID from the request does not match any of the Jobs running on this server\"\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "04-repeat-dismiss",
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": "{{jobUrl}}"
+                      },
+                      "response": [
+                        {
+                          "name": "HTTP 404",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": "{{jobUrl}}"
+                          },
+                          "status": "404",
+                          "code": 404,
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json;charset=UTF-8"
+                            }
+                          ],
+                          "body": "{\n  \"title\": \"NoSuchJob\",\n  \"type\": \"http://www.opengis.net/def/exceptions/ogcapi-processes-1/1.0/no-such-job\",\n  \"detail\": \"The JobID from the request does not match any of the Jobs running on this server\"\n}"
                         }
                       ]
                     }

@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "{{baseUrl}}/jobs/00000000-0000-0000-0000-000000000000",
+  "headers": {
+    "Accept": "application/json"
+  }
+}

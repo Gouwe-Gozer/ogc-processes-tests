@@ -84,7 +84,7 @@ and checks, or provide the small amount of support needed to run them.
 `*.test.ts` means a file contains tests. Vitest is the program that finds those
 tests, runs them and reports which passed or failed.
 
-There are currently **21 tests: 16 exercise the real client and five check the
+There are currently **24 tests: 19 exercise the real client and five check the
 recording helper**. Some files run the same check against multiple recordings,
 so the number of files is smaller than the number of tests.
 
@@ -95,7 +95,7 @@ so the number of files is smaller than the number of tests.
 | [execution.test.ts](../tests/protocol/execution.test.ts) | Checks execution requests and immediate results using ZOO, pygeoapi and Weaver recordings. |
 | [errors.test.ts](../tests/protocol/errors.test.ts) | Checks that the client reports both a structured error and an HTML error page while keeping the server's error information available. An expected error means the test passes. |
 | [submission.test.ts](../tests/protocol/submission.test.ts) | Checks that an accepted background job returns its ID and status address. These tests stop there; they do not wait for completion. |
-| [jobs.test.ts](../tests/protocol/jobs.test.ts) | Runs recorded successful jobs through the real client, from submission to status checks and results. Also checks failed jobs, results requested too early, and dismissal. |
+| [jobs.test.ts](../tests/protocol/jobs.test.ts) | Runs recorded successful jobs through the real client, from submission to status checks and results. Also checks failed jobs, results requested too early, dismissal, missing jobs and repeated dismissal. |
 | [recorded-fetch.ts](../tests/support/recorded-fetch.ts) | Loads selected recordings and provides the replacement fetch function. This is the fake transporter itself. |
 | [recorded-fetch.test.ts](../tests/support/recorded-fetch.test.ts) | Checks the helper directly: incorrect requests must fail, replies must remain readable, and saved body files must load correctly. These five tests protect the test setup. |
 | [setup.ts](../tests/setup.ts) | Blocks the normal global fetch during tests, so an accidental attempt to use it fails instead of contacting a server. |
@@ -183,10 +183,17 @@ respond to the body. The tests separately check selected request details.
 Job polling now uses the client's own loop: the ZOO recording reports running
 and then successful; Weaver has only a successful status reply recorded. The
 client then fetches the result document. A separate test asks the client to
-dismiss a job and checks the recorded dismissal reply. These tests do not
-simulate work being performed on a server.
+dismiss a job and checks the recorded dismissal reply. Further checks cover
+reading a missing job and trying to dismiss the same job again. These tests
+do not simulate work being performed on a server.
 
-To run just these five job tests:
+A missing job has different meanings to different client calls: `getJob`
+reports a missing-job error; `pollJob` stops waiting with the outcome
+`dismissed-remotely`; a repeated `dismissJob` reports the server's 404 error.
+The tests check that distinction. The label `dismissed-remotely` does not by
+itself prove who removed the job or why it is missing.
+
+To run just these eight job tests:
 
 ```bash
 npm test -- tests/protocol/jobs.test.ts --reporter=verbose

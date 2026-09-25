@@ -63,7 +63,9 @@ were the initial job coverage. The installed 0.3.2 package, inspected on
 25 September 2026, also exposes job status, polling, results retrieval, dismissal
 and job listing. The suite now tests successful submission/polling/results
 flows for ZOO and Weaver, ZOO failed status and dismissal, and Weaver
-results-not-ready errors. Job listing is available but not yet covered.
+results-not-ready errors. It also distinguishes unknown-job reads, polling
+a removed job after dismissal, and a repeated dismissal refusal. Job listing
+is available but not yet covered.
 The [test suite guide](client-fixture-handoff.md) documents the actual
 interfaces, capture conversion rules, and the implemented cross-provider tests.
 
@@ -106,8 +108,9 @@ can still be reused by tests for another concern.
 | `protocol/execution/weaver-local/sync-with-job-links` | Immediate HTTP 200 result that also advertises job-related links and `Content-Location` |
 | `protocol/jobs/zoo-local/successful-job` | Submission, running status, successful status, and result retrieval |
 | `protocol/jobs/zoo-local/failed-job` | Accepted submission followed by a failed terminal job state |
-| `protocol/jobs/zoo-local/dismiss-running-job` | Accepted submission followed by `DELETE` and a dismissed terminal state |
+| `protocol/jobs/zoo-local/dismiss-running-job` | Submission, dismissal, then GET and repeated DELETE returning NoSuchJob |
 | `protocol/jobs/weaver-local/successful-job` | Successful Weaver submission, polling, and results using `Location` when the accepted body has no links |
+| `protocol/jobs/weaver-local/unknown-job` | Structured NoSuchJob response when reading an unknown job |
 | `protocol/jobs/weaver-local/results-not-ready` | HTTP 404 `JobResultsNotReady` while the submitted job is still accepted |
 | `protocol/errors/zoo-local/process-description-html-error` | One process description returns HTTP 500 with HTML instead of JSON |
 | `protocol/errors/zoo-local/structured-execution-error` | Synchronous HTTP 500 with a structured JSON problem |
@@ -150,7 +153,6 @@ require another representative scenario:
 |---|---|
 | Similar GEOS and SAGA executions | They use request and result envelopes already represented by the selected synchronous scenarios |
 | Additional SAGA, GDAL, R, and OTB crashes | Their messages differ, but the core handles them through the selected structured HTTP-error path |
-| Unknown jobs and repeated dismissal | They are useful diagnostics but do not change the normal job flow selected above |
 | Additional bounding boxes, enums, repeated inputs, and schema variations | The selected form scenarios now cover the main shapes; add another only when it changes form or serialization behaviour |
 | Additional GeoJSON, CSV, raster, scalar, and nested JSON results | Their result wrappers and presentation families are represented by the selected result scenarios |
 | Server-side filenames and unavailable result downloads | Provider-specific evidence unless a target implementation requires client support |

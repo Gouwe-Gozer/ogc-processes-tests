@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import {
-  dismissJob, execute, getResults, pollJob, ProcessesError, waitForJob,
+  dismissJob, execute, getJob, getResults, JobNotFoundError, pollJob, ProcessesError, waitForJob,
   type ExecutePayload, type JobStatus,
 } from "@breinstein/oap-client";
 import { readExchange, recordedFetch } from "../support/recorded-fetch.js";
@@ -70,9 +70,16 @@ it.each([
 });
 
 it("ZOO: a failed job resolves with the recorded explanation and does not fetch results", async () => {
-  const exchange = await readExchange("protocol/jobs/zoo-local/failed-job", "02-poll-failed", variables);
-  const transport = recordedFetch(exchange);
-  const status = await waitForJob(jobUrl, { fetch: transport.fetch, maxPolls: 2 });
+  const scenario = "protocol/jobs/zoo-local/failed-job";
+  const submission = await readExchange(scenario, "01-submit", variables);
+  const exchange = await readExchange(scenario, "02-poll-failed", variables);
+  const transport = recordedFetch(submission, exchange);
+  const execution = await execute(`${baseUrl}/processes`, "demo", {
+    ...submission.request.body as ExecutePayload, mode: "async", fetch: transport.fetch,
+  });
+  expect(execution.kind).toBe("job");
+  if (execution.kind !== "job") throw new Error("Expected a job handle");
+  const status = await waitForJob(execution.job.statusUrl, { fetch: transport.fetch, maxPolls: 2 });
 
   transport.assertDone();
   expect(status).toMatchObject({ jobId, status: "failed", terminal: true });
@@ -81,9 +88,18 @@ it("ZOO: a failed job resolves with the recorded explanation and does not fetch 
 });
 
 it("Weaver: results requested too early retain the result-not-ready problem", async () => {
-  const exchange = await readExchange("protocol/jobs/weaver-local/results-not-ready", "02-results", variables);
-  const transport = recordedFetch(exchange);
-  const error: unknown = await getResults(jobUrl, { fetch: transport.fetch }).catch((cause: unknown) => cause);
+  const scenario = "protocol/jobs/weaver-local/results-not-ready";
+  const submission = await readExchange(scenario, "01-submit", variables);
+  const exchange = await readExchange(scenario, "02-results", variables);
+  const transport = recordedFetch(submission, exchange);
+  const payload = submission.request.body as ExecutePayload;
+  const execution = await execute(`${baseUrl}/processes`, "file2string_array", {
+    inputs: payload.inputs!, response: "document", mode: "async", fetch: transport.fetch,
+  });
+  expect(execution.kind).toBe("job");
+  if (execution.kind !== "job") throw new Error("Expected a job handle");
+  // Deliberately ask before polling: the recording is a refusal, not a result.
+  const error: unknown = await getResults(execution.job.statusUrl, { fetch: transport.fetch }).catch((cause: unknown) => cause);
 
   transport.assertDone();
   expect(error).toBeInstanceOf(ProcessesError);
@@ -114,4 +130,62 @@ it("ZOO: dismisses a submitted job and preserves the returned dismissed status",
   if (result.kind !== "dismissed") throw new Error("Expected dismissal");
   expect(result.status).toMatchObject({ jobId, status: "dismissed", terminal: true });
   expect(await result.envelope.json()).toEqual(dismissal.response.body);
+});
+
+it("Weaver: reading an unknown job rejects with the recorded problem as its cause", async () => {
+  const exchange = await readExchange("protocol/jobs/weaver-local/unknown-job", "01-get-unknown-job", variables);
+  const transport = recordedFetch(exchange);
+  const error: unknown = await getJob(exchange.request.url, { fetch: transport.fetch }).catch((cause: unknown) => cause);
+
+  transport.assertDone();
+  expect(error).toBeInstanceOf(JobNotFoundError);
+  if (!(error instanceof JobNotFoundError)) throw new Error("Expected JobNotFoundError");
+  expect(error.url).toBe(exchange.response.final_url);
+  const body = exchange.response.body as { type: string; title: string; status: number; detail: string; cause: string };
+  expect(error.cause).toMatchObject({
+    type: body.type, title: body.title, status: body.status, detail: body.detail,
+    // The client's public ProblemDetails keeps provider-specific members here.
+    extensions: { cause: body.cause },
+  });
+  expect(new Headers(transport.calls[0]![1]?.headers).get("accept")).toBe("application/json");
+});
+
+it("ZOO: polling after dismissal stops on the recorded missing job without replacing the dismissal", async () => {
+  const scenario = "protocol/jobs/zoo-local/dismiss-running-job";
+  const dismissal = await readExchange(scenario, "02-dismiss", variables);
+  const missing = await readExchange(scenario, "03-get-after-dismiss", variables);
+  const transport = recordedFetch(dismissal, missing);
+  // Start with the existing job URL. This is a sequential DELETE then GET,
+  // not an invented recording of concurrent polling and dismissal.
+  const dismissed = await dismissJob(jobUrl, { fetch: transport.fetch });
+  if (dismissed.kind !== "dismissed") throw new Error("Expected dismissal");
+  const report = await pollJob(jobUrl, { fetch: transport.fetch, maxPolls: 2 });
+
+  transport.assertDone();
+  expect(report.outcome).toBe("dismissed-remotely");
+  expect(report.statusSequence).toEqual(["404"]);
+  expect(report.status).toBeUndefined();
+  expect(dismissed.status).toMatchObject({ jobId, status: "dismissed", terminal: true });
+  expect(await dismissed.envelope.json()).toEqual(dismissal.response.body);
+});
+
+it("ZOO: repeating dismissal preserves the 404 problem without retrying DELETE", async () => {
+  const scenario = "protocol/jobs/zoo-local/dismiss-running-job";
+  const dismissal = await readExchange(scenario, "02-dismiss", variables);
+  const afterDismiss = await readExchange(scenario, "03-get-after-dismiss", variables);
+  const repeat = await readExchange(scenario, "04-repeat-dismiss", variables);
+  const transport = recordedFetch(dismissal, afterDismiss, repeat);
+  const dismissed = await dismissJob(jobUrl, { fetch: transport.fetch });
+  expect(dismissed.kind).toBe("dismissed");
+  // Preserve the captured order: the status read between the two DELETEs was 404.
+  await expect(getJob(jobUrl, { fetch: transport.fetch })).rejects.toBeInstanceOf(JobNotFoundError);
+  const error: unknown = await dismissJob(jobUrl, { fetch: transport.fetch }).catch((cause: unknown) => cause);
+
+  transport.assertDone();
+  expect(error).toBeInstanceOf(ProcessesError);
+  if (!(error instanceof ProcessesError)) throw new Error("Expected ProcessesError");
+  expect(error.status).toBe(404);
+  expect(error.outcome).toBe("exception");
+  expect(error.problem).toMatchObject(repeat.response.body as Record<string, unknown>);
+  expect(await error.envelope.json()).toEqual(repeat.response.body);
 });
