@@ -50,6 +50,27 @@ inspection, so the final local image ID was not independently read. The pinned
 base-image digest above identifies the base, not the final locally built image.
 These observations have not been rechecked against current upstream ZOO.
 
+Deployment metadata:
+```json
+{
+  "id": "zoo-local",
+  "title": "Local ZOO-Project test deployment",
+  "implementation": {
+    "name": "ZOO-Project",
+    "profile": "Ubuntu 18 / GDAL 3 / SAGA 7 / OTB 7"
+  },
+  "base_url": {
+    "variable": "zooLocalBaseUrl",
+    "default": "http://localhost/ogc-api"
+  },
+  "fixture_staging": {
+    "container": "zoo-project-zoofpm-1",
+    "destination": "/usr/com/zoo-project/ogc-processes-tests/fixtures"
+  }
+}
+
+```
+
 ## 1. Repeated raster input returns SIGSEGV
 
 **Request:** `POST /processes/SAGA.grid_tools.0/execution`.
