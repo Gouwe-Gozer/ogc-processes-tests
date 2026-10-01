@@ -54,6 +54,25 @@ and all 27 tests passed against both the pinned release and the sibling client
 source through `npm run check` and `npm run check:local`.
 The source links below document the original integration baseline.
 
+## Local core 0.5.0 compatibility
+
+On 1 October 2026, before adding access-failure scenarios, `npm run check:local`
+compiled core **0.5.0** from client commit
+[`683b7bb`](https://github.com/ITBreinstein/oap-client/commit/683b7bb5dad8dfd99881bc51798c69870d18b5f9).
+Type checking and all 27 existing tests passed. The source checkout was only
+read; its web app, relay and own test suites were not run.
+
+The [0.5.0 changelog](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/packages/core/CHANGELOG.md)
+adds the `items` link relation and `resolveHref`, and changes buffering for
+bodies with missing or understated `Content-Length`. Those bodies are now
+counted while reading and rejected above the buffer limit. Our DIRECTED CSV
+recording declares its full length; its existing blob-download test still
+passes. That test does not cover the new streaming size-limit cases.
+
+The pinned npm default remains **0.3.2**. This check establishes compatibility
+with the inspected local source, not with a published 0.5.0 package or every
+new feature. A dependency upgrade remains a separate change to review.
+
 ## Test a local client build
 
 The default `npm run check` tests the installed npm package. To check the
