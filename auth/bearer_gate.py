@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local test gate: check a fixed Bearer token, then forward to one API origin."""
+"""Local test gate: check a fixed Bearer token or API key, then forward to one API."""
 
 import argparse
 import hmac
@@ -21,17 +21,31 @@ MAX_REQUEST_BYTES = 16 * 1024 * 1024
 CHUNK_BYTES = 64 * 1024
 
 
-class BearerGate(ThreadingHTTPServer):
+class AuthGate(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, address, upstream, token, origins, timeout=300):
+    def __init__(self, address, upstream, token, origins, timeout=300, *, api_key_header=None):
         target = urlsplit(upstream)
         if (target.scheme not in {"http", "https"} or not target.hostname
                 or target.username is not None or target.password is not None
                 or target.path not in {"", "/"} or target.query or target.fragment):
             raise ValueError("upstream must be an http(s) origin without a path or credentials")
-        if not re.fullmatch(r"[A-Za-z0-9._~+/-]+=*", token):
+        self.api_key_mode = api_key_header is not None
+        if self.api_key_mode:
+            if not re.fullmatch(r"[!#$%&'*+.^_`|~0-9A-Za-z-]+", api_key_header):
+                raise ValueError("API-key header must be a nonempty HTTP field name")
+            reserved = REQUEST_HEADERS | {
+                "authorization", "cookie", "host", "content-length", "transfer-encoding",
+                "connection", "origin", "accept-encoding", "expect", "te", "trailer", "upgrade",
+            }
+            if api_key_header.lower() in reserved or api_key_header.lower().startswith(
+                    ("access-control-", "proxy-", "sec-")):
+                raise ValueError("choose a custom API-key header, not a protocol or browser-control header")
+            if not re.fullmatch(r"[!-~]+", token):
+                raise ValueError("the test API key must be nonempty visible ASCII without spaces")
+        elif not re.fullmatch(r"[A-Za-z0-9._~+/-]+=*", token):
             raise ValueError("the test token must use Bearer token characters")
+        self.credential_header = api_key_header.lower() if self.api_key_mode else "authorization"
         self.upstream = target
         self.upstream_port = target.port  # Validate before starting to listen.
         self.token = token
@@ -75,34 +89,39 @@ class GateHandler(BaseHTTPRequestHandler):
             self.wfile.write(body)
 
     def do_OPTIONS(self):
-        # Browsers send the preflight without the Bearer credential.
+        # Browsers send the preflight without the credential.
         origin = self.headers.get("Origin")
         method = self.headers.get("Access-Control-Request-Method", "")
         requested = {name.strip().lower() for name in
                      self.headers.get("Access-Control-Request-Headers", "").split(",") if name.strip()}
         if (origin not in self.server.origins or method not in METHODS
-                or not requested <= REQUEST_HEADERS | {"authorization"}):
+                or not requested <= REQUEST_HEADERS | {self.server.credential_header}):
             self.problem(403, "Forbidden", "This preflight is not allowed by the test gate.")
             return
         self.send_response(204)
         self.cors_headers()
         self.send_header("Access-Control-Allow-Methods", ", ".join(sorted(METHODS)))
-        self.send_header("Access-Control-Allow-Headers", ", ".join(sorted(REQUEST_HEADERS | {"authorization"})))
+        self.send_header("Access-Control-Allow-Headers", ", ".join(sorted(REQUEST_HEADERS | {self.server.credential_header})))
         self.send_header("Cache-Control", "no-store")
         self.send_header("Connection", "close")
         self.end_headers()
         self.close_connection = True
 
     def forward(self):
-        values = self.headers.get_all("Authorization", [])
-        scheme, _, credential = values[0].partition(" ") if len(values) == 1 else ("", "", "")
-        if scheme.lower() != "bearer" or not hmac.compare_digest(
-                credential.encode(), self.server.token.encode()):
-            challenge = 'Bearer realm="ogc-test"'
-            if values:
-                challenge += ', error="invalid_token"'
-            self.problem(401, "Unauthorized", "Supply the configured test Bearer token.", challenge)
-            return
+        values = self.headers.get_all(self.server.credential_header, [])
+        if self.server.api_key_mode:
+            if len(values) != 1 or not hmac.compare_digest(values[0].encode(), self.server.token.encode()):
+                self.problem(403, "Forbidden", "Supply the configured test API key.")
+                return
+        else:
+            scheme, _, credential = values[0].partition(" ") if len(values) == 1 else ("", "", "")
+            if scheme.lower() != "bearer" or not hmac.compare_digest(
+                    credential.encode(), self.server.token.encode()):
+                challenge = 'Bearer realm="ogc-test"'
+                if values:
+                    challenge += ', error="invalid_token"'
+                self.problem(401, "Unauthorized", "Supply the configured test Bearer token.", challenge)
+                return
         # Only origin-form paths: the caller cannot choose another upstream.
         raw_target = self.requestline.split()[1]
         if not raw_target.startswith("/") or raw_target.startswith("//"):
@@ -130,8 +149,8 @@ class GateHandler(BaseHTTPRequestHandler):
                 self.problem(400, "Bad Request", "Incomplete request body.")
                 return
             headers = {name: value for name, value in self.headers.items()
-                       if name.lower() in REQUEST_HEADERS}
-            # The gate consumes the token. It is never sent to the backend.
+                       if name.lower() in REQUEST_HEADERS and name.lower() != self.server.credential_header}
+            # The gate consumes the credential. It is never sent to the backend.
             headers["Accept-Encoding"] = "identity"
             connection.request(self.command, self.path, body=body, headers=headers)
             response = connection.getresponse()  # No redirect following or retries.
@@ -174,6 +193,9 @@ class GateHandler(BaseHTTPRequestHandler):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--auth", choices=["bearer", "api-key"], default="bearer",
+                        help="credential mode (default: bearer)")
+    parser.add_argument("--api-key-header", help="key header in api-key mode (default: X-API-Key)")
     parser.add_argument("--upstream", default="http://127.0.0.1:5012")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=5002)
@@ -182,14 +204,22 @@ def main():
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("timeout must be positive")
+    if args.auth == "bearer" and args.api_key_header is not None:
+        parser.error("--api-key-header requires --auth api-key")
+    api_key_header = None
+    if args.auth == "api-key":
+        api_key_header = args.api_key_header if args.api_key_header is not None else "X-API-Key"
+        token = os.environ.get("OGC_TEST_API_KEY", "local-test-api-key")
+    else:
+        token = os.environ.get("OGC_TEST_BEARER_TOKEN", "local-test-token")
     try:
-        server = BearerGate((args.host, args.port), args.upstream,
-                            os.environ.get("OGC_TEST_BEARER_TOKEN", "local-test-token"),
-                            args.origin or ["http://localhost:5173"], args.timeout)
+        server = AuthGate((args.host, args.port), args.upstream, token,
+                          args.origin or ["http://localhost:5173"], args.timeout,
+                          api_key_header=api_key_header)
     except (ValueError, OSError) as error:
         parser.error(str(error))
-    print(f"Bearer test gate: http://{args.host}:{server.server_port} -> {args.upstream}", flush=True)
-    print("Use the configured Bearer token; Ctrl+C stops the gate.", flush=True)
+    print(f"{args.auth} test gate: http://{args.host}:{server.server_port} -> {args.upstream}", flush=True)
+    print(f"Credential header: {server.credential_header}; Ctrl+C stops the gate.", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

@@ -1,12 +1,12 @@
-# Fixed Bearer authentication test gate
+# Fixed Bearer-token and API-key test gate
 
-This Python gate checks a fixed token before forwarding a request to an existing
-API. The API still supplies discovery, processes, jobs and results. The gate
-provides no OGC processes of its own.
+This Python gate checks a fixed Bearer token or API key before forwarding to
+an existing API. The API still supplies discovery, processes, jobs and results.
+The gate provides no OGC processes of its own.
 
 ```text
 OAP or curl -> http://localhost:5002 -> backend on http://127.0.0.1:5012
-                  checks token           runs the process
+                  checks credential      runs the process
 ```
 
 Use Python 3.11 or later. No Python packages need installing.
@@ -15,9 +15,11 @@ Use Python 3.11 or later. No Python packages need installing.
 python3 auth/bearer_gate.py
 ```
 
-The default token is `local-test-token`, deliberately public test data. Change
-it with the `OGC_TEST_BEARER_TOKEN` environment variable. This is a local testing
-utility, not a production authentication service.
+Bearer is the default mode; its token is `local-test-token`. Change it with
+`OGC_TEST_BEARER_TOKEN`. API-key mode uses `local-test-api-key`, configurable
+with `OGC_TEST_API_KEY`. Both defaults are deliberately public test data.
+This is a local testing utility, not a production authentication service.
+The filename remains `bearer_gate.py`; it now supports both modes.
 
 To use another backend or browser origin:
 
@@ -118,12 +120,70 @@ to the gate's client-visible address, recreate the backend, and set the gate's
 `--host`, `--port` and allowed `--origin` accordingly. Token authentication uses
 HTTP here only for the local test setup; use HTTPS when sending real credentials.
 
+## API-key mode
+
+Use the same DIRECTED backend and ports described above. Stop the running gate
+with Ctrl+C, then start it in API-key mode instead:
+
+```bash
+python3 auth/bearer_gate.py --auth api-key
+```
+
+The default header is `X-API-Key`, and the default key is `local-test-api-key`.
+From another terminal:
+
+```bash
+# Missing key: 403.
+curl -i http://localhost:5002/processes
+
+# Wrong key: 403.
+curl -i -H 'X-API-Key: wrong' http://localhost:5002/processes
+
+# Correct key: the real DIRECTED process list.
+curl -i -H 'X-API-Key: local-test-api-key' \
+  -H 'Accept: application/json' http://localhost:5002/processes
+```
+
+To run the Denmark calculation and save the returned body:
+
+```bash
+curl -sS -D - -o directed-auth-result.csv \
+  -H 'X-API-Key: local-test-api-key' \
+  -H 'Content-Type: application/json' \
+  --data '{"inputs":{"intensity":[0,30,80]}}' \
+  http://localhost:5002/processes/climada-simple-example-denmark-process/execution
+```
+
+Check the status and Content-Type before treating the file as CSV. The same
+key header is required on subsequent job-status and result requests too.
+
+The header name is configurable. For example, to match the constructed client
+acceptance cases, restart the gate with:
+
+```bash
+python3 auth/bearer_gate.py --auth api-key --api-key-header X-Processing-Key
+```
+
+Then send `X-Processing-Key: local-test-api-key` instead of `X-API-Key`.
+The selected header is also allowed in browser preflights from configured
+origins. Header names are case insensitive; key values are matched exactly.
+This gate accepts nonempty visible ASCII keys without spaces. Choose a custom
+header name, not `Authorization`, `Host`, framing headers or browser-control
+headers. Invalid configuration fails at startup without printing the key.
+
+Only the selected credential mode grants access. A Bearer token does not
+replace an API key. Missing, wrong or duplicate keys return 403 with a JSON
+problem and no Bearer challenge; 403 is this example's choice, not a universal
+rule for API-key services. The key is checked and consumed by the gate, so it
+is never forwarded to DIRECTED. There is no key in a URL or cookie.
+
 ## Handoff to OAP developers
 
 Start with direct browser access to port 5002. Implement credential handling in
 OAP and exercise that implementation against this gate:
 
-1. Let the user set a Bearer token for this service, initially held in memory.
+1. Let the user set a Bearer token or a key plus its header name for this
+   service, initially held in memory.
 2. Attach it through OAP's existing injectable fetch on discovery, page reads,
    description, execution, polling, dismissal and result requests. Also cover
    downloads made separately by the web app.
@@ -142,18 +202,19 @@ the browser-to-relay connection. A service token would need to be configured
 and attached on the relay-to-service connection, with appropriate challenge
 headers passed back. Our gate expects the service token.
 
-A fixed Bearer token is the only credential mode here. API-key headers, Basic
-Auth, OAuth login/refresh, users, roles and token expiry are not implemented.
+The two modes are fixed Bearer tokens and API keys in a configurable header.
+Basic Auth, OAuth login/refresh, users, roles and token expiry are not implemented.
 
 ## Behaviour
 
-- Every GET, HEAD, POST and DELETE needs the configured Bearer token.
-- Missing or wrong credentials return 401 with `WWW-Authenticate` and a JSON
-  problem. The request never reaches the backend.
+- Every GET, HEAD, POST and DELETE needs the selected credential.
+- Missing, wrong or duplicate credentials return a JSON problem: 401 with
+  `WWW-Authenticate` in Bearer mode, or 403 in API-key mode. The request never
+  reaches the backend.
 - OPTIONS preflights need no token. Only configured origins, supported methods
   and allowed headers are permitted. CORS headers also accompany failures.
 - An accepted request retains its path, query, method, body and relevant headers.
-  Authorization and cookies are consumed/dropped, not sent to the backend.
+  The selected key header, Authorization and cookies are not sent to the backend.
 - Replies retain their status, body and relevant headers, including `Location`,
   `Link` and `WWW-Authenticate`. Bodies stream in chunks, including large files.
   There is no payload rewriting, redirect following or automatic request retry.
@@ -172,7 +233,8 @@ passes such links unchanged so that configuration mistakes remain visible.
 python3 -m unittest discover -s auth -p 'test_*.py' -v
 ```
 
-These 12 Python tests make real HTTP requests over temporary loopback ports.
+These 32 Python tests exercise both modes over temporary loopback HTTP ports
+and reject invalid configuration before the gate starts.
 Their backend is a small test-only byte responder. They check the gate itself:
 credentials, preflight, error handling, forwarding and file bytes. They do not
 run OAP, DIRECTED, a browser or OAuth. A separate
@@ -227,3 +289,20 @@ This check used Python HTTP requests. It verified the returned CORS headers,
 but did not run a browser or OAP's authentication implementation. Building a
 fresh image was not part of this check. The temporary gate and backend were
 stopped afterwards; the original service was left running.
+
+#### API-key follow-up — 1 October 2026
+
+The same image and separate DIRECTED profile were checked with both the default
+`X-API-Key` header and custom `X-Processing-Key`. Missing/wrong keys returned
+403, the correct key returned the real process list, and each header passed
+its unauthenticated execution preflight. A Bearer token alone was refused.
+
+With `X-Processing-Key`, one real asynchronous calculation returned 201 with
+a gate-facing job URL, progressed from accepted to successful, and returned
+an 18,849,968-byte CSV with the same SHA-256 shown above. Its bytes matched the
+same job's direct backend result. Missing/wrong keys were also refused on the
+job-status and result requests. All 32 Python tests passed.
+
+These checks used Python HTTP requests, not OAP or a browser. The temporary
+gates and backend were stopped afterwards; the original service on port 5000
+stayed running.

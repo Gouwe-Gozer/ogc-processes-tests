@@ -94,21 +94,22 @@ These are constructed examples, not observations about a named provider.
 
 ## Protected-service testing
 
-[`auth/`](../auth/) supplies a Python gate that checks a fixed Bearer token and
-forwards accepted requests to a configured API. A separate DIRECTED profile
-advertises the gate's URL so client conversations stay on the protected entry
+[`auth/`](../auth/) supplies a Python gate that checks a fixed Bearer token or
+an API key in a configurable header, then forwards accepted requests to an API.
+A separate DIRECTED profile advertises the gate's URL so client conversations stay on the protected entry
 point. The gate defines no OGC processes and does not rewrite provider payloads.
 
-Its 12 Python tests exercise the gate's actual HTTP behaviour against a local
-byte responder. They run in their own CI job and are separate from the Node
-client/helper/acceptance suite. They do not establish that OAP can authenticate.
+Its 32 Python tests cover both credential modes, configuration and HTTP
+behaviour against a local byte responder. They run in their own CI job and are
+separate from the Node client/helper/acceptance suite. They do not establish that OAP can authenticate.
 Successful client authentication needs the client's own credential handling,
 then integration tests using the gate. Its UI and relay checks belong beside
 those implementations; this repository provides the service setup and examples.
 A [live DIRECTED check on 1 October 2026](../auth/README.md#live-directed-check--1-october-2026)
 passed discovery, asynchronous submission, polling and a full CSV download
-through the gate. Missing and wrong tokens were refused, and the downloaded
-bytes matched the backend's result. This used Python HTTP requests and an
+through the gate. The subsequent API-key check also passed using the same
+DIRECTED image, with default and custom header names. Missing and wrong
+credentials were refused, and the downloaded bytes matched the backend's result. This used Python HTTP requests and an
 existing Docker image; browser/OAP authentication and a fresh image build
 remain unverified.
 

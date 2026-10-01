@@ -99,4 +99,7 @@ API keys in query strings or cookies, Basic Auth, OAuth login/refresh, automatic
 security-scheme discovery, browser CORS and redirect credential handling are
 outside these cases. The external-result test covers an advertised link, not
 an HTTP redirect. UI downloads made separately from core need their own tests.
-The live Python gate in `auth/` currently supports Bearer only.
+The live [Python gate](../../auth/README.md#api-key-mode) also supports both
+modes. Use `--auth api-key --api-key-header X-Processing-Key` to match the
+header name in these examples; configure the client with the gate's chosen
+key value. Gate checks remain separate from OAP's auth implementation.

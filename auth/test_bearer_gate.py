@@ -2,12 +2,16 @@
 
 import http.client
 import json
+import os
+from pathlib import Path
+import subprocess
+import sys
 import threading
 import unittest
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from bearer_gate import BearerGate, MAX_REQUEST_BYTES
+from bearer_gate import AuthGate, MAX_REQUEST_BYTES
 
 ORIGIN = "http://localhost:5173"
 TOKEN = "local-test-token"
@@ -44,6 +48,12 @@ class Backend(BaseHTTPRequestHandler):
 
 
 class GateTests(unittest.TestCase):
+    api_key_header = None
+    secret = TOKEN
+    credential_header = "Authorization"
+    credential_value = f"Bearer {TOKEN}"
+    denial_status = 401
+
     def setUp(self):
         backend = ThreadingHTTPServer(("127.0.0.1", 0), Backend)
         backend.calls = []
@@ -52,12 +62,14 @@ class GateTests(unittest.TestCase):
         backend.headers = {"Content-Type": "application/json", "Content-Length": str(len(backend.body))}
         self.backend = self.enterContext(running(backend))
         upstream = f"http://127.0.0.1:{backend.server_port}"
-        self.gate = self.enterContext(running(BearerGate(("127.0.0.1", 0), upstream, TOKEN, [ORIGIN], 2)))
+        self.gate = self.enterContext(running(AuthGate(
+            ("127.0.0.1", 0), upstream, self.secret, [ORIGIN], 2, api_key_header=self.api_key_header,
+        )))
 
     def request(self, path="/processes", method="GET", body=None, headers=None, authorized=True):
         request_headers = {"Origin": ORIGIN}
         if authorized:
-            request_headers["Authorization"] = f"Bearer {TOKEN}"
+            request_headers[self.credential_header] = self.credential_value
         request_headers.update(headers or {})
         connection = http.client.HTTPConnection("127.0.0.1", self.gate.server_port, timeout=3)
         try:
@@ -68,13 +80,16 @@ class GateTests(unittest.TestCase):
             connection.close()
 
     def test_missing_and_wrong_credentials_never_reach_backend(self):
-        for authorization in [None, "Bearer wrong", f"Basic {TOKEN}", "Bearer LOCAL-TEST-TOKEN"]:
-            with self.subTest(authorization=authorization):
-                headers = {} if authorization is None else {"Authorization": authorization}
+        for credential in [None, "wrong", f"Basic {self.secret}", self.credential_value.upper()]:
+            with self.subTest(credential=credential):
+                headers = {} if credential is None else {self.credential_header: credential}
                 status, headers, body = self.request(authorized=False, headers=headers)
-                self.assertEqual(status, 401)
-                self.assertEqual(json.loads(body)["status"], 401)
-                self.assertIn('Bearer realm="ogc-test"', headers["WWW-Authenticate"])
+                self.assertEqual(status, self.denial_status)
+                self.assertEqual(json.loads(body)["status"], self.denial_status)
+                if self.api_key_header:
+                    self.assertNotIn("WWW-Authenticate", headers)
+                else:
+                    self.assertIn('Bearer realm="ogc-test"', headers["WWW-Authenticate"])
                 self.assertEqual(headers["Access-Control-Allow-Origin"], ORIGIN)
                 self.assertIn("www-authenticate", headers["Access-Control-Expose-Headers"])
         self.assertEqual(self.backend.calls, [])
@@ -86,6 +101,7 @@ class GateTests(unittest.TestCase):
         self.assertNotIn("Authorization", headers)
         self.assertNotIn("Cookie", headers)
         self.assertNotIn("Origin", headers)
+        self.assertNotIn(self.credential_header.lower(), {name.lower() for name in headers})
 
     def test_post_is_forwarded_once_with_body_prefer_and_location(self):
         self.backend.status = 201
@@ -139,20 +155,20 @@ class GateTests(unittest.TestCase):
         self.assertEqual(self.request("/jobs/example", "DELETE")[0], 204)
         self.assertEqual([call[0] for call in self.backend.calls], ["HEAD", "DELETE"])
 
-    def test_preflight_works_without_token_and_without_contacting_backend(self):
+    def test_preflight_works_without_credential_and_without_contacting_backend(self):
         status, headers, body = self.request(method="OPTIONS", authorized=False, headers={
             "Access-Control-Request-Method": "POST",
-            "Access-Control-Request-Headers": "authorization, content-type, prefer",
+            "Access-Control-Request-Headers": f"{self.credential_header}, content-type, prefer",
         })
         self.assertEqual((status, body), (204, b""))
         self.assertEqual(headers["Access-Control-Allow-Origin"], ORIGIN)
-        self.assertIn("authorization", headers["Access-Control-Allow-Headers"])
+        self.assertIn(self.credential_header.lower(), headers["Access-Control-Allow-Headers"])
         self.assertEqual(self.backend.calls, [])
 
     def test_preflight_rejects_unconfigured_origins_methods_and_headers(self):
         for change in [{"Origin": "https://elsewhere.invalid"},
                        {"Access-Control-Request-Method": "PUT"},
-                       {"Access-Control-Request-Headers": "x-api-key"}]:
+                       {"Access-Control-Request-Headers": "x-unconfigured-key"}]:
             with self.subTest(change=change):
                 status, _, _ = self.request(method="OPTIONS", authorized=False, headers={
                     "Access-Control-Request-Method": "GET", **change,
@@ -188,6 +204,88 @@ class GateTests(unittest.TestCase):
         self.assertEqual(status, 502)
         self.assertEqual(json.loads(body)["status"], 502)
         self.assertEqual(headers["Access-Control-Allow-Origin"], ORIGIN)
+
+
+    def test_duplicate_credentials_are_refused(self):
+        connection = http.client.HTTPConnection("127.0.0.1", self.gate.server_port, timeout=3)
+        try:
+            connection.putrequest("GET", "/processes")
+            connection.putheader(self.credential_header, self.credential_value)
+            connection.putheader(self.credential_header.lower(), self.credential_value)
+            connection.endheaders()
+            response = connection.getresponse()
+            self.assertEqual(response.status, self.denial_status)
+            response.read()
+        finally:
+            connection.close()
+        self.assertEqual(self.backend.calls, [])
+
+
+class ApiKeyGateTests(GateTests):
+    # Every shared forwarding, streaming and failure check also runs in this mode.
+    api_key_header = "X-Processing-Key"
+    secret = "test:key+with/symbols=_-"
+    credential_header = api_key_header
+    credential_value = secret
+    denial_status = 403
+
+    def test_header_name_is_case_insensitive_and_key_is_consumed(self):
+        status, _, _ = self.request(authorized=False, headers={
+            self.credential_header.lower(): self.secret,
+            "Authorization": f"Bearer {TOKEN}", "Cookie": "session=secret",
+        })
+        self.assertEqual(status, 200)
+        self.assertEqual(len(self.backend.calls), 1)
+        headers = {name.lower(): value for name, value in self.backend.calls[0][2].items()}
+        self.assertNotIn(self.credential_header.lower(), headers)
+        self.assertNotIn("authorization", headers)
+        self.assertNotIn("cookie", headers)
+
+    def test_other_credentials_do_not_replace_the_configured_key(self):
+        for headers in [{"Authorization": f"Bearer {TOKEN}"}, {"X-API-Key": self.secret}]:
+            with self.subTest(headers=headers):
+                self.assertEqual(self.request(authorized=False, headers=headers)[0], 403)
+        self.assertEqual(self.backend.calls, [])
+
+    def test_preflight_only_allows_the_configured_auth_header(self):
+        status, _, _ = self.request(method="OPTIONS", authorized=False, headers={
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "authorization, content-type",
+        })
+        self.assertEqual(status, 403)
+        self.assertEqual(self.backend.calls, [])
+
+
+class ConfigurationTests(unittest.TestCase):
+    def test_cli_rejects_conflicting_mode_empty_header_and_empty_key(self):
+        secret = "public-cli-test-secret"
+        for arguments, key in [
+            (["--api-key-header", "X-Processing-Key"], secret),
+            (["--auth", "api-key", "--api-key-header", ""], secret),
+            (["--auth", "api-key"], ""),
+        ]:
+            with self.subTest(arguments=arguments):
+                result = subprocess.run(
+                    [sys.executable, str(Path(__file__).with_name("bearer_gate.py")), "--port", "0", *arguments],
+                    env={**os.environ, "OGC_TEST_API_KEY": key},
+                    capture_output=True, text=True, timeout=3,
+                )
+                self.assertEqual(result.returncode, 2)
+                self.assertNotIn(secret, result.stdout + result.stderr)
+
+    def test_api_key_header_cannot_be_invalid_or_replace_protocol_headers(self):
+        for header in ["", "bad header", "x-key\r\nInjected: yes", "x-key:part", "clé",
+                       "Authorization", "CONTENT-LENGTH", "Host", "Cookie", "Accept",
+                       "Origin", "Connection", "Access-Control-Request-Method", "Sec-Fetch-Site"]:
+            with self.subTest(header=header), self.assertRaises(ValueError):
+                with AuthGate(("127.0.0.1", 0), "http://127.0.0.1:1", "key", [], api_key_header=header):
+                    pass
+
+    def test_api_key_cannot_be_empty_or_contain_whitespace_or_non_ascii(self):
+        for key in ["", "white space", "key\nvalue", "key\rvalue", "key\tvalue", "clé"]:
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                with AuthGate(("127.0.0.1", 0), "http://127.0.0.1:1", key, [], api_key_header="X-API-Key"):
+                    pass
 
 
 if __name__ == "__main__":

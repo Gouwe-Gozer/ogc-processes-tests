@@ -79,9 +79,10 @@ dependencies untouched. See the
 
 ## Try a protected service
 
-[`auth/`](auth/) contains a small Python Bearer-token gate and a separate
-DIRECTED Docker profile. It lets colleagues try missing, wrong and valid tokens
-against a real processing service. Its Python HTTP checks run in a separate
+[`auth/`](auth/) contains a small Python gate for Bearer tokens or API keys
+in a configurable header, and a separate DIRECTED Docker profile. It lets
+colleagues try missing, wrong and valid credentials against a real processing
+service. Its Python HTTP checks run in a separate
 GitHub Actions job. The [auth acceptance examples](tests/acceptance/) also cover
 an API-key header using constructed replies. Those client tests and the Python
 gate have separate purposes; see the [handoff](auth/README.md#handoff-to-oap-developers).
@@ -93,7 +94,7 @@ gate have separate purposes; see the [handoff](auth/README.md#handoff-to-oap-dev
 | `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
 | `tests/` | Recorded client tests, constructed workflows, service acceptance cases and the shared fake transport |
-| `auth/` | Python Bearer test gate, gate HTTP tests and a separate DIRECTED startup profile |
+| `auth/` | Python Bearer/API-key test gate, gate HTTP tests and a separate DIRECTED startup profile |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |
