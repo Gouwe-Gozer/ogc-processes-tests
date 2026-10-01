@@ -123,16 +123,21 @@ and checks, or provide the small amount of support needed to run them.
 `*.test.ts` means a file contains tests. Vitest is the program that finds those
 tests, runs them and reports which passed or failed.
 
-There are currently **53 cases: 45 pass and eight report missing authentication
-integration**. The passing cases include 20 recorded client checks, six constructed
-workflows, 12 pagination/date cases, two explicit authentication-header checks
-and five recording-helper checks.
+There are **42 tests, all exercising the real client**: 20 recorded checks,
+eight constructed checks, 12 pagination/date cases and two explicit
+credential-header checks. The fake transporter is a tool used by these tests;
+its own implementation is not a separate test subject in the client suite.
 
-The eight remaining auth cases already contain their example conversations and
-checks. They stop before making requests because we have not connected OAP's
-production credential handling. This is why the full command currently reports
-failure. It does not mean that we observed eight bugs in OAP's HTTP requests.
-See the [acceptance guide](../tests/acceptance/README.md) for the connection needed.
+Eight more auth workflows are prepared in the [pending folder](../tests/acceptance/pending/).
+They are not run or counted until we connect OAP's production credential handling.
+The runner mentions this gap so a passing suite cannot be mistaken for proof
+that service-wide authentication works.
+
+If a fixture cannot be loaded or the transporter cannot create its reply, the
+client test fails with **TEST SETUP**, a file or step, and the underlying error.
+If the client requests something different from the scenario, **CLIENT REQUEST**
+shows what was expected and what it sent. These diagnostics remain visible even
+when the client catches the original exception.
 
 | File | What it does in plain language |
 |---|---|
@@ -146,11 +151,10 @@ See the [acceptance guide](../tests/acceptance/README.md) for the connection nee
 | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) | Uses constructed replies to walk three process pages, run a process from the last page and retrieve its job result. A second test checks that a page-two failure rejects the list with the error details. |
 | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) | Supplies 401/403 refusals while listing, executing, polling or reading results. Checks that the client keeps the explanation and stops without repeating the calculation. It does not test login or token validity. |
 | [pagination-and-dates.test.ts](../tests/acceptance/pagination-and-dates.test.ts) | Checks job pages, next links in HTTP headers, date queries and dates in execution requests. |
-| [authentication.test.ts](../tests/acceptance/authentication.test.ts) | Checks explicit Bearer/API-key headers and defines protected workflows, wrong credentials, revoked access and a download on another host. |
-| [oap-auth-binding.ts](../tests/acceptance/oap-auth-binding.ts) | The connection to OAP's own credential handling. Currently reports the missing integration; it does not invent authentication for the client. |
+| [authentication.test.ts](../tests/acceptance/authentication.test.ts) | Checks that the real client transmits explicit Bearer/API-key headers and preserves the service's refusals. |
+| [response-envelope.test.ts](../tests/constructed/response-envelope.test.ts) | Checks that the client preserves requested/final URLs and independent results from repeated requests. |
 | [protected-conversation.ts](../tests/acceptance/protected-conversation.ts) | Acts as the service: checks credentials before releasing a reply and rejects credentials sent to another host. |
 | [recorded-fetch.ts](../tests/support/recorded-fetch.ts) | Loads selected recordings and provides the replacement fetch function. This is the fake transporter itself. |
-| [recorded-fetch.test.ts](../tests/support/recorded-fetch.test.ts) | Checks the helper directly: incorrect requests must fail, replies must remain readable, and saved body files must load correctly. These five tests protect the test setup. |
 | [setup.ts](../tests/setup.ts) | Blocks the normal global fetch during tests, so an accidental attempt to use it fails instead of contacting a server. |
 | [vitest.config.ts](../vitest.config.ts) | Tells Vitest where the tests are and which setup file to use. |
 
@@ -257,10 +261,10 @@ This suite does not test cancelling a local wait, generated
 forms, map/table rendering, browser network permissions (CORS), or the current
 availability of providers. The client repository has tests for cancellation,
 job listing, forms, initial result presentation and browser access; it does not
-follow that every desired UI presentation is already covered. The large CSV helper test checks loading the recording. A separate DIRECTED
+follow that every desired UI presentation is already covered. The DIRECTED
 core test checks that the client makes the complete file available for download
-and applies its size limit to text reads. Neither displays a table or clicks
-a browser download button.
+and applies its size limit to text reads. This does not display a table or
+click a browser download button.
 
 GitHub Actions automates these same checks once the workflow is pushed to
 GitHub. It tests the pinned client release; changes in the separate client

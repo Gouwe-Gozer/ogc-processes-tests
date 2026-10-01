@@ -241,8 +241,10 @@ run OAP, DIRECTED, a browser or OAuth. A separate
 [GitHub Actions job](../.github/workflows/auth-gate.yml) runs these same checks
 without Docker or a sibling checkout. They are separate from the Node suite
 run by `npm run check`. That suite now includes [auth acceptance cases](../tests/acceptance/)
-for Bearer and API-key headers, with explicit failures where production client
-credential handling still needs connecting.
+for explicit Bearer and API-key headers. Eight additional protected workflows
+are prepared outside the collected client tests until production credential
+handling is connected. The gate's Python tests never contribute to npm client
+test counts.
 
 The [constructed core tests](../tests/constructed/README.md#access-failures)
 separately check OAP's handling of prepared refusals. Neither group proves

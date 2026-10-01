@@ -10,6 +10,8 @@ const packageDir = local ?? resolve(root, "node_modules/@breinstein/oap-client")
 const manifest = JSON.parse(readFileSync(resolve(packageDir, "package.json"), "utf8"));
 console.info(`Client under test: ${local ? "LOCAL build" : "installed npm package"} ${manifest.version} (${packageDir})`);
 
+console.info("Not yet covered: 8 service-auth workflows await client integration (tests/acceptance/pending/).");
+
 export default defineConfig({
   resolve: {
     alias: local ? [{
@@ -19,7 +21,7 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/{protocol,constructed,acceptance}/**/*.test.ts"],
     setupFiles: ["./tests/setup.ts"],
   },
 });

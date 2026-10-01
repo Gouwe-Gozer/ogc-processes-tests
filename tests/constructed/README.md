@@ -68,19 +68,27 @@ To run just the access-failure tests:
 npm test -- tests/constructed/access-failures.test.ts --reporter=verbose
 ```
 
-To run all six constructed tests against the sibling client source:
+To run all eight constructed tests against the sibling client source:
 
 ```bash
 npm run check:local -- tests/constructed --reporter=verbose
 ```
 
-All six tests are also included in `npm run check` and the existing GitHub Actions
-workflow. They use the normal short polling interval; they do not test timing
-precision or replace the client's polling loop.
+All eight tests are also included in `npm run check` and the existing GitHub Actions
+workflow. The polling cases use a short polling interval; they do not test
+timing precision or replace the client's polling loop.
 
 These checks do not establish live-server compatibility or browser behaviour.
-These six cases do not cover paginated job lists, date filtering or successful
-authentication. Separate [acceptance cases](../acceptance/) now cover job
-pagination and date queries, and prepare protected workflows with explicit
-failures for missing client credential integration. Browser enforcement of access to `WWW-Authenticate` is also
-outside these core tests; the fake transport makes response headers readable.
+These cases do not cover successful service-wide authentication. Separate
+[acceptance cases](../acceptance/) cover job pagination, date queries and explicit
+credential headers. Eight protected workflows remain prepared outside the
+collected tests until production client credentials can be configured.
+Browser enforcement of access to `WWW-Authenticate` is also outside these core tests; the fake transport makes response headers readable.
+
+## Response handling
+
+Two cases in [response-envelope.test.ts](response-envelope.test.ts) call the
+real client's `send()` operation. They check that requested and final response
+URLs stay distinct, and that successive requests return independent, readable
+results. The replies are constructed, including redirect metadata; no live
+redirect is followed. These replace helper-only checks of response construction.

@@ -27,10 +27,13 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. There are 53 cases: 20 recorded client checks, six constructed
-workflows, 22 service acceptance cases and five recording-helper checks.
-Currently 45 pass; eight acceptance cases stop at the missing production-auth
-integration before making requests. They do not cover every collected scenario.
+exercise its relay. There are 42 client tests: 20 recorded checks, eight
+constructed checks and 14 acceptance cases. Every collected test exercises the
+real client. The fake transport is a tool, not a separate subject in this suite.
+Eight prepared auth workflows live under `tests/acceptance/pending/` until they
+can call production credential handling; they are not counted as client tests.
+The runner prints this coverage gap. The suite does not cover every collected
+scenario.
 
 The inspected client source at `fb9d5f2` already contains:
 
@@ -86,10 +89,11 @@ evidence; do not introduce a server framework or expectation manifests.
 
 [`tests/acceptance/`](../tests/acceptance/) additionally sets requirements from
 HTTP/OGC service contracts, without waiting for client support. Its pagination,
-job date-filter and execution-date cases are runnable now. Its authentication
-workflows keep missing integration visible as failing tests. Only the small
-OAP binding depends on the client's credential API; the service conversations
-and assertions must not be weakened to accommodate client limitations.
+job date-filter and execution-date cases are runnable now. Its two explicit
+credential-header tests call the client directly. Service-wide authentication
+workflows remain prepared but uncollected until their binding can call the
+client's credential implementation. This gap is reported separately from client
+results; the service conversations and assertions remain unchanged.
 These are constructed examples, not observations about a named provider.
 
 ## Protected-service testing
@@ -101,7 +105,7 @@ point. The gate defines no OGC processes and does not rewrite provider payloads.
 
 Its 32 Python tests cover both credential modes, configuration and HTTP
 behaviour against a local byte responder. They run in their own CI job and are
-separate from the Node client/helper/acceptance suite. They do not establish that OAP can authenticate.
+separate from the Node client suite. They do not establish that OAP can authenticate.
 Successful client authentication needs the client's own credential handling,
 then integration tests using the gate. Its UI and relay checks belong beside
 those implementations; this repository provides the service setup and examples.

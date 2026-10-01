@@ -18,7 +18,7 @@ export function authenticatedClient(
   const client = createClient({ baseUrl, fetch });
   throw new Error(
     "AUTH_INTEGRATION_MISSING: " + client.baseUrl.origin + " requires " + credential.header +
-    ". Connect OAP's production credential handling in tests/acceptance/oap-auth-binding.ts. " +
+    ". Connect OAP's production credential handling in tests/acceptance/pending/oap-auth-binding.ts. " +
     "No authenticated request has been tested; this is an integration gap, not a proved client defect.",
   );
   // When the real configuration is wired above, return this instance.

@@ -3,10 +3,10 @@
 This repository owns a small cross-provider regression suite as well as the
 recordings it uses. Tests import the real `@breinstein/oap-client` package and
 supply recorded responses through its existing `FetchLike` interface. ZOO,
-pygeoapi, and Weaver are fixture sources for shared client concerns. Six
-[constructed conversations](../tests/constructed/) use that same boundary to test
-several public operations together; their responses live directly in the test
-files and are not provider evidence. The additional
+pygeoapi, and Weaver are fixture sources for shared client concerns. Eight
+[constructed checks](../tests/constructed/) use that same boundary to test
+client workflows and response handling; their replies live directly in the
+test files and are not provider evidence. The additional
 [service acceptance examples](../tests/acceptance/) define pagination, dates and
 authentication requirements even where client integration is not ready.
 
@@ -49,14 +49,18 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-The suite now contains 53 cases: 20 client checks using recordings, six
-constructed workflows, 22 acceptance cases and five helper checks. Against
-both npm 0.3.2 and local 0.5.0, 45 pass and eight stop at
-`AUTH_INTEGRATION_MISSING`. Those eight have complete auth conversations and
-assertions but no connection to production credential handling yet; they do
-not demonstrate client request defects. Type checking passes, but the full test
-command and CI report failure. No tests are marked as expected failures or
-silently skipped. See the [acceptance guide](../tests/acceptance/README.md).
+The suite contains 42 client tests: 20 using recordings, eight constructed
+checks and 14 acceptance cases. All call the real client; there are no helper-only
+tests in the client results. Eight auth workflows remain prepared under
+`tests/acceptance/pending/`, outside collection, until their binding calls the
+client's production credential handling. The runner prints this coverage gap.
+They are not passes, client failures or skipped tests. See the
+[acceptance guide](../tests/acceptance/README.md).
+
+After this separation, type checking and all 42 client tests passed against
+npm 0.3.2 and local core 0.5.0 at `683b7bb`. Deliberately broken replay data
+also confirmed that setup errors remain visible when the client catches them;
+those temporary diagnostic probes are not part of the suite.
 The source links below document the original integration baseline.
 
 ## Local core 0.5.0 compatibility
@@ -175,8 +179,9 @@ is already implemented; the test double does not introduce a new transport API.
 - `recordedFetch(...exchanges)` returns an injected fetch, captured calls, and
   `assertDone()`. It checks the next recorded method and URL, then returns a
   fresh native `Response`. Unexpected requests fail; there is no live fallback.
-  Tests call `assertDone()` to detect unused exchanges and extra attempts,
-  including request mismatches caught by the client.
+  Tests call `assertDone()` to detect unused exchanges and extra attempts.
+  A test-finish hook retains the original replay failure even when the client
+  catches or wraps it; the hook is part of the client test, not an extra test.
 
 The real client handles envelopes, protocol parsing, execution classification,
 and errors. Tests assert outgoing headers/bodies and public outcomes directly.
@@ -200,20 +205,29 @@ metadata, not a new scenario specification or replacement client models.
 | Complete pagination-to-result workflow and page-two failure | Constructed inline responses, explicitly separate from provider recordings | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) |
 | Access refusals during a conversation | Constructed catalogue 401, execution 403, polling 401 and results 403; error/challenge preservation and no unintended requests | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) |
 | Job pagination, HTTP next links and dates | Constructed pages and date selections; initial query preservation, next-link following, errors and execution inputs | [pagination-and-dates.test.ts](../tests/acceptance/pagination-and-dates.test.ts) |
-| Bearer and API-key requirements | Two passing explicit-header requests; eight workflow cases fail at missing production-auth integration | [authentication.test.ts](../tests/acceptance/authentication.test.ts) |
+| Bearer and API-key request headers | Actual outgoing credentials and preservation of service refusals | [authentication.test.ts](../tests/acceptance/authentication.test.ts) |
+| Response URLs and independent results | Client keeps requested/final URLs and returns distinct, readable responses on successive requests | [response-envelope.test.ts](../tests/constructed/response-envelope.test.ts) |
+
+Eight [service-auth workflows](../tests/acceptance/pending/) are prepared outside
+this test count; their production integration is not yet available.
 
 The scenario READMEs retain their links to provider evidence. Recorded examples
 and constructed acceptance requirements remain distinct. Requirements need not
 wait for client support; bindings call actual public APIs and must report missing
 integration honestly. A scenario can serve another concern without being copied.
 
-The [helper tests](../tests/support/recorded-fetch.test.ts) check that a bad
-request cannot silently pass, responses have independent readable bodies, URLs
-are preserved, and `body_file` can supply original bytes. Their controlled
-variations are loader checks, not additional provider evidence. The helper's
-large CSV test checks byte loading only.
+The fake transport has no separate tests in the client suite. Problems loading
+JSON, expanding variables, reading body files or constructing replay responses
+report `FixtureSetupError: [TEST SETUP]` with the file/step and original cause.
+These indicate that the fixture or test tool needs fixing. They cannot silently
+pass when the client catches the exception.
 
-The separate DIRECTED core test calls the real `execute` function with the
+A different outgoing method or URL reports `ClientRequestMismatch:
+[CLIENT REQUEST]` with expected and actual values. An incomplete conversation
+reports the expected, received and served request counts. This is a mismatch
+between the client and the scenario, not automatically proof of which is wrong.
+
+The DIRECTED core test calls the real `execute` function with the
 recorded inputs. It checks that the CSV is an immediate result despite its
 `Location` header, preserves its media type and length, and exceeds the default
 buffer limit. Reading it as text rejects with `BodyTooLargeError`; reading it
@@ -309,14 +323,14 @@ README; do not introduce `testcase.json` or expectation manifests. Add captures
 only for distinct behaviour or a demonstrated evidence gap, preserving provider
 provenance.
 
-Job status, polling, dismissal and result retrieval are exercised here. Job
-listing is available but not yet covered by our suite; the client repository
-has its own job-list tests. Forms, result presentation and relay/callback
-code also have tests there, but are outside our core-package integration.
+Job status, polling, dismissal, result retrieval and job-list pagination are
+exercised here. The client repository also has its own job-list tests.
+Forms, result presentation and relay/callback code also have tests there, but are outside our core-package integration.
 Schema-preservation tests here do not exercise form controls, and reading a
 result body does not test rendering a map or table.
 
 Continue adding distinct UI input/output examples even when no test here uses
 them yet. Colleagues can consume them in tests beside the actual UI code.
-Broader controlled HTTP and timing checks remain with the client implementation;
-the recording helper needs only its own small support checks here.
+Broader controlled HTTP and timing checks remain with the client implementation.
+The recording helper supports client tests; it does not contribute test results
+about its own implementation to the client suite.
