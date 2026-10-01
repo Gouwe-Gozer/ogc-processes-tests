@@ -123,15 +123,27 @@ and checks, or provide the small amount of support needed to run them.
 `*.test.ts` means a file contains tests. Vitest is the program that finds those
 tests, runs them and reports which passed or failed.
 
-There are **42 tests, all exercising the real client**: 20 recorded checks,
-eight constructed checks, 12 pagination/date cases and two explicit
-credential-header checks. The fake transporter is a tool used by these tests;
-its own implementation is not a separate test subject in the client suite.
+There are **50 tests, all exercising the real client**: 20 recorded checks,
+eight constructed checks, 12 pagination/date cases and ten auth checks.
+The fake transporter is a tool used by these tests; its own implementation is
+not a separate test subject in the client suite.
 
-Eight more auth workflows are prepared in the [pending folder](../tests/acceptance/pending/).
-They are not run or counted until we connect OAP's production credential handling.
-The runner mentions this gap so a passing suite cannot be mistaken for proof
-that service-wide authentication works.
+The auth tests act like a service with a locked door: no key or the wrong key
+gets a refusal; the right key gets the reply. The real client sends each request.
+We check that it sends an explicitly supplied key correctly and reports refusals
+while discovering processes, submitting calculations, checking jobs and reading
+results. The test tools never supply a key on the client's behalf.
+
+On 1 October 2026, the npm and local client runs both returned **48 passes and
+two failures**. When the first page says access is denied, OAP tries another
+address anyway. Our discovery tests expect it to stop. These are visible client
+behaviour failures, not errors deliberately thrown by an unfinished test helper.
+
+This does not yet prove that OAP can remember a key and attach it throughout a
+whole job. Its core has no setting for that. See the
+[auth coverage and remaining requirements](../tests/acceptance/README.md#bearer-tokens-and-api-keys).
+The separate `auth/test_bearer_gate.py` checks our Python gate itself; it does
+not run OAP and is not included in either npm client command.
 
 If a fixture cannot be loaded or the transporter cannot create its reply, the
 client test fails with **TEST SETUP**, a file or step, and the underlying error.
@@ -151,7 +163,7 @@ when the client catches the original exception.
 | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) | Uses constructed replies to walk three process pages, run a process from the last page and retrieve its job result. A second test checks that a page-two failure rejects the list with the error details. |
 | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) | Supplies 401/403 refusals while listing, executing, polling or reading results. Checks that the client keeps the explanation and stops without repeating the calculation. It does not test login or token validity. |
 | [pagination-and-dates.test.ts](../tests/acceptance/pagination-and-dates.test.ts) | Checks job pages, next links in HTTP headers, date queries and dates in execution requests. |
-| [authentication.test.ts](../tests/acceptance/authentication.test.ts) | Checks that the real client transmits explicit Bearer/API-key headers and preserves the service's refusals. |
+| [authentication.test.ts](../tests/acceptance/authentication.test.ts) | Checks missing/wrong/correct Bearer/API-key headers, plus how real client discovery, execution, polling and result reads respond to a protected service. |
 | [response-envelope.test.ts](../tests/constructed/response-envelope.test.ts) | Checks that the client preserves requested/final URLs and independent results from repeated requests. |
 | [protected-conversation.ts](../tests/acceptance/protected-conversation.ts) | Acts as the service: checks credentials before releasing a reply and rejects credentials sent to another host. |
 | [recorded-fetch.ts](../tests/support/recorded-fetch.ts) | Loads selected recordings and provides the replacement fetch function. This is the fake transporter itself. |

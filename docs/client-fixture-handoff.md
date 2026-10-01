@@ -49,18 +49,18 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-The suite contains 42 client tests: 20 using recordings, eight constructed
-checks and 14 acceptance cases. All call the real client; there are no helper-only
-tests in the client results. Eight auth workflows remain prepared under
-`tests/acceptance/pending/`, outside collection, until their binding calls the
-client's production credential handling. The runner prints this coverage gap.
-They are not passes, client failures or skipped tests. See the
+The suite contains 50 client tests: 20 using recordings, eight constructed
+checks and 22 acceptance cases. All call the real client; there are no helper-only
+tests in the client results. Ten auth checks run normally, with no placeholder
+binding or client-side credential wrapper. See the
 [acceptance guide](../tests/acceptance/README.md).
 
-After this separation, type checking and all 42 client tests passed against
-npm 0.3.2 and local core 0.5.0 at `683b7bb`. Deliberately broken replay data
-also confirmed that setup errors remain visible when the client catches them;
-those temporary diagnostic probes are not part of the suite.
+On 1 October 2026, type checking passed against npm 0.3.2 and local core 0.5.0
+at `a68ff6a`; both runs returned **48 passes and two auth failures**. After the
+protected landing page returns 401 or 403, OAP tries a guessed catalogue URL.
+The tests require stopping at that refusal and remain failing in normal CI.
+Earlier diagnostic probes also confirmed that setup errors remain visible when
+the client catches them; those temporary probes are not part of the suite.
 The source links below document the original integration baseline.
 
 ## Local core 0.5.0 compatibility
@@ -205,11 +205,13 @@ metadata, not a new scenario specification or replacement client models.
 | Complete pagination-to-result workflow and page-two failure | Constructed inline responses, explicitly separate from provider recordings | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) |
 | Access refusals during a conversation | Constructed catalogue 401, execution 403, polling 401 and results 403; error/challenge preservation and no unintended requests | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) |
 | Job pagination, HTTP next links and dates | Constructed pages and date selections; initial query preservation, next-link following, errors and execution inputs | [pagination-and-dates.test.ts](../tests/acceptance/pagination-and-dates.test.ts) |
-| Bearer and API-key request headers | Actual outgoing credentials and preservation of service refusals | [authentication.test.ts](../tests/acceptance/authentication.test.ts) |
+| Bearer and API-key authentication | Missing/wrong/correct request headers; client refusals during discovery, execution, polling and results | [authentication.test.ts](../tests/acceptance/authentication.test.ts) |
 | Response URLs and independent results | Client keeps requested/final URLs and returns distinct, readable responses on successive requests | [response-envelope.test.ts](../tests/constructed/response-envelope.test.ts) |
 
-Eight [service-auth workflows](../tests/acceptance/pending/) are prepared outside
-this test count; their production integration is not yet available.
+The [auth guide](../tests/acceptance/README.md#bearer-tokens-and-api-keys) also
+records the remaining requirements for credentials configured once, complete
+authenticated workflows and keeping credentials away from unrelated services.
+These are not established by passing explicit-header or refusal tests.
 
 The scenario READMEs retain their links to provider evidence. Recorded examples
 and constructed acceptance requirements remain distinct. Requirements need not

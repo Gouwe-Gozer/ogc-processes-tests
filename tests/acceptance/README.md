@@ -9,11 +9,10 @@ npm test -- tests/acceptance --reporter=verbose
 npm run check:local -- tests/acceptance --reporter=verbose
 ```
 
-There are **14 active acceptance tests**: 12 for pagination/dates and two for
-explicit credential headers. They also run in `npm run check` and GitHub Actions.
-Eight [prepared auth workflows](pending/) are outside collection until they can
-exercise production credential handling. The runner reports this gap; those
-drafts contribute no passes, failures or skipped tests to client totals.
+There are **22 active acceptance tests**: 12 for pagination/dates and ten for
+authentication. All run in `npm run check`, `npm run check:local` and the normal
+GitHub Actions client job. Unsupported behaviour stays visible as a failure;
+there are no pending auth files or unconditional missing-integration errors.
 
 ## Pagination and dates
 
@@ -36,10 +35,37 @@ server's filtering algorithm. The process-input case checks outgoing JSON.
 
 ## Bearer tokens and API keys
 
-[authentication.test.ts](authentication.test.ts) has two client tests, one per
-credential kind. They call the real client's `send()` with missing, wrong and
-correct credentials. Assertions check outgoing URLs and header values, and
-preservation of status, problem details and authentication challenges.
+[authentication.test.ts](authentication.test.ts) runs five cases for each
+credential kind:
+
+| Client operation | Expected behaviour |
+|---|---|
+| `client.send()` with missing, wrong and correct credentials | Preserve both refusals and accept the protected reply only when the correct header is sent. |
+| `client.listProcesses()` without credentials | Report the protected landing page's refusal and stop, without guessing another catalogue URL. |
+| Exported core `execute()` without credentials | Report the protected execution's refusal without repeating the POST or starting a job. |
+| `client.pollJob()` without credentials | Report the refusal, stop polling, and make no execution or results request. |
+| `client.getResults()` without credentials | Follow the advertised CSV link and report its refusal rather than returning the error body as a successful download. |
+
+All cases call real OAP code. They check outgoing requests, response status,
+problem details and the Bearer challenge. The standalone `execute()` entry point
+uses an already-known process collection, so a discovery failure cannot prevent
+the submission check from reaching its protected endpoint.
+
+On 1 October 2026, both npm **0.3.2** and local core **0.5.0** at `a68ff6a`
+passed eight auth tests and failed the two discovery cases. The client requests
+`/api/`, receives 401 or 403, then requests `/api/processes` without credentials.
+Our acceptance requirement is to stop at that authentication refusal. This is
+an explicit suite requirement, not a claim that OGC forbids every discovery
+fallback. The tests remain ordinary failures, not skipped or expected-failure
+cases. Across the full suite, the result is **48 passed, two failed**; both
+commands exit unsuccessfully until that behaviour changes.
+
+Run only the auth cases with:
+
+```bash
+npm test -- tests/acceptance/authentication.test.ts --reporter=verbose
+npm run check:local -- tests/acceptance/authentication.test.ts --reporter=verbose
+```
 
 Bearer uses `Authorization` as described in
 [RFC 6750 sections 2.1 and 3](https://www.rfc-editor.org/rfc/rfc6750.html#section-2.1).
@@ -53,11 +79,26 @@ refusals use 401 with a challenge. All secrets are public test data.
 It checks credentials before releasing replies and never inserts headers on
 the client's behalf. No extra API server, Docker or real secret is needed.
 
-**Passing these tests establishes explicit request-header handling only.**
-The [pending workflows](pending/) cover configuring credentials once for the
-whole conversation, later pages, polling, revoked access and external downloads.
-Those behaviours are not yet exercised. They are preserved outside collection
-instead of reporting hardcoded missing-integration errors as client failures.
+**These tests cover explicit credential headers and client reactions to a
+protected service. They do not establish automatic credential management.**
+OAP's current core accepts headers on `send()` but has no service-credential
+setting for its higher-level operations. The tests do not invent one, wrap the
+client's fetch to add credentials, or refresh tokens for it.
+
+The old eight workflow drafts threw `AUTH_INTEGRATION_MISSING` before any
+request. They have been replaced by the eight runnable operation checks above;
+this restores client auth coverage without claiming that the original complete
+authenticated workflows are implemented. Their remaining requirements are:
+
+- Configure credentials once for discovery, pagination, descriptions, execution,
+  polling and a protected CSV result.
+- Follow an external result link without sending the service credential there.
+- Report wrong configured credentials and revoked access during polling without
+  resubmitting the calculation.
+
+Those successful-flow and credential-scoping requirements need calls to a real
+client credential API when one exists. They are documented here rather than
+represented by a helper that always throws or implements authentication itself.
 
 API keys in queries/cookies, Basic Auth, OAuth login/refresh, security-scheme
 discovery, browser CORS and redirect credential handling are outside these

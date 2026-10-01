@@ -54,16 +54,20 @@ commands on pushes and pull requests. See the
 [test suite guide](docs/client-fixture-handoff.md) for coverage, fixture
 conversion, and the distinction between recorded tests and live compatibility.
 
-The client suite contains **42 tests, all exercising the actual client**.
+The client suite contains **50 tests, all exercising the actual client**.
 Both commands use this same suite; `check:local` changes which client build is
 loaded. The fake transport supports the tests and has no tests of its own in
 this suite. Its failures are labelled `TEST SETUP`; requests that differ from
 the scenario are labelled `CLIENT REQUEST` with expected and actual values.
 
-Eight [prepared auth workflows](tests/acceptance/pending/) await connection to
-OAP's production credential handling. They are outside the collected tests;
-the runner prints that coverage gap rather than counting them as client failures
-or passes. The separate Python gate checks are not part of either npm command.
+Ten [auth tests](tests/acceptance/#bearer-tokens-and-api-keys) run in both commands:
+missing/wrong/correct Bearer or API-key headers, and protected discovery,
+execution, polling and results. The service checks credentials; the test tools
+never add them for the client. On 1 October 2026, npm 0.3.2 and local core 0.5.0
+at `a68ff6a` both returned **48 passes and two failures**: after a discovery
+refusal, OAP tries a guessed catalogue URL instead of stopping. These failures
+remain visible in CI. The separate Python gate checks are not part of either
+npm command.
 To run just the service acceptance cases:
 
 ```bash

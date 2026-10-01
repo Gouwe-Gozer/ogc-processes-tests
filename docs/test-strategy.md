@@ -27,13 +27,12 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. There are 42 client tests: 20 recorded checks, eight
-constructed checks and 14 acceptance cases. Every collected test exercises the
-real client. The fake transport is a tool, not a separate subject in this suite.
-Eight prepared auth workflows live under `tests/acceptance/pending/` until they
-can call production credential handling; they are not counted as client tests.
-The runner prints this coverage gap. The suite does not cover every collected
-scenario.
+exercise its relay. There are 50 client tests: 20 recorded checks, eight
+constructed checks and 22 acceptance cases, including ten auth checks. Every
+collected test exercises the real client. The fake transport is a tool, not a
+separate subject in this suite. Auth failures remain in the normal run and CI;
+see the [current results](../tests/acceptance/README.md#bearer-tokens-and-api-keys).
+The suite does not cover every collected scenario.
 
 The inspected client source at `fb9d5f2` already contains:
 
@@ -89,11 +88,12 @@ evidence; do not introduce a server framework or expectation manifests.
 
 [`tests/acceptance/`](../tests/acceptance/) additionally sets requirements from
 HTTP/OGC service contracts, without waiting for client support. Its pagination,
-job date-filter and execution-date cases are runnable now. Its two explicit
-credential-header tests call the client directly. Service-wide authentication
-workflows remain prepared but uncollected until their binding can call the
-client's credential implementation. This gap is reported separately from client
-results; the service conversations and assertions remain unchanged.
+job date-filter, execution-date and auth cases all call real client operations.
+Auth checks exercise missing/wrong/correct headers and refusals during discovery,
+execution, polling and result reads. The service side requires credentials; no
+test wrapper supplies them for the client. Configuring credentials once for a
+whole conversation remains a documented requirement until the core offers that
+configuration. An always-throwing binding cannot establish a client failure.
 These are constructed examples, not observations about a named provider.
 
 ## Protected-service testing
@@ -119,9 +119,9 @@ remain unverified.
 
 ## Current client readiness
 
-The updated checkout at `683b7bb` declares core 0.5.0. Its compatibility with
-this suite is described in the [local compatibility check](client-fixture-handoff.md#local-core-050-compatibility).
-The [public client options](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/packages/core/src/client.ts#L35)
+The updated checkout at `a68ff6a` declares core 0.5.0. The current auth results
+are described in the [acceptance guide](../tests/acceptance/README.md#bearer-tokens-and-api-keys).
+The [public client options](https://github.com/ITBreinstein/oap-client/blob/a68ff6a/packages/core/src/client.ts#L35)
 still provide an injected fetch, with no dedicated service-login configuration.
 The [relay forwarding rules](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/apps/relay/src/forward.ts#L44)
 exclude authorization and cookies. Its browser session tokens therefore do
