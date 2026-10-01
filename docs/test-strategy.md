@@ -27,9 +27,10 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. The current 31 tests are 26 client-core checks (20 using
-recordings and six constructed conversations) and five recording-helper checks;
-they do not cover every scenario in the collection.
+exercise its relay. There are 53 cases: 20 recorded client checks, six constructed
+workflows, 22 service acceptance cases and five recording-helper checks.
+Currently 45 pass; eight acceptance cases stop at the missing production-auth
+integration before making requests. They do not cover every collected scenario.
 
 The inspected client source at `fb9d5f2` already contains:
 
@@ -83,6 +84,14 @@ client operations work together here. Keep their responses and assertions under
 [`tests/constructed/`](../tests/constructed/), clearly separate from provider
 evidence; do not introduce a server framework or expectation manifests.
 
+[`tests/acceptance/`](../tests/acceptance/) additionally sets requirements from
+HTTP/OGC service contracts, without waiting for client support. Its pagination,
+job date-filter and execution-date cases are runnable now. Its authentication
+workflows keep missing integration visible as failing tests. Only the small
+OAP binding depends on the client's credential API; the service conversations
+and assertions must not be weakened to accommodate client limitations.
+These are constructed examples, not observations about a named provider.
+
 ## Protected-service testing
 
 [`auth/`](../auth/) supplies a Python gate that checks a fixed Bearer token and
@@ -91,8 +100,8 @@ advertises the gate's URL so client conversations stay on the protected entry
 point. The gate defines no OGC processes and does not rewrite provider payloads.
 
 Its 12 Python tests exercise the gate's actual HTTP behaviour against a local
-byte responder. They run in their own CI job and are separate from the 31
-client/helper tests. They do not establish that OAP can authenticate.
+byte responder. They run in their own CI job and are separate from the Node
+client/helper/acceptance suite. They do not establish that OAP can authenticate.
 Successful client authentication needs the client's own credential handling,
 then integration tests using the gate. Its UI and relay checks belong beside
 those implementations; this repository provides the service setup and examples.
@@ -383,9 +392,10 @@ OGC provider or a scenario folder here.
 ### Provider evidence and controlled client tests
 
 Some important client behaviours may never appear in the selected live
-services. Do not invent provider evidence for them. Test them with controlled
-responses in the client project as the relevant operations are implemented.
-Constructed workflows here may combine several such operations: the current
+services. Do not invent provider evidence for them. Service acceptance cases
+can be written here before the client implements a feature; detailed internal
+unit tests remain with the client. Constructed workflows may combine several
+operations: the current
 [pagination workflow](../tests/constructed/) connects discovery, three catalogue
 pages, description, execution, polling and results, with a second-page HTTP
 failure variant. This does not change the provenance of our recorded evidence.

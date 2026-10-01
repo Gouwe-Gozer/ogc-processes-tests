@@ -177,8 +177,10 @@ Their backend is a small test-only byte responder. They check the gate itself:
 credentials, preflight, error handling, forwarding and file bytes. They do not
 run OAP, DIRECTED, a browser or OAuth. A separate
 [GitHub Actions job](../.github/workflows/auth-gate.yml) runs these same checks
-without Docker or a sibling checkout. They are separate from the 31 Node tests
-run by `npm run check`.
+without Docker or a sibling checkout. They are separate from the Node suite
+run by `npm run check`. That suite now includes [auth acceptance cases](../tests/acceptance/)
+for Bearer and API-key headers, with explicit failures where production client
+credential handling still needs connecting.
 
 The [constructed core tests](../tests/constructed/README.md#access-failures)
 separately check OAP's handling of prepared refusals. Neither group proves

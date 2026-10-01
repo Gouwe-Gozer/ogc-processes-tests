@@ -6,7 +6,9 @@ supply recorded responses through its existing `FetchLike` interface. ZOO,
 pygeoapi, and Weaver are fixture sources for shared client concerns. Six
 [constructed conversations](../tests/constructed/) use that same boundary to test
 several public operations together; their responses live directly in the test
-files and are not provider evidence.
+files and are not provider evidence. The additional
+[service acceptance examples](../tests/acceptance/) define pagination, dates and
+authentication requirements even where client integration is not ready.
 
 The client repository owns its implementation, core unit tests, UI tests,
 relay tests, and browser/live-provider checks. This suite can run independently
@@ -47,11 +49,14 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-The suite now contains 31 tests: 20 client checks using recordings, six
-constructed client conversations and five helper checks. The constructed cases
-cover pagination through execution/results and access refusals during listing,
-execution, polling and results retrieval. All six constructed tests call the
-real core package.
+The suite now contains 53 cases: 20 client checks using recordings, six
+constructed workflows, 22 acceptance cases and five helper checks. Against
+both npm 0.3.2 and local 0.5.0, 45 pass and eight stop at
+`AUTH_INTEGRATION_MISSING`. Those eight have complete auth conversations and
+assertions but no connection to production credential handling yet; they do
+not demonstrate client request defects. Type checking passes, but the full test
+command and CI report failure. No tests are marked as expected failures or
+silently skipped. See the [acceptance guide](../tests/acceptance/README.md).
 The source links below document the original integration baseline.
 
 ## Local core 0.5.0 compatibility
@@ -194,10 +199,13 @@ metadata, not a new scenario specification or replacement client models.
 | Missing job and repeated dismissal | Weaver `unknown-job`; ZOO `dismiss-running-job` post-dismissal exchanges | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 | Complete pagination-to-result workflow and page-two failure | Constructed inline responses, explicitly separate from provider recordings | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) |
 | Access refusals during a conversation | Constructed catalogue 401, execution 403, polling 401 and results 403; error/challenge preservation and no unintended requests | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) |
+| Job pagination, HTTP next links and dates | Constructed pages and date selections; initial query preservation, next-link following, errors and execution inputs | [pagination-and-dates.test.ts](../tests/acceptance/pagination-and-dates.test.ts) |
+| Bearer and API-key requirements | Two passing explicit-header requests; eight workflow cases fail at missing production-auth integration | [authentication.test.ts](../tests/acceptance/authentication.test.ts) |
 
-The scenario READMEs retain their links to provider evidence. Selection follows
-implemented client behaviour, not a provider-specific test framework. A scenario
-can serve another concern later without being copied.
+The scenario READMEs retain their links to provider evidence. Recorded examples
+and constructed acceptance requirements remain distinct. Requirements need not
+wait for client support; bindings call actual public APIs and must report missing
+integration honestly. A scenario can serve another concern without being copied.
 
 The [helper tests](../tests/support/recorded-fetch.test.ts) check that a bad
 request cannot silently pass, responses have independent readable bodies, URLs

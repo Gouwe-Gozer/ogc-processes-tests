@@ -79,7 +79,8 @@ workflow. They use the normal short polling interval; they do not test timing
 precision or replace the client's polling loop.
 
 These checks do not establish live-server compatibility or browser behaviour.
-They do not cover paginated job lists, date filtering or successful
-authentication. Those need separate cases tied to the corresponding client
-functionality. Browser enforcement of access to `WWW-Authenticate` is also
+These six cases do not cover paginated job lists, date filtering or successful
+authentication. Separate [acceptance cases](../acceptance/) now cover job
+pagination and date queries, and prepare protected workflows with explicit
+failures for missing client credential integration. Browser enforcement of access to `WWW-Authenticate` is also
 outside these core tests; the fake transport makes response headers readable.

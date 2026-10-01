@@ -10,7 +10,9 @@ This repository has two connected purposes:
   under [`tests/`](tests/) checks the requests the client builds and how it
   interprets discovery, execution, job and error responses. Most tests use
   provider recordings; explicitly [constructed workflows](tests/constructed/)
-  also exercise several client operations together.
+  also exercise several client operations together. Service-based
+  [acceptance cases](tests/acceptance/) define pagination, dates and authentication
+  requirements independently of what the current client already supports.
 
 Start with [`scenarios/`](scenarios/): [`forms/`](scenarios/forms/) connects input
 schemas to request bodies; [`results/`](scenarios/results/) connects output
@@ -52,6 +54,18 @@ commands on pushes and pull requests. See the
 [test suite guide](docs/client-fixture-handoff.md) for coverage, fixture
 conversion, and the distinction between recorded tests and live compatibility.
 
+The current full result is **45 passed and eight failed**, on both npm 0.3.2 and
+local core 0.5.0. The eight authentication workflows stop with
+`AUTH_INTEGRATION_MISSING`: the examples and assertions are ready, but OAP's
+production credential handling still needs connecting in one test binding.
+They are ordinary failures, so `npm run check` and CI currently exit with failure.
+See [what these results mean](tests/acceptance/README.md#the-one-connection-still-needed).
+To run just the new cases:
+
+```bash
+npm test -- tests/acceptance --reporter=verbose
+```
+
 To test source from the sibling `../oap-client` checkout instead:
 
 ```bash
@@ -68,8 +82,9 @@ dependencies untouched. See the
 [`auth/`](auth/) contains a small Python Bearer-token gate and a separate
 DIRECTED Docker profile. It lets colleagues try missing, wrong and valid tokens
 against a real processing service. Its Python HTTP checks run in a separate
-GitHub Actions job. OAP credential handling still needs to be implemented by
-the client developers; see the [handoff](auth/README.md#handoff-to-oap-developers).
+GitHub Actions job. The [auth acceptance examples](tests/acceptance/) also cover
+an API-key header using constructed replies. Those client tests and the Python
+gate have separate purposes; see the [handoff](auth/README.md#handoff-to-oap-developers).
 
 ## Folder guide
 
@@ -77,7 +92,7 @@ the client developers; see the [handoff](auth/README.md#handoff-to-oap-developer
 |---|---|
 | `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
-| `tests/` | Real-client tests using recordings or explicitly constructed workflows, plus the shared fake transport |
+| `tests/` | Recorded client tests, constructed workflows, service acceptance cases and the shared fake transport |
 | `auth/` | Python Bearer test gate, gate HTTP tests and a separate DIRECTED startup profile |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
