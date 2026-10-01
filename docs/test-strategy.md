@@ -18,7 +18,7 @@ may help UI development even if it adds no new protocol behaviour.
 | Concern | `ogc-processes-tests` (this repository) | `oap-client` (client development repository) |
 |---|---|---|
 | Real provider evidence | Collect complete requests, responses, descriptions, body files and provenance; curate scenarios | Consume selected examples in implementation and tests |
-| Core protocol behaviour | Exercise public client functions against selected recordings; check requests and interpreted results | Own implementation, detailed unit tests, controlled edge cases and integration tests |
+| Core protocol behaviour | Exercise public client functions against selected recordings and constructed workflows; check requests and interpreted results | Own implementation, detailed unit tests, controlled edge cases and integration tests |
 | Poll timing, cancellation, transport failures | Keep relevant observed evidence; do not fabricate provider captures | Test deadlines, aborts, backoff and network failures with controlled conditions |
 | Forms and request encoding | Supply descriptions and accepted/rejected requests with varied input shapes | Test form planning, validation, encoding and interaction against the actual UI code |
 | Results and presentation | Supply output descriptions, values, media types, wrappers, links and files | Test result interpretation, presentation components and application workflows |
@@ -27,8 +27,9 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. The current 25 tests are 20 client-core checks and five
-recording-helper checks; they do not cover every scenario in the collection.
+exercise its relay. The current 27 tests are 22 client-core checks (20 using
+recordings and two constructed workflows) and five recording-helper checks;
+they do not cover every scenario in the collection.
 
 The inspected client source at `fb9d5f2` already contains:
 
@@ -67,8 +68,8 @@ For now, this repository should:
 - provide fixtures and Postman collections for inspecting live APIs;
 - record enough provider information to understand where an exchange came
   from;
-- run a small deterministic client suite against selected recordings locally
-  and in GitHub Actions.
+- run a small deterministic client suite against selected recordings and
+  explicitly constructed workflows locally and in GitHub Actions.
 
 The contents of `scenarios/` remain fixture material. Executable assertions and
 a small fixture-backed `fetch` live under `tests/` in this repository. They run
@@ -76,8 +77,11 @@ the real client core; the broader client-owned tests are listed above.
 
 This repository does not need a provider scenario for every defensive branch
 in the client. Its main job is to preserve useful differences observed in real
-OGC API Processes services. Controlled conditions that do not depend on a real
-provider belong in the client repository.
+OGC API Processes services. Detailed defensive unit tests belong in the client
+repository. A small number of constructed workflows can also test how public
+client operations work together here. Keep their responses and assertions under
+[`tests/constructed/`](../tests/constructed/), clearly separate from provider
+evidence; do not introduce a server framework or expectation manifests.
 
 ## Current client readiness
 
@@ -346,6 +350,10 @@ OGC provider or a scenario folder here.
 Some important client behaviours may never appear in the selected live
 services. Do not invent provider evidence for them. Test them with controlled
 responses in the client project as the relevant operations are implemented.
+Constructed workflows here may combine several such operations: the current
+[pagination workflow](../tests/constructed/) connects discovery, three catalogue
+pages, description, execution, polling and results, with a second-page HTTP
+failure variant. This does not change the provenance of our recorded evidence.
 
 | Behaviour | Where it should be tested | When it belongs here |
 |---|---|---|

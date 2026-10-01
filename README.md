@@ -6,9 +6,11 @@ This repository has two connected purposes:
   process descriptions, execution requests and responses with varied payloads:
   numbers, arrays, GeoJSON, CSV, nested JSON, files and download links. These
   examples help colleagues build forms, encode requests and present results.
-- **Test the real client core against selected recorded conversations.** The
-  suite under [`tests/`](tests/) checks the requests the client builds and how
-  it interprets discovery, execution, job and error responses.
+- **Test the real client core against selected conversations.** The suite
+  under [`tests/`](tests/) checks the requests the client builds and how it
+  interprets discovery, execution, job and error responses. Most tests use
+  provider recordings; explicitly [constructed workflows](tests/constructed/)
+  also exercise several client operations together.
 
 Start with [`scenarios/`](scenarios/): [`forms/`](scenarios/forms/) connects input
 schemas to request bodies; [`results/`](scenarios/results/) connects output
@@ -18,8 +20,9 @@ A useful UI example does not need an executable test here to belong in the repo.
 
 The `oap-client` repository owns the implementation and its own core unit,
 web UI, relay, browser and live-provider tests. Our suite complements those
-with real provider recordings. Neither of our test commands runs that other
-repository's tests or proves that its UI works in a browser. See the
+with real provider recordings and a few constructed workflows. Neither of our
+test commands runs that other repository's tests or proves that its UI works
+in a browser. See the
 [division of responsibilities](docs/test-strategy.md#which-repository-tests-what).
 
 The end goal, current limits, and decisions that wait for the client are
@@ -66,7 +69,7 @@ dependencies untouched. See the
 |---|---|
 | `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
-| `tests/` | Executable cross-provider tests of the real client and a small recorded fetch |
+| `tests/` | Real-client tests using recordings or explicitly constructed workflows, plus the shared fake transport |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |

@@ -3,7 +3,10 @@
 This repository owns a small cross-provider regression suite as well as the
 recordings it uses. Tests import the real `@breinstein/oap-client` package and
 supply recorded responses through its existing `FetchLike` interface. ZOO,
-pygeoapi, and Weaver are fixture sources for shared client concerns.
+pygeoapi, and Weaver are fixture sources for shared client concerns. Two
+[constructed workflows](../tests/constructed/) use that same boundary to test
+several public operations together; their responses live directly in the test
+file and are not provider evidence.
 
 The client repository owns its implementation, core unit tests, UI tests,
 relay tests, and browser/live-provider checks. This suite can run independently
@@ -44,8 +47,11 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-All 25 tests pass against this release, including eight recorded lifecycle
-tests using `execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`.
+The suite now contains 27 tests, including eight recorded lifecycle tests using
+`execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`, and two
+constructed workflow tests using `createClient`. On 1 October 2026, type checking
+and all 27 tests passed against both the pinned release and the sibling client
+source through `npm run check` and `npm run check:local`.
 The source links below document the original integration baseline.
 
 ## Test a local client build
@@ -152,7 +158,7 @@ metadata, not a new scenario specification or replacement client models.
 
 ## Current coverage
 
-| Client concern | Existing scenarios | Executable tests |
+| Client concern | Scenario or constructed conversation | Executable tests |
 |---|---|---|
 | Discovery and listing | `protocol/discovery/weaver-redoak/core-discovery` | [discovery.test.ts](../tests/protocol/discovery.test.ts) |
 | Description/schema preservation | pygeoapi raw-versus-document description; `protocol/discovery/weaver-local/process-description` | [descriptions.test.ts](../tests/protocol/descriptions.test.ts) |
@@ -163,6 +169,7 @@ metadata, not a new scenario specification or replacement client models.
 | Submission through polling and results | ZOO and Weaver `successful-job`, including ZOO running and successful status variants | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 | Failed job status, early results refusal and dismissal | ZOO `failed-job` and `dismiss-running-job`; Weaver `results-not-ready`, starting from submission | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 | Missing job and repeated dismissal | Weaver `unknown-job`; ZOO `dismiss-running-job` post-dismissal exchanges | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
+| Complete pagination-to-result workflow and page-two failure | Constructed inline responses, explicitly separate from provider recordings | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) |
 
 The scenario READMEs retain their links to provider evidence. Selection follows
 implemented client behaviour, not a provider-specific test framework. A scenario

@@ -8,7 +8,9 @@ testing. For the technical details and rules for adding tests, see the
 
 Our repository does two jobs. It collects varied real requests and outputs
 for colleagues building the UI, and it tests the client core against a selected
-set of those recordings. The collection is broader than the automated suite.
+set of those recordings. Two constructed conversations also test a complete
+workflow and a failure partway through it. The collection is broader than the
+automated suite.
 
 | Here, in `ogc-processes-tests` | In `oap-client` |
 |---|---|
@@ -31,7 +33,8 @@ client tests that were inspected.
 ## What are we testing?
 
 We test the **real OAP client library** against saved conversations with OGC API
-Processes servers, including ZOO, pygeoapi and Weaver.
+Processes servers, including ZOO, pygeoapi and Weaver. We also supply deliberately
+constructed conversations to check combinations of client operations.
 
 The question is: **does the client send the expected request and correctly
 understand a response like the ones we have observed in practice?**
@@ -55,8 +58,10 @@ reply. The client normally uses a function called `fetch` to do that.
 
 The client already lets callers supply a replacement `fetch`. Our tests use
 that option to supply a small function called `recordedFetch`. This is what we
-mean by the **fake transporter**: it supplies a saved reply instead of making
-an internet request.
+mean by the **fake transporter**: it supplies a prepared reply instead of making
+an internet request. Most replies come from saved provider recordings. The two
+[constructed tests](../tests/constructed/) write their replies directly in the
+test file, so no real provider is implied by their behaviour.
 
 ```mermaid
 sequenceDiagram
@@ -115,9 +120,10 @@ and checks, or provide the small amount of support needed to run them.
 `*.test.ts` means a file contains tests. Vitest is the program that finds those
 tests, runs them and reports which passed or failed.
 
-There are currently **25 tests: 20 exercise the real client and five check the
-recording helper**. Some files run the same check against multiple recordings,
-so the number of files is smaller than the number of tests.
+There are currently **27 tests: 22 exercise the real client and five check the
+recording helper**. Of the client checks, 20 use recordings and two use
+constructed conversations. Some files run the same check against multiple
+recordings, so the number of files is smaller than the number of tests.
 
 | File | What it does in plain language |
 |---|---|
@@ -128,6 +134,7 @@ so the number of files is smaller than the number of tests.
 | [errors.test.ts](../tests/protocol/errors.test.ts) | Checks that the client reports both a structured error and an HTML error page while keeping the server's error information available. An expected error means the test passes. |
 | [submission.test.ts](../tests/protocol/submission.test.ts) | Checks that an accepted background job returns its ID and status address. These tests stop there; they do not wait for completion. |
 | [jobs.test.ts](../tests/protocol/jobs.test.ts) | Runs recorded successful jobs through the real client, from submission to status checks and results. Also checks failed jobs, results requested too early, dismissal, missing jobs and repeated dismissal. |
+| [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) | Uses constructed replies to walk three process pages, run a process from the last page and retrieve its job result. A second test checks that a page-two failure rejects the list with the error details. |
 | [recorded-fetch.ts](../tests/support/recorded-fetch.ts) | Loads selected recordings and provides the replacement fetch function. This is the fake transporter itself. |
 | [recorded-fetch.test.ts](../tests/support/recorded-fetch.test.ts) | Checks the helper directly: incorrect requests must fail, replies must remain readable, and saved body files must load correctly. These five tests protect the test setup. |
 | [setup.ts](../tests/setup.ts) | Blocks the normal global fetch during tests, so an accidental attempt to use it fails instead of contacting a server. |
