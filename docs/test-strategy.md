@@ -27,8 +27,8 @@ may help UI development even if it adds no new protocol behaviour.
 Our `npm run check` and `npm run check:local` execute **our tests only**. The
 latter changes the core implementation being tested to an isolated compilation
 of local source. It does not run the client's tests, compile its web app or
-exercise its relay. The current 27 tests are 22 client-core checks (20 using
-recordings and two constructed workflows) and five recording-helper checks;
+exercise its relay. The current 31 tests are 26 client-core checks (20 using
+recordings and six constructed conversations) and five recording-helper checks;
 they do not cover every scenario in the collection.
 
 The inspected client source at `fb9d5f2` already contains:
@@ -85,7 +85,22 @@ evidence; do not introduce a server framework or expectation manifests.
 
 ## Current client readiness
 
-The source was reviewed on 25 September 2026 at `oap-client` commit `fb9d5f2`.
+The updated checkout at `683b7bb` declares core 0.5.0. Its compatibility with
+this suite is described in the [local compatibility check](client-fixture-handoff.md#local-core-050-compatibility).
+The [public client options](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/packages/core/src/client.ts#L35)
+still provide an injected fetch, with no dedicated service-login configuration.
+The [relay forwarding rules](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/apps/relay/src/forward.ts#L44)
+exclude authorization and cookies. Its browser session tokens therefore do
+not establish authentication to a protected processing service.
+
+Our [constructed access-failure tests](../tests/constructed/README.md#access-failures)
+check the core's handling of prepared 401/403 responses, including preservation
+of challenge headers and stopping the conversation without resubmission.
+Successful login and credential renewal must exercise the client's eventual
+service-authentication implementation; a test helper must not implement those
+features and then claim to have tested them in the client.
+
+The earlier source was reviewed on 25 September 2026 at `oap-client` commit `fb9d5f2`.
 It has a public core API, injectable `fetch`, response and error types, job
 operations, and a Vitest runner. Forms, request encoding and initial result
 presentation also exist under `apps/web`; relay code and tests exist under

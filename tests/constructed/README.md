@@ -6,11 +6,12 @@ No API server or processing algorithm runs. The client itself discovers links,
 retrieves pages, builds the execution request, polls and reads the result.
 
 The JSON responses are written directly in
-[pagination-workflow.test.ts](pagination-workflow.test.ts). They are constructed
+[pagination-workflow.test.ts](pagination-workflow.test.ts) and
+[access-failures.test.ts](access-failures.test.ts). They are constructed
 test data, not observations about ZOO, Weaver, pygeoapi or another provider.
 Real provider exchanges remain in `evidence/` and `scenarios/`.
 
-## What the two tests do
+## Pagination workflow
 
 | Test | Conversation and checks |
 |---|---|
@@ -28,6 +29,31 @@ cancellation and malformed documents, plus two captured ZOO catalogue pages.
 These tests exercise several public client operations together through one
 `createClient` instance. They complement those focused unit tests.
 
+## Access failures
+
+Four tests in [access-failures.test.ts](access-failures.test.ts) check what
+happens when the service refuses access during a conversation:
+
+| Test | What the real client must do |
+|---|---|
+| Catalogue page two returns 401 | Reject listing instead of returning page one as complete. Keep the failed URL, problem details and `WWW-Authenticate` challenge available. |
+| Execution returns 403 | Reject the execution with the service's explanation. Send the execution POST once and make no status request. |
+| Polling returns 401 | Submit successfully, observe a running job, then stop polling on the refusal. Preserve the challenge and error details; keep the last observed job state as running. Do not resubmit, dismiss or fetch results. |
+| Results return 403 | Submit successfully and poll to successful status, then follow the advertised results URL and report its refusal. Keep the successful job status. Do not retry execution or guess another results URL. |
+
+Each test asserts the exact requests made as well as the public error. All
+refusals use `application/problem+json`. The two 401 cases include a Bearer
+challenge header. These are prepared responses: no token is issued, checked,
+expired or refreshed. They test **handling access failures**, not successful
+authentication or which credentials a server accepts. No secrets are needed.
+
+The client checkout at `683b7bb` has separate browser-to-relay session handling;
+the relay excludes authorization and cookies when forwarding to the service.
+That session token does not authenticate a user to an OGC service. Successful
+service login, token refresh, cookie behaviour and relay routing need tests
+using the client's corresponding implementation. This suite imports the core
+package and does not load the web app or relay.
+
 ## Try it
 
 From the repository root, after installing dependencies:
@@ -36,16 +62,24 @@ From the repository root, after installing dependencies:
 npm test -- tests/constructed/pagination-workflow.test.ts --reporter=verbose
 ```
 
-To run the same tests against the sibling client source:
+To run just the access-failure tests:
 
 ```bash
-npm run check:local -- tests/constructed/pagination-workflow.test.ts --reporter=verbose
+npm test -- tests/constructed/access-failures.test.ts --reporter=verbose
 ```
 
-Both tests are also included in `npm run check` and the existing GitHub Actions
+To run all six constructed tests against the sibling client source:
+
+```bash
+npm run check:local -- tests/constructed --reporter=verbose
+```
+
+All six tests are also included in `npm run check` and the existing GitHub Actions
 workflow. They use the normal short polling interval; they do not test timing
 precision or replace the client's polling loop.
 
 These checks do not establish live-server compatibility or browser behaviour.
-They do not cover paginated job lists, date filtering or authentication. Those
-need separate cases tied to the corresponding client functionality.
+They do not cover paginated job lists, date filtering or successful
+authentication. Those need separate cases tied to the corresponding client
+functionality. Browser enforcement of access to `WWW-Authenticate` is also
+outside these core tests; the fake transport makes response headers readable.

@@ -3,10 +3,10 @@
 This repository owns a small cross-provider regression suite as well as the
 recordings it uses. Tests import the real `@breinstein/oap-client` package and
 supply recorded responses through its existing `FetchLike` interface. ZOO,
-pygeoapi, and Weaver are fixture sources for shared client concerns. Two
-[constructed workflows](../tests/constructed/) use that same boundary to test
+pygeoapi, and Weaver are fixture sources for shared client concerns. Six
+[constructed conversations](../tests/constructed/) use that same boundary to test
 several public operations together; their responses live directly in the test
-file and are not provider evidence.
+files and are not provider evidence.
 
 The client repository owns its implementation, core unit tests, UI tests,
 relay tests, and browser/live-provider checks. This suite can run independently
@@ -47,11 +47,11 @@ The default CI job tests the pinned release, not the latest client source.
 
 The installed 0.3.2 package was inspected on 25 September 2026. It also exports
 job status, polling, results retrieval, dismissal and job listing functions.
-The suite now contains 27 tests, including eight recorded lifecycle tests using
-`execute`, `pollJob`, `waitForJob`, `getJob`, `getResults` and `dismissJob`, and two
-constructed workflow tests using `createClient`. On 1 October 2026, type checking
-and all 27 tests passed against both the pinned release and the sibling client
-source through `npm run check` and `npm run check:local`.
+The suite now contains 31 tests: 20 client checks using recordings, six
+constructed client conversations and five helper checks. The constructed cases
+cover pagination through execution/results and access refusals during listing,
+execution, polling and results retrieval. All six constructed tests call the
+real core package.
 The source links below document the original integration baseline.
 
 ## Local core 0.5.0 compatibility
@@ -61,6 +61,10 @@ compiled core **0.5.0** from client commit
 [`683b7bb`](https://github.com/ITBreinstein/oap-client/commit/683b7bb5dad8dfd99881bc51798c69870d18b5f9).
 Type checking and all 27 existing tests passed. The source checkout was only
 read; its web app, relay and own test suites were not run.
+
+After adding the four access-failure scenarios, type checking and all **31**
+tests passed against both npm **0.3.2** (`npm run check`) and this local **0.5.0**
+source (`npm run check:local`).
 
 The [0.5.0 changelog](https://github.com/ITBreinstein/oap-client/blob/683b7bb5dad8dfd99881bc51798c69870d18b5f9/packages/core/CHANGELOG.md)
 adds the `items` link relation and `resolveHref`, and changes buffering for
@@ -189,6 +193,7 @@ metadata, not a new scenario specification or replacement client models.
 | Failed job status, early results refusal and dismissal | ZOO `failed-job` and `dismiss-running-job`; Weaver `results-not-ready`, starting from submission | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 | Missing job and repeated dismissal | Weaver `unknown-job`; ZOO `dismiss-running-job` post-dismissal exchanges | [jobs.test.ts](../tests/protocol/jobs.test.ts) |
 | Complete pagination-to-result workflow and page-two failure | Constructed inline responses, explicitly separate from provider recordings | [pagination-workflow.test.ts](../tests/constructed/pagination-workflow.test.ts) |
+| Access refusals during a conversation | Constructed catalogue 401, execution 403, polling 401 and results 403; error/challenge preservation and no unintended requests | [access-failures.test.ts](../tests/constructed/access-failures.test.ts) |
 
 The scenario READMEs retain their links to provider evidence. Selection follows
 implemented client behaviour, not a provider-specific test framework. A scenario
@@ -227,7 +232,9 @@ repeated DELETE, and Weaver's unknown-job GET.
 ## Review of remaining job scenarios
 
 The September 2026 review selected existing evidence that exercises distinct
-public outcomes. No provider was contacted and no responses were invented.
+public outcomes. No provider was contacted and no responses were invented in
+that review. The table also notes the explicitly constructed access-failure
+cases added in October.
 
 | Situation | Current check or reason to wait |
 |---|---|
@@ -236,7 +243,8 @@ public outcomes. No provider was contacted and no responses were invented.
 | Reading an unknown job | Weaver `unknown-job`: `getJob` rejects with `JobNotFoundError`; standard problem fields and provider-specific `extensions` remain available in its cause |
 | Polling after a confirmed dismissal | ZOO DELETE followed by recorded GET 404; `pollJob` stops with `dismissed-remotely` without changing the earlier dismissal object |
 | Repeating dismissal | ZOO's recorded DELETE, GET, DELETE sequence; the second DELETE rejects with the preserved 404 problem and is not retried |
-| Job remains running, local cancellation, generic status/network failures | Still outside this recorded coverage. Controlled timing and transport tests belong with the client; a future regression test here must label any constructed sequence as simulated |
+| Access refused during polling or result retrieval | Constructed tests simulate a running job followed by 401, and a successful job followed by results 403. They check error preservation and request order, not credential validation |
+| Job remains running, local cancellation, other status/network failures | Still outside this coverage. Controlled timing and transport tests belong with the client |
 | Job disappears during an active poll loop | Not captured. Do not splice an unknown-job reply onto an unrelated running job and call it provider evidence |
 | Browser cannot access status or headers | Requires real browser networking; the recorded fetch cannot establish CORS compatibility |
 
