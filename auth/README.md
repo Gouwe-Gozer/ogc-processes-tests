@@ -30,6 +30,121 @@ python3 auth/bearer_gate.py --upstream http://127.0.0.1:5012 \
 The gate listens on loopback; `--host` and `--port` can change that. The upstream
 argument is a fixed HTTP(S) origin, without a path, query or credentials.
 
+## Start with DIRECTED
+
+The expected layout is the same parent folder for this repository and the
+[DIRECTED fork](https://github.com/Gouwe-Gozer/pygeoapi_processes):
+
+```text
+parent-folder/
+├── ogc-processes-tests/
+└── pygeoapi_processes/
+```
+
+From `ogc-processes-tests`, start a separate backend:
+
+```bash
+docker compose -f auth/compose.yml up -d --build
+```
+
+This builds the fork's existing Dockerfile using its source and included
+Denmark data. It reads that checkout without changing its files. The first
+build can take a while. It creates its own Compose project and image, separate
+from an existing DIRECTED deployment on port 5000.
+
+The backend is published on loopback port **5012**. Our
+[config](directed-config.yml) sets `server.url` to **http://localhost:5002**, so
+advertised process, execution, status and results addresses lead through the
+gate. pygeoapi's [configuration documentation](https://docs.pygeoapi.io/en/stable/configuration.html)
+describes `server.url`; this is separate from the port on which Docker publishes
+the backend. Response payloads are not rewritten by the gate.
+
+Keep the gate running in a second terminal:
+
+```bash
+python3 auth/bearer_gate.py
+```
+
+Clients should connect to **http://localhost:5002**. Check it from another
+terminal, starting with small discovery requests:
+
+```bash
+# No token: 401 from the gate, even if the backend is stopped.
+curl -i http://localhost:5002/processes
+
+# Wrong token: 401 from the gate.
+curl -i -H 'Authorization: Bearer wrong' http://localhost:5002/processes
+
+# Correct token: the real DIRECTED process list.
+curl -i -H 'Authorization: Bearer local-test-token' \
+  -H 'Accept: application/json' \
+  http://localhost:5002/processes
+
+# Correct token: the real CLIMADA process description.
+curl -i -H 'Authorization: Bearer local-test-token' \
+  -H 'Accept: application/json' \
+  http://localhost:5002/processes/climada-simple-example-denmark-process
+```
+
+Inspect the returned links: API links should point at port 5002. If they point
+at 5000 or 5012, fix the backend's public URL before testing a complete workflow.
+A correct token followed by 502 means the gate could not read the backend; check
+`docker compose -f auth/compose.yml logs directed`.
+
+To execute the actual Denmark calculation and save its response:
+
+```bash
+curl -sS -D - -o directed-auth-result.csv \
+  -H 'Authorization: Bearer local-test-token' \
+  -H 'Content-Type: application/json' \
+  --data '{"inputs":{"intensity":[0,30,80]}}' \
+  http://localhost:5002/processes/climada-simple-example-denmark-process/execution
+```
+
+This runs the real calculation. Our earlier unprotected capture returned a
+large CSV; inspect the status and Content-Type before interpreting the saved
+body. An error body may also be written to that filename. The gate's 300-second
+socket timeout can be raised for slower calculations. An interrupted or timed-out
+POST may have reached the backend; the gate will not repeat it automatically.
+
+Stop the gate with Ctrl+C, and stop the separate backend with:
+
+```bash
+docker compose -f auth/compose.yml down
+```
+
+To use another machine or port, change `server.url` in `auth/directed-config.yml`
+to the gate's client-visible address, recreate the backend, and set the gate's
+`--host`, `--port` and allowed `--origin` accordingly. Token authentication uses
+HTTP here only for the local test setup; use HTTPS when sending real credentials.
+
+## Handoff to OAP developers
+
+Start with direct browser access to port 5002. Implement credential handling in
+OAP and exercise that implementation against this gate:
+
+1. Let the user set a Bearer token for this service, initially held in memory.
+2. Attach it through OAP's existing injectable fetch on discovery, page reads,
+   description, execution, polling, dismissal and result requests. Also cover
+   downloads made separately by the web app.
+3. Scope it to the configured service. Links and redirects to other destinations
+   must not automatically receive the token.
+4. Check missing, wrong and correct tokens. With the correct token, follow the
+   real service's links through a full calculation; with a refusal, retain its
+   explanation and avoid resubmitting the calculation.
+
+The current OAP npm package has no credential UI. These curl commands prove the
+gate and backend interaction, not OAP's implementation. The Python gate tests
+also do not validate client-side token scoping to other hosts.
+
+Relay support is a separate implementation step: its session token belongs to
+the browser-to-relay connection. A service token would need to be configured
+and attached on the relay-to-service connection, with appropriate challenge
+headers passed back. Our gate expects the service token.
+
+A fixed Bearer token is the only credential mode here. API-key headers, Basic
+Auth, OAuth login/refresh, users, roles and token expiry are not implemented.
+
 ## Behaviour
 
 - Every GET, HEAD, POST and DELETE needs the configured Bearer token.
@@ -60,7 +175,15 @@ python3 -m unittest discover -s auth -p 'test_*.py' -v
 These 12 Python tests make real HTTP requests over temporary loopback ports.
 Their backend is a small test-only byte responder. They check the gate itself:
 credentials, preflight, error handling, forwarding and file bytes. They do not
-run OAP, DIRECTED, a browser or OAuth.
+run OAP, DIRECTED, a browser or OAuth. A separate
+[GitHub Actions job](../.github/workflows/auth-gate.yml) runs these same checks
+without Docker or a sibling checkout. They are separate from the 31 Node tests
+run by `npm run check`.
+
+The gate HTTP tests passed locally when this profile was added. Docker was
+unavailable in that environment, so the DIRECTED build/start and browser
+workflow have not yet been verified there. The Compose/configuration files
+were inspected for paths, ports and advertised URL consistency.
 
 The [constructed core tests](../tests/constructed/README.md#access-failures)
 separately check OAP's handling of prepared refusals. Neither group proves

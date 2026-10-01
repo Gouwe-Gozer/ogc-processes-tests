@@ -63,6 +63,14 @@ then checks both types and behaviour. It leaves the client checkout and installe
 dependencies untouched. See the
 [local client instructions](docs/client-fixture-handoff.md#test-a-local-client-build).
 
+## Try a protected service
+
+[`auth/`](auth/) contains a small Python Bearer-token gate and a separate
+DIRECTED Docker profile. It lets colleagues try missing, wrong and valid tokens
+against a real processing service. Its Python HTTP checks run in a separate
+GitHub Actions job. OAP credential handling still needs to be implemented by
+the client developers; see the [handoff](auth/README.md#handoff-to-oap-developers).
+
 ## Folder guide
 
 | Folder | Contents |
@@ -70,6 +78,7 @@ dependencies untouched. See the
 | `scenarios/` | Small representative request-response exchanges |
 | `evidence/` | Provider captures grouped by discovery, descriptions, executions, and jobs |
 | `tests/` | Real-client tests using recordings or explicitly constructed workflows, plus the shared fake transport |
+| `auth/` | Python Bearer test gate, gate HTTP tests and a separate DIRECTED startup profile |
 | `fixtures/` | Small raster, vector, table, and point-cloud input files |
 | `scripts/` | Commands for running evidence requests and updating captures |
 | `generated/postman/` | Postman collections generated from `scenarios/` and `evidence/` |

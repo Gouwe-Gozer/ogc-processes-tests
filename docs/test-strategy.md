@@ -83,6 +83,22 @@ client operations work together here. Keep their responses and assertions under
 [`tests/constructed/`](../tests/constructed/), clearly separate from provider
 evidence; do not introduce a server framework or expectation manifests.
 
+## Protected-service testing
+
+[`auth/`](../auth/) supplies a Python gate that checks a fixed Bearer token and
+forwards accepted requests to a configured API. A separate DIRECTED profile
+advertises the gate's URL so client conversations stay on the protected entry
+point. The gate defines no OGC processes and does not rewrite provider payloads.
+
+Its 12 Python tests exercise the gate's actual HTTP behaviour against a local
+byte responder. They run in their own CI job and are separate from the 31
+client/helper tests. They do not establish that OAP can authenticate.
+Successful client authentication needs the client's own credential handling,
+then integration tests using the gate. Its UI and relay checks belong beside
+those implementations; this repository provides the service setup and examples.
+The [startup notes](../auth/README.md#start-with-directed) state the live
+DIRECTED/browser validation still outstanding.
+
 ## Current client readiness
 
 The updated checkout at `683b7bb` declares core 0.5.0. Its compatibility with

@@ -1,0 +1,12 @@
+# An isolated DIRECTED backend for the gate. Run from the test repository root.
+name: ogc-auth-directed
+services:
+  directed:
+    image: ogc-processes-tests-directed-auth:local
+    build:
+      context: ../../pygeoapi_processes
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:5012:80"
+    volumes:
+      - ./directed-config.yml:/pygeoapi/local.config.yml:ro
