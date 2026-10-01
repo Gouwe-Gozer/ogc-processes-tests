@@ -180,13 +180,48 @@ run OAP, DIRECTED, a browser or OAuth. A separate
 without Docker or a sibling checkout. They are separate from the 31 Node tests
 run by `npm run check`.
 
-The gate HTTP tests passed locally when this profile was added. Docker was
-unavailable in that environment, so the DIRECTED build/start and browser
-workflow have not yet been verified there. The Compose/configuration files
-were inspected for paths, ports and advertised URL consistency.
-
 The [constructed core tests](../tests/constructed/README.md#access-failures)
 separately check OAP's handling of prepared refusals. Neither group proves
 successful authentication by the OAP web app. The OAP developers must add
 service-specific credential handling before its successful-login checks can
 run against this gate.
+
+### Live DIRECTED check — 1 October 2026
+
+The profile also passed a live check using the already-built
+`pygeoapi_processes-pygeoapi` image, which reports pygeoapi `0.25.dev0`.
+Its image ID was
+`sha256:f1e748b3eb960c2c3142f076f669dfdb761f7fa57ef81eec656827ced01ee2ce`.
+The original service on port 5000 stayed running. A separate container used
+this profile on port 5012, with the gate on port 5002.
+
+| Request | Observed result |
+| --- | --- |
+| Process list with missing or wrong token | 401 with a Bearer challenge and CORS headers |
+| Landing page, process list and CLIMADA description with correct token | 200; local API links used port 5002 |
+| Execution preflight from `http://localhost:5173`, allowing `authorization,content-type,prefer` | 204 without a token |
+| Submission with `{"inputs":{"intensity":[0,30,80]}}` and `Prefer: respond-async` | 201; `Location` used port 5002 |
+| Following that job with the correct token | Accepted, then successful |
+| Following its result link with the correct token | 200, `text/csv`, 18,849,968 bytes |
+| Submission, job status and result requests with missing or wrong token | 401 |
+
+The CSV was byte-for-byte identical to the same job's result fetched directly
+from the backend. Its SHA-256 was
+`676ec1ac1862942992367c8eb7ab5de7328ae92047777375e427fdacc9cd06d6`.
+The 12 automated Python gate tests also passed.
+
+To reuse that existing local image instead of building, the check started the
+backend with this override, followed by `python3 auth/bearer_gate.py`:
+
+```bash
+docker compose -f auth/compose.yml -f - up -d --no-build --pull never <<'YAML'
+services:
+  directed:
+    image: pygeoapi_processes-pygeoapi
+YAML
+```
+
+This check used Python HTTP requests. It verified the returned CORS headers,
+but did not run a browser or OAP's authentication implementation. Building a
+fresh image was not part of this check. The temporary gate and backend were
+stopped afterwards; the original service was left running.

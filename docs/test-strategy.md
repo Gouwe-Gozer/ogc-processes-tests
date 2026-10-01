@@ -96,8 +96,12 @@ client/helper tests. They do not establish that OAP can authenticate.
 Successful client authentication needs the client's own credential handling,
 then integration tests using the gate. Its UI and relay checks belong beside
 those implementations; this repository provides the service setup and examples.
-The [startup notes](../auth/README.md#start-with-directed) state the live
-DIRECTED/browser validation still outstanding.
+A [live DIRECTED check on 1 October 2026](../auth/README.md#live-directed-check--1-october-2026)
+passed discovery, asynchronous submission, polling and a full CSV download
+through the gate. Missing and wrong tokens were refused, and the downloaded
+bytes matched the backend's result. This used Python HTTP requests and an
+existing Docker image; browser/OAP authentication and a fresh image build
+remain unverified.
 
 ## Current client readiness
 
